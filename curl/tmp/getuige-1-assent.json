@@ -1,0 +1,15 @@
+{
+  "id": "fb9af6c2-0ab7-4cb3-aea3-02d9773937ab",
+  "contact": "string",
+  "description": "U wordt uitgenodigd als getuige bij een huwlijk",
+  "forwardUrl;": null,
+  "name": "Gerda Getuige",
+  "person": "string",
+  "process": "http://localhost:3000/assent/",
+  "property": "partners",
+  "request": "string",
+  "requester": "228807323",
+  "revocable": true,
+  "status": null,
+  "token": null
+}

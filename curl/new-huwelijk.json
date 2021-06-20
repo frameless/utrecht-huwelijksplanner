@@ -1,0 +1,21 @@
+{
+  "partners": [
+    {
+      "id": "43d0b946-154f-4d52-a180-832a160f8e32",
+      "contact": "string",
+      "description": "U begint de aanvraag",
+      "forwardUrl;": null,
+      "name": "Anne Nico Johannes Deursen",
+      "person": "string",
+      "process": "http://localhost:3000/assent/",
+      "property": "partners",
+      "request": "string",
+      "requester": "259730890",
+      "revocable": true,
+      "status": "granted",
+      "token": null
+    }
+  ],
+  "getuigen": [],
+  "type": "huwelijk"
+}

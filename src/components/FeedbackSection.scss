@@ -1,0 +1,12 @@
+.example-feedback-section {
+  margin-block-end: calc(var(--utrecht-space-around, 0) * var(--utrecht-feedback-section-margin-block-end, 0));
+  margin-block-start: calc(var(--utrecht-space-around, 0) * var(--utrecht-feedback-section-margin-block-start, 0));
+  padding-block-end: 1em;
+  padding-block-start: 1em;
+  padding-inline-end: 1em;
+  padding-inline-start: 1em;
+}
+
+.example-feedback-section--success {
+  background-color: yellowgreen;
+}

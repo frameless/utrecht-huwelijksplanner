@@ -1,0 +1,11 @@
+# Ignore 3rd party files
+node_modules/
+
+# Ignore generated files
+dist/
+coverage/
+tmp/
+build/
+
+# Ignore all docusaurus files
+docusaurus/

@@ -1,0 +1,15 @@
+---
+version: "3"
+services:
+  dev:
+    volumes:
+      - ./:/var/www
+      - /var/www/node_modules
+    build:
+      args:
+        - "NODE_ENV=development"
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    command: "dev"

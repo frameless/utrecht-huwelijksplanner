@@ -1,0 +1,15 @@
+{
+  "aanstaande": "Aanstaande",
+  "legal-witness": "Getuige",
+  "no-required-witness": "Nog geen getuige.",
+  "no-optional-witness": "Geen tweede getuige.",
+  "ceremony-type": "Type ceremonie",
+  "ceremony-date": "Datum",
+  "ceremony-time": "Tijd",
+  "ceremony-location": "Locatie",
+  "cancel-ceremony-link": "Annuleer ceremonie",
+  "cancel-ceremony-link_geregistreerd-partnerschap": "Annuleer partnerschap",
+  "cancel-ceremony-link_eenvoudig-huwelijk": "Annuleer huwelijk",
+  "cancel-ceremony-link_uitgebreid-huwelijk": "Annuleer huwelijk",
+  "cancel-ceremony-link_flits-balie-huwelijk": "Annuleer huwelijk"
+}

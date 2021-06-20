@@ -1,0 +1,6 @@
+/* Don't set padding and inline-size on page directly, but use those tokens in page-header page-footer and page-content instead */
+.utrecht-page {
+  max-inline-size: 100%;
+  padding-inline-end: 0;
+  padding-inline-start: 0;
+}

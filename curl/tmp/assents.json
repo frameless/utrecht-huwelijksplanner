@@ -1,0 +1,55 @@
+{
+  "results": [
+    {
+      "id": "ff776d2c-9d9c-4912-bc51-ed16f28d375b",
+      "contact": null,
+      "description": "Partner van ..",
+      "forwardUrl": null,
+      "name": "Partner",
+      "person": null,
+      "process": null,
+      "property": null,
+      "request": null,
+      "requester": "019655344",
+      "revocable": true,
+      "status": "requested",
+      "token": "string"
+    },
+    {
+      "id": "7d3d577b-10aa-488b-8ce4-bddee9bbe55a",
+      "contact": null,
+      "description": "Getuige voor huwelijk",
+      "forwardUrl": null,
+      "name": "Getuige",
+      "person": null,
+      "process": null,
+      "property": null,
+      "request": null,
+      "requester": "019655344",
+      "revocable": true,
+      "status": null,
+      "token": "string"
+    },
+    {
+      "id": "deba1603-46b8-4578-ad73-1e34b7d270d2",
+      "contact": null,
+      "description": "Gemeente Utrecht",
+      "forwardUrl": null,
+      "name": "Instemmings gemeente",
+      "person": null,
+      "process": null,
+      "property": null,
+      "request": null,
+      "requester": "471608130",
+      "revocable": true,
+      "status": "requested",
+      "token": "string"
+    }
+  ],
+  "count": 3,
+  "limit": 25,
+  "total": 3,
+  "start": 1,
+  "page": 1,
+  "pages": 1
+}

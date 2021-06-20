@@ -1,0 +1,18 @@
+.utrecht-data-list--grid > .utrecht-data-list__item {
+  display: grid;
+  gap: 1ch;
+  grid-auto-rows: minmax(44px, auto);
+  grid-template-areas: "item-key item-value actions";
+  grid-template-columns: repeat(3, 1fr);
+  line-height: 1.5;
+}
+
+.utrecht-data-list--grid > .utrecht-data-list__item > .utrecht-data-list__item-value {
+  grid-area: item-value;
+}
+.utrecht-data-list--grid > .utrecht-data-list__item > .utrecht-data-list__item-key {
+  grid-area: item-key;
+}
+.utrecht-data-list--grid > .utrecht-data-list__item > .utrecht-data-list__actions {
+  grid-area: actions;
+}

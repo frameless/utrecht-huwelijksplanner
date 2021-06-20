@@ -1,0 +1,1182 @@
+{
+  "results": [
+    {
+      "id": "c754b7c8-269b-4d86-a9b3-ce77faea28ac",
+      "bevoegdeOrganisatie": "/apiSDGLocatie/23887a4a-b127-487f-8c55-c05579d70d75",
+      "catalogus": null,
+      "doelgroep": "eu-burger",
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": true,
+      "productValtOnder": null,
+      "publicatieDatum": "2022-01-04T11:27:57",
+      "upnLabel": "stookontheffing",
+      "upnUri": "http://standaarden.overheid.nl/owms/terms/stookonth",
+      "uuid": "f3603321-b592-41b5-a2c7-949f493dbd99",
+      "verantwoordelijkeOrganisatie": "/apiSDGLocatie/4ea1de44-0cfa-475c-b99d-064565add6b3",
+      "versie": null,
+      "vertalingen": ["/apiSDGVertaling/6c233f4b-7115-486c-8664-b191b5ae2cf9"],
+      "embedded": {
+        "verantwoordelijkeOrganisatie": {
+          "id": "4ea1de44-0cfa-475c-b99d-064565add6b3",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "bevoegdeOrganisatie": {
+          "id": "23887a4a-b127-487f-8c55-c05579d70d75",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "vertalingen": [
+          {
+            "id": "6c233f4b-7115-486c-8664-b191b5ae2cf9",
+            "bewijs": null,
+            "bezwaarEnBeroep": null,
+            "conditions": null,
+            "contact": null,
+            "datumWijziging": "2022-01-04T11:29:26+00:00",
+            "decentraleProcedureLink": null,
+            "deskMemo": null,
+            "kostenEnBetaalmethoden": null,
+            "notice": null,
+            "procedureBeschrijving": null,
+            "productAanwezigToelichting": null,
+            "productTitelDecentraal": null,
+            "productValtOnderToelichting": null,
+            "specifiekeTekst": null,
+            "synonyms": [
+              "/apiSDGVertalingsynonymsEntity/aae43051-181e-4c27-a811-362a2eaee86d",
+              "/apiSDGVertalingsynonymsEntity/a61ff59b-ef35-4729-bbce-050aa561c843"
+            ],
+            "taal": "nl",
+            "uitersteTermijn": null,
+            "vereisten": null,
+            "verwijzingLinks": [],
+            "wtdBijGeenReactie": null,
+            "embedded": {
+              "synonyms": [
+                {
+                  "id": "aae43051-181e-4c27-a811-362a2eaee86d",
+                  "synonym": null
+                },
+                {
+                  "id": "a61ff59b-ef35-4729-bbce-050aa561c843",
+                  "synonym": null
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "9c586cb9-fb37-4aee-a9cc-091be5cdcade",
+      "bevoegdeOrganisatie": "/apiSDGLocatie/2942a286-28f9-4cee-8ec8-43472eaeca05",
+      "catalogus": null,
+      "doelgroep": null,
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": true,
+      "productValtOnder": null,
+      "publicatieDatum": "2022-07-22T11:18:04",
+      "upnLabel": "omgevingsvergunning milieu",
+      "upnUri": "http://standaarden.overheid.nl/owms/terms/omgevingsvergunning_milieu",
+      "uuid": "c5deefa1-9256-4efc-8b11-0848834fd1ec",
+      "verantwoordelijkeOrganisatie": "/apiSDGLocatie/e5135c65-432b-420f-bbad-3ff94e218f5c",
+      "versie": null,
+      "vertalingen": ["/apiSDGVertaling/e623d2f7-2dc3-4a84-bc51-90870fd33df1"],
+      "embedded": {
+        "verantwoordelijkeOrganisatie": {
+          "id": "e5135c65-432b-420f-bbad-3ff94e218f5c",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "bevoegdeOrganisatie": {
+          "id": "2942a286-28f9-4cee-8ec8-43472eaeca05",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "vertalingen": [
+          {
+            "id": "e623d2f7-2dc3-4a84-bc51-90870fd33df1",
+            "bewijs": null,
+            "bezwaarEnBeroep": null,
+            "conditions": "<p>Het <a href=\"https://www.omgevingsloket.nl/\" title=\"Naar het omgevingsloket\">omgevingsloket</a> geeft aan welke gegevens u moet verstrekken bij de aanvraag van een omgevingsvergunning milieu. Het gaat hier bijvoorbeeld om:</p>\n<ul>\n<li>uw naam en adres;</li>\n<li>het bedrijfsadres;</li>\n<li>de kadastrale aanduiding;</li>\n<li>de ligging van het bedrijf (door middel van duidelijke plattegrondtekeningen);</li>\n<li>de aard van het bedrijf;</li>\n<li>bewijs van inschrijving Kamer van Koophandel.</li>\n</ul>\n<h2>Wet milieubeheer</h2>\n<p>Een omgevingsvergunning is een beschikking van de gemeente (of een ander overheidsorgaan) waarbij de gemeente (of een ander overheidsorgaan) aan de aanvrager (meestal een bedrijf) toestemming verleent om iets te doen dat normaal verboden is op grond van de Wet milieubeheer.</p>\n<p>Aan een omgevingsvergunning zijn voorschriften verbonden in het belang van de bescherming van het milieu.</p>",
+            "contact": "<p>Voor vragen over de Omgevingsvergunning- of melding kunt u de <a href=\"https://www.odijsselland.nl/vergunning-of-melding-activiteitenbesluit/\" title=\"Naar de website van Omgevingsdienst IJsselland\">website</a> van de omgevingsdienst IJsselland raadplegen. U kunt op deze website ook een contactformulier invullen als u vragen heeft.</p>",
+            "datumWijziging": "2022-07-22T11:18:04+00:00",
+            "decentraleProcedureLink": null,
+            "deskMemo": "<h2>Milieumelding</h2>\n<p>Per 1 januari 2008 zijn 12 algemene maatregelen van bestuur (AMvB's) vervangen door 1 nieuwe algemene maatregel van bestuur: het Besluit algemene regels voor inrichtingen milieubeheer, beter bekend als het Activiteitenbesluit.</p>\n<h2>Wat betekent het Activiteitenbesluit voor mijn bedrijf?</h2>\n<p>Door het invullen van het digitale meldingsformulier Activiteitenbesluit Milieubeheer komt u precies te weten aan welke voorschriften uw bedrijf moet voldoen. Tevens geeft dit digitale formulier uw inzicht of u voor uw bedrijfsactiviteiten een omgevingsvergunning moet aanvragen, of dat u kunt volstaan met een melding bij de gemeente. Voor de meeste bedrijven geldt de laatste optie.</p>\n<p>Verzoek kopie milieuvergunning: graag het verzoek mailen naar vergunningmilieu@deventer.nl</p>\n<h2>Contactpersonen</h2>\n<p>Omgevingsdienst IJsselland<br />Tel: 088-5251050<br />e-mail: info@odijsselland.nl<br />webstie: <a href=\"http://www.odijsselland.nl/\">www.odijsselland.nl</a></p>\n<p>Bezoekadres: L&uuml;beckplein 2, 8017 JZ Zwolle<br />Postadres: Postbus 40252, 8004 DG Zwolle</p>",
+            "kostenEnBetaalmethoden": "<p>Als u een omgevingsvergunning aanvraagt, dan betaalt u meestal niet alleen de kosten voor de omgevingsvergunning. Vaak brengt de gemeente ook plankosten in rekening. Dit zijn kosten voor voorbereiding van en toezicht op de aanleg van voorzieningen. Bijvoorbeeld groenvoorzieningen, nieuwe wegen of het dempen van sloten. Er is een landelijk <a href=\"https://vng.nl/onderwerpenindex/ruimte-en-wonen/grondzaken-beleid/nieuws/nieuwe-versie-plankostenscan\" title=\"Rekenmodel regeling plankosten exploitatiekosten 2018\">rekenmodel</a> waarmee de gemeente de plankosten bepaalt.</p>",
+            "notice": "<h2>Atlas Leefomgeving</h2>\n<div>\n<p>In de Atlas Leefomgeving kunt u nagaan wat er speelt op milieugebied in de directe omgeving van uw woning of bedrijf. Zo kunt u op kaarten zien of er sprake is van bodemverontreiniging, geluidbelasting of dat een nabijgelegen bedrijf over een omgevingsvergunning milieu beschikt. Ook vindt u in de <a href=\"http://www.deventer.nl/leven/milieu-duurzaamheid/atlas-leefomgeving\" title=\"Naar de Atlas Leefomgeving\">Atlas Leefomgeving</a> meer informatie over milieuonderwerpen als asbest en lucht. U kunt bovendien zien hoe bewoners de milieusituatie in hun wijk beleven, bijvoorbeeld over rommel op straat en stankoverlast.</p>\n</div>",
+            "procedureBeschrijving": "<h2>Milieumelding</h2>\n <p>Meestal is een milieumelding voldoende. Of u eventueel een omgevingsvergunning milieu nodig heeft,&nbsp;kunt u controleren via het afwegingsmodel <a href=\"https://www.aimonline.nl/\" title=\"Naar het afwegingsmodel op aimonline.nl\">Activiteitenbesluit Internet Module (AIM)</a>. Via deze module kunt u direct de melding doen.</p>\n <p>Op <a href=\"http://www.infomil.nl/\" title=\"Naar www.infomil.nl\">http://www.infomil.nl/</a> vindt u meer informatie over milieumeldingen en het Activiteitenbesluit.</p>\n <h2>Omgevingsvergunning milieu</h2>\n <ul>\n <li>U doet de vergunningcheck via het <a href=\"https://www.omgevingsloket.nl/\" title=\"Naar Omgevingsloket online\">Omgevingsloket</a>. Hiermee ziet u of u een omgevingsvergunning nodig heeft.</li>\n <li>Heeft u een vergunning nodig, dan kunt u deze direct digitaal aanvragen via het <a href=\"https://www.omgevingsloket.nl/\" title=\"Naar Omgevingsloket online\">Omgevingsloket</a>.</li>\n <li>Zodra de aanvraag volledig is, neemt het bevoegd gezag deze in behandeling. Dat is meestal de gemeente, maar kan ook de provincie of de rijksoverheid zijn.</li>\n <li>Is de omgevingsvergunning toegekend, dan krijgt u deze samen met de voorschriften thuisgestuurd.</li>\n <li>Bent u het niet eens met de beslissing, dan kunt u bezwaar maken of beroep aantekenen. In het besluit staat hoe u dat doet. Ook 3e belanghebbenden kunnen bezwaar of beroep aantekenen. Dit kan tot 6 weken na het besluit op de aanvraag.</li>\n </ul>\n <h2>Hoe verloopt een aanvraag?</h2>\n <p>Bij een aanvraag voor een omgevingsvergunning is er sprake van een uitgebreide voorbereidingsperiode. Hiervoor geldt een uiterlijke beslistermijn van 6 maanden. De termijn gaat in op de dag na de datum waarop de aanvraag is ontvangen&nbsp;en eindigt met het nemen van het besluit. De beslistermijn kan met 6 weken worden verlengd. Daarnaast kan het nodig zijn dat u de aanvraag aanvult met gegevens. In dat geval wordt de tijd die u hiervoor gebruikt bij de beslistermijn opgeteld.</p>\n <h2>Aanvraag in fasen</h2>\n <p>Bij aanvragen met meerdere activiteiten is het in de meeste gevallen mogelijk de activiteiten apart aan te vragen. Ook kunt u de omgevingsvergunning milieu aanvragen in fasen. Het voordeel hiervan is dat de vervolgaanvraag kan worden afgestemd op het besluit van de eerdere aanvraag.</p>\n <h2>Vooroverleg</h2>\n <p>Voordat u een aanvraag doet voor een omgevingsvergunning milieu, kunt u een <a href=\"http://www.deventer.nl/loketten/digitaal-loket/omgevingsvergunning-vooroverleg\" title=\"Naar de pagina Vooroverleg omgevingsvergunning\">vooroverleg</a> aanvragen. U heeft zo meer zekerheid dat uw aanvraag direct compleet is. Er wordt ook bekeken of uw plannen kans van slagen hebben of dat u iets moet wijzigen. Het overleg heeft geen juridische status.</p>",
+            "productAanwezigToelichting": null,
+            "productTitelDecentraal": "Omgevingsvergunning voor het milieu aanvragen",
+            "productValtOnderToelichting": null,
+            "specifiekeTekst": "<p>Start u een nieuw bedrijf? Verandert uw bestaande bedrijf of breidt u dit uit? Dan kunt u een omgevingsvergunning milieu nodig hebben. In de meeste gevallen hoeft u alleen een milieumelding te doen.</p>",
+            "synonyms": [
+              "/apiSDGVertalingsynonymsEntity/57aad789-cb01-48d0-a2e7-c95067f2b696",
+              "/apiSDGVertalingsynonymsEntity/a9e287dc-6de0-451a-9330-f2224f594bda",
+              "/apiSDGVertalingsynonymsEntity/a4e1f2f3-b165-45cf-b19f-ff8a22bed5b9",
+              "/apiSDGVertalingsynonymsEntity/594df8a3-2744-464d-820f-c3d45a516961",
+              "/apiSDGVertalingsynonymsEntity/f6c6b72c-b550-49d7-9bb0-ff4bda2f9346",
+              "/apiSDGVertalingsynonymsEntity/47486a17-5b06-406d-b578-fc0af5a57d6d",
+              "/apiSDGVertalingsynonymsEntity/4ada485b-81f0-44cd-ba00-1f4cc53982e1",
+              "/apiSDGVertalingsynonymsEntity/de011beb-2e7c-44b4-96c6-238cd1ab2390",
+              "/apiSDGVertalingsynonymsEntity/94c5def3-217a-475d-97c8-1ea6c1f43c2e",
+              "/apiSDGVertalingsynonymsEntity/5508da89-a8e5-4a2c-b578-d977e25a05ba",
+              "/apiSDGVertalingsynonymsEntity/3f6f7925-2b77-4e24-883b-c4a1e84b47d9",
+              "/apiSDGVertalingsynonymsEntity/4915afd8-0dc4-48f4-982a-f1c0368a6a58",
+              "/apiSDGVertalingsynonymsEntity/8b62f231-1376-4118-99fa-06c2521c0b2f",
+              "/apiSDGVertalingsynonymsEntity/7c1bd027-d525-4f83-84e9-b0e0716a0c02",
+              "/apiSDGVertalingsynonymsEntity/b2818c2c-26f5-4638-a5cd-518ddb540482",
+              "/apiSDGVertalingsynonymsEntity/4b421d82-e907-40d9-a18f-990d8ea533db",
+              "/apiSDGVertalingsynonymsEntity/f772b788-df42-4df5-a38b-fb542efb4b38",
+              "/apiSDGVertalingsynonymsEntity/fec074c5-27cd-4a7e-80e9-0e5a00fcabd6",
+              "/apiSDGVertalingsynonymsEntity/9257955e-9339-46f7-ac6e-38254c881584",
+              "/apiSDGVertalingsynonymsEntity/ac4c9a36-6e26-43fe-b647-7b20e30c4078",
+              "/apiSDGVertalingsynonymsEntity/7f0058f6-d2c9-45cc-a1da-67a10693128d",
+              "/apiSDGVertalingsynonymsEntity/10645724-3f17-41cb-b511-1a35fceabc60"
+            ],
+            "taal": "nl",
+            "uitersteTermijn": null,
+            "vereisten": null,
+            "verwijzingLinks": [],
+            "wtdBijGeenReactie": null,
+            "embedded": {
+              "synonyms": [
+                {
+                  "id": "57aad789-cb01-48d0-a2e7-c95067f2b696",
+                  "synonym": "milieuvoorwaarden voor bedrijfsactiviteiten"
+                },
+                {
+                  "id": "a9e287dc-6de0-451a-9330-f2224f594bda",
+                  "synonym": "Milieuvergunning"
+                },
+                {
+                  "id": "a4e1f2f3-b165-45cf-b19f-ff8a22bed5b9",
+                  "synonym": "algemene maatregel van bestuur"
+                },
+                {
+                  "id": "594df8a3-2744-464d-820f-c3d45a516961",
+                  "synonym": "milieustraat"
+                },
+                {
+                  "id": "f6c6b72c-b550-49d7-9bb0-ff4bda2f9346",
+                  "synonym": "milieu"
+                },
+                {
+                  "id": "47486a17-5b06-406d-b578-fc0af5a57d6d",
+                  "synonym": "milieumelding"
+                },
+                {
+                  "id": "4ada485b-81f0-44cd-ba00-1f4cc53982e1",
+                  "synonym": "vervuiling"
+                },
+                {
+                  "id": "de011beb-2e7c-44b4-96c6-238cd1ab2390",
+                  "synonym": "kca-depot"
+                },
+                {
+                  "id": "94c5def3-217a-475d-97c8-1ea6c1f43c2e",
+                  "synonym": "kunststofverwerking"
+                },
+                {
+                  "id": "5508da89-a8e5-4a2c-b578-d977e25a05ba",
+                  "synonym": "rioolwaterzuivering"
+                },
+                {
+                  "id": "3f6f7925-2b77-4e24-883b-c4a1e84b47d9",
+                  "synonym": "onderhoudssteunpunt"
+                },
+                {
+                  "id": "4915afd8-0dc4-48f4-982a-f1c0368a6a58",
+                  "synonym": "grondopslag"
+                },
+                {
+                  "id": "8b62f231-1376-4118-99fa-06c2521c0b2f",
+                  "synonym": "baggeropslag"
+                },
+                {
+                  "id": "7c1bd027-d525-4f83-84e9-b0e0716a0c02",
+                  "synonym": "extrusie"
+                },
+                {
+                  "id": "b2818c2c-26f5-4638-a5cd-518ddb540482",
+                  "synonym": "kunststofrecycling"
+                },
+                {
+                  "id": "4b421d82-e907-40d9-a18f-990d8ea533db",
+                  "synonym": "opslag oud papier"
+                },
+                {
+                  "id": "f772b788-df42-4df5-a38b-fb542efb4b38",
+                  "synonym": "textielopslag"
+                },
+                {
+                  "id": "fec074c5-27cd-4a7e-80e9-0e5a00fcabd6",
+                  "synonym": "bunkerstations binnenvaart"
+                },
+                {
+                  "id": "9257955e-9339-46f7-ac6e-38254c881584",
+                  "synonym": "opslag groenafval"
+                },
+                {
+                  "id": "ac4c9a36-6e26-43fe-b647-7b20e30c4078",
+                  "synonym": "opslag afval"
+                },
+                {
+                  "id": "7f0058f6-d2c9-45cc-a1da-67a10693128d",
+                  "synonym": "overslag afval"
+                },
+                {
+                  "id": "10645724-3f17-41cb-b511-1a35fceabc60",
+                  "synonym": "waterzuiveringsinstallatie"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "161b7211-a2bd-414c-a32f-468339a35447",
+      "bevoegdeOrganisatie": "/apiSDGLocatie/258883d3-bbca-4276-8069-4584ff0e6305",
+      "catalogus": null,
+      "doelgroep": "eu-burger, eu-bedrijf",
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": true,
+      "productValtOnder": null,
+      "publicatieDatum": "2021-03-19T00:17:07",
+      "upnLabel": "omgevingsvergunning bouw",
+      "upnUri": "http://standaarden.overheid.nl/owms/terms/",
+      "uuid": "e9388ded-31c8-4561-96c5-42e7352825dd",
+      "verantwoordelijkeOrganisatie": "/apiSDGLocatie/49cdf749-0731-440c-b855-ba0df6669c31",
+      "versie": null,
+      "vertalingen": ["/apiSDGVertaling/f5bf0459-aaaa-449f-82be-ce12eec56569"],
+      "embedded": {
+        "verantwoordelijkeOrganisatie": {
+          "id": "49cdf749-0731-440c-b855-ba0df6669c31",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "bevoegdeOrganisatie": {
+          "id": "258883d3-bbca-4276-8069-4584ff0e6305",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "vertalingen": [
+          {
+            "id": "f5bf0459-aaaa-449f-82be-ce12eec56569",
+            "bewijs": null,
+            "bezwaarEnBeroep": "<h2>2 procedures</h2>\n<p>Bij de omgevingsvergunning zijn 2 procedures: een gewone (de reguliere) en een uitgebreide procedure.</p>\n<p>Bij de gewone procedure maakt u eerst bezwaar bij de instantie die uw aanvraag heeft afgewezen (bekijk&nbsp;<a href=\"http://www.deventer.nl/bezwaar\" title=\"Naar Bezwaar\">bezwaar bij gemeente Deventer</a>). Doe dit binnen 6 weken. Bent u het daarna niet eens met de uitspraak op het bezwaarschrift? Teken dan beroep aan bij de rechtbank. Eventueel kunt u ook nog in hoger beroep bij de Afdeling Bestuursrechtspraak van de Raad van State.</p>\n<p>Bij de uitgebreide procedure geeft u eerst uw mening over het ontwerpbesluit (zienswijze). Doe dit binnen 6 weken. Daarna kunt u in beroep gaan bij de rechtbank. Ook dan kunt u eventueel nog in hoger beroep gaan bij de Afdeling Bestuursrechtspraak van de Raad van State.</p>\n<p>Is er niet gereageerd binnen de beroepstermijn van 6 weken? Dan is de vergunning definitief.</p>",
+            "conditions": "<p>U moet in de volgende gevallen een omgevingsvergunning aanvragen:</p>\n<ul>\n<li>Het gaat om de sloop van een bouwwerk binnen een beschermd stads- of dorpsgezicht.</li>\n<li>Het gaat om het restaureren, grondig verbouwen of slopen van een monument.</li>\n<li>In het bestemmingsplan van de gemeente staat dat u een omgevingsvergunning moet aanvragen.</li>\n</ul>\n<h2>Sloopafval</h2>\n<ul>\n<li>Het sloopafval scheidt u zoveel mogelijk in verontreinigde en niet-verontreinigde delen;</li>\n<li>Het verontreinigde afval biedt u aan als chemisch afval;</li>\n<li>Het niet-verontreinigde scheidt u in herbruikbare en niet-herbruikbare materialen;</li>\n<li>De niet-herbruikbare delen voert u af;</li>\n<li>De herbruikbare delen (met name beton- en metselwerkpuin) worden door een recyclingbedrijf tot puingranulaat verwerkt.</li>\n</ul>",
+            "contact": null,
+            "datumWijziging": "2021-03-19T00:17:07+00:00",
+            "decentraleProcedureLink": null,
+            "deskMemo": "<h2>Zaakgerichte vragen</h2>\n<p>Team Ondernemen en Vergunningen - Adviseurs monumenten</p>\n<h2>Algemene vragen</h2>\n<p>Publiekscontacten Vergunningen</p>",
+            "kostenEnBetaalmethoden": "<p>Aan een omgevingsvergunning zijn kosten verbonden. Een overzicht van alle kosten vindt u in de tarieventabel van de&nbsp;<a href=\"https://www.deventer.nl/legesverordening\" title=\"Naar de legesverordening\">Legesverordening</a>&nbsp;van de gemeente Deventer.</p>",
+            "notice": "<h2>Monument: buiten- en binnenkant</h2>\n<p>Bij een monument gaat het niet alleen om de gevel of de buitenkant van het gebouw. Het gehele gebouw is aangewezen als monument, inclusief de binnenkant.</p>\n<h2>Er zijn 4 verschillende soorten monumenten:</h2>\n<ul>\n<li>Rijksmonument</li>\n<li>Gemeentelijk monument</li>\n<li>Rijksbeschermd stads- of dorpsgezicht</li>\n<li>Gemeentelijk beschermd stadsgezicht</li>\n</ul>\n<p>Een gemeentelijk monument of een Rijksmonument is een onroerend goed dat van (lokaal of algemeen) belang is door zijn schoonheid of betekenis voor de wetenschap of door zijn cultuurhistorische waarde. U hebt een vergunning nodig als u een monument wil slopen, veranderen of herstellen. Ook het gebruiken of laten gebruiken, waardoor het monument wordt ontsierd of in gevaar wordt gebracht mag niet zonder vergunning. Reguliere onderhoudswerkzaamheden zijn vergunningvrij.</p>\n<p>Bij beschermde stads- of dorpsgezichten gaat het om groepen van onroerende zaken, waarin zich &eacute;&eacute;n of meer monumenten bevinden. Hierbij hoeft het niet alleen te gaan over mooie panden. Ook bruggen kunnen hier bijvoorbeeld deel van uitmaken. Heeft uw plan gevolgen voor het aanzicht van een beschermd stads- of dorpsgezicht? Dan heeft u een omgevingsvergunning nodig.</p>\n<h2>Meer informatie</h2>\n<ul>\n<li>Meer informatie over<a href=\"https://www.raadvanstate.nl/\" title=\"Naar de website van de Raad van State\">&nbsp;in hoger beroep gaan bij de Raad van State</a>.</li>\n<li><a href=\"http://www.synbiosys.alterra.nl/natura2000/routeplanner.aspx?subj=routeplanner\" title=\"Naar de routeplanner beschermde natuur\">Routeplanner beschermde natuur binnen de omgevingsvergunning</a></li>\n</ul>",
+            "procedureBeschrijving": "<p>Als u wilt weten of u een vergunning aan moet vragen, kunt u op het Omgevingsloket Online (OLO) een vergunningcheck doen. Moet u een vergunning aanvragen? Dit doet u ook via het OLO.</p>\n <p>Onder andere de volgende gegevens zijn nodig bij de aanvraag:</p>\n <ul>\n <li>foto&rsquo;s</li>\n <li>een situatieschets</li>\n <li>een korte beschrijving van het te slopen gebouw</li>\n <li>een tekening van het gebouw met de maten (vaak een oude bouwtekening, hoeft niet door een architect)</li>\n </ul>\n <h2>Beschermd stads- en dorpsgezicht</h2>\n <p>Het gebied van de binnenstad inclusief het Rijsterborgherpark en de Worp (het plantsoen) behoren tot een beschermd stadsgezicht van Deventer. Of uw sloopproject binnen de grenzen van het stadsgezicht valt, kunt u navragen bij de gemeente.</p>\n <h2>Mobiel puinbreken</h2>\n <p>Wilt u mobiel gaan breken, dan kunt u online&nbsp;<a href=\"https://dloket.deventer.nl/startform?id=VEO_MPB\" title=\"Naar Kennisgeving mobiel puinbreken\">mobiel breken melden</a>. De melding wordt gedaan door de uitvoerder van de werkzaamheden.</p>\n <h2>Onderhoud: vaak vergunningvrij</h2>\n <p>Voor gewoon onderhoud hoeft u geen vergunning aan te vragen. Gewoon onderhoud is alles waarbij het uiterlijk van het interieur of van de buitenkant van het pand niet verandert. Voorbeelden zijn:</p>\n <ul>\n <li>bijhouden van het schilderwerk in dezelfde kleur</li>\n <li>kleine reparaties met de oorspronkelijke materialen</li>\n </ul>\n <p>Ook als u in het monument aanpassingen doet, kan dit vaak zonder vergunning. Denk aan het verwijderen van een niet-historische keuken of plafond. Heeft uw monument onderdelen die geen monumentale waarde hebben? Bijvoorbeeld een recente schuur? Dan zijn de bouwactiviteiten aan deze onderdelen ook vaak vergunningvrij.</p>\n <p>Meer informatie over vergunningvrije werkzaamheden vindt u in de&nbsp;<a href=\"https://www.cultureelerfgoed.nl/domeinen/monumenten/publicaties/publicaties/2018/01/01/vergunningvrij\" title=\"Bekijk de brochure\">brochure</a>&nbsp;op de website van de Rijksdienst voor het Cultureel Erfgoed.</p>\n <p>U vraagt de omgevingsvergunning aan bij het&nbsp;<a href=\"http://www.omgevingsloket.nl/\" title=\"Naar Omgevingsloket Online\">Omgevingsloket Online (OLO)</a>. U ziet daar of de gemeente, provincie of het rijk over de vergunning voor uw monument gaat.</p>\n <h2>Andere vergunningen</h2>\n <p>In veel gevallen heeft u naast de omgevingsvergunning voor het monument ook een omgevingsvergunning voor het bouwen of verbouwen van uw pand nodig. Wilt u weten welke vergunningen u nodig heeft? Doet u dan de vergunningencheck op het Omgevingsloket Online.</p>\n <p>De aanvraag lijkt op de aanvraag voor een omgevingsvergunning voor het bouwen. Kijk daarvoor bij&nbsp;<a href=\"https://www.deventer.nl/loketten/digitaal-loket/bouw-en-verbouw-vergunning\" title=\"Naar Bouw en verbouw, vergunning\">Bouw en verbouw, vergunning</a>. Stuur dezelfde stukken mee. Daarnaast kan om de volgende informatie gevraagd worden:</p>\n <ul>\n <li>een bouwrapport of een cultuurhistorisch rapport</li>\n <li>een bouwbestek</li>\n </ul>\n <p>U moet tekeningen meeleveren. Dit zijn tekeningen van hoe het er nu uit ziet en van wat u van plan bent. Dat is nodig voor de toetsing.</p>",
+            "productAanwezigToelichting": null,
+            "productTitelDecentraal": "Monument verbouwen of slopen",
+            "productValtOnderToelichting": null,
+            "specifiekeTekst": "<p>Bezit (of koopt) u een beschermd monument?&nbsp;Dan zijn er regels als u het zou willen verbouwen, herstellen of aanpassen. Het doel van de monumentenstatus is de waarden te behouden. Daarom heeft u een&nbsp;omgevingsvergunning nodig als u een monument wilt wijzigen of (gedeeltelijk) slopen. Het plegen van onderhoud is vaak vergunningvrij.</p>\n <p>U heeft ook een vergunning nodig als u een gebouw binnen een beschermd stads- of dorpsgezicht wilt slopen. Of als in het bestemmingsplan staat dat u een omgevingsvergunning moet aanvragen.</p>\n <p>Wilt u mobiel gaan breken (sloopafval ter plaatse bewerken), stel dan de gemeente van tevoren op de hoogte van de werkzaamheden.</p>",
+            "synonyms": [
+              "/apiSDGVertalingsynonymsEntity/7b8e0422-8c75-4c6b-8581-d3ee7abd4128",
+              "/apiSDGVertalingsynonymsEntity/7d765fc0-af01-4bc3-95c9-4341050c31ea",
+              "/apiSDGVertalingsynonymsEntity/8dffc35a-a554-4033-9bd7-4c3292f13a64",
+              "/apiSDGVertalingsynonymsEntity/50994148-6c27-4e51-8bac-04ed38a7653d",
+              "/apiSDGVertalingsynonymsEntity/35c501cb-8cd7-40a2-b87e-936824d5ba59",
+              "/apiSDGVertalingsynonymsEntity/b64ea4f9-774e-4a68-8da8-c19eadde4415",
+              "/apiSDGVertalingsynonymsEntity/b116bd58-6e80-4cc8-93bd-ab03e8746990",
+              "/apiSDGVertalingsynonymsEntity/92c045d8-6c33-4e3b-ae84-af772f16ea0a",
+              "/apiSDGVertalingsynonymsEntity/91105827-7d08-4da7-a558-b685e4e48c52",
+              "/apiSDGVertalingsynonymsEntity/32d2093a-f9e6-4cd9-bacd-55582ca340b0",
+              "/apiSDGVertalingsynonymsEntity/0e18fa48-f265-46a8-942a-be6cfdf3071c"
+            ],
+            "taal": "nl",
+            "uitersteTermijn": "<p>Bij een omgevingsvergunning voor een monument zijn er 2 procedures: een eenvoudige (de reguliere) en een uitgebreide.</p>\n <p>De uitgebreide procedure geldt alleen voor beschermde Rijksmonumenten. Deze procedure wordt gevolgd bij:</p>\n <ul>\n <li>(gedeeltelijke) sloop</li>\n <li>ingrijpende wijzigingen</li>\n <li>reconstructie van een beschermd monument</li>\n <li>wijziging bij herbestemming</li>\n <li>uitvoering van een natuurtoets door de gemeente</li>\n </ul>\n <p>De tijdsduur voor de uitgebreide procedure bedraagt 26 weken.</p>\n <p>Voor alle andere wijzigingen wordt de reguliere procedure gevolgd. Dit geldt ook voor wijzigingen aan gemeentelijke en provinciale monumenten. De tijdsduur voor de beslissing is 8 weken.</p>\n <p>De termijnen kunnen met 6 weken worden verlengd.</p>",
+            "vereisten": null,
+            "verwijzingLinks": [],
+            "wtdBijGeenReactie": null,
+            "embedded": {
+              "synonyms": [
+                {
+                  "id": "7b8e0422-8c75-4c6b-8581-d3ee7abd4128",
+                  "synonym": "provinciale en gemeentelijke monumenten"
+                },
+                {
+                  "id": "7d765fc0-af01-4bc3-95c9-4341050c31ea",
+                  "synonym": "panden"
+                },
+                {
+                  "id": "8dffc35a-a554-4033-9bd7-4c3292f13a64",
+                  "synonym": "gebouwen"
+                },
+                {
+                  "id": "50994148-6c27-4e51-8bac-04ed38a7653d",
+                  "synonym": "verwijderen asbest"
+                },
+                {
+                  "id": "35c501cb-8cd7-40a2-b87e-936824d5ba59",
+                  "synonym": "sloopvergunning"
+                },
+                {
+                  "id": "b64ea4f9-774e-4a68-8da8-c19eadde4415",
+                  "synonym": "toestemming tot het slopen van bouwwerk of woning"
+                },
+                {
+                  "id": "b116bd58-6e80-4cc8-93bd-ab03e8746990",
+                  "synonym": "monumentenvergunning"
+                },
+                {
+                  "id": "92c045d8-6c33-4e3b-ae84-af772f16ea0a",
+                  "synonym": "vastgoed"
+                },
+                {
+                  "id": "91105827-7d08-4da7-a558-b685e4e48c52",
+                  "synonym": "beschermd stadsgezicht"
+                },
+                {
+                  "id": "32d2093a-f9e6-4cd9-bacd-55582ca340b0",
+                  "synonym": "beschermd dorpsgezicht"
+                },
+                {
+                  "id": "0e18fa48-f265-46a8-942a-be6cfdf3071c",
+                  "synonym": "sloopomgevingsvergunning"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "09cf8f2e-ceed-43a1-b700-c792f0c43751",
+      "bevoegdeOrganisatie": "/apiSDGLocatie/74ece1aa-f9a0-444c-9645-79d48eca62f6",
+      "catalogus": null,
+      "doelgroep": "eu-bedrijf ",
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": true,
+      "productValtOnder": null,
+      "publicatieDatum": "2021-07-30T09:24:50",
+      "upnLabel": "omgevingsvergunning brandveilig gebruik",
+      "upnUri": "http://standaarden.overheid.nl/owms/terms/omgVgBrvGebr",
+      "uuid": "6e424b39-be9a-4247-8fa5-32182d30875c",
+      "verantwoordelijkeOrganisatie": "/apiSDGLocatie/a080f00c-8e13-42e4-9b24-b0b3a0161a1d",
+      "versie": null,
+      "vertalingen": ["/apiSDGVertaling/6ec0978d-06d9-4e6e-b06e-94e1d0bb3fbf"],
+      "embedded": {
+        "verantwoordelijkeOrganisatie": {
+          "id": "a080f00c-8e13-42e4-9b24-b0b3a0161a1d",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "bevoegdeOrganisatie": {
+          "id": "74ece1aa-f9a0-444c-9645-79d48eca62f6",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "vertalingen": [
+          {
+            "id": "6ec0978d-06d9-4e6e-b06e-94e1d0bb3fbf",
+            "bewijs": "string",
+            "bezwaarEnBeroep": null,
+            "conditions": null,
+            "contact": "string",
+            "datumWijziging": "2021-07-30T09:24:50+00:00",
+            "decentraleProcedureLink": "string",
+            "deskMemo": "<h2>Contactpersonen</h2>\n<h2>Gebruiksmelding</h2>\n<p>Team Toezicht, Ben Visscher</p>\n<h2>Vergunningen zaakgerichte vragen</h2>\n<p>Team OV, wabo-casemanagers</p>\n<h2>Vergunningen algemene vragen</h2>\n<p>PC Vergunningen</p>\n<p>&nbsp;</p>",
+            "kostenEnBetaalmethoden": "<p>De tarieventabel&nbsp;vindt u onder Titel 2, hoofdstuk 3&nbsp;in de <a href=\"http://www.deventer.nl/legesverordening\" title=\"Naar de pagina Legesverordening Deventer\">legesverordening van de gemeente Deventer</a>.</p>\n <p>Aan het doen van een gebruiksmelding zijn geen kosten verbonden.</p>\n <p>&nbsp;</p>",
+            "notice": "<p>De overheid heeft als taak de brandveiligheid van bouwwerken te bewaken. Naast brandveilig bouwen is een brandveilig gebruik van belang. De omgevingsvergunning is hierbij het belangrijkste instrument.</p>\n<h2>Omgevingsvergunning</h2>\n<p>U vraagt een omgevingsvergunning aan bij onderstaande situaties:</p>\n<ul>\n<li>u heeft bedrijfsmatig of in het kader van verzorging een nachtverblijf voor meer dan 10 personen (bijvoorbeeld verzorgingshuizen en hotels);</li>\n<li>u heeft een dagverblijf voor meer dan 10 personen jonger dan 12 jaar (bijvoorbeeld kinderdagverblijven en basisscholen);</li>\n<li>u heeft een dagverblijf voor meer dan 10 personen met een lichamelijke of verstandelijke handicap (bijvoorbeeld kinderdagverblijven en basisscholen).</li>\n</ul>\n<h2>Gebruiksmelding</h2>\n<p>Voor het gebruik van bepaalde gebouwen hoeft u alleen een gebruiksmelding te doen:</p>\n<ul>\n<li>het gebouw is bedoeld voor het verblijf van meer dan 50 personen. Hierbij is er geen slaapfunctie;</li>\n<li>er is sprake van kamerverhuur van&nbsp;5 of meer wooneenheden.</li>\n</ul>\n<p>Het gaat bijvoorbeeld om middelbare scholen, kantoren, restaurants, sportaccommodaties, winkelcentra en supermarkten.</p>\n<p>Als u een gebruiksmelding moet doen, mag u dit tegelijk doen met de aanvraag van de omgevingsvergunning voor andere activiteiten. U bent dit niet verplicht.</p>",
+            "procedureBeschrijving": "<ul>\n <li>U doet de vergunningcheck via het <a href=\"https://www.omgevingsloket.nl/\" title=\"Naar de website www.omgevingsloket.nl\">Omgevingsloket</a>. Hiermee ziet u of u een omgevingsvergunning nodig heeft.</li>\n <li>Heeft u een vergunning nodig, dan kunt u deze direct&nbsp;online aanvragen via het <a href=\"https://www.omgevingsloket.nl/\" title=\"Naar de website www.omgevingsloket.nl\">Omgevingsloket</a>.</li>\n <li>Ook als u alleen een gebruiksmelding moet doen, kunt u terecht bij het <a href=\"https://www.omgevingsloket.nl/\">Omgevingsloket</a>.</li>\n <li>Zodra de aanvraag of melding volledig is, neemt het bevoegd gezag deze in behandeling. Dat kan de gemeente zijn, maar ook de provincie, het waterschap of de rijksoverheid.</li>\n <li>Aan de behandeling van de vergunningaanvraag zijn kosten verbonden. U ontvangt daarvoor een acceptgiro. Aan het doen van een gebruiksmelding zijn geen kosten verbonden.</li>\n <li>Is de omgevingsvergunning toegekend, dan krijgt u deze samen met de voorwaarden thuisgestuurd.</li>\n <li>Bent u het niet eens met de beslissing, dan kunt u bezwaar maken of beroep aantekenen. In het besluit staat hoe u dat doet. Ook belanghebbenden kunnen bezwaar maken. Dit kan tot 6 weken na het besluit op de aanvraag.</li>\n </ul>\n <h2>Hoe verloopt een aanvraag?</h2>\n <p>Bij een aanvraag van een vergunning kan sprake zijn van een reguliere of een uitgebreide voorbereidingsperiode. Dit is afhankelijk van de complexiteit van de aanvraag.</p>\n <ul>\n <li>Voor de <strong>reguliere</strong> voorbereidingsperiode geldt een uiterlijke afhandelingstermijn van 8 weken.</li>\n <li>Voor de <strong>uitgebreide</strong> voorbereidingsperiode geldt een uiterlijke afhandelingstermijn van 6 maanden.</li>\n </ul>\n <p>Het bevoegd gezag geeft vooraf aan van welk type voorbereidingsperiode er sprake is. Bij een gebruiksmelding is de voorbereidingsperiode 4 weken.</p>\n <p>De termijn gaat in zodra de aanvraag ontvangen is en eindigt met de bekendmaking van het besluit. Beide afhandelingstermijnen kunnen met 6 weken worden verlengd. Daarnaast kan het nodig zijn dat u de aanvraag aanvult met gegevens. In dat geval wordt de tijd die u hiervoor gebruikt bij de afhandelingstermijn opgeteld.</p>\n <h2>Wat heeft u nodig?</h2>\n <p>De eisen voor het verstrekken van een omgevingsvergunning of een melding verschillen per inrichting. Dit geldt ook voor de informatie over de inrichting die u moet overleggen. Het bevoegd gezag zal u aangeven wat u aan documenten moet meenemen of opsturen.</p>",
+            "productAanwezigToelichting": null,
+            "productTitelDecentraal": "Brandveilig gebruik van gebouwen",
+            "productValtOnderToelichting": null,
+            "specifiekeTekst": "<p>Bent u verantwoordelijk voor een (horeca)bedrijf, school of instelling? Let er dan op dat het gebruik van de inrichting brandveilig is. De gemeente stelt hiervoor een omgevingsvergunning op. Het kan zijn dat u het gebruik slechts hoeft te melden.</p>",
+            "synonyms": [
+              "/apiSDGVertalingsynonymsEntity/153ea7d1-54cd-41f3-8cfd-0da5d1c7973a",
+              "/apiSDGVertalingsynonymsEntity/b3fddbab-49e0-40e4-9d01-a0a191d7a719",
+              "/apiSDGVertalingsynonymsEntity/15926cf8-19cc-4ae6-8d92-8f5024efe51a",
+              "/apiSDGVertalingsynonymsEntity/9ed87e4a-5c80-4387-bf65-7c7044e03d03",
+              "/apiSDGVertalingsynonymsEntity/6c029c90-bdb4-4ad2-bf71-d2ee281f0e49",
+              "/apiSDGVertalingsynonymsEntity/2a6b74ae-8014-406e-afbe-c58b42690ea8",
+              "/apiSDGVertalingsynonymsEntity/ba7121f4-251b-4f3a-b5d3-e23c695f512a",
+              "/apiSDGVertalingsynonymsEntity/84dbfb12-f80f-4005-813b-ef89e61d852a",
+              "/apiSDGVertalingsynonymsEntity/a8882aa9-dd49-40d8-907d-6e7e4e81905d",
+              "/apiSDGVertalingsynonymsEntity/8ff639d9-ecaf-4ed1-916e-29e768ea07cf",
+              "/apiSDGVertalingsynonymsEntity/d750965f-379b-444f-b025-aa9ae54fb1f8",
+              "/apiSDGVertalingsynonymsEntity/788c6586-fe6a-4d89-8b78-5f5c530570dd",
+              "/apiSDGVertalingsynonymsEntity/1378bdf7-3780-4ddb-8293-9d63e2e560b3",
+              "/apiSDGVertalingsynonymsEntity/4488bf8f-3862-4658-8a58-4004c19ac969",
+              "/apiSDGVertalingsynonymsEntity/700fb6f0-de99-41a7-9705-039709f63c26",
+              "/apiSDGVertalingsynonymsEntity/39249412-f094-473c-abd5-bcfb3bd7762b",
+              "/apiSDGVertalingsynonymsEntity/02cc5536-40a0-4e56-b74a-49ccd363e7f9",
+              "/apiSDGVertalingsynonymsEntity/7bacf8f0-5bbc-440e-b7e5-711211e5cc2d",
+              "/apiSDGVertalingsynonymsEntity/f578cf0f-9658-402c-b1a4-8c5abd52e604"
+            ],
+            "taal": "nl",
+            "uitersteTermijn": null,
+            "vereisten": "string",
+            "verwijzingLinks": [],
+            "wtdBijGeenReactie": "string",
+            "embedded": {
+              "synonyms": [
+                {
+                  "id": "153ea7d1-54cd-41f3-8cfd-0da5d1c7973a",
+                  "synonym": "gebruiksvergunning brandpreventie"
+                },
+                {
+                  "id": "b3fddbab-49e0-40e4-9d01-a0a191d7a719",
+                  "synonym": "pand"
+                },
+                {
+                  "id": "15926cf8-19cc-4ae6-8d92-8f5024efe51a",
+                  "synonym": "BRANDVEILIGHEID"
+                },
+                {
+                  "id": "9ed87e4a-5c80-4387-bf65-7c7044e03d03",
+                  "synonym": "gebruiksvergunning"
+                },
+                {
+                  "id": "6c029c90-bdb4-4ad2-bf71-d2ee281f0e49",
+                  "synonym": "verzorgingstehuis"
+                },
+                {
+                  "id": "2a6b74ae-8014-406e-afbe-c58b42690ea8",
+                  "synonym": "kinderdagverblijf"
+                },
+                {
+                  "id": "ba7121f4-251b-4f3a-b5d3-e23c695f512a",
+                  "synonym": "basisschool"
+                },
+                {
+                  "id": "84dbfb12-f80f-4005-813b-ef89e61d852a",
+                  "synonym": "bouwwerken"
+                },
+                {
+                  "id": "a8882aa9-dd49-40d8-907d-6e7e4e81905d",
+                  "synonym": "gebruiksmelding"
+                },
+                {
+                  "id": "8ff639d9-ecaf-4ed1-916e-29e768ea07cf",
+                  "synonym": "brand veiligheid"
+                },
+                {
+                  "id": "d750965f-379b-444f-b025-aa9ae54fb1f8",
+                  "synonym": "brandveiligheid bouwwerk"
+                },
+                {
+                  "id": "788c6586-fe6a-4d89-8b78-5f5c530570dd",
+                  "synonym": "vergunning brandveiligheid"
+                },
+                {
+                  "id": "1378bdf7-3780-4ddb-8293-9d63e2e560b3",
+                  "synonym": "gebouw gaan gebruiken"
+                },
+                {
+                  "id": "4488bf8f-3862-4658-8a58-4004c19ac969",
+                  "synonym": "melden ingebruikname gebouw"
+                },
+                {
+                  "id": "700fb6f0-de99-41a7-9705-039709f63c26",
+                  "synonym": "nieuw gebouw in gebruik nemen"
+                },
+                {
+                  "id": "39249412-f094-473c-abd5-bcfb3bd7762b",
+                  "synonym": "nieuw gebouw gereed"
+                },
+                {
+                  "id": "02cc5536-40a0-4e56-b74a-49ccd363e7f9",
+                  "synonym": "toestemming om gebouw te gebruiken"
+                },
+                {
+                  "id": "7bacf8f0-5bbc-440e-b7e5-711211e5cc2d",
+                  "synonym": "melding brand veiligheid"
+                },
+                {
+                  "id": "f578cf0f-9658-402c-b1a4-8c5abd52e604",
+                  "synonym": "melden brandveiligheid gebouw"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c5b04336-4290-46db-921f-5530484aa7ed",
+      "bevoegdeOrganisatie": "/apiSDGLocatie/a264cabb-3a1e-4316-817c-0225a136e127",
+      "catalogus": null,
+      "doelgroep": "eu-burger",
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": true,
+      "productValtOnder": null,
+      "publicatieDatum": "2022-06-28",
+      "upnLabel": "individuele inkomenstoeslag",
+      "upnUri": "http://standaarden.overheid.nl/owms/terms/indInkToesl",
+      "uuid": "5d96f61e-5a87-4d59-8676-70402b215a4e",
+      "verantwoordelijkeOrganisatie": "/apiSDGLocatie/a8e31ec2-3bef-4bb4-b315-1b4ac7efde01",
+      "versie": null,
+      "vertalingen": ["/apiSDGVertaling/a01a21f4-2df7-4d29-b449-e6fbb2ad1813"],
+      "embedded": {
+        "verantwoordelijkeOrganisatie": {
+          "id": "a8e31ec2-3bef-4bb4-b315-1b4ac7efde01",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "bevoegdeOrganisatie": {
+          "id": "a264cabb-3a1e-4316-817c-0225a136e127",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "vertalingen": [
+          {
+            "id": "a01a21f4-2df7-4d29-b449-e6fbb2ad1813",
+            "bewijs": "string",
+            "bezwaarEnBeroep": null,
+            "conditions": "<p>Wanneer komt u voor de Individuele inkomenstoeslag in aanmerking?</p>\n<ul>\n<li>u woont in de gemeente Deventer;</li>\n<li>u bent tussen de 21 en de pensioengerechtigde leeftijd;</li>\n<li>u heeft en/of uw gezinsleden hebben de afgelopen 5 jaar onafgebroken een inkomen ontvangen dat niet hoger is dan de bijstandsnorm.&nbsp;<a href=\"http://deventer.antwoordop.nl/bijstand/459901-overzicht-actuele-bijstandsbedragen\" title=\"https://deventer.antwoordop.nl/bijstand/459901-overzicht-actuele-bijstandsbedragen\">Bekijk de normbedragen op de website deventer.antwoordopbijstand.nl</a></li>\n<li>uw eigen vermogen komt niet boven het maximale bedrag uit. Zie voor deze<a href=\"https://www.rijksoverheid.nl/onderwerpen/bijstand/vraag-en-antwoord/wanneer-heb-ik-recht-op-bijstand\" title=\"Naar de bedragen op de website van de Rijksoverheid\">&nbsp;maximale bedragen</a>&nbsp;de website van de Rijksoverheid;</li>\n<li>u heeft binnen 12 maanden geen zicht op verbetering van inkomen;</li>\n<li>u heeft de afgelopen 12 maanden geen Individuele inkomenstoeslag&nbsp;ontvangen.</li>\n</ul>",
+            "contact": "<p>Voor individuele inkomenstoeslag kunt u terecht bij <a title=\"Naar de contactpagina van Werk en Inkomen\" href=\"https://www.deventer.nl/contactwerkeninkomen\">Werk en Inkomen.</a></p>",
+            "datumWijziging": "2022-06-28T10:15:50+00:00",
+            "decentraleProcedureLink": "string",
+            "deskMemo": "<p>Wanneer iemand IIT wil aanvragen controleer je wanneer de laatste verstrekte aanvraag is gedaan, om te kijken of er al opnieuw een aanvraag gedaan mag worden.<br />Dit kun je doen door in de eSuite de persoon op te zoeken en te kijken onder zaken.<br />Is de laatst verstrekte aanvraag in mei 2022 gedaan, dan mag in mei 2023 er weer een nieuwe aanvraag gedaan worden en mag het formulier dus weer verstuurd worden.<br />Er dient minimaal 1 jaar tussen een verstrekte aanvraag te zitten en dat er weer een nieuwe aanvraag gedaan mag worden.<br /><span style=\"font-size: 0.8rem;\">Staat er geweigerd zet het telefoontje dan door naar Minima (IO).</span></p>\n<p>Er liggen 2 formulieren:</p>\n<p>PW-uitkering (bijstandsuitkering) en Overig inkomen (alle andere situaties). Wanneer iemand een aanvraag doet verstuur je &eacute;&eacute;n van beide formulieren, zoek uit of er een bijstandsuitkering is. Wij hoeven niet na te gaan of iemand al recht heeft op IIT.</p>\n<p>Vragen dan doorverbinden naar collega's Minima (Inkomensondersteuning). Bij doorverbinden geef geboortedatum door.</p>",
+            "kostenEnBetaalmethoden": null,
+            "notice": "<h2>Hoogte Individuele inkomenstoeslag</h2>\n<table border=\"1\" cellspacing=\"1\" cellpadding=\"2\">\n<tbody>\n<tr>\n<td>\n<p>alleenstaande</p>\n</td>\n<td>\n<p><strong>&euro; 348</strong></p>\n</td>\n</tr>\n<tr>\n<td>\n<p>alleenstaande ouder</p>\n</td>\n<td>\n<p><strong>&euro; 443</strong></p>\n</td>\n</tr>\n<tr>\n<td>\n<p>gezin</p>\n</td>\n<td>\n<p><strong>&euro; 496</strong></p>\n</td>\n</tr>\n</tbody>\n</table>\n<h2>Andere regelingen bij laag inkomen</h2>\n<p>Individuele inkomenstoeslag is 1 van de regelingen die de gemeente Deventer heeft om mensen met een laag inkomen te helpen. Op de pagina&nbsp;<a title=\"Naar de pagina Laag inkomen\" href=\"http://www.deventer.nl/laaginkomen\">Laag inkomen</a>&nbsp;leest u welke regelingen er nog meer zijn.</p>",
+            "procedureBeschrijving": "<h2>Individuele inkomenstoeslag: eerst informatie aanvragen</h2>\n<ul>\n<li>Wilt u individuele inkomenstoeslag aanvragen? Overleg dan eerst met een consulent van <a title=\"Naar de contactpagina van Werk en Inkomen\" href=\"https://www.deventer.nl/contactwerkeninkomen\">Werk en Inkomen</a>. De medewerker bespreekt samen met u uw situatie en beoordeelt of u mogelijk recht heeft op de toeslag.</li>\n<li>Daarna kunt u een offici&euml;le aanvraag indienen. Dat gaat met een aanvraagformulier.</li>\n<li>Na maximaal 8 weken krijgt u bericht of de aanvraag is toegekend.</li>\n</ul>\n<h2>Digitaal</h2>\n<p>U kunt&nbsp;digitaal vragen om&nbsp;<a title=\"Individuele inkomenstoeslag aanvragen\" href=\"http://dloket.deventer.nl/burger/startform?id=IMO_IKT\">informatie over de individuele inkomenstoeslag</a>. U logt in met uw DigiD.&nbsp;<br />Een medewerker van <a title=\"Ga naar de contactpagina van Werk en Inkomen\" href=\"https://www.deventer.nl/contactwerkeninkomen\">Werk en Inkomen</a> neemt contact met u op.</p>\n<h2>Aanvraag indienen</h2>\n<p>Heeft u overlegd met Werk en Inkomen en wilt u een aanvraag indienen? Dit kan op twee manieren:</p>\n<ul>\n<li>Per mail via:</li>\n</ul>\n<p><a title=\"Stuur een e-mail naar postinkomensondersteuning@deventer.nl\" href=\"mailto:postinkomensondersteuning@deventer.nl\">postinkomensondersteuning@deventer.nl</a><br /><br /></p>\n<ul>\n<li>Per post via:</li>\n</ul>\n<p>Gemeente Deventer<br />Inkomensondersteuning<br />Postbus 5000<br />7400 GC Deventer</p>\n<h2>Wat heeft u nodig voor de aanvraag?</h2>\n<p>Op het aanvraagformulier staat welke documenten u&nbsp;mee moet sturen.</p>\n<h2>Schriftelijk bericht na 8 weken</h2>\n<p>Na maximaal 8 weken krijgt u schriftelijk bericht over uw aanvraag. De termijn start op de dag van de aanvraag, nadat de gemeente alle gevraagde gegevens en documenten heeft ontvangen.<br /><br />U kunt de individuele inkomenstoeslag elke 12 maanden opnieuw aanvragen.</p>",
+            "productAanwezigToelichting": null,
+            "productTitelDecentraal": "Individuele inkomenstoeslag aanvragen",
+            "productValtOnderToelichting": null,
+            "specifiekeTekst": "<p>Heeft u een minimuminkomen en geen uitzicht op werk? Bent u tussen de 21 en pensioengerechtigde leeftijd? Dan kunt u in aanmerking komen voor een individuele inkomenstoeslag. Met de individuele inkomenstoeslag kunt u bijvoorbeeld openstaande rekeningen betalen of noodzakelijke spullen kopen. De gemeente keert deze toeslag 1 keer per 12 maanden uit.</p>",
+            "synonyms": [
+              "/apiSDGVertalingsynonymsEntity/682f1167-3070-44d9-adc3-c485f56aecc2",
+              "/apiSDGVertalingsynonymsEntity/1f9f3fd0-3570-43e4-a747-d35723e39b18",
+              "/apiSDGVertalingsynonymsEntity/5d815073-5312-4208-b440-42be00600e3a",
+              "/apiSDGVertalingsynonymsEntity/3ab6771e-b36e-40d1-aa09-b0ee068ca750"
+            ],
+            "taal": "nl",
+            "uitersteTermijn": null,
+            "vereisten": "string",
+            "verwijzingLinks": ["/apiSDGVertalingverwijzingLinksEntity/d46b926e-0876-4a01-8b72-e1fd436c66bb"],
+            "wtdBijGeenReactie": null,
+            "embedded": {
+              "verwijzingLinks": [
+                {
+                  "id": "d46b926e-0876-4a01-8b72-e1fd436c66bb",
+                  "label": "Laag inkomen",
+                  "url": "https://www.deventer.nl/laaginkomen"
+                }
+              ],
+              "synonyms": [
+                {
+                  "id": "682f1167-3070-44d9-adc3-c485f56aecc2",
+                  "synonym": "iit"
+                },
+                {
+                  "id": "1f9f3fd0-3570-43e4-a747-d35723e39b18",
+                  "synonym": "bijstand"
+                },
+                {
+                  "id": "5d815073-5312-4208-b440-42be00600e3a",
+                  "synonym": "bijstandsuitkering"
+                },
+                {
+                  "id": "3ab6771e-b36e-40d1-aa09-b0ee068ca750",
+                  "synonym": "extra inkomen"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "78d5cf9e-04d5-4d7c-8018-e38e963d36b6",
+      "bevoegdeOrganisatie": "/apiSDGLocatie/1baaedb5-9a96-4758-9705-2f8a6624f037",
+      "catalogus": null,
+      "doelgroep": "eu-burger, eu-bedrijf",
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": true,
+      "productValtOnder": null,
+      "publicatieDatum": "2021-03-24T17:23:02",
+      "upnLabel": "omgevingsvergunning sloop",
+      "upnUri": "http://standaarden.overheid.nl/owms/terms/",
+      "uuid": "e94d35b7-2903-4593-8dad-f91753157f54",
+      "verantwoordelijkeOrganisatie": "/apiSDGLocatie/8c558fa2-4922-414f-95ca-611666e3a3e8",
+      "versie": null,
+      "vertalingen": ["/apiSDGVertaling/544eb30c-da48-493b-81bf-41d8fa08db2d"],
+      "embedded": {
+        "verantwoordelijkeOrganisatie": {
+          "id": "8c558fa2-4922-414f-95ca-611666e3a3e8",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "bevoegdeOrganisatie": {
+          "id": "1baaedb5-9a96-4758-9705-2f8a6624f037",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "vertalingen": [
+          {
+            "id": "544eb30c-da48-493b-81bf-41d8fa08db2d",
+            "bewijs": null,
+            "bezwaarEnBeroep": null,
+            "conditions": "<p>U bent verplicht de melding te doen, als u:</p>\n<ul>\n<li>meer dan 10 m&sup3; sloopafval heeft</li>\n<li>asbest gaat verwijderen</li>\n</ul>\n<p>Heeft u minder afval en is er geen asbest aanwezig? U hoeft geen melding te doen. Kijk ook op de pagina&nbsp;<a href=\"https://www.deventer.nl/loketten/digitaal-loket/asbestverwijdering\" title=\"Naar de pagina Asbestverwijdering\">Asbestverwijdering</a>.</p>\n<h2>Sloopafval</h2>\n<ul>\n<li>Het sloopafval scheidt u zoveel mogelijk in verontreinigde en niet-verontreinigde delen.</li>\n<li>Het verontreinigde afval biedt u aan als chemisch afval.</li>\n<li>Het niet-verontreinigde scheidt u in herbruikbare en niet-herbruikbare materialen.</li>\n<li>De niet-herbruikbare delen voert u af.</li>\n<li>De herbruikbare delen (met name beton- en metselwerkpuin) worden door een recyclingbedrijf tot puingranulaat verwerkt.</li>\n</ul>",
+            "contact": null,
+            "datumWijziging": "2021-03-24T17:24:16+00:00",
+            "decentraleProcedureLink": null,
+            "deskMemo": "<h2>Termijn</h2>\n<p>10 werkdagen</p>\n<h2>Contactpersonen</h2>\n<p>Publiekscontacten vergunnningen tst. 3933</p>",
+            "kostenEnBetaalmethoden": "<p>Een sloopmelding is gratis. Aan een omgevingsvergunning zijn wel kosten verbonden. Een overzicht van alle kosten vindt u in de tarieventabel van de&nbsp;<a href=\"https://www.deventer.nl/legesverordening\" title=\"Naar de legesverordening\">Legesverordening</a>&nbsp;van de gemeente Deventer.</p>",
+            "notice": null,
+            "procedureBeschrijving": "<p>U doet de melding via het&nbsp;<a href=\"https://www.omgevingsloket.nl/\">Omgevingsloket Online (OLO)</a>.</p>\n <p>Heeft u naast het slopen ook (ver)bouwplannen? En heeft u voor die plannen een omgevingsvergunning nodig? Dan kunt u de sloopmelding samen doen met de aanvraag van de omgevingsvergunning.</p>\n <p>U doet de melding minimaal 4 weken voor u met het sloopwerk begint. Soms kunt u de melding 5 werkdagen voor de start van het slopen doen. Dit kan als het gebouw anders onnodig leeg komt te staan. Of het gaat om een reparatie of onderhoud aan een deel van het gebouw waar asbest zit.</p>\n <p>U geeft onder andere het volgende door bij de sloopmelding:</p>\n <ul>\n <li>uw naam en adres (gebouweigenaar)</li>\n <li>naam en adres van degene die gaat slopen</li>\n <li>de dagen en tijden waarop u gaat slopen</li>\n <li>de manier waarop u gaat slopen</li>\n <li>het materiaal dat vrijkomt bij de sloop</li>\n <li>de hoeveelheid materiaal dat vrijkomt bij de sloop</li>\n <li>een tekening van wat u gaat slopen</li>\n </ul>\n <p>Daarnaast heeft u eventueel het volgende nodig:</p>\n <ul>\n <li>asbestinventarisatierapport door een gecertificeerd asbestinventarisatiebureau</li>\n <li>onderzoeksrapport gevaarlijk afval</li>\n <li>sloopveiligheidsplan</li>\n <li>akoestisch onderzoek</li>\n <li>trillingenonderzoek</li>\n </ul>\n <h2><strong>Mobiel puinbreken</strong></h2>\n <p>Wilt u mobiel gaan breken, dan kunt u online&nbsp;<a href=\"https://dloket.deventer.nl/startform?id=VEO_MPB\" title=\"Naar het formulier Kennisgeving mobiel breken\">mobiel breken melden</a>. De melding wordt gedaan door de uitvoerder van de werkzaamheden.</p>",
+            "productAanwezigToelichting": null,
+            "productTitelDecentraal": "Gebouw of woning slopen",
+            "productValtOnderToelichting": null,
+            "specifiekeTekst": "<p>U mag niet zomaar slopen of asbest verwijderen. U moet hiervoor meestal een melding doen. Dit is verplicht om de veiligheid en gezondheid van mensen te beschermen. Daarnaast wil de gemeente ongewenste sloop tegengaan.</p>\n <p>Soms moet u een omgevingsvergunning aanvragen voor het slopen. Lees hiervoor:&nbsp;<a href=\"https://www.deventer.nl/monumentenvergunning\" title=\"Naar Monument verbouwen of slopen\">Monument verbouwen of slopen</a>.</p>\n <p>Wanneer u mobiel gaat breken (sloopafval ter plaatse bewerken), moet u de gemeente van tevoren op de hoogte stellen van de werkzaamheden.</p>",
+            "synonyms": [
+              "/apiSDGVertalingsynonymsEntity/e36223b8-0e64-4db3-af1a-fdba280864c9",
+              "/apiSDGVertalingsynonymsEntity/cad0691f-66f5-4397-b8bf-964b310c6843",
+              "/apiSDGVertalingsynonymsEntity/c53a7df5-946d-4a6f-a1eb-7bd80af00c79",
+              "/apiSDGVertalingsynonymsEntity/9b16b37b-c2af-4043-8bff-6191553c2852",
+              "/apiSDGVertalingsynonymsEntity/e950c145-eda3-48ff-be60-18f68ffba594",
+              "/apiSDGVertalingsynonymsEntity/2ce148fb-0eb8-463e-afc2-4f067ede92d9",
+              "/apiSDGVertalingsynonymsEntity/a0608fae-416c-4f58-9f77-ad4a125576ae"
+            ],
+            "taal": "nl",
+            "uitersteTermijn": null,
+            "vereisten": null,
+            "verwijzingLinks": [],
+            "wtdBijGeenReactie": null,
+            "embedded": {
+              "synonyms": [
+                {
+                  "id": "e36223b8-0e64-4db3-af1a-fdba280864c9",
+                  "synonym": "sloopvergunning"
+                },
+                {
+                  "id": "cad0691f-66f5-4397-b8bf-964b310c6843",
+                  "synonym": "sloopmelding"
+                },
+                {
+                  "id": "c53a7df5-946d-4a6f-a1eb-7bd80af00c79",
+                  "synonym": "asbest verwijderen"
+                },
+                {
+                  "id": "9b16b37b-c2af-4043-8bff-6191553c2852",
+                  "synonym": "monument"
+                },
+                {
+                  "id": "e950c145-eda3-48ff-be60-18f68ffba594",
+                  "synonym": "rijksmonument"
+                },
+                {
+                  "id": "2ce148fb-0eb8-463e-afc2-4f067ede92d9",
+                  "synonym": "vergunning om te slopen"
+                },
+                {
+                  "id": "a0608fae-416c-4f58-9f77-ad4a125576ae",
+                  "synonym": "standaardsloop"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "d1e8209a-8026-4271-9b3a-831fc22d46c4",
+      "bevoegdeOrganisatie": "/apiSDGLocatie/9906a715-200c-4ffc-9311-67614b0b3b8d",
+      "catalogus": null,
+      "doelgroep": "eu-burger",
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": true,
+      "productValtOnder": null,
+      "publicatieDatum": "2021-06-24",
+      "upnLabel": "briefadres",
+      "upnUri": "http://standaarden.overheid.nl/owms/terms/briefadres",
+      "uuid": "dcb9bafe-2c61-4a27-9fc4-703b7e2a49f5",
+      "verantwoordelijkeOrganisatie": "/apiSDGLocatie/ca9fc456-9271-431f-b5b6-c4ca358eebbe",
+      "versie": null,
+      "vertalingen": ["/apiSDGVertaling/1f2bf63b-a112-44be-ab1d-24de12e69425"],
+      "embedded": {
+        "verantwoordelijkeOrganisatie": {
+          "id": "ca9fc456-9271-431f-b5b6-c4ca358eebbe",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "bevoegdeOrganisatie": {
+          "id": "9906a715-200c-4ffc-9311-67614b0b3b8d",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "vertalingen": [
+          {
+            "id": "1f2bf63b-a112-44be-ab1d-24de12e69425",
+            "bewijs": null,
+            "bezwaarEnBeroep": null,
+            "conditions": "<p>De belangrijkste voorwaarden om een briefadres aan te vragen zijn:</p><ul><li>U heeft een goede reden voor uw aanvraag. Het kan zijn dat u:<ul><li>(tijdelijk) geen woning heeft</li><li>schipper bent en maximaal 2 jaar aaneengesloten van huis bent voor uw werk</li><li>in een gevangenis verblijft</li><li>in een psychiatrische inrichting verblijft</li><li>in een blijf-van-mijn-lijfhuis of ander opvangtehuis verblijft</li><li>bedreigd wordt of om andere veiligheidsredenen niet wilt dat uw verblijfplaats bekend is</li></ul></li><li>Het briefadres is in Nederland.</li><li>Het briefadres is geen postbus.</li><li>U heeft toestemming van de hoofdbewoner of eigenaar van het briefadres.</li><li>U heeft de Nederlandse nationaliteit of een geldige verblijfsvergunning.</li></ul>",
+            "contact": "<p>Voor de aanvraag van een briefadres kunt u terecht op de locaties <a href=\"https://www.deventer.nl/contact\" title=\"Naar de pagina Contact\">stadhuis Deventer</a>, <a href=\"https://www.deventer.nl/bathmen\" title=\"Naar de pagina Bathmen\">Bathmen</a> en <a href=\"https://www.deventer.nl/schalkhaar\" title=\"Naar de pagina Schalkhaar\">Schalkhaar</a>.</p>\n<p>Heeft u vragen, neem dan <a href=\"https://www.deventer.nl/contact\" title=\"Naar de pagina Contact\">contact</a> met ons op.</p>",
+            "datumWijziging": "2021-06-24T14:47:37+00:00",
+            "decentraleProcedureLink": null,
+            "deskMemo": "&lt;p&gt;Voor een briefadres zijn strikte regels.&amp;nbsp;Het wordt alleen in uitzonderingsgevallen toegekend.&lt;br /&gt;Geef daarom over dit product niet veel informatie. Verbind zoveel mogelijk door naar PC Gegevensbeheer.&lt;/p&gt;&#13;&lt;h2&gt;Contactpersonen&lt;/h2&gt;&#13;&lt;p&gt;Publiekscontacten Burgertaken Gegevensbeheer&lt;/p&gt;&#13;&lt;p&gt;I.v.m. de strenge voorwaarden doorverbinden naar: Publiekscontacten Gegevensbeheer&lt;/p&gt;",
+            "kostenEnBetaalmethoden": null,
+            "notice": "<p>De gemeente schrijft u in op het adres waar u woont. Onder bepaalde voorwaarden kan de gemeente u op een briefadres inschrijven.</p>\n<p>Een briefadres is nuttig als u voor langere tijd geen post kunt ontvangen op uw verblijfsadres. Bijvoorbeeld, als u zeevarend bent, voor enige tijd verblijft in het buitenland of in een:</p>\n<ul>\n<li>verpleegtehuis</li>\n<li>ziekenhuis</li>\n<li>strafinrichting</li>\n<li>afkickcentrum</li>\n<li>psychiatrische inrichting</li>\n</ul>\n<p>Een briefadres moet altijd een bestaand adres zijn en dus geen postbus.</p>",
+            "procedureBeschrijving": "<p>Een briefadres vraagt u persoonlijk aan bij de balie Publiekscontacten. U kunt hiervoor een afspraak maken via telefoonnummer 14 0570. Met een afspraak helpen wij u binnen 5 minuten en voorkomt u dus wachttijd.</p>\n <p>De gemeente bepaalt aan de hand van een ingevulde vragenlijst of u in aanmerking komt voor een briefadres. Dit document kunt u invullen bij de balie Publiekscontacten. Daarnaast heeft u een&nbsp;<a href=\"https://www.deventer.nl/loketten/documenten-digitaal-loket/toestemmingsverklaring-hoofdbewoner.pdf\" title=\"Download het formulier Toestemmingsverklaring hoofdbewoner (pdf, 82 KB)\">schriftelijke verklaring van de hoofdbewoner</a> (pdf, 82 KB) nodig.</p>\n <h2>Wat heeft u nodig?</h2>\n <ul>\n <li>een geldig legitimatiebewijs;</li>\n <li>de ingevulde vragenlijst. Dit document krijgt u bij de balie en kunt u direct invullen;</li>\n <li>de <a href=\"https://www.deventer.nl/loketten/documenten-digitaal-loket/toestemmingsverklaring-hoofdbewoner.pdf\" title=\"Download het formulier Toestemmingsverklaring hoofdbewoner (pdf, 82 KB)\">schriftelijke verklaring van de hoofdbewoner</a> (pdf, 82 KB), waarin staat dat deze er voor zorgt dat de post bij u aankomt. Neem de verklaring ingevuld en ondertekend mee naar uw aanvraag.</li>\n <li>een kopie van een geldig legitimatiebewijs van de hoofdbewoner.</li>\n </ul>",
+            "productAanwezigToelichting": null,
+            "productTitelDecentraal": "Briefadres aanvragen",
+            "productValtOnderToelichting": null,
+            "specifiekeTekst": "<p>Wilt u uw post ontvangen op een briefadres, dan kunt u dit onder strenge voorwaarden aanvragen bij de gemeente. Een briefadres is bijvoorbeeld het adres van een familielid, vriend of kennis. De hoofdbewoner van dit adres geeft schriftelijk toestemming en zorgt er voor dat de post bij u aankomt. Zo blijft u bereikbaar voor offici&euml;le instanties.</p>",
+            "synonyms": [
+              "/apiSDGVertalingsynonymsEntity/7b89874a-fc86-43b6-9cf9-7dcba07d2e55",
+              "/apiSDGVertalingsynonymsEntity/fb060545-6304-4cbd-b87a-91535639a1c5",
+              "/apiSDGVertalingsynonymsEntity/d4cdc16c-d542-412e-bf3a-b3b566e93377",
+              "/apiSDGVertalingsynonymsEntity/284533d7-6df3-477a-84e6-d939dd7bdeff",
+              "/apiSDGVertalingsynonymsEntity/a13bc814-64d9-41d8-910d-64d92cb11761",
+              "/apiSDGVertalingsynonymsEntity/10af5c0d-53a3-43f1-b655-ed3c0b5e1108"
+            ],
+            "taal": "nl",
+            "uitersteTermijn": "<p>Over het algemeen wordt uw verzoek om een briefadres binnen een paar dagen verwerkt. Soms zijn extra gesprekken nodig met de aanvrager en de hoofdbewoner van het briefadres. De beslissing over uw aanvraag duurt dan langer.</p>",
+            "vereisten": null,
+            "verwijzingLinks": [],
+            "wtdBijGeenReactie": null,
+            "embedded": {
+              "synonyms": [
+                {
+                  "id": "7b89874a-fc86-43b6-9cf9-7dcba07d2e55",
+                  "synonym": "verzoek briefadres"
+                },
+                {
+                  "id": "fb060545-6304-4cbd-b87a-91535639a1c5",
+                  "synonym": "postadres"
+                },
+                {
+                  "id": "d4cdc16c-d542-412e-bf3a-b3b566e93377",
+                  "synonym": "woonadres"
+                },
+                {
+                  "id": "284533d7-6df3-477a-84e6-d939dd7bdeff",
+                  "synonym": "tijdelijk adres"
+                },
+                {
+                  "id": "a13bc814-64d9-41d8-910d-64d92cb11761",
+                  "synonym": "briefadres aanvragen"
+                },
+                {
+                  "id": "10af5c0d-53a3-43f1-b655-ed3c0b5e1108",
+                  "synonym": "post op ander adres laten bezorgen"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fecb1b9f-2d3e-49bd-8050-e7d976bd7972",
+      "bevoegdeOrganisatie": "/apiSDGLocatie/99c43cfc-ade0-472d-9b06-8e0c1b290107",
+      "catalogus": null,
+      "doelgroep": "eu-burger, eu-bedrijf",
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": true,
+      "productValtOnder": null,
+      "publicatieDatum": "2022-04-25T15:08:11",
+      "upnLabel": "omgevingsvergunning kap",
+      "upnUri": "http://standaarden.overheid.nl/owms/terms/omgevingsvergunning_kap",
+      "uuid": "253be85c-64c4-49a7-afaf-c4100b88133a",
+      "verantwoordelijkeOrganisatie": "/apiSDGLocatie/d328a703-06d0-41d7-8366-865dc966c3fa",
+      "versie": null,
+      "vertalingen": ["/apiSDGVertaling/ed5232e2-e2d7-4fcd-893c-d9d978f693ca"],
+      "embedded": {
+        "verantwoordelijkeOrganisatie": {
+          "id": "d328a703-06d0-41d7-8366-865dc966c3fa",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "bevoegdeOrganisatie": {
+          "id": "99c43cfc-ade0-472d-9b06-8e0c1b290107",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "vertalingen": [
+          {
+            "id": "ed5232e2-e2d7-4fcd-893c-d9d978f693ca",
+            "bewijs": null,
+            "bezwaarEnBeroep": null,
+            "conditions": "<p>U heeft een omgevingsvergunning kap nodig als de boom of struik een stamomtrek heeft van 0,75 m of groter, gemeten op 1,3 m hoogte vanaf de grond.</p>\n<h2>Herplantplicht</h2>\n<p>Als u bomen kapt, dan geldt in principe een herplantplicht. Dit betekent dat er bomen herplant moeten worden als compensatie voor de gekapte bomen. De voorwaarden voor herplant staan in de omgevingsvergunning kap die aan u verleend is. Denk hierbij aan het aantal en soorten bomen die u moet herplanten en voor welke datum dat gebeurd moet zijn.</p>\n<p>Voor particuliere bomen in een voor- of achtertuin is herplant niet altijd nodig. Of u moet herplanten hangt bijvoorbeeld af van:</p>\n<ul>\n<li>de grootte van de tuin;</li>\n<li>de ruimte die overblijft voor herplant;</li>\n<li>of er voldoende houtopstanden (bomen en struiken) in de omgeving aanwezig blijven.</li>\n</ul>",
+            "contact": null,
+            "datumWijziging": "2022-04-25T15:10:09+00:00",
+            "decentraleProcedureLink": null,
+            "deskMemo": "<h2>Termijn</h2>\n<p>10 werkdagen</p>\n<h2>Kaplijst (=vellijst)</h2>\n<p>kaart : <a href=\"https://openbareruimte.deventer.nl/dagelijks-onderhoud/bomen\">https://openbareruimte.deventer.nl/dagelijks-onderhoud/bomen</a></p>\n<h2>Mag ik gekapt hout meenemen?</h2>\n<p>Het gekapte hout is eigendom van Het Groen Bedrijf. Wie dit hout wil kopen, kan contact met het Groenbedrijf opnemen: 0570 - 856 400.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\n<h2>Bezwaar</h2>\n<p>Bent u het niet eens met de beslissing, dan kunt u bezwaar maken. In het besluit staat hoe u dat doet. Ook belanghebbenden kunnen bezwaar maken. Dit kan tot 6 weken na het besluit op de aanvraag.</p>\n<h2>Contactpersonen</h2>\n<h2>Zaakgerichte vragen</h2>\n<p>Afdeling Ondernemen en Vergunningen - Vergunningverleners</p>\n<h2>Algemene vragen</h2>\n<p>Publiekscontacten Vergunningen</p>\n<p>Adviseur kapvergunningen VTH: Pjotr de Boer</p>",
+            "kostenEnBetaalmethoden": "<p>Er zijn kosten voor de aanvraag van een omgevingsvergunning kap:</p>\n<table border=\"1\" cellspacing=\"1\" cellpadding=\"2\">\n<tbody>\n<tr>\n<td>1 of 2 bomen</td>\n<td><strong>&euro; 91,50</strong></td>\n</tr>\n<tr>\n<td>3 bomen</td>\n<td><strong>&euro; 185</strong></td>\n</tr>\n</tbody>\n</table>\n<p>Het tarief voor 3 bomen wordt vermeerderd met <strong>&euro; 38</strong>&nbsp;voor iedere volgende boom, met een maximum van <strong>&euro; 3.822</strong>.</p>\n<p>U ontvangt hiervoor een factuur.</p>",
+            "notice": "<h2>Regels</h2>\n<p>In de gemeente Deventer zijn regels voor het kappen van bomen. Deze staan vermeld in de Algemene Plaatselijke Verordening (APV).</p>\n<h2>Bestemmingsplannen</h2>\n<p>In een bestemmingsplan kunnen regels staan ter bescherming van de groeiplaats van bomen en struiken. Zo kunnen er voorwaarden zijn voor het kappen of bewerken van bomen. Dit wordt per geval bekeken.</p>\n<p>De bestemmingsplannen van Deventer vindt u op <a href=\"http://www.ruimtelijkeplannen.nl/\" title=\"Naar de website Ruimtelijkeplannen.nl\">www.ruimtelijkeplannen.nl</a>. U kunt de bestemmingsplannen ook inzien bij Publiekscontacten, Grote Kerkhof 1.</p>",
+            "procedureBeschrijving": "<p>U vraagt de omgevingsvergunning aan bij het <a href=\"http://www.omgevingsloket.nl/\" title=\"Naar Omgevingsloket Online\">OLO (Omgevingsloket Online)</a>. Hier kunt u ook checken of u een omgevingsvergunning nodig heeft.</p>\n <h2>Aanvraag</h2>\n <p>Bij uw aanvraag heeft u de volgende gegevens nodig:</p>\n <ul>\n <li>het aantal bomen/struiken dat u wilt kappen;</li>\n <li>een omschrijving van de boom/struik (soort en stamomtrek op 1,3 m hoogte);</li>\n <li>reden van de kap;</li>\n <li>een foto van de boom/struik;</li>\n <li>een situatieschets.</li>\n </ul>\n <p>Dreigt de kap het leven van planten en dieren te verstoren? Is de boom bijvoorbeeld een verblijfplaats voor nestelende vogels of schuilplaats voor vleermuizen? Dan moet u in uw aanvraag vermelden op welke manier u hiermee rekening houdt. Dat staat in de <a href=\"http://www.rvo.nl/onderwerpen/agrarisch-ondernemen/beschermde-planten-dieren-en-natuur/flora-en-faunawet-ffw\" title=\"Naar Flora- en Faunawet op www.rvo.nl\">Flora- en faunawet</a>.</p>\n <h2>Aanvragen door eigenaar</h2>\n <p>U kunt een vergunning aanvragen als u zelf eigenaar bent van de boom. Eigenaar van de boom bent u als de grond waarop de boom staat, uw eigendom is. Bent u niet de eigenaar, bijvoorbeeld omdat u een huurwoning heeft? Dan vraagt u toestemming aan de huiseigenaar om een omgevingsvergunning kap aan te vragen. Dit kan door middel van een schriftelijke toestemming of door medeondertekening van het aanvraagformulier.</p>",
+            "productAanwezigToelichting": null,
+            "productTitelDecentraal": "Bomen kappen",
+            "productValtOnderToelichting": null,
+            "specifiekeTekst": "<p>Wilt u een boom of struik kappen, verplanten of sterk snoeien, dan kunt u een omgevingsvergunning kap nodig hebben (voorheen: kapvergunning).</p>\n <ul>\n <li>U doet de vergunningcheck via het <a href=\"https://www.omgevingsloket.nl/\">Omgevingsloket Online</a>. Hiermee ziet u of u een omgevingsvergunning kap nodig heeft.</li>\n <li>In sommige gevallen heeft de boom een ecologische waarde. Er kan dan een aanvullende natuurtoets nodig zijn.</li>\n </ul>",
+            "synonyms": [
+              "/apiSDGVertalingsynonymsEntity/8eff18d5-d254-4c06-8b29-ea35480ddf12",
+              "/apiSDGVertalingsynonymsEntity/979352ab-41a2-4c5d-aafd-82af59c27f81",
+              "/apiSDGVertalingsynonymsEntity/41432051-99de-4081-bd03-e04686242782",
+              "/apiSDGVertalingsynonymsEntity/f890c4a6-30f0-4af9-92d3-aac85435c57d",
+              "/apiSDGVertalingsynonymsEntity/98859ac3-6552-433a-a28a-8de9fcd2c643",
+              "/apiSDGVertalingsynonymsEntity/830afafb-f1a3-42da-9202-d00490633a69",
+              "/apiSDGVertalingsynonymsEntity/576a2f83-76c8-4660-82dc-0d7a7cc24a0c",
+              "/apiSDGVertalingsynonymsEntity/08443f94-a988-4795-9564-d1c58a497a48",
+              "/apiSDGVertalingsynonymsEntity/5a71140d-95c2-4c6e-b60b-6600e913684b",
+              "/apiSDGVertalingsynonymsEntity/bb499c29-b425-4be3-aa99-f85872c6e6f3",
+              "/apiSDGVertalingsynonymsEntity/032856d5-7df5-4013-9508-247dfc05b72e",
+              "/apiSDGVertalingsynonymsEntity/7f4920b9-aaeb-4ace-8e45-893dec713a63",
+              "/apiSDGVertalingsynonymsEntity/ad6b6a4c-3d2d-4f1d-9cce-906d8d58fde4",
+              "/apiSDGVertalingsynonymsEntity/eb915857-7e1f-4775-b772-9eff9040986a",
+              "/apiSDGVertalingsynonymsEntity/2a8f04f5-c051-4551-b7d1-a213c5b8ab7f"
+            ],
+            "taal": "nl",
+            "uitersteTermijn": "<p>Zodra de aanvraag volledig is, neemt gemeente Deventer deze in behandeling.</p>\n <p>Na maximaal 8 weken krijgt u schriftelijk bericht over de toekenning of afwijzing van uw aanvraag. Deze termijn start op de dag van de aanvraag, nadat de gemeente alle gevraagde gegevens en documenten heeft ontvangen. Soms duurt de procedure toch langer dan 8 weken, bijvoorbeeld als advies nodig is van externe instanties. Als dat het geval is, ontvangt u hierover bericht.</p>\n <p>Is de omgevingsvergunning kap toegekend, dan krijgt u deze samen met de voorwaarden thuisgestuurd.</p>",
+            "vereisten": null,
+            "verwijzingLinks": [],
+            "wtdBijGeenReactie": null,
+            "embedded": {
+              "synonyms": [
+                {
+                  "id": "8eff18d5-d254-4c06-8b29-ea35480ddf12",
+                  "synonym": "houtopslag"
+                },
+                {
+                  "id": "979352ab-41a2-4c5d-aafd-82af59c27f81",
+                  "synonym": "houtopstand"
+                },
+                {
+                  "id": "41432051-99de-4081-bd03-e04686242782",
+                  "synonym": "kapvergunning"
+                },
+                {
+                  "id": "f890c4a6-30f0-4af9-92d3-aac85435c57d",
+                  "synonym": "bomen kappen"
+                },
+                {
+                  "id": "98859ac3-6552-433a-a28a-8de9fcd2c643",
+                  "synonym": "velvergunning"
+                },
+                {
+                  "id": "830afafb-f1a3-42da-9202-d00490633a69",
+                  "synonym": "omhakken"
+                },
+                {
+                  "id": "576a2f83-76c8-4660-82dc-0d7a7cc24a0c",
+                  "synonym": "boomziekte"
+                },
+                {
+                  "id": "08443f94-a988-4795-9564-d1c58a497a48",
+                  "synonym": "zieke boom"
+                },
+                {
+                  "id": "5a71140d-95c2-4c6e-b60b-6600e913684b",
+                  "synonym": "iepziekte"
+                },
+                {
+                  "id": "bb499c29-b425-4be3-aa99-f85872c6e6f3",
+                  "synonym": "iepenziekte"
+                },
+                {
+                  "id": "032856d5-7df5-4013-9508-247dfc05b72e",
+                  "synonym": "boom omzagen"
+                },
+                {
+                  "id": "7f4920b9-aaeb-4ace-8e45-893dec713a63",
+                  "synonym": "ontheffing boom kappen"
+                },
+                {
+                  "id": "ad6b6a4c-3d2d-4f1d-9cce-906d8d58fde4",
+                  "synonym": "omgevingsvergunning boom"
+                },
+                {
+                  "id": "eb915857-7e1f-4775-b772-9eff9040986a",
+                  "synonym": "zieke boom vernietigen"
+                },
+                {
+                  "id": "2a8f04f5-c051-4551-b7d1-a213c5b8ab7f",
+                  "synonym": "boom is ziek"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "afbd3d89-c555-4545-b03c-8291b091fc1a",
+      "bevoegdeOrganisatie": "/apiSDGLocatie/25921f2c-85e0-4655-a2d8-084b046d5a4a",
+      "catalogus": null,
+      "doelgroep": "eu-burger, eu-bedrijf",
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": true,
+      "productValtOnder": null,
+      "publicatieDatum": "2021-03-15T17:00:50",
+      "upnLabel": "asbestverwijdering",
+      "upnUri": "http://standaarden.overheid.nl/owms/terms/",
+      "uuid": "899a8867-6251-471f-9914-bed1b9c237a5",
+      "verantwoordelijkeOrganisatie": "/apiSDGLocatie/bac75fd0-150f-48b5-b08e-64b4c14f3a57",
+      "versie": null,
+      "vertalingen": ["/apiSDGVertaling/a734f60a-00a8-4e81-b7cc-c0cf813cf8ac"],
+      "embedded": {
+        "verantwoordelijkeOrganisatie": {
+          "id": "bac75fd0-150f-48b5-b08e-64b4c14f3a57",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "bevoegdeOrganisatie": {
+          "id": "25921f2c-85e0-4655-a2d8-084b046d5a4a",
+          "owmsEndDate": null,
+          "owmsIdentifier": "http://standaarden.overheid.nl/owms/terms/Deventer_(gemeente)",
+          "owmsPrefLabel": "Deventer",
+          "url": null
+        },
+        "vertalingen": [
+          {
+            "id": "a734f60a-00a8-4e81-b7cc-c0cf813cf8ac",
+            "bewijs": null,
+            "bezwaarEnBeroep": null,
+            "conditions": "<p>Niet iedereen mag zelf asbest verwijderen.</p>\n<ul>\n<li>Inwoners en woningbouwcorporaties mogen asbest zelf verwijderen. Zij moeten wel aan de regels voldoen. De belangrijkste regel is dat een particulier maximaal 35 m&sup2; asbest mag verwijderen. Het moet dan wel in goede staat zijn. Weet u het niet zeker? De gemeente kan u vertellen of u de asbest zelf mag verwijderen. Als dat niet mag, moet u het laten verwijderen door een gecertificeerd bedrijf.</li>\n<li>Bedrijven moeten asbest altijd laten verwijderen door een gecertificeerd asbestverwijderingsbedrijf.</li>\n</ul>\n<h2>Overtreding regels rond asbest</h2>\n<p>Overtredingen van de regelgeving rond asbest zijn strafbaar. Het niet opvolgen van de regels kan schadelijk zijn voor uw gezondheid of die van anderen. De gemeente en de Omgevingsdienst IJsselland houden hier toezicht op. Wilt u een pand van v&oacute;&oacute;r 1994 geheel of gedeeltelijk (laten) slopen, dan is&nbsp;ook het niet indienen van een sloopmelding strafbaar. De regels vindt u in het&nbsp;<a href=\"https://wetten.overheid.nl/BWBR0019316/2017-01-01\" title=\"Naar het Asbestverwijderingsbesluit 2005\">Asbestverwijderingsbesluit 2005</a>&nbsp;en het&nbsp;<a href=\"https://wetten.overheid.nl/BWBR0030461/2018-11-03\" title=\"Naar het Bouwbesluit 2012\">Bouwbesluit 2012</a>.</p>",
+            "contact": "<p>U&nbsp;doet de melding via&nbsp;het&nbsp;<a href=\"https://www.omgevingsloket.nl/\" title=\"Naar Omgevingsloket online (OLO)\" class=\"external\">Omgevingsloket online (OLO)</a>.</p>",
+            "datumWijziging": "2021-03-15T17:00:59+00:00",
+            "decentraleProcedureLink": null,
+            "deskMemo": null,
+            "kostenEnBetaalmethoden": "<p>U betaalt de kosten voor het verwijderen van asbest zelf.</p>",
+            "notice": null,
+            "procedureBeschrijving": "<p>Om een sloopmelding te doen, heeft u nodig:</p>\n <ul>\n <li>uw naam en adres (gebouweigenaar)</li>\n <li>naam en adres van degene die het asbest gaat verwijderen</li>\n <li>de dagen en tijden dat u asbest gaat verwijderen</li>\n <li>de manier waarop u asbest gaat verwijderen</li>\n </ul>\n <p>Misschien heeft u een asbestinventarisatierapport nodig. Dit moet van een gecertificeerd asbestinventarisatiebureau zijn. U heeft geen asbestinventarisatierapport nodig, als:</p>\n <ul>\n <li>u particulier bent en het gaat om maximaal 35 m&sup2; vloerbedekking met asbest erin. Het moet gaan om asbestplaten, asbesthoudende vloertegels of niet-gelijmde vloerbedekking. U mag de asbest zelf uit uw huis of bijgebouw van uw huis verwijderen.</li>\n <li>uw bedrijf asbesthoudende onderdelen verwijdert, zoals:\n <ul>\n <li>vloerplaten onder verwarmingstoestellen</li>\n <li>beglazingskit in de constructie van kassen</li>\n <li>rem- en frictiematerialen</li>\n <li>pakkingen uit verbrandingsmotoren</li>\n <li>verwarmingstoestellen met een vermogen van maximaal 2.250 kW</li>\n </ul>\n </li>\n </ul>",
+            "productAanwezigToelichting": null,
+            "productTitelDecentraal": "Asbest verwijderen",
+            "productValtOnderToelichting": null,
+            "specifiekeTekst": "<p>Asbest is kankerverwekkend materiaal. Wilt u asbest verwijderen? Dan moet u een sloopmelding doen. U heeft namelijk toestemming nodig om asbest te verwijderen.</p>\n <p>Asbest kan voorkomen in:</p>\n <ul>\n <li>vlakke platen (gevels dakbeschot, rondom schoorstenen)</li>\n <li>vlakke gevelplaten met coating (decoratieve buitengevels, galerijen)</li>\n <li>schoorstenen of luchtkanalen (bij kachel of cv-installatie, ventilatiekanaal)</li>\n <li>bloembakken</li>\n <li>golfplaten (daken van schuren en garages)</li>\n <li>standleiding (afvoer toilet)</li>\n <li>brandwerend board (onder cv-ketels, wanden cv-kast, trapbeschot, plafonds)</li>\n <li>vinylzeil of oude vloerbedekking (asbesthoudende onderlaag)</li>\n <li>oude huishoudelijke apparaten</li>\n </ul>\n <p>Voor meer informatie over de sloopmelding:&nbsp;'<a href=\"https://www.deventer.nl/sloopmelding\" title=\"Gebouw of woning slopen\">Gebouw of woning slopen</a>'.</p>",
+            "synonyms": [
+              "/apiSDGVertalingsynonymsEntity/7bacd4ba-2352-47de-9707-453ff402ee6e",
+              "/apiSDGVertalingsynonymsEntity/a88df7ee-8757-4b83-9753-baf0d3a845e1",
+              "/apiSDGVertalingsynonymsEntity/b4522299-a904-422a-9963-e619aa15b874"
+            ],
+            "taal": "nl",
+            "uitersteTermijn": "<p>U doet de melding minimaal 4 weken voor u met het sloopwerk begint. Soms kunt u de melding 5 werkdagen voor de start van het slopen doen. Dit kan bijvoorbeeld als het gebouw anders onnodig leeg komt te staan.</p>\n <p>De termijn van 5 werkdagen geldt ook voor particulieren die asbest zelf gaan verwijderen. Het gaat om het verwijderen van maximaal 35 m&sup2; asbest dat vast zit in een ander materiaal (hechtgebonden asbest).</p>",
+            "vereisten": null,
+            "verwijzingLinks": [],
+            "wtdBijGeenReactie": null,
+            "embedded": {
+              "synonyms": [
+                {
+                  "id": "7bacd4ba-2352-47de-9707-453ff402ee6e",
+                  "synonym": "melden en afvoeren van asbest"
+                },
+                {
+                  "id": "a88df7ee-8757-4b83-9753-baf0d3a845e1",
+                  "synonym": "verwijderen asbest"
+                },
+                {
+                  "id": "b4522299-a904-422a-9963-e619aa15b874",
+                  "synonym": "asbestverwijdering"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "429e9c01-1a9c-4c1b-936c-932a8345fb1d",
+      "bevoegdeOrganisatie": null,
+      "catalogus": null,
+      "doelgroep": null,
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": null,
+      "productValtOnder": null,
+      "publicatieDatum": null,
+      "upnLabel": null,
+      "upnUri": null,
+      "uuid": null,
+      "verantwoordelijkeOrganisatie": null,
+      "versie": null,
+      "vertalingen": []
+    },
+    {
+      "id": "fee053f7-305f-4396-a259-81cfd3a16e96",
+      "bevoegdeOrganisatie": null,
+      "catalogus": null,
+      "doelgroep": null,
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": null,
+      "productValtOnder": null,
+      "publicatieDatum": null,
+      "upnLabel": null,
+      "upnUri": null,
+      "uuid": null,
+      "verantwoordelijkeOrganisatie": null,
+      "versie": null,
+      "vertalingen": []
+    },
+    {
+      "id": "d6dda935-435e-494c-a6e1-ec671ec2a246",
+      "bevoegdeOrganisatie": null,
+      "catalogus": null,
+      "doelgroep": null,
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": null,
+      "productValtOnder": null,
+      "publicatieDatum": null,
+      "upnLabel": null,
+      "upnUri": null,
+      "uuid": null,
+      "verantwoordelijkeOrganisatie": null,
+      "versie": null,
+      "vertalingen": []
+    },
+    {
+      "id": "3232de89-bd33-49a0-8150-1bc31fa40d70",
+      "bevoegdeOrganisatie": null,
+      "catalogus": null,
+      "doelgroep": null,
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": null,
+      "productValtOnder": null,
+      "publicatieDatum": null,
+      "upnLabel": null,
+      "upnUri": null,
+      "uuid": null,
+      "verantwoordelijkeOrganisatie": null,
+      "versie": null,
+      "vertalingen": []
+    },
+    {
+      "id": "27c73863-18de-4c56-a691-e767adea4ada",
+      "bevoegdeOrganisatie": null,
+      "catalogus": null,
+      "doelgroep": null,
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": null,
+      "productValtOnder": null,
+      "publicatieDatum": null,
+      "upnLabel": null,
+      "upnUri": null,
+      "uuid": null,
+      "verantwoordelijkeOrganisatie": null,
+      "versie": null,
+      "vertalingen": []
+    },
+    {
+      "id": "665a2520-1289-4b13-b3b4-56800a697995",
+      "bevoegdeOrganisatie": null,
+      "catalogus": null,
+      "doelgroep": null,
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": null,
+      "productValtOnder": null,
+      "publicatieDatum": null,
+      "upnLabel": null,
+      "upnUri": null,
+      "uuid": null,
+      "verantwoordelijkeOrganisatie": null,
+      "versie": null,
+      "vertalingen": []
+    },
+    {
+      "id": "6f4261f1-9eb8-4951-9899-c5fbe94c113e",
+      "bevoegdeOrganisatie": null,
+      "catalogus": null,
+      "doelgroep": null,
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": null,
+      "productValtOnder": null,
+      "publicatieDatum": null,
+      "upnLabel": null,
+      "upnUri": null,
+      "uuid": null,
+      "verantwoordelijkeOrganisatie": null,
+      "versie": null,
+      "vertalingen": []
+    },
+    {
+      "id": "72b0aae7-59c2-4312-8053-7cd038c53c63",
+      "bevoegdeOrganisatie": null,
+      "catalogus": null,
+      "doelgroep": null,
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": null,
+      "productValtOnder": null,
+      "publicatieDatum": null,
+      "upnLabel": null,
+      "upnUri": null,
+      "uuid": null,
+      "verantwoordelijkeOrganisatie": null,
+      "versie": null,
+      "vertalingen": []
+    },
+    {
+      "id": "49ab7b59-e45b-4cbe-83b7-33a2c0f10352",
+      "bevoegdeOrganisatie": null,
+      "catalogus": null,
+      "doelgroep": null,
+      "gerelateerdeProducten": [],
+      "locaties": null,
+      "productAanwezig": null,
+      "productValtOnder": null,
+      "publicatieDatum": null,
+      "upnLabel": null,
+      "upnUri": null,
+      "uuid": null,
+      "verantwoordelijkeOrganisatie": null,
+      "versie": null,
+      "vertalingen": []
+    }
+  ],
+  "count": 18,
+  "limit": 25,
+  "total": 18,
+  "start": 1,
+  "page": 1,
+  "pages": 1
+}
