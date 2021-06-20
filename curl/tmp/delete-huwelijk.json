@@ -1,0 +1,5 @@
+{
+  "message": "No handler found for endpoint: /huwelijken/{id} delete and method: DELETE",
+  "data": { "id": "93092ae9-c55f-4e38-88c7-4780dc2d01e9" },
+  "path": null
+}

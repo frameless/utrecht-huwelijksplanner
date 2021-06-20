@@ -1,0 +1,15 @@
+{
+  "id": "15decc0a-031b-4453-bee6-131d20a51b85",
+  "contact": "string",
+  "description": "U wordt uitgenodigd als partner bij een huwlijk",
+  "forwardUrl;": null,
+  "name": "Sanne van den Broecke",
+  "person": "string",
+  "process": "http://localhost:3000/assent/",
+  "property": "partners",
+  "request": "string",
+  "requester": "298272921",
+  "revocable": true,
+  "status": null,
+  "token": null
+}

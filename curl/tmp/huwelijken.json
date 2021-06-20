@@ -1,0 +1,71 @@
+{
+  "results": [
+    {
+      "id": "6e69d32c-afdb-4aef-85cc-fd5ff743a84b",
+      "ambtenaar": "/api/sdg/kennisartikel/8acc9bd3-9aa0-4541-93e6-5a2013bdb904",
+      "ceremonie": "/api/sdg/kennisartikel/740fa99c-c85b-4e6a-b5e5-8beffcaa406f",
+      "checklist": "/apihuwelijkchecklistEntity/fe117155-97e6-4b9f-ad1c-ffe03ae17e37",
+      "getuigen": ["/apiAssent/7d3d577b-10aa-488b-8ce4-bddee9bbe55a"],
+      "instemmingGemeente": null,
+      "kosten": null,
+      "locatie": "/api/sdg/kennisartikel/44d97912-d79d-4f57-a4ef-a8c3bcdc86f2",
+      "moment": "2019-08-24T14:15:22+00:00",
+      "order": null,
+      "partners": ["/apiAssent/ff776d2c-9d9c-4912-bc51-ed16f28d375b"],
+      "status": "concept",
+      "type": "/api/sdg/kennisartikel/9567e6c1-a1f9-408c-8f6c-19e80e3845ce",
+      "zaak": null,
+      "embedded": {
+        "checklist": {
+          "id": "fe117155-97e6-4b9f-ad1c-ffe03ae17e37",
+          "ambtenaar": "/apihuwelijkchecklistEntityambtenaarEntity/b58275dc-91d4-4d72-b1dd-5f9927e29841",
+          "getuigen": "/apihuwelijkchecklistEntitygetuigenEntity/fd2b3ab6-ee60-4f12-8b5f-628d01c784c6",
+          "moment": "/apihuwelijkchecklistEntitymomentEntity/b39d7ccf-733b-491f-bc07-4e751f6d85e1",
+          "order": "/apihuwelijkchecklistEntityorderEntity/f740a273-6da8-474d-abb9-3b0a9a4a51f1",
+          "partners": "/apihuwelijkchecklistEntitypartnersEntity/8d7a1f99-0a06-4be4-bf3c-4031b3566296",
+          "producten": "/apihuwelijkchecklistEntityproductenEntity/26e6720e-84b1-4523-8c43-8c4cb4f6fb85",
+          "zaak": "/apihuwelijkchecklistEntityzaakEntity/5881fb41-ca5b-4780-8fd9-93c61d293036",
+          "embedded": {
+            "partners": {
+              "id": "8d7a1f99-0a06-4be4-bf3c-4031b3566296",
+              "display": "Parter is verzocht toe te stemmen",
+              "result": false
+            },
+            "getuigen": {
+              "id": "fd2b3ab6-ee60-4f12-8b5f-628d01c784c6",
+              "display": "Getuige is verzocht toe te stemmen",
+              "result": false
+            },
+            "ambtenaar": {
+              "id": "b58275dc-91d4-4d72-b1dd-5f9927e29841",
+              "display": "Ambtenaar gereserveerd",
+              "result": true
+            },
+            "moment": {
+              "id": "b39d7ccf-733b-491f-bc07-4e751f6d85e1",
+              "display": "Datum van ceremonie gereserveerd",
+              "result": true
+            },
+            "producten": {
+              "id": "26e6720e-84b1-4523-8c43-8c4cb4f6fb85",
+              "display": "Producten besteld",
+              "result": true
+            },
+            "order": { "id": "f740a273-6da8-474d-abb9-3b0a9a4a51f1", "display": "Order is geplaatst", "result": true },
+            "zaak": {
+              "id": "5881fb41-ca5b-4780-8fd9-93c61d293036",
+              "display": "Uw heeft uw huwelijk betaald",
+              "result": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "count": 1,
+  "limit": 25,
+  "total": 1,
+  "start": 1,
+  "page": 1,
+  "pages": 1
+}

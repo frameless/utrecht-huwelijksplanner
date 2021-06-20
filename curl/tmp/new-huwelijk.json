@@ -1,0 +1,14 @@
+{
+  "id": "7e5c7bfd-db51-41f8-b409-d594d7d6a4d7",
+  "ambtenaar": null,
+  "checklist": null,
+  "getuigen": [],
+  "instemmingGemeente": null,
+  "locatie": null,
+  "moment": null,
+  "order": null,
+  "partners": ["/api/assents/2cbdf6c7-ecdc-4535-8431-8415d2308ad7"],
+  "producten": null,
+  "type": "huwelijk",
+  "zaak": null
+}

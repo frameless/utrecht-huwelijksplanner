@@ -1,0 +1,38 @@
+.utrecht-page-header {
+  --utrecht-page-header-logo-max-inline-size: 192px;
+  --utrecht-page-header-logo-max-block-size: 102px;
+  --utrecht-logo-max-inline-size: var(--utrecht-page-header-logo-max-inline-size);
+  --utrecht-logo-max-block-size: var(--utrecht-page-header-logo-max-block-size);
+  background-color: var(--utrecht-page-background-color);
+  display: grid;
+  gap: 20px 0;
+  grid-template-areas: "logo . lang" "nav nav nav" "breadcrumb-nav breadcrumb-nav breadcrumb-nav";
+  grid-template-columns: min-content auto max-content;
+  margin-inline-end: auto;
+  margin-inline-start: auto;
+  max-inline-size: var(--utrecht-page-header-max-inline-size, var(--utrecht-page-max-inline-size));
+  padding-inline-end: 0;
+  padding-inline-start: 0;
+
+  .utrecht-logo {
+    grid-area: logo;
+  }
+}
+
+.utrecht-page-header__logo {
+  grid-area: logo;
+  margin-inline-start: var(--utrecht-page-header-margin-inline-start, var(--utrecht-page-margin-inline-start, 0));
+}
+
+.utrecht-page-header__alternate-lang-nav {
+  grid-area: lang;
+}
+
+.utrecht-page-header__nav {
+  grid-area: nav;
+}
+
+.utrecht-page-header__breadcrumb-nav {
+  grid-area: breadcrumb-nav;
+  margin-inline-start: var(--utrecht-page-header-margin-inline-start, var(--utrecht-page-margin-inline-start, 0));
+}

@@ -1,0 +1,10 @@
+{
+  "message": "Validation errors",
+  "data": {
+    "partners": {
+      "arrayType": "\"/api/assents/2cbdf6c7-ecdc-4535-8431-8415d2308ad7\" must be of type array",
+      "uuid": "\"/api/assents/2cbdf6c7-ecdc-4535-8431-8415d2308ad7\" must be a valid UUID"
+    }
+  },
+  "path": "huwelijk"
+}

@@ -1,0 +1,166 @@
+@import "./data-list";
+@import "./page-content";
+@import "./page-header";
+@import "./page-footer";
+@import "./page";
+@import "./skip-link";
+@import "./src/components/Email.scss";
+@import "./src/components/FeedbackSection.scss";
+@import "./src/components/FormContent.scss";
+@import "./src/components/HeadingGroup.scss";
+@import "./src/components/PageContentMain.scss";
+
+body {
+  margin-block-end: 0;
+  margin-block-start: 0;
+  margin-inline-end: 0;
+  margin-inline-start: 0;
+  /*--utrecht-page-content-max-inline-size: 700px;*/
+}
+
+.todo-radio-group {
+  --utrecht-form-fieldset-legend-color: var(--utrecht-form-label-color);
+  --utrecht-form-fieldset-legend-font-family: var(--utrecht-form-label-font-family);
+  --utrecht-form-fieldset-legend-font-size: var(--utrecht-form-label-font-size);
+  --utrecht-form-fieldset-legend-font-weight: var(--utrecht-form-label-font-weight);
+  --utrecht-form-fieldset-legend-line-height: var(--utrecht-form-label-line-height);
+  --utrecht-form-fieldset-legend-text-transform: var(--utrecht-form-label-text-transform);
+  --utrecht-form-fieldset-legend-margin-block-end: var(--utrecht-form-label-margin-block-end);
+  --utrecht-form-fieldset-legend-margin-block-start: var(--utrecht-form-label-margin-block-start);
+}
+
+.todo-radio-group--inline {
+  --utrecht-form-field-margin-block-end: 0;
+  --utrecht-form-field-margin-block-start: 0;
+  display: inline-flex;
+  gap: var(--todo-radio-group-gap);
+}
+
+.todo-form--distanced {
+  margin-block-end: var(--todo-form-margin-block-end, 0);
+  margin-block-start: var(--todo-form-margin-block-start, 0);
+  margin-inline-end: var(--todo-form-margin-inline-end, 0);
+  margin-inline-start: var(--todo-form-margin-inline-start, 0);
+}
+
+.utrecht-form-label--disabled {
+  /* Is assigned to font-weight in utrecht/../bem.scss */
+  color: var(--utrecht-form-label-disabled-color, var(--utrecht-form-label-color));
+}
+
+.utrecht-form-field--inline {
+  align-items: baseline;
+  display: inline-flex;
+  gap: var(--todo-form-field-inline-gap);
+}
+
+.todo-form-stepper {
+  border-color: var(--todo-form-stepper-border-color);
+  border-style: solid;
+  border-width: var(--todo-form-stepper-border-width, 0);
+  border-bottom-width: var(--todo-form-stepper-border-bottom-width, var(--todo-form-stepper-border-width), 0);
+  color: var(--todo-form-stepper-color);
+  font-size: var(--todo-form-stepper-font-size);
+  font-weight: var(--todo-form-stepper-font-weight);
+  padding-block-end: var(--todo-form-stepper-padding-block-end);
+  padding-block-start: var(--todo-form-stepper-padding-block-start);
+  padding-inline-end: var(--todo-form-stepper-padding-inline-end);
+  padding-inline-start: var(--todo-form-stepper-padding-inline-start);
+}
+
+.todo-form-stepper--distanced {
+  margin-block-end: var(--todo-form-stepper-margin-block-end, 0);
+  margin-block-start: var(--todo-form-stepper-margin-block-start, 0);
+}
+
+.todo-form-field-group--inline {
+  display: grid;
+  gap: var(--todo-form-field-group-gap);
+  grid-auto-columns: min-content;
+  grid-auto-flow: column;
+}
+
+.todo-form-field--house-number {
+  --todo-char-width-custom: 1ch;
+  --todo-max-length: 5;
+}
+
+.todo-form-field--house-number-suffix {
+  --todo-max-length: 4;
+}
+
+.todo-form-field--postcode {
+  --todo-max-length: 7;
+}
+
+.todo-form-field--family-name-prefix {
+  --todo-max-length: 10;
+}
+
+.todo-form-field--max-length .utrecht-textbox {
+  --todo-char-width: var(--todo-char-width-custom, calc((1 / 3 * 1ch + 2 / 3 * 1em)));
+  box-sizing: content-box;
+  inline-size: calc(var(--todo-char-width) * var(--todo-max-length));
+}
+
+.todo-aside {
+  background-color: #dbeaf6;
+  margin-block-end: calc(var(--utrecht-space-around, 0) * var(--utrecht-space-block-md, 0));
+  margin-block-start: calc(var(--utrecht-space-around, 0) * var(--utrecht-space-block-md, 0));
+  padding-block-end: var(--utrecht-space-block-md);
+  padding-block-start: var(--utrecht-space-block-md);
+  padding-inline-end: var(--utrecht-space-inline-md);
+  padding-inline-start: var(--utrecht-space-inline-md);
+}
+.todo-aside :first-child {
+  --utrecht-space-around: 0;
+}
+
+.utrecht-data-list__item-value {
+  --utrecht-space-around: 0;
+
+  .utrecht-unordered-list__item:first-of-type {
+    margin-block-start: calc(var(--utrecht-space-around, 0) * var(--utrecht-unordered-list-item-margin-block-start, 0));
+  }
+  .utrecht-unordered-list__item:last-of-type {
+    margin-block-end: calc(var(--utrecht-space-around, 0) * var(--utrecht-unordered-list-item-margin-block-end, 0));
+  }
+}
+
+.example-debugging {
+  data[value] {
+    background-color: mintcream !important;
+  }
+  data.utrecht-value-number {
+    background-color: mintcream !important;
+    outline: 2px dotted cornflowerblue !important;
+  }
+  time {
+    background-color: lightskyblue !important;
+    outline: 2px dotted rebeccapurple !important;
+  }
+
+  [translate="no"] {
+    background-color: papayawhip !important;
+  }
+
+  bdi {
+    outline: 2px dotted blue !important;
+  }
+  input[autocomplete] {
+    background-color: papayawhip !important;
+  }
+}
+
+.utrecht-navhtml {
+  --utrecht-link-color: var(--utrecht-topnav-link-color);
+  --utrecht-link-active-color: var(--utrecht-topnav-link-color);
+  --utrecht-link-hover-color: var(--utrecht-topnav-link-color);
+  --utrecht-link-focus-color: var(--utrecht-topnav-link-color);
+  --utrecht-link-visited-color: var(--utrecht-topnav-link-color);
+  --utrecht-link-text-decoration: none;
+}
+
+.utrecht-spotlight-section > :first-child {
+  --utrecht-space-around: 0;
+}

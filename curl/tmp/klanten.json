@@ -1,0 +1,175 @@
+{
+  "results": [
+    {
+      "id": "b7e548b5-6252-44d5-9fa2-63be78f8ed98",
+      "achternaam": "Moulin",
+      "adressen": [],
+      "bedrijfsnaam": null,
+      "bronorganisatie": "999990639",
+      "emails": [],
+      "functie": null,
+      "klantnummer": "00000221",
+      "subject": "https://example.com",
+      "subjectIdentificatie": "/apiNatuurlijkPersoon/942542c1-5cb8-43fa-8cd7-82ae4dc0f3e2",
+      "subjectType": "natuurlijk_persoon",
+      "telefoonnummers": [
+        "/apiKlantTelefoon/8767065a-dd4b-45e6-9329-fdd30cf0107f",
+        "/apiKlantTelefoon/ebac8b0b-51d0-44dc-9a46-b4968e5b7eb5"
+      ],
+      "url": "/api/klanten/b7e548b5-6252-44d5-9fa2-63be78f8ed98",
+      "voornaam": "Suzanne",
+      "voorvoegselAchternaam": null,
+      "websiteUrl": null,
+      "embedded": {
+        "telefoonnummers": [
+          { "id": "8767065a-dd4b-45e6-9329-fdd30cf0107f", "naam": "telefoonnummer 1", "telefoonnummer": "0101122334" },
+          { "id": "ebac8b0b-51d0-44dc-9a46-b4968e5b7eb5", "naam": "telefoonnummer 2", "telefoonnummer": "0612341234" }
+        ],
+        "subjectIdentificatie": {
+          "id": "942542c1-5cb8-43fa-8cd7-82ae4dc0f3e2",
+          "anpIdentificatie": null,
+          "geboortedatum": null,
+          "geslachtsaanduiding": null,
+          "geslachtsnaam": null,
+          "inpANummer": null,
+          "inpBsn": "999993653",
+          "subVerblijfBuitenland": null,
+          "verblijfsadres": null,
+          "voorletters": null,
+          "voornamen": null,
+          "voorvoegselGeslachtsnaam": null
+        }
+      }
+    },
+    {
+      "id": "7f36c4ec-dae9-42e2-b071-4b28e1562e20",
+      "achternaam": "\u017bywia\u0142owska",
+      "adressen": [],
+      "bedrijfsnaam": null,
+      "bronorganisatie": "999990639",
+      "emails": ["/apiKlantEmail/2a25712b-7184-4e21-9a9f-3896fd3cf69e"],
+      "functie": null,
+      "klantnummer": "00000222",
+      "subject": "https://example.com",
+      "subjectIdentificatie": "/apiNatuurlijkPersoon/2e5af345-3dde-4125-affc-02c3674670bc",
+      "subjectType": "natuurlijk_persoon",
+      "telefoonnummers": [],
+      "url": "/api/klanten/7f36c4ec-dae9-42e2-b071-4b28e1562e20",
+      "voornaam": "R\u00f3za Mstyslava",
+      "voorvoegselAchternaam": null,
+      "websiteUrl": null,
+      "embedded": {
+        "emails": [
+          { "id": "2a25712b-7184-4e21-9a9f-3896fd3cf69e", "email": "icatttest+roza@gmail.com", "naam": "e-mailadres 1" }
+        ],
+        "subjectIdentificatie": {
+          "id": "2e5af345-3dde-4125-affc-02c3674670bc",
+          "anpIdentificatie": null,
+          "geboortedatum": null,
+          "geslachtsaanduiding": null,
+          "geslachtsnaam": null,
+          "inpANummer": null,
+          "inpBsn": "999990172",
+          "subVerblijfBuitenland": null,
+          "verblijfsadres": null,
+          "voorletters": null,
+          "voornamen": null,
+          "voorvoegselGeslachtsnaam": null
+        }
+      }
+    },
+    {
+      "id": "b099f43a-c298-4c0b-b59c-eae2bf02fbd8",
+      "achternaam": "Teemuts",
+      "adressen": [],
+      "bedrijfsnaam": null,
+      "bronorganisatie": "999990639",
+      "emails": ["/apiKlantEmail/6614451f-53c2-4af9-b9f5-f5bf0b9fd1e5"],
+      "functie": null,
+      "klantnummer": "00000223",
+      "subject": "https://example.com",
+      "subjectIdentificatie": null,
+      "subjectType": "natuurlijk_persoon",
+      "telefoonnummers": [],
+      "url": "/api/klanten/b099f43a-c298-4c0b-b59c-eae2bf02fbd8",
+      "voornaam": "Sam",
+      "voorvoegselAchternaam": null,
+      "websiteUrl": null,
+      "embedded": {
+        "emails": [
+          {
+            "id": "6614451f-53c2-4af9-b9f5-f5bf0b9fd1e5",
+            "email": "icatttest+samtee@gmail.com",
+            "naam": "e-mailadres 1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "7c14e7c1-0283-47fd-a14a-d9238fa445e3",
+      "achternaam": "Vaak",
+      "adressen": [],
+      "bedrijfsnaam": null,
+      "bronorganisatie": "999990639",
+      "emails": ["/apiKlantEmail/6d5b58ce-6d04-4c6c-ac46-968caa74893a"],
+      "functie": null,
+      "klantnummer": "00000224",
+      "subject": "https://example.com",
+      "subjectIdentificatie": "/apiNatuurlijkPersoon/c6939eb8-5374-458e-8f01-42f09b81fed9",
+      "subjectType": "natuurlijk_persoon",
+      "telefoonnummers": [],
+      "url": "/api/klanten/7c14e7c1-0283-47fd-a14a-d9238fa445e3",
+      "voornaam": "Klaas",
+      "voorvoegselAchternaam": null,
+      "websiteUrl": "https://conduction.nl",
+      "embedded": {
+        "emails": [
+          { "id": "6d5b58ce-6d04-4c6c-ac46-968caa74893a", "email": "test@conduction.nl", "naam": "e-mailadres 1" }
+        ],
+        "subjectIdentificatie": {
+          "id": "c6939eb8-5374-458e-8f01-42f09b81fed9",
+          "anpIdentificatie": null,
+          "geboortedatum": null,
+          "geslachtsaanduiding": "m",
+          "geslachtsnaam": "Vaak",
+          "inpANummer": null,
+          "inpBsn": null,
+          "subVerblijfBuitenland": null,
+          "verblijfsadres": null,
+          "voorletters": "K",
+          "voornamen": null,
+          "voorvoegselGeslachtsnaam": null
+        }
+      }
+    },
+    {
+      "id": "607b2a5d-9e57-45ab-849b-8dec56ee534a",
+      "achternaam": "Haas",
+      "adressen": [],
+      "bedrijfsnaam": null,
+      "bronorganisatie": "999990639",
+      "emails": [],
+      "functie": null,
+      "klantnummer": "00000225",
+      "subject": "https://example.com",
+      "subjectIdentificatie": null,
+      "subjectType": "natuurlijk_persoon",
+      "telefoonnummers": ["/apiKlantTelefoon/7768ebc0-01fb-4e1f-a81c-76ac2e9de816"],
+      "url": "/api/klanten/607b2a5d-9e57-45ab-849b-8dec56ee534a",
+      "voornaam": "Joske",
+      "voorvoegselAchternaam": "de",
+      "websiteUrl": null,
+      "embedded": {
+        "telefoonnummers": [
+          { "id": "7768ebc0-01fb-4e1f-a81c-76ac2e9de816", "naam": "telefoonnummer 1", "telefoonnummer": "0656785678" }
+        ]
+      }
+    }
+  ],
+  "count": 5,
+  "limit": 25,
+  "total": 5,
+  "start": 1,
+  "page": 1,
+  "pages": 1
+}

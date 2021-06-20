@@ -1,0 +1,76 @@
+[
+  {
+    "id": "0802309d-91cd-49ec-93b7-3313f5eb0bf7",
+    "achternaam": "Teemuts",
+    "adressen": ["/apiKlantAdres/696a6ad3-0697-45e8-9a8e-ff5447fbc7d8"],
+    "bedrijfsnaam": null,
+    "bronorganisatie": "123456456",
+    "emails": ["/apiKlantEmail/95f8cf71-9d86-40da-a624-44c9efa33d31"],
+    "functie": null,
+    "klantnummer": "1234564",
+    "subject": "https://example.com",
+    "subjectIdentificatie": "/apiNatuurlijkPersoon/deaf4221-e4ff-4d9c-9879-d547be1ba632",
+    "subjectType": "natuurlijk_persoon",
+    "telefoonnummers": ["/apiKlantTelefoon/ee67590f-65a6-4cbf-8b79-4b2e26125673"],
+    "url": "/api/klanten/0802309d-91cd-49ec-93b7-3313f5eb0bf7",
+    "voornaam": "Sam",
+    "voorvoegselAchternaam": null,
+    "websiteUrl": "www.google.nl",
+    "embedded": {
+      "telefoonnummers": [
+        {
+          "id": "ee67590f-65a6-4cbf-8b79-4b2e26125673",
+          "naam": "telefoonnummer 1",
+          "telefoonnummer": "0612345678"
+        }
+      ],
+      "emails": [
+        {
+          "id": "95f8cf71-9d86-40da-a624-44c9efa33d31",
+          "email": "sam@gmail.com",
+          "naam": "e-mailadres 1"
+        }
+      ],
+      "adressen": [
+        {
+          "id": "696a6ad3-0697-45e8-9a8e-ff5447fbc7d8",
+          "huisletter": null,
+          "huisnummer": 63,
+          "huisnummertoevoeging": null,
+          "landcode": "NL",
+          "naam": null,
+          "postcode": "3533VB",
+          "straatnaam": "Dantelaan",
+          "woonplaatsnaam": "Utrecht"
+        }
+      ],
+      "subjectIdentificatie": {
+        "id": "deaf4221-e4ff-4d9c-9879-d547be1ba632",
+        "anpIdentificatie": null,
+        "geboortedatum": "12-02-2000",
+        "geslachtsaanduiding": null,
+        "geslachtsnaam": null,
+        "inpANummer": null,
+        "inpBsn": "123456789",
+        "subVerblijfBuitenland": null,
+        "verblijfsadres": "/apiVerblijfsAdres/eb2266c0-b1e5-4f61-9697-cd8c85a45de4",
+        "voorletters": "S",
+        "voornamen": "Sam",
+        "voorvoegselGeslachtsnaam": null,
+        "embedded": {
+          "verblijfsadres": {
+            "id": "eb2266c0-b1e5-4f61-9697-cd8c85a45de4",
+            "aoaHuisletter": null,
+            "aoaHuisnummer": 63,
+            "aoaHuisnummertoevoeging": null,
+            "aoaIdentificatie": null,
+            "aoaPostcode": "3533VB",
+            "gorOpenbareRuimteNaam": null,
+            "inpLocatiebeschrijving": null,
+            "wplWoonplaatsNaam": "Utrecht"
+          }
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,97 @@
+{
+  "partners": [
+    {
+      "id": "43d0b946-154f-4d52-a180-832a160f8e32",
+      "contact": "string",
+      "description": "U begint de aanvraag",
+      "forwardUrl;": null,
+      "name": "Anne Nico Johannes Deursen",
+      "person": "string",
+      "process": "http://localhost:3000/assent/",
+      "property": "partners",
+      "request": "string",
+      "requester": "259730890",
+      "revocable": true,
+      "status": "granted",
+      "token": null
+    },
+    {
+      "id": "eac77c3b-9af3-4965-b7e1-e1f1f5f47b7c",
+      "contact": "string",
+      "description": "U wordt uitgenodigd als partner bij een huwlijk",
+      "forwardUrl;": null,
+      "name": "Sanne van den Broecke",
+      "person": "string",
+      "process": "http://localhost:3000/assent/",
+      "property": "partners",
+      "request": "string",
+      "requester": "298272921",
+      "revocable": true,
+      "status": "granted",
+      "token": null
+    }
+  ],
+  "getuigen": [
+    {
+      "id": "fb9af6c2-0ab7-4cb3-aea3-02d9773937ab",
+      "contact": "string",
+      "description": "U wordt uitgenodigd als getuige bij een huwlijk",
+      "forwardUrl;": null,
+      "name": "Gerda Getuige",
+      "person": "string",
+      "process": "http://localhost:3000/assent/",
+      "property": "partners",
+      "request": "string",
+      "requester": "228807323",
+      "revocable": true,
+      "status": null,
+      "token": null
+    },
+    {
+      "id": "e02e9eda-be61-4b71-bc82-49dc294b74eb",
+      "contact": "string",
+      "description": "U wordt uitgenodigd als getuige bij een huwlijk",
+      "forwardUrl;": null,
+      "name": "Gerard Getuige",
+      "person": "string",
+      "process": "http://localhost:3000/assent/",
+      "property": "partners",
+      "request": "string",
+      "requester": "228807323",
+      "revocable": true,
+      "status": null,
+      "token": null
+    },
+    {
+      "id": "a3d9c15c-0ef6-43cd-9d0c-5d0904f055b1",
+      "contact": "string",
+      "description": "U wordt uitgenodigd als getuige bij een huwlijk",
+      "forwardUrl;": null,
+      "name": "Gosse Getuige",
+      "person": "string",
+      "process": "http://localhost:3000/assent/",
+      "property": "partners",
+      "request": "string",
+      "requester": "228807323",
+      "revocable": true,
+      "status": null,
+      "token": null
+    },
+    {
+      "id": "07622d48-784b-49f3-a494-f614accd02de",
+      "contact": "string",
+      "description": "U wordt uitgenodigd als getuige bij een huwlijk",
+      "forwardUrl;": null,
+      "name": "Gonny Getuige",
+      "person": "string",
+      "process": "http://localhost:3000/assent/",
+      "property": "partners",
+      "request": "string",
+      "requester": "228807323",
+      "revocable": true,
+      "status": null,
+      "token": null
+    }
+  ],
+  "type": "huwelijk"
+}

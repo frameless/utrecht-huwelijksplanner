@@ -1,0 +1,55 @@
+/**
+ * @license EUPL-1.2
+ * Copyright (c) 2021 Robbert Broersma
+ */
+
+.utrecht-skip-link {
+  background-color: var(--utrecht-skip-link-background-color, var(--utrecht-document-background-color));
+  color: var(--utrecht-skip-link-color, var(--utrecht-link-color));
+  margin-block-end: var(--utrecht-skip-link-margin-block);
+  margin-block-start: var(--utrecht-skip-link-margin-block);
+  margin-inline-end: var(--utrecht-skip-link-margin-inline);
+  margin-inline-start: var(--utrecht-skip-link-margin-inline);
+  padding-block-end: var(--utrecht-skip-link-padding-block-end);
+  padding-block-start: var(--utrecht-skip-link-padding-block-start);
+  padding-inline-end: var(--utrecht-skip-link-padding-inline-end);
+  padding-inline-start: var(--utrecht-skip-link-padding-inline-start);
+  text-decoration: var(--utrecht-link-text-decoration);
+}
+
+.utrecht-skip-link,
+.utrecht-skip-link--hidden {
+  position: fixed;
+  top: 200%;
+}
+
+.utrecht-skip-link--focus,
+.utrecht-skip-link:focus {
+  text-decoration: var(--utrecht-link-focus-text-decoration);
+}
+
+.utrecht-skip-link:focus,
+.utrecht-skip-link--visible {
+  /**
+   * WCAG 2.2 / 2.4.12: "No part of the focus indicator is hidden by author-created content".
+   * To go the extra mile, ensure the focus indicator is inside the viewport.
+   * */
+  --_utrecht-skip-link-inset: calc(var(--utrecht-focus-outline-width, 0px) + var(--utrecht-focus-outline-offset, 0px));
+  inset-block-start: var(--_utrecht-skip-link-inset);
+  inset-inline-start: var(--_utrecht-skip-link-inset);
+
+  position: fixed;
+  z-index: var(--utrecht-layer-focus-z-index);
+}
+
+.utrecht-skip-link--auto {
+  @extend .utrecht-skip-link--hidden;
+}
+.utrecht-skip-link--auto:focus {
+  @extend .utrecht-skip-link--visible;
+}
+
+.utrecht-skip-link-group {
+  margin-block-end: 0;
+  margin-block-start: 0;
+}

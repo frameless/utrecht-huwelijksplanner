@@ -1,0 +1,15 @@
+{
+  "id": "07622d48-784b-49f3-a494-f614accd02de",
+  "contact": "string",
+  "description": "U wordt uitgenodigd als getuige bij een huwlijk",
+  "forwardUrl;": null,
+  "name": "Gonny Getuige",
+  "person": "string",
+  "process": "http://localhost:3000/assent/",
+  "property": "partners",
+  "request": "string",
+  "requester": "228807323",
+  "revocable": true,
+  "status": null,
+  "token": null
+}
