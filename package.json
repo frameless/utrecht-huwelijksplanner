@@ -73,7 +73,7 @@
     "@utrecht/design-tokens": "1.0.0-alpha.383",
     "@utrecht/web-component-library-react": "1.0.0-alpha.389",
     "eslint": "8.22.0",
-    "eslint-config-next": "12.2.5",
+    "eslint-config-next": "13.0.6",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "26.8.7",
