@@ -94,7 +94,7 @@
     "react-i18next": "11.18.5",
     "rimraf": "3.0.2",
     "sass": "1.54.7",
-    "sharp": "0.30.7",
+    "sharp": "0.31.2",
     "stylelint": "14.10.0",
     "stylelint-config-prettier": "9.0.3",
     "stylelint-order": "5.0.0",
