@@ -61,7 +61,7 @@
     "@gemeente-denhaag/process-steps": "0.1.0-alpha.99",
     "@nl-design-system-unstable/amsterdam-design-tokens": "1.0.0-alpha.32",
     "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/react": "13.3.0",
+    "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "14.4.3",
     "@types/lodash.merge": "4.6.7",
     "@types/node": "18.7.14",
