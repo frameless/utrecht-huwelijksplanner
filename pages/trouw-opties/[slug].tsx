@@ -1,3 +1,4 @@
+import { formatISO, isSameDay, parseISO } from "date-fns";
 import { NextPage } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -9,6 +10,7 @@ import {
   Button,
   ButtonGroup,
   ButtonLink,
+  Calendar,
   Document,
   Fieldset,
   FieldsetLegend,
@@ -29,12 +31,12 @@ import {
   Surface,
   TimeValue,
 } from "../../src/components";
-import { DateInput } from "../../src/components/DateInput";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
+// import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
 import { Availability } from "../../src/generated/openapi/Agenda-Service";
 import { HuwelijksplannerAPI } from "../../src/openapi/index";
+import agenda from "../../src/openapi/mock/agenda.json";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -46,14 +48,23 @@ const BlogPost: NextPage = () => {
   const { query, locale = "nl", push } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
 
-  const getEvents = (type: CeremonyType, date: string) => {
-    return calendars[type as keyof typeof calendars].filter((event) => event.startDateTime.startsWith(date));
-  };
+  // const getEvents = (type: CeremonyType, date: string) => {
+  //   return calendars[type as keyof typeof calendars].filter((event) => event.startDateTime.startsWith(date));
+  // };
 
   const [, setResults] = useState<Availability[]>([]);
 
   const [selectedDate, setSelectedDate] = useState("2021-04-14");
   const [selectedLocationAndDate, setSelectedLocationAndDate] = useState<string | undefined>();
+  const [currentEvents, setCurrentEvents] = useState<any[]>();
+  const agendaItems = Object.values(agenda).reduce((acc, curVal) => acc.concat(curVal), []);
+  const agendaStartDateItems = agendaItems.map((obj) => ({
+    ...obj,
+    date: formatISO(new Date(obj.start)),
+    selected: true,
+  }));
+  // .sort((a: any, b: any) => a.date - b.date)
+  // .filter((item, index, array) => index >= 1 && item.date !== array[index - 1].date);
 
   const loadEvents = useCallback(() => {
     console.log("load events for: ", selectedDate);
@@ -68,7 +79,8 @@ const BlogPost: NextPage = () => {
 
   useEffect(() => {
     loadEvents();
-  }, [selectedDate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onChangeDateHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedLocationAndDate(event.target.value);
@@ -87,7 +99,14 @@ const BlogPost: NextPage = () => {
       console.log("please, select a date!");
     }
   };
-
+  /*
+TODO
+- add design tokens to the Calender component for the .utrecht-calendar__table-days-item-day--selected on hover, also check the border color token
+- we need to fix the improve the agenda interface on the backend at least add an `id` that we can use it later to fetch it for the radio button below 
+  - we need an endpoint for the radio button that has the available events from the backend  
+  + category for each event for example FLITS/BALIE-HUWELIJK, UITGEBREID TROUWEN — ZELF DE PLAATS BEPALEN
+  
+*/
   return (
     <Surface>
       <Document>
@@ -123,10 +142,15 @@ const BlogPost: NextPage = () => {
                 <section>
                   <FormField>
                     <FormLabel htmlFor="date">Trouwdatum</FormLabel>
-                    <DateInput
-                      id="date"
-                      onInput={(event) => setSelectedDate((event.target as HTMLInputElement).value)}
-                      defaultValue={selectedDate}
+                    <Calendar
+                      onCalendarClick={(d) => {
+                        setSelectedDate(d);
+                        setCurrentEvents(
+                          agendaStartDateItems.filter(({ date }) => isSameDay(parseISO(date), parseISO(d)))
+                        );
+                      }}
+                      currentDate={new Date("2022-01-01")}
+                      events={agendaStartDateItems as any}
                     />
                   </FormField>
                   <Fieldset>
@@ -154,28 +178,59 @@ const BlogPost: NextPage = () => {
                       ))}
                     </Fieldset>*/}
                     <Fieldset>
-                      <FieldsetLegend>Flits/balie-huwelijk — Stadskantoor</FieldsetLegend>
-                      {getEvents("flits-balie-huwelijk", selectedDate).map((event) => (
-                        <FormField key={event.id}>
-                          <RadioButton
-                            id={event.id}
-                            name="event"
-                            value={event.id}
-                            required
-                            onChange={onChangeDateHandler}
-                          />
-                          <FormLabel htmlFor={event.id}>
-                            <span aria-label="negen uur tot tien over negen">
-                              <TimeValue dateTime={event.startDateTime} locale={locale} />
-                              {" – "}
-                              <TimeValue dateTime={event.endDateTime} locale={locale} />
-                              {" uur"}
-                            </span>
-                          </FormLabel>
-                        </FormField>
-                      ))}
+                      {/* <FieldsetLegend>Flits/balie-huwelijk — Stadskantoor</FieldsetLegend> */}
+                      {currentEvents &&
+                        currentEvents.length > 0 &&
+                        currentEvents.map(({ date, start, stop }) => {
+                          return (
+                            <FormField key={date}>
+                              <RadioButton
+                                id={date}
+                                name="event"
+                                value={date}
+                                required
+                                onChange={onChangeDateHandler}
+                              />
+                              <FormLabel htmlFor={date}>
+                                <span aria-label="negen uur tot tien over negen">
+                                  <TimeValue dateTime={start} locale={locale} />
+                                  {" – "}
+                                  <TimeValue dateTime={stop} locale={locale} />
+                                  {" uur"}
+                                </span>
+                              </FormLabel>
+                            </FormField>
+                          );
+                        })}
                     </Fieldset>
-                    <Fieldset>
+                    {/* <Fieldset>
+                      <FieldsetLegend>Flits/balie-huwelijk — Stadskantoor</FieldsetLegend>
+                      {getEvents("flits-balie-huwelijk", selectedDate).map((event) => {
+                        // console.log(event, "event.startDateTime");
+                        // console.log(selectedDate, "selectedDate");
+
+                        return (
+                          <FormField key={event.id}>
+                            <RadioButton
+                              id={event.id}
+                              name="event"
+                              value={event.id}
+                              required
+                              onChange={onChangeDateHandler}
+                            />
+                            <FormLabel htmlFor={event.id}>
+                              <span aria-label="negen uur tot tien over negen">
+                                <TimeValue dateTime={event.startDateTime} locale={locale} />
+                                {" – "}
+                                <TimeValue dateTime={event.endDateTime} locale={locale} />
+                                {" uur"}
+                              </span>
+                            </FormLabel>
+                          </FormField>
+                        );
+                      })}
+                    </Fieldset> */}
+                    {/* <Fieldset>
                       <FieldsetLegend>Uitgebreid trouwen — Zelf de plaats bepalen</FieldsetLegend>
                       {getEvents("uitgebreid-huwelijk", selectedDate).map((event) => (
                         <FormField key={event.id}>
@@ -196,7 +251,7 @@ const BlogPost: NextPage = () => {
                           </FormLabel>
                         </FormField>
                       ))}
-                    </Fieldset>
+                    </Fieldset> */}
                   </Fieldset>
                   <ButtonGroup>
                     <Button type="submit" appearance="primary-action-button">
