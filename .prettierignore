@@ -9,3 +9,4 @@ CHANGELOG.md
 package.json
 package-lock.json
 src/generated/
+./curl/package.json

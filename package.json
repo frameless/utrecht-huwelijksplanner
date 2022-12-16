@@ -34,7 +34,7 @@
     "lint": "npm-run-all --continue-on-error lint:**",
     "lint:css": "stylelint '**/*.{css,scss}'",
     "lint:js": "eslint --ext '.js,.json,.jsx,.ts,.tsx' --report-unused-disable-directives .",
-    "lint:package-json": "npmPkgJsonLint '**/package.json'",
+    "lint:package-json": "npmPkgJsonLint '**/package.json' --ignorePath ./.prettierignore",
     "lint:package-lock": "npm ls",
     "lint:prettier": "prettier --check .",
     "lint:ts": "tsc --noEmit --project tsconfig.json",
