@@ -27,7 +27,7 @@ export const OpenAPI: OpenAPIConfig = {
   USERNAME: undefined,
   PASSWORD: undefined,
   HEADERS: {
-    Authorization: process.env.API_TOKEN || '',
+    Authorization: process.env.NEXT_PUBLIC_API_TOKEN || '',
   },
   ENCODE_PATH: undefined,
 };
