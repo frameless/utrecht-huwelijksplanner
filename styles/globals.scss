@@ -11,11 +11,13 @@
 @import "./src/components/PageContentMain.scss";
 
 body {
+  /*--utrecht-page-content-max-inline-size: 700px;*/
+  --utrecht-calendar-table-days-item-day-selected-color: #fff;
+  --utrecht-calendar-table-days-item-day-selected-background-color: #2964a3;
   margin-block-end: 0;
   margin-block-start: 0;
   margin-inline-end: 0;
   margin-inline-start: 0;
-  /*--utrecht-page-content-max-inline-size: 700px;*/
 }
 
 .todo-radio-group {
