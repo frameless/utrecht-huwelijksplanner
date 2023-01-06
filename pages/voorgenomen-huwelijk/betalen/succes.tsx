@@ -77,35 +77,115 @@ export default function HuwelijksplannerStep0() {
     return data.witnesses.length >= data.minWitnessPerPartner * 2;
   };
 
-  const MarriageProcessSteps = ({ data, locale }: { data: HuwelijksplannerState; locale: string }) => (
+  const MarriageProcessSteps = ({ data }: { data: HuwelijksplannerState; locale: string }) => (
+    <ProcessSteps
+      steps={[
+        {
+          key: "cc18f54d-aadd-498f-b518-2fc74ce8e9b6",
+          marker: 1,
+          status: isValidMinWitnesses(data) ? "checked" : undefined,
+          title: "Getuigen wijzigen of meer getuigen uitnodigen",
+          meta: data.canInviteWitnesses ? (
+            <div>
+              <Paragraph>
+                tussen vandaag en{" "}
+                {data["inviteWitnessEndDate"] ? (
+                  <DateValue dateTime={data["inviteWitnessEndDate"]} locale={locale} />
+                ) : (
+                  ""
+                )}{" "}
+                <UtrechtBadgeStatus status="neutral">niet verplicht</UtrechtBadgeStatus>
+              </Paragraph>
+            </div>
+          ) : (
+            ""
+          ),
+          steps: [
+            {
+              status: isValidMinWitnesses(data) ? "checked" : undefined,
+              title: `tussen vandaag en ${data["inviteWitnessEndDate"]}`,
+            },
+          ],
+        },
+        {
+          key: "12ca94b2-7179-4ae8-9032-dad49c294ff2",
+          marker: 2,
+          title: "Getuigen zijn definitief en bevestigingen van getuigen ontvangen",
+        },
+        {
+          key: "e51f2b4c-d62f-4347-8dc1-c83a9be0afc2",
+          marker: 3,
+          title: "Eventuele extra’s bestellen",
+        },
+        {
+          key: "1fc162c6-f1ab-4d1b-9007-d891cbd5614b",
+          title: "Trouwdag",
+          marker: 4,
+          date: data.reservation
+            ? ((<DateValue dateTime={data.reservation["ceremony-start"]} locale={locale} />) as any)
+            : "",
+          meta:
+            data.reservation && data.reservation["ceremony-location"] === "Locatie Stadskantoor" ? (
+              <Paragraph>
+                Jullie gaan trouwen op de vierde verdieping van het{" "}
+                <Link href="https://www.utrecht.nl/contact/stadskantoor">Stadskantoor Utrecht</Link>.
+              </Paragraph>
+            ) : (
+              ""
+            ),
+        },
+      ]}
+    />
+    /*(
+                <>
+                  tussen vandaag en{" "}
+                  {data["inviteWitnessEndDate"] ? (
+                    <DateValue dateTime={data["inviteWitnessEndDate"]} locale={locale} />
+                  ) : (
+                    ""
+                  )}{" "}
+                  <UtrechtBadgeStatus status="neutral">niet verplicht</UtrechtBadgeStatus>
+                </>
+              ),*/
+    /*, {
+      key: "5cec92c5-73d1-485b-bf49-549472e211dc",
+      marker: 2,
+      status: "current",
+      steps: [{
+        status: "checked",
+        title: "Afspraak meten geluidsoverlast gemaakt"
+      }, {
+        status: "checked",
+        title: "Geluidsoverlast gemeten"
+      }, {
+        status: "checked",
+        title: "Onderzoek resultaten verwerkt"
+      }],
+      title: "Onderzoek naar geluidsoverlast"
+    }, {
+      key: "41ed3247-830e-408a-b2e0-5666a47a3631",
+      marker: 3,
+      title: "Uitvoeren van maatregelen"
+    }, {
+      key: "8ff216a2-9ccd-4ada-a1b2-00eb824b1e9b",
+      marker: 4,
+      title: "Maatregelen zijn uitgevoerd"
+    }]} />*/
+    /*
     <ProcessSteps.StepList>
-      <ProcessSteps.Step checked={isValidMinWitnesses(data)}>
+      <ProcessSteps.Step checked={}>
         <ProcessSteps.StepSection>
           <ProcessSteps.StepHeader>
             <ProcessSteps.StepMarker>
               <div>1</div>
             </ProcessSteps.StepMarker>
             <ProcessSteps.StepHeading>
-              {/* TODO: Speciale tekst als het alleen vandaag is */}
-              tussen vandaag en{" "}
-              {data["inviteWitnessEndDate"] ? (
-                <DateValue dateTime={data["inviteWitnessEndDate"]} locale={locale} />
-              ) : (
-                ""
-              )}{" "}
-              <UtrechtBadgeStatus status="neutral">niet verplicht</UtrechtBadgeStatus>
+              
+              
             </ProcessSteps.StepHeading>
             <ProcessSteps.StepExpandedIcon />
           </ProcessSteps.StepHeader>
-          {data.canInviteWitnesses ? (
-            <div>
-              <Paragraph>
-                <Link href="/huwelijksplanner-step-invite-witness">Getuigen wijzigen of meer getuigen uitnodigen</Link>
-              </Paragraph>
-            </div>
-          ) : (
-            ""
-          )}
+          
         </ProcessSteps.StepSection>
       </ProcessSteps.Step>
       <ProcessSteps.Step>
@@ -175,6 +255,7 @@ export default function HuwelijksplannerStep0() {
         </ProcessSteps.StepSection>
       </ProcessSteps.Step>
     </ProcessSteps.StepList>
+    */
   );
 
   const PartnerDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => (
