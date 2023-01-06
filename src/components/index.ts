@@ -6,7 +6,7 @@
 // Components maintained by others:
 export * from '@utrecht/component-library-react';
 export { UtrechtIconArrow } from '@utrecht/web-component-library-react';
-export * as ProcessSteps from '@gemeente-denhaag/process-steps';
+export * from '@gemeente-denhaag/process-steps';
 
 // Components for this project:
 export { Address } from './Address';
