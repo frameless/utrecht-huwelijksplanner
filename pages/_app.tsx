@@ -9,7 +9,7 @@ import "../styles/globals.scss";
 import "../styles/utrecht-theme.css";
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
-  <div className={clsx("example-debugging-disabled", "utrecht-theme")}>
+  <div className={clsx("example-debugging-disabled", "utrecht-theme", "utrecht-theme--media-query-color-scheme")}>
     <Component {...pageProps} />
   </div>
 );
