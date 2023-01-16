@@ -71,7 +71,7 @@
     "@typescript-eslint/parser": "5.33.1",
     "@utrecht/assets": "1.0.0-alpha.35",
     "@utrecht/component-library-css": "1.0.0-alpha.414",
-    "@utrecht/component-library-react": "1.0.0-alpha.223",
+    "@utrecht/component-library-react": "1.0.0-alpha.236",
     "@utrecht/design-tokens": "1.0.0-alpha.407",
     "@utrecht/web-component-library-react": "1.0.0-alpha.413",
     "eslint": "8.22.0",
