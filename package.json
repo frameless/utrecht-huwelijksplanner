@@ -72,7 +72,7 @@
     "@utrecht/assets": "1.0.0-alpha.35",
     "@utrecht/component-library-css": "1.0.0-alpha.414",
     "@utrecht/component-library-react": "1.0.0-alpha.223",
-    "@utrecht/design-tokens": "1.0.0-alpha.407",
+    "@utrecht/design-tokens": "1.0.0-alpha.430",
     "@utrecht/web-component-library-react": "1.0.0-alpha.413",
     "eslint": "8.22.0",
     "eslint-config-next": "12.2.6",
