@@ -81,7 +81,7 @@ export default function HuwelijksplannerStep0() {
     <ProcessSteps
       steps={[
         {
-          key: "cc18f54d-aadd-498f-b518-2fc74ce8e9b6",
+          id: "cc18f54d-aadd-498f-b518-2fc74ce8e9b6",
           marker: 1,
           status: isValidMinWitnesses(data) ? "checked" : undefined,
           title: "Getuigen wijzigen of meer getuigen uitnodigen",
@@ -102,23 +102,24 @@ export default function HuwelijksplannerStep0() {
           ),
           steps: [
             {
+              id: "dc18f54d-aadd-498f-b518-2fc74ce8e9b6",
               status: isValidMinWitnesses(data) ? "checked" : undefined,
               title: `tussen vandaag en ${data["inviteWitnessEndDate"]}`,
             },
           ],
         },
         {
-          key: "12ca94b2-7179-4ae8-9032-dad49c294ff2",
+          id: "12ca94b2-7179-4ae8-9032-dad49c294ff2",
           marker: 2,
           title: "Getuigen zijn definitief en bevestigingen van getuigen ontvangen",
         },
         {
-          key: "e51f2b4c-d62f-4347-8dc1-c83a9be0afc2",
+          id: "e51f2b4c-d62f-4347-8dc1-c83a9be0afc2",
           marker: 3,
           title: "Eventuele extra’s bestellen",
         },
         {
-          key: "1fc162c6-f1ab-4d1b-9007-d891cbd5614b",
+          id: "1fc162c6-f1ab-4d1b-9007-d891cbd5614b",
           title: "Trouwdag",
           marker: 4,
           date: data.reservation
@@ -148,7 +149,7 @@ export default function HuwelijksplannerStep0() {
                 </>
               ),*/
     /*, {
-      key: "5cec92c5-73d1-485b-bf49-549472e211dc",
+      id: "5cec92c5-73d1-485b-bf49-549472e211dc",
       marker: 2,
       status: "current",
       steps: [{
@@ -163,11 +164,11 @@ export default function HuwelijksplannerStep0() {
       }],
       title: "Onderzoek naar geluidsoverlast"
     }, {
-      key: "41ed3247-830e-408a-b2e0-5666a47a3631",
+      id: "41ed3247-830e-408a-b2e0-5666a47a3631",
       marker: 3,
       title: "Uitvoeren van maatregelen"
     }, {
-      key: "8ff216a2-9ccd-4ada-a1b2-00eb824b1e9b",
+      id: "8ff216a2-9ccd-4ada-a1b2-00eb824b1e9b",
       marker: 4,
       title: "Maatregelen zijn uitgevoerd"
     }]} />*/

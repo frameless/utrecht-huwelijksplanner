@@ -1,4 +1,4 @@
-import { Checkbox, CustomRadioButton, FormField, FormLabel } from "@utrecht/component-library-react";
+import { Checkbox, FormField, FormLabel, RadioButton } from "@utrecht/component-library-react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
@@ -83,25 +83,25 @@ export default function MultistepForm1() {
                       </FormLabel>
                     </FormField>
                     <FormField>
-                      <CustomRadioButton id="1" name="marriage-certificate-kind" />
+                      <RadioButton id="1" name="marriage-certificate-kind" />
                       <FormLabel htmlFor="1" type="radio">
                         Wit lederen omslag (€ 32,50)
                       </FormLabel>
                     </FormField>
                     <FormField>
-                      <CustomRadioButton id="2" name="marriage-certificate-kind" />
+                      <RadioButton id="2" name="marriage-certificate-kind" />
                       <FormLabel htmlFor="2" type="radio">
                         Wit lederen omslag (€ 32,50)
                       </FormLabel>
                     </FormField>
                     <FormField>
-                      <CustomRadioButton id="3" name="marriage-certificate-kind" />
+                      <RadioButton id="3" name="marriage-certificate-kind" />
                       <FormLabel htmlFor="3" type="radio">
                         Donkerblauw lederen omslag (€ 32,50)
                       </FormLabel>
                     </FormField>
                     <FormField>
-                      <CustomRadioButton id="4" name="marriage-certificate-kind" />
+                      <RadioButton id="4" name="marriage-certificate-kind" />
                       <FormLabel htmlFor="4" type="radio">
                         Rood kunstlederen omslag (€ 30,00)
                       </FormLabel>

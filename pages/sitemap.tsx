@@ -42,7 +42,7 @@ export default function HuwelijksplannerStep0() {
                 collapsible={false}
                 steps={[
                   {
-                    key: "eb18814b-eb1e-4295-866c-145f632f1c2d",
+                    id: "eb18814b-eb1e-4295-866c-145f632f1c2d",
                     marker: " ",
                     status: "checked",
                     title: (
@@ -58,7 +58,7 @@ export default function HuwelijksplannerStep0() {
                     ),
                   },
                   {
-                    key: "cd6ac94e-76a0-4862-a523-895f8dc2f87b",
+                    id: "cd6ac94e-76a0-4862-a523-895f8dc2f87b",
                     marker: "1",
                     status: "current",
                     title: (<Link href="/trouw-opties">Stap 1: Kies wat je wil</Link>) as any,
@@ -72,7 +72,7 @@ export default function HuwelijksplannerStep0() {
                     ),
                   },
                   {
-                    key: "72ebd58e-f5f4-46eb-8ff8-79bcf245eca8",
+                    id: "72ebd58e-f5f4-46eb-8ff8-79bcf245eca8",
                     marker: "2",
                     title: (<Link href="/trouw-opties/huwelijk">Stap 2: Kies datum en tijd</Link>) as any,
                     meta: (
@@ -85,7 +85,7 @@ export default function HuwelijksplannerStep0() {
                     ),
                   },
                   {
-                    key: "3ef8876f-1ad8-44b4-a5f0-ce118c54f209",
+                    id: "3ef8876f-1ad8-44b4-a5f0-ce118c54f209",
                     marker: "3",
                     title: "Stap 3: Inloggen en gegevens controleren",
                     meta: (
@@ -98,6 +98,7 @@ export default function HuwelijksplannerStep0() {
                     ),
                     steps: [
                       {
+                        id: "3ef8876f-1ad8-44b4-a5f0-ce118c54f210",
                         title: (<Link href="/voorgenomen-huwelijk">Call to action: Inloggen</Link>) as any,
                         meta: (
                           <Link
@@ -109,6 +110,7 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "3ef8876f-1ad8-44b4-a5f0-ce118c54f309",
                         title: (
                           <Link
                             href="/login"
@@ -127,6 +129,7 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "3ef8876f-1ad8-44b4-a5f0-ce118c55f209",
                         title: (
                           <Link href="/persoonsgegevens/EC4D6AEF-0E23-4686-8778-71D2C02D7A38">
                             Aanvullen persoonsgegevens
@@ -144,7 +147,7 @@ export default function HuwelijksplannerStep0() {
                     ],
                   },
                   {
-                    key: "cadfeb8d-0408-4efb-8c16-425c7e45eb47",
+                    id: "cadfeb8d-0408-4efb-8c16-425c7e45eb47",
                     marker: "4",
                     title: "Stap 4: Partner gaat inloggen en gegevens controleren",
                     // (
@@ -162,6 +165,7 @@ export default function HuwelijksplannerStep0() {
                     ),
                     steps: [
                       {
+                        id: "cadfeb8d-0408-5efb-8c16-425c7e45eb47",
                         title: (
                           <>
                             {"Partner logt in op zelfde device: "}
@@ -183,6 +187,8 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "cbdfeb8d-0408-4efb-8c16-425c7e45eb47",
+
                         title: (
                           <>
                             {"Alternatief: "}
@@ -204,6 +210,8 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "cadfeb8d-0408-4efb-8c16-425c7e66eb47",
+
                         title: (
                           <>
                             Partner krijgt e-mail:{" "}
@@ -216,7 +224,10 @@ export default function HuwelijksplannerStep0() {
                           </>
                         ) as any,
                       },
+
                       {
+                        id: "cadfeb8d-0408-4aab-8c16-425c7e45eb47",
+
                         title: (
                           <Link
                             href="/voorgenomen-huwelijk/partner/succes"
@@ -235,6 +246,8 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "cadaeb8d-0408-4efb-8c16-425c7e45eb47",
+
                         title: (
                           <Link
                             href="/persoonsgegevens/67EEFC1C-A28A-43E7-8950-76C289E905C7"
@@ -253,6 +266,8 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "cadfeb4d-0408-4efb-8c16-425c7e45eb47",
+
                         title: (
                           <Link
                             href="/persoonsgegevens/succes"
@@ -271,6 +286,8 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "cadfeb8d-0608-4efb-8c16-425c7e45eb47",
+
                         title: (
                           <>
                             Uitnodiger krijgt e-mail als partner heeft bevestigd:{" "}
@@ -286,7 +303,7 @@ export default function HuwelijksplannerStep0() {
                     ],
                   },
                   {
-                    key: "8ffdfe08-cce4-47d4-9e09-66003be91b63",
+                    id: "8ffdfe08-cce4-47d4-9e09-66003be91b63",
                     marker: "5",
                     title: (<Link href="/voorgenomen-huwelijk/getuigen">Stap 5: Getuigen uitnodigen</Link>) as any,
                     meta: (
@@ -299,6 +316,8 @@ export default function HuwelijksplannerStep0() {
                     ),
                     steps: [
                       {
+                        id: "8fadfe08-cce4-47d4-9e09-66003be91b63",
+
                         title: (
                           <Link href="/voorgenomen-huwelijk/getuigen/succes">
                             Gelukt! - Gemeente Gaat Checken - Je kunt daarna betalen
@@ -316,7 +335,7 @@ export default function HuwelijksplannerStep0() {
                     ],
                   },
                   {
-                    key: "38d590d4-563d-4e5e-b822-d2eb598014c3",
+                    id: "38d590d4-563d-4e5e-b822-d2eb598014c3",
                     marker: "6",
                     title: (
                       <Link href="/voorgenomen-huwelijk/checken">Stap 6: Gemeente Utrecht controleert</Link>
@@ -331,7 +350,7 @@ export default function HuwelijksplannerStep0() {
                     ),
                   },
                   {
-                    key: "580e1369-ab6b-4fb0-bee8-73a5f3ecebd3",
+                    id: "580e1369-ab6b-4fb0-bee8-73a5f3ecebd3",
                     marker: "7",
                     // <Link href="/voorgenomen-huwelijk/betalen">
                     title:
@@ -348,6 +367,8 @@ export default function HuwelijksplannerStep0() {
                     ),
                     steps: [
                       {
+                        id: "480e1369-ab6b-4fb0-bee8-73a5f3ecebd3",
+
                         title: (
                           <>
                             {"Call to action: "}
@@ -365,6 +386,8 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "580e1379-ab6b-4fb0-bee8-73a5f3ecebd3",
+
                         title: (<Link href="/voorgenomen-huwelijk/betalen">Betalen — iDEAL</Link>) as any,
                         meta: (
                           <Link
@@ -376,6 +399,8 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "580e1269-ab6b-4fb0-bee8-73a5f3ecebd3",
+
                         title: (
                           <>
                             {"Feedback: "}
@@ -394,6 +419,8 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "580e1369-bb6b-4fb0-bee8-73a5f3ecebd3",
+
                         title: (
                           <Link href="/voorgenomen-huwelijk/betalen/succes">
                             na Stap 7: Je datum is geregeld! — Betaling geslaagd - Overzicht
@@ -409,6 +436,8 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "580e1369-abeb-4fb0-bee8-73a5f3ecebd3",
+
                         title: (
                           <Link href="/email-reservation-success">
                             E-mail aan alle partners: Melding voorgenomen huwelijk geslaagd
@@ -424,6 +453,8 @@ export default function HuwelijksplannerStep0() {
                         ),
                       },
                       {
+                        id: "591e1369-ab6b-4fb0-bee8-73a5f3ecebd3",
+
                         title: (
                           <Link href="/email-data-summary">
                             E-mail aan de buitengewoon ambtenaar van de burgerlijke stand (BABS): Melding voorgenomen
@@ -442,7 +473,7 @@ export default function HuwelijksplannerStep0() {
                     ],
                   },
                   {
-                    key: "21e36a43-2927-4c28-b650-4fa0bf293e9e",
+                    id: "21e36a43-2927-4c28-b650-4fa0bf293e9e",
                     marker: " ",
                     title: (<Link href="/voorgenomen-huwelijk/betalen/succes">Trouwdatum is geregeld</Link>) as any,
                     meta: (
@@ -455,7 +486,7 @@ export default function HuwelijksplannerStep0() {
                     ),
                   },
                   {
-                    key: "84e45eb2-418c-4a15-9f6a-37bde0b78be5",
+                    id: "84e45eb2-418c-4a15-9f6a-37bde0b78be5",
                     marker: "8",
                     title: (<Link href="/extra">Stap 8: Kies je extra's</Link>) as any,
                     meta: (
@@ -468,12 +499,14 @@ export default function HuwelijksplannerStep0() {
                     ),
                   },
                   {
-                    key: "415d2c3b-26da-4cfd-a225-2107ac84c6bc",
+                    id: "415d2c3b-26da-4cfd-a225-2107ac84c6bc",
                     marker: " ",
                     title: (<Link href="/huwelijksplanner-cancel">Huwelijk annuleren</Link>) as any,
                     status: "warning",
                     steps: [
                       {
+                        id: "615d2c3b-26da-4cfd-a225-2107ac84c6bc",
+
                         title: (<Link href="/huwelijksplanner-cancelled">Feedback: Huwelijk geannuleerd</Link>) as any,
                         status: "error",
                       },
