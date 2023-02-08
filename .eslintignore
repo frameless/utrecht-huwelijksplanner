@@ -1,11 +1,15 @@
 # Ignore 3rd party files
+
 node_modules
 
 # Ignore minified files
-*.min.js
+
+\*.min.js
 
 # Ignore generated files
+
 coverage/
 dist
 build
 tmp
+generated/
