@@ -5,11 +5,10 @@ ENV SHELL /bin/bash
 ARG TZ=Europe/Amsterdam
 ENV TZ Europe/Amsterdam
 
-USER node
 
 WORKDIR /var/www
 
-COPY --chown=node:node package.json package-lock.json ./
+COPY package.json package-lock.json ./
 
 ARG HUSKY_SKIP_INSTALL=true
 ARG NODE_ENV
@@ -29,7 +28,7 @@ then \
 # for when NODE_ENV is "production" using a production mode install,
 # leaving only the packages needed for production.
 
-ADD --chown=node:node ./ /var/www/
+ADD ./ /var/www/
 
 RUN if test "$NODE_ENV" != 'development'; \
 then \
