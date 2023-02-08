@@ -1,3 +1,5 @@
+#!/bin/sh -e
+
 npx -p openapi-typescript-codegen@0.23.0 openapi --exportCore true --input ../src/openapi/Agenda-Service.yaml --output ../src/generated/openapi/Agenda-Service/
 npx -p openapi-typescript-codegen@0.23.0 openapi --exportCore true --input ../src/openapi/Overige-Objecten.yaml --output ../src/generated/openapi/Overige-Objecten/
 npx -p openapi-typescript-codegen@0.23.0 openapi --exportCore true --input ../src/openapi/trouwservice.yaml --output ../src/generated/openapi/trouwservice/

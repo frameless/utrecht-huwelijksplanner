@@ -1,3 +1,5 @@
+#!/bin/sh -e
+
 curl --verbose --request GET \
   --url https://huwelijksplanner-gateway.commonground.nu/api/assents \
   --header "Authorization: ${API_TOKEN}" \
