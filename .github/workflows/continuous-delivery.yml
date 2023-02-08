@@ -44,7 +44,6 @@ jobs:
 
   continuous-deployment:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/ci/docker-image'
 
     steps:
       - uses: actions/checkout@v2
