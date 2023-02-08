@@ -41,6 +41,21 @@ then \
     && npm cache clean --force 2> /dev/null \
 ; fi
 
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL \
+    org.label-schema.build-date="${BUILD_DATE}" \
+    org.label-schema.description="Utrecht Huwelijksplanner front-end" \
+    org.label-schema.name="utrecht-huwelijksplanner" \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.url="https://github.com/frameless/utrecht-huwelijksplanner/" \
+    org.label-schema.usage="https://github.com/frameless/utrecht-huwelijksplanner/blob/develop/README.md" \
+    org.label-schema.vcs-ref="${VCS_REF}" \
+    org.label-schema.vcs-url="https://github.com/frameless/utrecht-huwelijksplanner.git" \
+    org.label-schema.vendor="Frameless B.V." \
+    org.label-schema.version="8.10"
+
 EXPOSE 3000
 
 ENTRYPOINT ["npm", "run"]
