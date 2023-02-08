@@ -69,11 +69,11 @@ jobs:
             echo "success=false" >> $GITHUB_OUTPUT
           fi
 
-      - if: steps.containerregistry-login.outputs.success == 'true' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/acceptance' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/development' || github.ref == 'refs/heads/feature-admin' || github.ref == 'refs/heads/feature-soap' || github.ref == 'refs/heads/feature-soap-extra')
+      - if: steps.containerregistry-login.outputs.success == 'true'
         name: Push to Container Registry
         run: docker-compose push
 
-      - if: steps.containerregistry-login.outputs.success == 'true' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/acceptance' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/development' || github.ref == 'refs/heads/feature-admin'|| github.ref == 'refs/heads/feature-soap' || github.ref == 'refs/heads/feature-soap-extra')
+      - if: steps.containerregistry-login.outputs.success == 'true'
         name: Push versioned containers to Container Registry
         run: |
           images=$(docker-compose images -q | xargs docker inspect --format='{{ index .RepoTags 0}}' | cut -d':' -f1 | grep $APP_NAME)
