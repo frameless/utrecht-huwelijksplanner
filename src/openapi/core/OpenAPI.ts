@@ -19,7 +19,7 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-  BASE: 'https://huwelijksplanner-gateway.commonground.nu/api',
+  BASE: process.env.NEXT_PUBLIC_API_URL ?? '',
   VERSION: '1.0',
   WITH_CREDENTIALS: false,
   CREDENTIALS: 'include',
@@ -27,7 +27,7 @@ export const OpenAPI: OpenAPIConfig = {
   USERNAME: undefined,
   PASSWORD: undefined,
   HEADERS: {
-    Authorization: process.env.NEXT_PUBLIC_API_TOKEN || '',
+    Authorization: process.env.NEXT_PUBLIC_API_TOKEN ?? '',
   },
   ENCODE_PATH: undefined,
 };
