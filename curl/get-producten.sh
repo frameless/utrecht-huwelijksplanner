@@ -1,3 +1,5 @@
+#!/bin/sh -e
+
 curl --verbose --request GET \
   --url "https://huwelijksplanner-gateway.commonground.nu/api/sdg/api/v1/producten" \
   --header "Authorization: ${API_TOKEN}" \

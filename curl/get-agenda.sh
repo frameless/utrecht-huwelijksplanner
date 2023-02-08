@@ -1,3 +1,5 @@
+#!/bin/sh -e
+
 rm tmp/agenda.json tmp/agenda-specific.json
 
 curl --verbose \
