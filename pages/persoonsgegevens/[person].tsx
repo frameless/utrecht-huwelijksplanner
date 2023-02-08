@@ -25,10 +25,10 @@ import {
   Surface,
   Textbox,
 } from "@utrecht/component-library-react";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ChangeEventHandler, FormEvent, useState } from "react";
 import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
