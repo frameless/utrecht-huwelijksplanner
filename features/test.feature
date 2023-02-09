@@ -100,12 +100,69 @@ Given Ik ben op de DigID login pagina #Eenvoudig trouwen Step 3
     And Ik heb geen DigID konto
     And Ik zie een link "Nog geen DigID? Vraag uw DigiD aan" in de pagina
 When Ik klik op de link
-Then Ik ga naar en pagina waarin ik mijn DigID kan krijgen
+Then Ik ga naar een pagina waarin ik mijn DigID kan krijgen
+ 
+Scenario: Ik wil mijn basisgegevens bevestigen***
+Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    And Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    And Mijn persoonsgegevens zijn juist
+    And Mijn adresgegevens zijn juist
 
 Scenario: Ik wil mijn gegevens bevestigen
 Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
     And Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
-    And Mijn gegevens zijn juist
+    And Mijn gegevens zijn niet juist
+When Ik op Neem contact op met de gemeente klikt
+Then Ik ga naar een pagina waarin ik mijn gegevens kan laten bekend zijn
+
+Scenario: Ik wil mijn telefoonnummer invullen
+Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    And Ik zie een input field voor mijn telefoonnummer
+When Ik in een input field mijn telefoonnummer typt
+Then Wordt het getypte nummer gecontroleerd voor geldigheid
+
+Scenario: Ik wil mijn email invullen
+Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    And Ik zie een input field voor mijn email
+When Ik in een input field mijn email typt
+Then Wordt het getypte email gecontroleerd voor geldigheid
+
+Scenario: Ik wil verklaren dat ik niet getrouwd ben
+Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    And Ik zie een checkbox voor de alleenstaand verklaring
+When Ik op de checkbox tikt
+Then Wordt het checkbox ingevuld
+
+Scenario: Ik wil verklaren dat ik niet binnen mijn familie ga trouwen
+Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    And Ik zie een checkbox voor de niet familie trouwen verklaring
+When Ik op de checkbox tikt
+Then Wordt het checkbox ingevuld
+
+Scenario: Ik wil iemand in mijn familie trouwen
+Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    And Ik zie een checkbox voor de niet familie trouwen verklaring
+    And Ik zie een Meer Informatie sectie met contactmogelijkheden links
+When Ik op een van de contactmogelijkehen links klikt
+Then Ik neem contact met de gemeente om mijn familieleden te kunnen trouwen
+
+Scenario: Ik wil al de gegevens in het formulier bevestigen
+Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    And Al de ingevulde gegevens in het formulier kloppen
+When Ik op de gegevensbevestiging checkbox tikt
+Then Wordt het checkbox ingevuld
+
+Scenario: Ik wil mijn contactgegevens opslaan
+Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    And Ik heb al mijn contactgegevens ingevuld
+    And Ik heb al de verklering checkboxes getikt
+When Ik op de Contactgegevens button klikt
+Then Ik ga naar een pagina waarin ik mijn partner voor de huwelijk kan melden
+voorgenomen-huwelijk/partner
+
+Scenario: Ik wil mijn partner voor de huwelijk melden
+Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    And Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
 When 
 Then 
 
