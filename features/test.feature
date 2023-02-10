@@ -1,176 +1,240 @@
+# language: nl
 
 ## Step 0
-Feature: Gratis Huwelijk/geregistreerd partnerschap
+Functionaliteit: Gratis Huwelijk/geregistreerd partnerschap
 Scenario: Ik wil een huwelijk of geregistreerd partnerschap plannen
-Given Ik ben op de utrecht huwelijksplanner pagina #Regel je huwelijk of geregistreerd partnerschap Step 0 
-    And Ik kan een Start button zien
-When Ik klik op Start
-Then Ga ik naar de "Trouwen of geregistreerd partnerschap" pagina #step 1
+Gegeven Ik ben op de utrecht huwelijksplanner pagina #Regel je huwelijk of geregistreerd partnerschap Step 0 
+    En Ik kan een Start button zien
+Wanneer Ik klik op Start
+Dan Ga ik naar de "Trouwen of geregistreerd partnerschap" pagina #step 1
 
 ## Step 1
 Scenario: Ik wil een huwelijk plannen
-Given Ik ben op de trouwopties pagina #Trouwen of geregistreerd partnerschap Step 1
-    And Ik kan een Trouwen plannen button zien
-When Ik klik op de Trouwen plannen button
-Then Ga ik naar de pagina "Wanneer en Hoe" sectie voor huwelijken #step 2
+Gegeven Ik ben op de trouwopties pagina #Trouwen of geregistreerd partnerschap Step 1
+    En Ik kan een Trouwen plannen button zien
+Wanneer Ik klik op de Trouwen plannen button
+Dan Ga ik naar de pagina "Wanneer en Hoe" sectie voor huwelijken #step 2
 
 Scenario: Ik wil een geregistreerd partnerschap plannen
-Given Ik ben op de trouwopties pagina #Trouwen of geregistreerd partnerschap Step 1 
-    And Ik kan een Geregistreerd Partnerschap plannen button zien
-When Ik kies een geregistreerd partnerschap button
-Then Ga ik naar de pagina "Wanneer en Hoe" sectie voor geregistreerd partnerschap #step 2
+Gegeven Ik ben op de trouwopties pagina #Trouwen of geregistreerd partnerschap Step 1 
+    En Ik kan een Geregistreerd Partnerschap plannen button zien
+Wanneer Ik kies een geregistreerd partnerschap button
+Dan Ga ik naar de pagina "Wanneer en Hoe" sectie voor geregistreerd partnerschap #step 2
 
 ## Step 2
 Scenario: Ik wil zien wanneer ik kan trouwen
-Given Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
-    And Er is een input field date op de pagina
-When Ik de kalender icon klikt 
-Then Ik kan de beschikbare data zien
+Gegeven Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
+    En Er is een input field date op de pagina
+Wanneer Ik de kalender icon klikt 
+Dan Ik kan de beschikbare data zien
 
 Scenario: Ik wil zien wanneer ik kan trouwen
-Given Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
-    And Er is een input field date op de pagina
-When Ik het input field gefocussed heb
-Then Ik kan de datum handmatig invoeren
-    And De beschikbare data voor de ingevoerd datum zien
+Gegeven Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
+    En Er is een input field date op de pagina
+Wanneer Ik het input field gefocussed heb
+Dan Ik kan de datum hEnmatig invoeren
+    En De beschikbare data voor de ingevoerd datum zien
 
 Scenario: Ik wil een trouwdatum selecteren
-Given Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
-    And Ik wil in de komende twee weken trouwen
-When Ik probeer de beschikbare dag te selecteeren
-Then Zie ik dat ik dat niet kan
+Gegeven Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
+    En Ik wil in de komende twee weken trouwen
+Wanneer Ik probeer de beschikbare dag te selecteeren
+Dan Zie ik dat ik dat niet kan
 
 Scenario: Ik wil een trouwdatum selecteren
-Given Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
-    And Ik wil niet in de komende twee weken trouwen
-    And Er zijn beschikbare data voor trouwen
-When Ik kan de beschikbare dag selecteeren
-Then De datum wordt op de input field gezet
+Gegeven Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
+    En Ik wil niet in de komende twee weken trouwen
+    En Er zijn beschikbare data voor trouwen
+Wanneer Ik kan de beschikbare dag selecteeren
+Dan De datum wordt op de input field gezet
 
 Scenario: Ik wil een tijdslot selecteren
-Given Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
-    And Ik heb een beschikbare dag geselecteerd
-When Ik kan het gewenste tijdslot klikken
-Then Het tijdslot wordt geselecteerd
+Gegeven Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
+    En Ik heb een beschikbare dag geselecteerd
+Wanneer Ik kan het gewenste tijdslot klikken
+Dan Het tijdslot wordt geselecteerd
 
 Scenario: Ik wil mijn gewenste tijd een datum bevestigen
-Given Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
-    And Ik heb een beschikbare dag en tijdslot geselecteerd
-    And Ik zie een bevestiging button
-When Ik mijn keuze bevestig
-Then Ga ik naar de "Eenvoudig trouwen" pagina #Step 3
+Gegeven Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
+    En Ik heb een beschikbare dag en tijdslot geselecteerd
+    En Ik zie een bevestiging button
+Wanneer Ik mijn keuze bevestig
+Dan Ga ik naar de "Eenvoudig trouwen" pagina #Step 3
 
 Scenario: Ik wil pas over een jaar trouwen
-Given Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
-When Ik probeer een datum over een jaar te selecteren
-Then Ik kan geen datum selecteren
+Gegeven Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
+Wanneer Ik probeer een datum over een jaar te selecteren
+Dan Ik kan geen datum selecteren
 
 Scenario: Er is geen gewenste tijd een datum die bij me passen
-Given Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
-    And Ik heb de beschikbare dagen en tijdsloten gezien 
-When Ik op cancel klik (Geen van de data mij passen)***
-Then Ik verlaat de website 
+Gegeven Ik ben op de trouwopties huwelijk pagina #Wanneer en Hoe Step 2
+    En Ik heb de beschikbare dagen en tijdsloten gezien 
+Wanneer Ik op cancel klik (Geen van de data mij passen)***
+Dan Ik verlaat de website 
 
 ## Step 3
-Scenario: Ik wil mijn gewenste tijd een datum bevestigen
-Given Ik ben op de voorgenomen-huwelijk pagina #Eenvoudig trouwen Step 3
-    And Ik zie de correcte vroeger geselecteerde tijd en datum combinatie 
-    And Ik zie een Inloggen met DigID button
-When Ik klik op de button
-Then Ik word naar de DigIDlogin pagina doorgestuurd #Step 3
+Scenario: Ik wil naar de DigID login pagina
+Gegeven Ik ben op de voorgenomen-huwelijk pagina #Eenvoudig trouwen Step 3
+    En Ik zie de correcte vroeger geselecteerde tijd en datum combinatie 
+    En Ik zie een Inloggen met DigID button
+Wanneer Ik klik op de button
+Dan Ik word naar de DigIDlogin pagina doorgestuurd #Step 3
 
 ***2 people choose the same date, what happens?
 ***How long is the data available in this session?
 
 Scenario: Ik wil met DigID inloggen
-Given Ik ben op de DigID login pagina #Eenvoudig trouwen Step 3
-    And Ik heb een DigID konto
-    And Ik zie de inloggen opties #Meer info TBD
-When Ik klik op een van de opties
-Then Ik word ingeloggd met DigID
+Gegeven Ik ben op de DigID login pagina #Eenvoudig trouwen Step 3
+    En Ik heb een DigID konto
+    En Ik zie de inloggen opties #Meer info TBD
+Wanneer Ik klik op een van de opties
+Dan Ik word ingeloggd met DigID
 
 Scenario: Ik wil de DigID inloggen annuleren
-Given Ik ben op de DigID login pagina #Eenvoudig trouwen Step 3
-When Ik klik op annuleren
-Then Word ik teruggestuurd naar de voorgenomen-huwelijk pagina
+Gegeven Ik ben op de DigID login pagina #Eenvoudig trouwen Step 3
+Wanneer Ik klik op annuleren
+Dan Word ik teruggestuurd naar de voorgenomen-huwelijk pagina
 ***zie ik mijn gegevens weer terug??
 
 Scenario: Ik wil een DigID konto hebben
-Given Ik ben op de DigID login pagina #Eenvoudig trouwen Step 3
-    And Ik heb geen DigID konto
-    And Ik zie een link "Nog geen DigID? Vraag uw DigiD aan" in de pagina
-When Ik klik op de link
-Then Ik ga naar een pagina waarin ik mijn DigID kan krijgen
+Gegeven Ik ben op de DigID login pagina #Eenvoudig trouwen Step 3
+    En Ik heb geen DigID konto
+    En Ik zie een link "Nog geen DigID? Vraag uw DigiD aan" in de pagina
+Wanneer Ik klik op de link
+Dan Ik ga naar een pagina waarin ik mijn DigID kan krijgen
  
 Scenario: Ik wil mijn basisgegevens bevestigen***
-Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
-    And Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
-    And Mijn persoonsgegevens zijn juist
-    And Mijn adresgegevens zijn juist
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Mijn persoonsgegevens zijn juist
+    En Mijn adresgegevens zijn juist
 
 Scenario: Ik wil mijn gegevens bevestigen
-Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
-    And Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
-    And Mijn gegevens zijn niet juist
-When Ik op Neem contact op met de gemeente klikt
-Then Ik ga naar een pagina waarin ik mijn gegevens kan laten bekend zijn
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Mijn gegevens zijn niet juist
+Wanneer Ik op Neem contact op met de gemeente klikt
+Dan Ik ga naar een pagina waarin ik mijn gegevens kan laten bekend zijn
 
 Scenario: Ik wil mijn telefoonnummer invullen
-Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
-    And Ik zie een input field voor mijn telefoonnummer
-When Ik in een input field mijn telefoonnummer typt
-Then Wordt het getypte nummer gecontroleerd voor geldigheid
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Ik zie een input field voor mijn telefoonnummer
+Wanneer Ik in een input field mijn telefoonnummer typt
+Dan Wordt het getypte nummer gecontroleerd voor geldigheid
 
 Scenario: Ik wil mijn email invullen
-Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
-    And Ik zie een input field voor mijn email
-When Ik in een input field mijn email typt
-Then Wordt het getypte email gecontroleerd voor geldigheid
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Ik zie een input field voor mijn email
+Wanneer Ik in een input field mijn email typt
+Dan Wordt het getypte email gecontroleerd voor geldigheid
 
 Scenario: Ik wil verklaren dat ik niet getrouwd ben
-Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
-    And Ik zie een checkbox voor de alleenstaand verklaring
-When Ik op de checkbox tikt
-Then Wordt het checkbox ingevuld
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Ik zie een checkbox voor de alleenstaEn verklaring
+Wanneer Ik op de checkbox tikt
+Dan Wordt het checkbox ingevuld
 
 Scenario: Ik wil verklaren dat ik niet binnen mijn familie ga trouwen
-Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
-    And Ik zie een checkbox voor de niet familie trouwen verklaring
-When Ik op de checkbox tikt
-Then Wordt het checkbox ingevuld
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Ik zie een checkbox voor de niet familie trouwen verklaring
+Wanneer Ik op de checkbox tikt
+Dan Wordt het checkbox ingevuld
 
-Scenario: Ik wil iemand in mijn familie trouwen
-Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
-    And Ik zie een checkbox voor de niet familie trouwen verklaring
-    And Ik zie een Meer Informatie sectie met contactmogelijkheden links
-When Ik op een van de contactmogelijkehen links klikt
-Then Ik neem contact met de gemeente om mijn familieleden te kunnen trouwen
+Scenario: Ik wil iemEn in mijn familie trouwen
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Ik zie een checkbox voor de niet familie trouwen verklaring
+    En Ik zie een Meer Informatie sectie met contactmogelijkheden links
+Wanneer Ik op een van de contactmogelijkehen links klikt
+Dan Ik neem contact met de gemeente om mijn familieleden te kunnen trouwen
 
 Scenario: Ik wil al de gegevens in het formulier bevestigen
-Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
-    And Al de ingevulde gegevens in het formulier kloppen
-When Ik op de gegevensbevestiging checkbox tikt
-Then Wordt het checkbox ingevuld
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Al de ingevulde gegevens in het formulier kloppen
+Wanneer Ik op de gegevensbevestiging checkbox tikt
+Dan Wordt het checkbox ingevuld
 
 Scenario: Ik wil mijn contactgegevens opslaan
-Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
-    And Ik heb al mijn contactgegevens ingevuld
-    And Ik heb al de verklering checkboxes getikt
-When Ik op de Contactgegevens button klikt
-Then Ik ga naar een pagina waarin ik mijn partner voor de huwelijk kan melden
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Ik heb al mijn contactgegevens ingevuld
+    En Ik heb al de verklering checkboxes getikt
+Wanneer Ik op de Contactgegevens button klikt
+Dan Ik ga naar een pagina waarin ik mijn partner voor de huwelijk kan melden
 voorgenomen-huwelijk/partner
 
 Scenario: Ik wil mijn partner voor de huwelijk melden
-Given Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
-    And Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
-When 
-Then 
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
+    En Ik zie een Partner inloggen met DigID button 
+Wanneer Ik op de button klikt
+Dan Ik word naar de DigIDlogin pagina doorgestuurd #Step 3
 
-Feature: Eenvoudig huwelijk/partnerschap
-Scenario:
+Scenario: Ik wil mijn partner met DigID inloggen
+Gegeven Ik ben op de DigID login pagina #Eenvoudig trouwen Step 3
+Wanneer Ik login met een DigID konto
+    En Het is een ander login als dat van partner 1
+Dan Mijn partner wordt ingeloggd met DigID
 
-Feature: Flits- en baliehuwelijk/partnerschap, variant op eenvoudig
-Scenario:
+Scenario: Ik wil mijn partner voor de huwelijk melden
+Gegeven Ik ben op de Persoonsgegevens pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
+    En Ik zie een  mail een uitnodiging aan je partner link
+Wanneer Ik op de link klikt
+Dan Ik word naar de Partner Uitnodigen pagina doorgestuurd #Step 3
+
+Scenario: Ik wil mijn partners gegevens invullen voor een DigID login uitnodiging 
+Gegeven Ik ben op de Partner Uitnodigen pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
+    En Ik zie een  name input field
+    En Ik zie een email input field
+    En Ik zie een Verstuur uitnodiging button
+Wanneer Ik de input fields invul
+Dan Word de ingevulde informatie laten zien op de input fields #Step 3
+
+Scenario: Ik wil mijn partner een uitnodiging voor een DigID login sturen
+Gegeven Ik ben op de Partner Uitnodigen pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
+    En Ik heb de partner gegevens input fields ingevuld
+Wanneer Ik op de Verstuur uitnodiging button klikt
+Dan Word een uitnodiging voor en DigID login email naar mijn partner gestuurd
+    En Ik word naar de Partner Success pagina gestuurd #Step 3
+
+Scenario: Ik wil mijn email bekijken
+Gegeven Ik ben op de Partner Success pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
+    En Ik zie een text waarin staat we wachten voor de login van partner 2
+    En Ik zie een button Bekijk e-mail voor aanvrager
+Wanneer Ik op de button klikt
+Dan Ik word naar de Aanvrager email pagina gestuurd #Step 3
+
+Scenario: Ik wil met de huwelijksaanvraag doorgaan
+Gegeven Ik ben op de Aanvrager email pagina #Eenvoudig trouwen Step 3
+    En Ik zie de correcte naam van partner 1
+    En Ik zie een button Doorgaan huwelijksaanvraag
+Wanneer Ik op de button klikt
+Dan Ik word naar de Getuigen pagina gestuurd#Step 3
+    
+Scenario: Ik wil de email van mijn partner bekijken
+Gegeven Ik ben op de Partner Success pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
+    En Ik zie een text waarin staat we wachten voor de login van partner 2
+    En Ik zie een button Bekijk e-mail voor partner
+Wanneer Ik op de button klikt
+Dan Ik word naar de Invitation Email Partner pagina gestuurd #Step 3
+
+Scenario: Ik partner 2 met DigID inloggen
+Gegeven Ik ben op de Invitation Email Partner pagina #Eenvoudig trouwen Step 3
+    En Ik zie de correcte naam van partner 2
+    En Ik zie een button Inloggen met DigID
+Wanneer Ik op de button klikt
+Dan Ik word naar de DigIDlogin pagina doorgestuurd #Step 3
+
+Scenario: Ik wil een DigID inloggen uitnodiging naar partner 2 stuuren
+Gegeven Ik ben op de Partner Success pagina #Eenvoudig trouwen Step 3
+    En Ik zie een name input field 
+    En Ik zie een email input field
+Wanneer Ik vul in de gegevens van partner 2 
+Dan Wordt het getypte email gecontroleerd voor geldigheid #Step 3
+    En ???
 
 Kies tussen trouwen en geregistreerd partnerschap
 Kies een datum en tijd voor de bijeenkomst
