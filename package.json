@@ -53,7 +53,7 @@
     "@utrecht/component-library-css": "1.0.0-alpha.438",
     "@utrecht/component-library-react": "1.0.0-alpha.247",
     "@utrecht/design-tokens": "1.0.0-alpha.431",
-    "@utrecht/web-component-library-react": "1.0.0-alpha.437",
+    "@utrecht/web-component-library-react": "1.0.0-alpha.439",
     "clsx": "1.2.1",
     "lodash.assign": "4.2.0",
     "lodash.clonedeepwith": "4.5.0",
