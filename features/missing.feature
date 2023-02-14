@@ -1,5 +1,5 @@
-# Where is the cost calculation coming from?
-# Could this calculation be incorrect?
+# Waar komt de rekening van?
+# Kan de rekening niet juist zijn?
 # Krijg de user nooit een prijsverdeling (wat heeft wat gekost)?
 # Hoelang blift de user sessie (met al de informatie) actief?
 #   -Wat als de user offline gaat?
@@ -15,5 +15,6 @@
 #   - En dan heb ik niet de min 2 getuigen nodig voor de huwelijk. Krijg ik dan meer tijd om een nieuwe getuigen te vinden?
 # Wat gebeurt als ik mijn extra wil annuleren?
 # Wat als de geselecteerde aangeboden extra niet beschikbaar is? 
+# iDEAL betaling testen, is dit mogelijk?
 
  

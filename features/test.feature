@@ -306,7 +306,7 @@ Wanneer Ik op de Nodig getuigen uit button klikt
 Dan Ik word naar de Getuigen pagina gestuurd#Step 3
 
 Scenario: Getuigen gegevens invullen
-Gegeven Ik ben op de Getuigen #Eenvoudig trouwen Step 3
+Gegeven Ik ben op de Getuigen pagina #Eenvoudig trouwen Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
     En Ik zie de kosten voor de huwelijk
     En Ik zie tussen 2 en 4 input field sets voor de namen en emails van de getuigen 
@@ -314,7 +314,7 @@ Wanneer Ik in een input field klikt
 Dan Kan ik de input fields met de gegevens van de getuigen invullen #Step 3
 
 Scenario: Getuigens email controlleren
-Gegeven Ik ben op de Getuigen #Eenvoudig trouwen Step 3
+Gegeven Ik ben op de Getuigen pagina #Eenvoudig trouwen Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
     En Ik zie de kosten voor de huwelijk
     En Ik zie tussen 2 en 4 input field sets voor de namen en emails van de getuigen 
@@ -323,7 +323,7 @@ Dan Kan ik de gegevens van de getuigen invullen #Step 3
     En Wordt de getypte email gecontroleerd voor geldigheid
 
 Scenario: Verzenden van getuigen uitnodigingen
-Gegeven Ik ben op de Getuigen #Eenvoudig trouwen Step 3
+Gegeven Ik ben op de Getuigen pagina #Eenvoudig trouwen Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
     En Ik zie de kosten voor de huwelijk
     En Ik heb tenminste 1 paar van input fields ingevuld 
@@ -331,15 +331,89 @@ Gegeven Ik ben op de Getuigen #Eenvoudig trouwen Step 3
 Wanneer Ik op de Verstuur uitnodiging button klikt
 Dan Ik word naar de Getuigen Succes pagina gestuurd #Step 3
     
-Scenario: 
-Gegeven Ik ben op de Getuigen Succes #Eenvoudig trouwen Step 3
+Scenario: Ik wil de gemeente laten mijn huwelijks verzoek checken
+Gegeven Ik ben op de Getuigen Succespagina #Eenvoudig trouwen Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
     En Ik zie de kosten voor de huwelijk
 Wanneer Ik op de Laat de gemeente checken en ga betalen button klikt
-Dan Ik word naar de  pagina gestuurd #Step 3
+Dan Ik word naar de Voorgenomen Huwelijk Checken pagina gestuurd #Step 3
+#Hoelang moet man wachten? Ga ik direct naar de volgende pagina zoals bij de draft website? Wat gebeurt als er iets mis is (email, phonecall, anders)? 
+
+Scenario: Ik wil voor mij huwelijk betalen
+Gegeven Ik ben op de Voorgenomen Huwelijk Checken pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik zie de kosten voor de huwelijk
+Wanneer Ik op de Ga betalen button klikt
+Dan Ik word naar de Voorgenomen Huwelijk Betalen pagina gestuurd #Step 3
+
+Scenario: Ik wil met iDEAL voor mij huwelijk betalen
+Gegeven Ik ben op de Voorgenomen Huwelijk Betalen pagina #Eenvoudig trouwen Step 3
+    En Ik zie Gemeente Utrecht als de korrekte begunstigde
+    En Ik zie de kosten voor de huwelijk
+Wanneer Ik op de icoon van mijn bank X klikt
+Dan Ik word naar de X bank betaling pagina gestuurd #Step 3
+
+Scenario: Ik wil mijn betaling with bank X voltooien
+Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 3
+    En X
+    En X
+Wanneer X
+Dan Ik word naar de X bank betaling pagina gestuurd #Step 3
+
+Scenario: Ik wil mijn huwelijk betaling ontvangen bevestigen
+Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik zie de kosten voor de huwelijk
+    En Ik zie als text GELUKT Betaling ontvangen   
+
+Scenario: Ik wil informatie over het Stadskantoor Utrecht locatie
+Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik zie de kosten voor de huwelijk
+    En Ik zie als text GELUKT Betaling ontvangen 
+Wanneer Ik op de link Stadskantoor Utrecht link klikt
+Dan Ik word naar de Contact Stadskantoor pagina gestuurd #Step 5
+
+Scenario: Ik wil de huwelijk annuleeren
+Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik zie de kosten voor de huwelijk
+    En Ik zie als text GELUKT Betaling ontvangen 
+Wanneer Ik op de Annuleer huwelijk link klikt
+Dan Ik word naar de Huwelijksplanner Cancel pagina gestuurd #Step 5
+
+Scenario: Ik wil de huwelijksreservering annuleeren
+Gegeven Ik ben op de Huwelijksplanner Cancel pagina #Eenvoudig trouwen Step 5 
+Wanneer Ik op de Annuleer reservering button klikt
+Dan Ik word naar de Huwelijksplanner Cancel pagina gestuurd #Step 5
+
+Scenario: Ik wil de huwelijksreservering annuleeren
+Gegeven Ik ben op de Huwelijksplanner Cancel pagina #Eenvoudig trouwen Step 5 
+Wanneer Ik op de Nee, ik wil terug naar het overzicht button klikt
+Dan Ik word naar de Betalen Succes pagina gestuurd #Step 5
+
+Scenario: Ik wil de gegevens van de betrokkenen aanpassen 
+Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik zie de kosten voor de huwelijk
+    En Ik zie als text GELUKT Betaling ontvangen 
+Wanneer Ik op een van de Aanpassen links klikt
+Dan 404
 
 
 *Should there be a version of this for partner 1 and another for Partner 2??
 line 235 partner 2 
 * is the getuig uitnodiging pagina voor elk partner anders? IT'S THE SAME
 * witnesses webpage does not allow input
+--
+* If I right click open a button, will my data still be there in the new window? ScenarioGUERKIN ANNOTATIONS POSSIBLE ??
+* line 340 ?? missing part is automatic part is "manual 1 pag succes one page niet succes page wait pagina"
+cancel extra boekje goedkopere huwelijk voor elk los ding scenario
+* line X hoe kan ik mijn betaling cancellen?
+* line 377 english version says Cancel de ceremony, dutch version says Annuleer huwelijk :/
+* line 382 shouldn't it say " Annuleer huwelijk reservering" instead? like in the next scenario WEIRD  INFO STILL THERE DATE COMES LATER 
+* line 391 links 404
+* back to wedding extras...
+write as i would it expect it to be 
+
+aanpassen links to specif related page linked
