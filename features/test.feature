@@ -385,21 +385,82 @@ Dan Ik word naar de Huwelijksplanner Cancel pagina gestuurd #Step 5
 Scenario: Ik wil de huwelijksreservering annuleeren
 Gegeven Ik ben op de Huwelijksplanner Cancel pagina #Eenvoudig trouwen Step 5 
 Wanneer Ik op de Annuleer reservering button klikt
-Dan Ik word naar de Huwelijksplanner Cancel pagina gestuurd #Step 5
+Dan Ik word naar de "Annuleer reservering bevestiging" pagina gestuurd #Step 5
 
 Scenario: Ik wil de huwelijksreservering annuleeren
 Gegeven Ik ben op de Huwelijksplanner Cancel pagina #Eenvoudig trouwen Step 5 
 Wanneer Ik op de Nee, ik wil terug naar het overzicht button klikt
 Dan Ik word naar de Betalen Succes pagina gestuurd #Step 5
 
-Scenario: Ik wil de gegevens van de betrokkenen aanpassen 
+Scenario: Ik wil de gegevens van Partner 1 aanpassen 
 Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
     En Ik zie de kosten voor de huwelijk
     En Ik zie als text GELUKT Betaling ontvangen 
-Wanneer Ik op een van de Aanpassen links klikt
-Dan 404
+Wanneer Ik op een van de Aanpassen links van de contactgegevens van Partner 1 klikt
+Dan Ik word naar de Persoonsgegevens voor Partner 1 pagina gestuurd # Step 3
 
+Scenario: Ik wil terug gaan naar de Melding Voorgenomen Huwelijk pagina gaan  
+Gegeven Ik ben op de Persoonsgegevens voor Partner 1 pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik heb voor de huwelijk al betaald
+    En Ik zie een link Ga terug naar de Melding Voorgenomen Huwelijk pagina 
+Wanneer Ik op de Ga terug naar de Melding Voorgenomen Huwelijk pagina klikt
+Dan Ik word naar de Betalen Succes pagina gestuurd # Step 5
+
+Scenario: Ik wil de gegevens van Partner 2 aanpassen 
+Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik zie de kosten voor de huwelijk
+    En Ik zie als text GELUKT Betaling ontvangen 
+Wanneer Ik op een van de Aanpassen links van de contactgegevens van Partner 2 klikt
+Dan Ik word naar de Persoonsgegevens voor Partner 2 pagina gestuurd # Step 3
+
+Scenario: Ik wil terug gaan naar de Melding Voorgenomen Huwelijk pagina gaan  
+Gegeven Ik ben op de Persoonsgegevens voor Partner 2 pagina #Eenvoudig trouwen Step 3
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik heb voor de huwelijk al betaald
+    En Ik zie een link Ga terug naar de Melding Voorgenomen Huwelijk pagina 
+Wanneer Ik op de Ga terug naar de Melding Voorgenomen Huwelijk pagina klikt
+Dan Ik word naar de Betalen Succes pagina gestuurd # Step 5
+
+Scenario: Ik wil de gegevens van getuige 1 aanpassen 
+Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik zie de kosten voor de huwelijk
+    En Ik zie als text GELUKT Betaling ontvangen 
+Wanneer Ik op een van de Aanpassen links van de contactgegevens van Getuigen 1 klikt
+Dan Ik word naar de Getuigen pagina gestuurd # Step 3
+    En De gegeven van getuig 1 verwezen door de geklikte link woordt gefocuseerd
+
+Scenario: Ik wil de gegevens van getuige 2 aanpassen 
+Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik zie de kosten voor de huwelijk
+    En Ik zie als text GELUKT Betaling ontvangen 
+Wanneer Ik op een van de Aanpassen links van de contactgegevens van Getuigen 1 klikt
+Dan Ik word naar de Getuigen pagina gestuurd # Step 3
+    En De gegeven van getuig 2 verwezen door de geklikte link woordt gefocuseerd
+                    
+Scenario: Ik wil de gegevens van getuige 3 aanpassen 
+Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik zie de kosten voor de huwelijk
+    En Ik zie als text GELUKT Betaling ontvangen 
+    En Er zijn contactgegevens voorhanden voor Getuig 3
+Wanneer Ik op een van de Aanpassen links van de contactgegevens van Getuigen 1 klikt
+Dan Ik word naar de Getuigen pagina gestuurd # Step 3
+    En De gegeven van getuig 3 verwezen door de geklikte link woordt gefocuseerd
+
+Scenario: Ik wil de gegevens van getuige 4 aanpassen 
+Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
+    En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
+    En Ik zie de kosten voor de huwelijk
+    En Ik zie als text GELUKT Betaling ontvangen 
+    En Er zijn contactgegevens voorhanden voor Getuig 4
+Wanneer Ik op een van de Aanpassen links van de contactgegevens van Getuigen 1 klikt
+Dan Ik word naar de Getuigen pagina gestuurd # Step 3
+    En De gegeven van getuig 3 verwezen door de geklikte link woordt gefocuseerd
 
 *Should there be a version of this for partner 1 and another for Partner 2??
 line 235 partner 2 
@@ -415,5 +476,7 @@ cancel extra boekje goedkopere huwelijk voor elk los ding scenario
 * line 391 links 404
 * back to wedding extras...
 write as i would it expect it to be 
-
 aanpassen links to specif related page linked
+#not real sites between ""
+*line 395 zou dit linken aan de vorige pagina van step 3? want dan moet man nog een keer al de andere stapen doorlopen PLUS, man komt terug naar de betaling pagina, maar mat heeft al betaald
+* line 427 getuigen wat als de user de gegevens voor getuigens 1 en 3 of 3 en 4 invuuld (not in order)? mag dat? worden de getuigen geregistreerd als 3 en 4 of worden ze gemaakt naar 1 en 2?
