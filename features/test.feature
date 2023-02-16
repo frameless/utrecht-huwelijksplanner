@@ -6,20 +6,20 @@ Scenario: Ik wil een huwelijk of geregistreerd partnerschap plannen
 Gegeven Ik ben op de utrecht huwelijksplanner pagina #Regel je huwelijk of geregistreerd partnerschap Step 0 
     En Ik kan een Start button zien
 Wanneer Ik klik op Start
-Dan Ga ik naar de Trouw Opties pagina #step 1
+Dan Ik word naar de Trouw Opties pagina gestuurd #step 1
 
 ## Step 1
 Scenario: Ik wil een huwelijk plannen
 Gegeven Ik ben op de Trouw Opties pagina #Trouwen of geregistreerd partnerschap Step 1
     En Ik kan een Trouwen plannen button zien
 Wanneer Ik klik op de Trouwen plannen button
-Dan Ga ik naar de Trouw Opties Huwelijk pagina #step 2
+Dan Ik word naar de Trouw Opties Huwelijk pagina gestuurd #step 2
 
 Scenario: Ik wil een geregistreerd partnerschap plannen
 Gegeven Ik ben op de Trouw Opties pagina #Trouwen of geregistreerd partnerschap Step 1 
     En Ik kan een Geregistreerd partnerschap plannen button zien
 Wanneer Ik klik op de Geregistreerd partnerschap plannen button
-Dan Ga ik naar de Trouw Opties Geregistreerd partnerschap pagina  #Step 2
+Dan Ik word naar de Trouw Opties Geregistreerd partnerschap pagina gestuurd #Step 2
 
 ## Step 2
 Scenario: Ik wil zien op welk datum ik kan trouwen
@@ -69,7 +69,7 @@ Gegeven Ik ben op de Trouw Opties Huwelijk pagina #Wanneer en Hoe Step 2
     En Ik heb een beschikbare dag en tijdslot geselecteerd
     En Ik zie een Ja, dit wil ik! button
 Wanneer Ik op de button klikt
-Dan Ga ik naar de Voorgenomen Huwelijk pagina #Step 3
+Dan Ik word naar de Voorgenomen Huwelijk pagina gestuurd #Step 3
 
 Scenario: Ik wil in over een jaar trouwen
 Gegeven Ik ben op de Trouw Opties Huwelijk pagina #Wanneer en Hoe Step 2
@@ -97,7 +97,7 @@ Gegeven Ik ben op de DigID Login pagina #Inloggen bij DigID Step 3
     En Ik zie de DigID Inloggen interface 
     En Ik zie de DigID inloggen opties buttons   #<---Meer info TBD
 Wanneer Ik klik op een van de inloggen opties
-Dan Partner 1 wordt ingeloggd met DigID
+Dan Partner 1 word ingeloggd met DigID
     En Ik word naar de Persoonsgegevens voor Partner 1 pagina gestuurd
 
 Scenario: Ik wil de DigID inloggen annuleren
@@ -112,7 +112,7 @@ Gegeven Ik ben op de DigID Login pagina #Inloggen bij DigID Step 3
     En Ik heb geen DigID konto
     En Ik zie de  Nog geen DigID? Vraag uw DigiD aan link op de pagina
 Wanneer Ik klik op de link
-Dan Ik ga naar een pagina waarin ik een DigID kan krijgen
+Dan Ik word naar een pagina waarin ik een DigID kan krijgen gestuurd
 
 Scenario: Ik wil de basisgegevens van Partner 1 bevestigen
 Gegeven Ik ben op de Persoonsgegevens voor Partner 1 pagina # Step 3
@@ -126,14 +126,14 @@ Gegeven Ik ben op de Persoonsgegevens voor Partner 1 pagina #Melding Voorgenomen
     En De basisgegevens van Partner 1 zijn niet juist
     En Ik zie een Neem contact op met de gemeente link
 Wanneer Ik op de Neem contact op met de gemeente link klikt
-Dan Ik ga naar de Persoonsgegevens opvragen of aanpassen (BRP) pagina 
+Dan Ik word naar de Persoonsgegevens opvragen of aanpassen (BRP) pagina gestuurd
 
 Scenario: Ik wil het telefoonnummer van Partner 1 invullen
 Gegeven Ik ben op de Persoonsgegevens voor Partner 1 pagina #Melding Voorgenomen Huwelijk Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
     En Ik zie een input field voor het telefoonnummer van Partner 1
 Wanneer Ik in de input field het telefoonnummer van Partner 1 invullt
-Dan Wordt het getypte nummer gecontroleerd voor geldigheid
+Dan Het getypte nummer wordt gecontroleerd voor geldigheid
 
 Scenario: Ik wil het telefoonnummer van Partner 1 bewerken
 Gegeven Ik ben op de Persoonsgegevens voor Partner 1 pagina #Melding Voorgenomen Huwelijk Step 3
@@ -142,14 +142,14 @@ Gegeven Ik ben op de Persoonsgegevens voor Partner 1 pagina #Melding Voorgenomen
     En Ik heb al een nummer in de input field getypt
 Wanneer Ik in de input field klikt 
 Dan Kan ik het getypte nummer bewerken 
-    En Wordt het getypte nummer gecontroleerd voor geldigheid
+    En Het getypte nummer wordt gecontroleerd voor geldigheid
 
 Scenario: Ik wil de email van Partner 1 invullen
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
     En Ik zie een input field voor de email van Partner 1
 Wanneer Ik in de input field de email van Partner 1 invullt
-Dan Wordt het getypte email gecontroleerd voor geldigheid
+Dan Het getypte email wordt gecontroleerd voor geldigheid
 
 Scenario: Ik wil de email van Partner 1 bewerken
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
@@ -158,34 +158,34 @@ Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 
     En Ik heb al een email in de input field getypt
 Wanneer Ik in de input field klikt
 Dan Kan ik het getypte email bewerken  
-    En Wordt het getypte email gecontroleerd voor geldigheid
+    En Het getypte email wordt gecontroleerd voor geldigheid
 
 Scenario: Ik Partner 1 wil verklaren dat ik niet getrouwd ben
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
     En Ik zie een checkbox voor de alleenstaand verklaring van Partner 1
 Wanneer Ik op de checkbox klikt
-Dan Wordt het checkbox ingevuld
+Dan Het checkbox wordt ingevuld
 
 Scenario: Ik Partner 1 wil mijn alleenstaand verklaring terugnemen
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
     En Ik zie een getikte checkbox voor de alleenstaand verklaring van Partner 1
 Wanneer Ik op de checkbox klikt
-Dan Wordt het checkbox leeg
+Dan Het checkbox wordt leeg
 
 Scenario: Ik Partner 1 wil verklaren dat ik niet binnen mijn familie ga trouwen
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
     En Ik zie een checkbox voor de niet familie trouwen verklaring voor Partner 1
 Wanneer Ik op de checkbox klikt
-Dan Wordt het checkbox ingevuld
+Dan Het checkbox wordt ingevuld
 
 Scenario: Ik Partner 1 wil mijn verklaring dat ik niet binnen mijn familie ga trouwen terugnemen
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
     En Ik zie een getikte checkbox voor de niet familie trouwen verklaring  van Partner 1
 Wanneer Ik op de checkbox klikt
-Dan Wordt het checkbox leeg
+Dan Het checkbox wordtleeg
 
 Scenario: Ik Partner 1 wil iemand in mijn familie trouwen
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
@@ -209,13 +209,13 @@ Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 
     En Ik zie een checkbox voor de gegevensbevestiging van Partner 1 
     En Al de ingevulde gegevens in het formulier kloppen
 Wanneer Ik op de gegevensbevestiging checkbox klikt
-Dan Wordt het checkbox ingevuld
+Dan Het checkbox wordt ingevuld
 
 Scenario: Ik Partner 1 wil mijn bevestiging dat al de gegevens in het formulier kloppen terugnemen
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
     En Ik zie een ingevulde checkbox voor de gegevensbevestiging van Partner 1 
 Wanneer Ik op de checkbox klikt
-Dan Wordt de checkbox leeg
+Dan De checkbox wordt leeg
 
 Scenario: Ik Partner 1 wil mijn contactgegevens opslaan
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
@@ -244,7 +244,7 @@ Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 
     En Ik heb de Contactgegevens opslaan button geklikt
     En Ik heb een Please tick this box if you want to proceed popup gekgregen
 Wanneer Ik op de allenstand verklaring checkbox klikt
-Dan Wordt de alleenstaand verklaring checkbox ingevuld #Wat is de naam van dit in het Nederlands?
+Dan De alleenstaand verklaring checkbox wordt ingevuld #Wat is de naam van dit in het Nederlands?
 
 
 Scenario: Ik Partner 1 wil mijn contactgegevens opslaan
@@ -265,7 +265,7 @@ Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 
     En Ik heb de Contacgegevens opslaan button geklikt
     En Ik heb een Please tick this box if you want to proceed popup gekgregen
 Wanneer Ik op de verklaring dat ik niet binnen mijn familie ga trouwen verklaring checkbox klikt
-Dan Wordt de verklaring dat ik niet binnen mijn familie ga trouwen checkbox ingevuld #Wat is de naam van dit in het Nederlands?
+Dan De verklaring dat ik niet binnen mijn familie ga trouwen checkbox wordt ingevuld #Wat is de naam van dit in het Nederlands?
 
 Scenario: Ik Partner 1 wil mijn contactgegevens opslaan
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
@@ -285,15 +285,15 @@ Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 
     En Ik heb de Contacgegevens opslaan button geklikt
     En Ik heb een Please tick this box if you want to proceed popup gekgregen
 Wanneer Ik op de bevestiging dat al de gegevens in het formulier kloppen checkbox klikt
-Dan Wordt de bevestiging dat al de gegevens in het formulier kloppen checkbox ingevuld #Wat is de naam van dit in het Nederlands?
+Dan De bevestiging dat al de gegevens in het formulier kloppen checkbox wordt ingevuld #Wat is de naam van dit in het Nederlands?
 
 Scenario: Ik wil Partner 2 voor de huwelijk melden
 Gegeven Ik ben op de Persoonsgegevens pagina #Melding Voorgenomen Huwelijk Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie
     En Ik zie een Partner inloggen met DigID button 
-Wanneer Ik op de button klikt
+Wanneer Ik op de Partner inloggen met DigID button klikt
 Dan Ik word naar de DigIDlogin pagina doorgestuurd #Step 3
------
+#-----!!!
 Scenario: Ik wil Partner 2 met DigID inloggen
 Gegeven Ik ben op de DigID login pagina #Inloggen bij DigID Step 3
 Wanneer Ik login met een DigID konto
@@ -306,7 +306,7 @@ Gegeven Ik ben op de DigID Login pagina #Inloggen bij DigID Step 3
     En Ik zie de DigID Inloggen interface 
     En Ik zie de DigID inloggen opties buttons   #<---Meer info TBD
 Wanneer Ik klik op een van de inloggen opties
-Dan Partner 1 wordt ingeloggd met DigID
+Dan Partner 1 word ingeloggd met DigID
     En Ik word naar de Persoonsgegevens voor Partner 1 pagina gestuurd
 
 Scenario: Ik wil mijn partner voor de huwelijk melden!!!
@@ -368,7 +368,7 @@ Gegeven Ik ben op de Persoonsgegevens pagina voor Partner 2 #Eenvoudig trouwen S
     En Ik zie een name input field 
     En Ik zie een email input field
 Wanneer Ik vul in de gegevens van partner 2 
-Dan Wordt het getypte email gecontroleerd voor geldigheid #Step 3
+Dan Het getypte email wordt gecontroleerd voor geldigheid #Step 3
     En Ik krijg een bevestiging dat de e-mail is verzonden
 
 !!!!!
@@ -383,31 +383,31 @@ Gegeven Ik ben op de Persoonsgegevens pagina voor Partner 2 #Eenvoudig trouwen S
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
     En Mijn gegevens zijn niet juist
 Wanneer Ik op Neem contact op met de gemeente klikt
-Dan Ik ga naar een pagina waarin ik mijn gegevens kan laten bekend zijn
+Dan Ik word naar een pagina waarin ik mijn gegevens kan laten bekend zijn gestuurd
 
 Scenario: Ik, Partner 2, wil mijn telefoonnummer invullen
 Gegeven Ik ben op de Persoonsgegevens pagina voor Partner 2 #Eenvoudig trouwen Step 3
     En Ik zie een input field voor mijn telefoonnummer
 Wanneer Ik in een input field mijn telefoonnummer typt
-Dan Wordt het getypte nummer gecontroleerd voor geldigheid
+Dan Het getypte nummer wordt gecontroleerd voor geldigheid
 
 Scenario: Ik, Partner 2, wil mijn email invullen
 Gegeven Ik ben op de Persoonsgegevens pagina voor Partner 2 #Eenvoudig trouwen Step 3
     En Ik zie een input field voor mijn email
 Wanneer Ik in een input field mijn email typt
-Dan Wordt het getypte email gecontroleerd voor geldigheid
+Dan De getypte email wordt gecontroleerd voor geldigheid
 
 Scenario: Ik, Partner 2, wil verklaren dat ik niet getrouwd ben
 Gegeven Ik ben op de Persoonsgegevens pagina voor Partner 2 #Eenvoudig trouwen Step 3
     En Ik zie een checkbox voor de alleenstaEn verklaring
 Wanneer Ik op de checkbox tikt
-Dan Wordt het checkbox ingevuld
+Dan Het checkbox wordt ingevuld
 
 Scenario: Ik, Partner 2, wil verklaren dat ik niet binnen mijn familie ga trouwen
 Gegeven Ik ben op de Persoonsgegevens pagina voor Partner 2 #Eenvoudig trouwen Step 3
     En Ik zie een checkbox voor de niet familie trouwen verklaring
 Wanneer Ik op de checkbox tikt
-Dan Wordt het checkbox ingevuld
+Dan Het checkbox wordt ingevuld
 
 Scenario: Ik, Partner 2, wil iemand in mijn familie trouwen
 Gegeven Ik ben op de Persoonsgegevens pagina voor Partner 2#Eenvoudig trouwen Step 3
@@ -420,14 +420,14 @@ Scenario: Ik, Partner 2, wil al de gegevens in het formulier bevestigen
 Gegeven Ik ben op de Persoonsgegevens pagina voor Partner 2 #Eenvoudig trouwen Step 3
     En Al de ingevulde gegevens in het formulier kloppen
 Wanneer Ik op de gegevensbevestiging checkbox tikt
-Dan Wordt het checkbox ingevuld
+Dan Het checkbox wordt ingevuld
 
 Scenario: Ik, Partner 2, wil mijn contactgegevens opslaan
 Gegeven Ik ben op de Persoonsgegevens pagina voor Partner 2 #Eenvoudig trouwen Step 3
     En Ik heb al mijn contactgegevens ingevuld
     En Ik heb al de verklering checkboxes getikt
 Wanneer Ik op de Contactgegevens opslaan button klikt
-Dan Ik ga naar een pagina waarin ik kan bevestigen de gegevens van Partner 2 zijn gekoppeld met die van Partner 1
+Dan Ik word naar een pagina waarin ik kan bevestigen de gegevens van Partner 2 zijn gekoppeld met die van Partner 1 gestuurd
 
 Scenario: Gekoppeling van gegevens bevestigen
 Gegeven Ik ben op de Persoonsgegevens Succes pagina voor Partner 2 #Eenvoudig trouwen Step 3
@@ -459,7 +459,7 @@ Gegeven Ik ben op de Getuigen pagina #Eenvoudig trouwen Step 3
     En Ik zie tussen 2 en 4 input field sets voor de namen en emails van de getuigen 
 Wanneer Ik in een input field klikt
 Dan Kan ik de gegevens van de getuigen invullen #Step 3
-    En Wordt de getypte email gecontroleerd voor geldigheid
+    En De getypte email wordt gecontroleerd voor geldigheid
 
 Scenario: Verzenden van getuigen uitnodigingen
 Gegeven Ik ben op de Getuigen pagina #Eenvoudig trouwen Step 3
@@ -471,13 +471,13 @@ Wanneer Ik op de Verstuur uitnodiging button klikt
 Dan Ik word naar de Getuigen Succes pagina gestuurd #Step 3
     
 Scenario: Ik wil de gemeente laten mijn huwelijks verzoek checken
-Gegeven Ik ben op de Getuigen Succespagina #Eenvoudig trouwen Step 3
+Gegeven Ik ben op de Getuigen Succes pagina #Eenvoudig trouwen Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
     En Ik zie de kosten voor de huwelijk
 Wanneer Ik op de Laat de gemeente checken en ga betalen button klikt
 Dan Ik word naar de Voorgenomen Huwelijk Checken pagina gestuurd #Step 3
 #Hoelang moet man wachten? Ga ik direct naar de volgende pagina zoals bij de draft website? Wat gebeurt als er iets mis is (email, phonecall, anders)? 
-
+#-----!!!
 Scenario: Ik wil voor mij huwelijk betalen
 Gegeven Ik ben op de Voorgenomen Huwelijk Checken pagina #Eenvoudig trouwen Step 3
     En Ik zie de korrekte vroeger geselecteerde tijd een datum combinatie 
@@ -570,7 +570,7 @@ Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
     En Ik zie als text GELUKT Betaling ontvangen 
 Wanneer Ik op een van de Aanpassen links van de contactgegevens van Getuigen 1 klikt
 Dan Ik word naar de Getuigen pagina gestuurd # Step 3
-    En De gegeven van getuig 1 verwezen door de geklikte link woordt gefocuseerd
+    En De gegeven van getuig 1 verwezen door de geklikte link wordt gefocuseerd
 
 Scenario: Ik wil de gegevens van getuige 2 aanpassen 
 Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
@@ -579,7 +579,7 @@ Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
     En Ik zie als text GELUKT Betaling ontvangen 
 Wanneer Ik op een van de Aanpassen links van de contactgegevens van Getuigen 1 klikt
 Dan Ik word naar de Getuigen pagina gestuurd # Step 3
-    En De gegeven van getuig 2 verwezen door de geklikte link woordt gefocuseerd
+    En De gegeven van getuig 2 verwezen door de geklikte link wordt gefocuseerd
                     
 Scenario: Ik wil de gegevens van getuige 3 aanpassen 
 Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
@@ -589,7 +589,7 @@ Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
     En Er zijn contactgegevens voorhanden voor Getuig 3
 Wanneer Ik op een van de Aanpassen links van de contactgegevens van Getuigen 1 klikt
 Dan Ik word naar de Getuigen pagina gestuurd # Step 3
-    En De gegeven van getuig 3 verwezen door de geklikte link woordt gefocuseerd
+    En De gegeven van getuig 3 verwezen door de geklikte link wordt gefocuseerd
 
 Scenario: Ik wil de gegevens van getuige 4 aanpassen 
 Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
@@ -599,7 +599,7 @@ Gegeven Ik ben op de Betalen Succes pagina #Eenvoudig trouwen Step 5
     En Er zijn contactgegevens voorhanden voor Getuig 4
 Wanneer Ik op een van de Aanpassen links van de contactgegevens van Getuigen 1 klikt
 Dan Ik word naar de Getuigen pagina gestuurd # Step 3
-    En De gegeven van getuig 3 verwezen door de geklikte link woordt gefocuseerd
+    En De gegeven van getuig 3 verwezen door de geklikte link wordt gefocuseerd
 
 *Should there be a version of this for partner 1 and another for Partner 2??
 line 235 partner 2 
