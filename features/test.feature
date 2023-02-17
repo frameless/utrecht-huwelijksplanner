@@ -3,17 +3,20 @@
 ## Step 0
 Functionaliteit: Gratis Huwelijk/geregistreerd partnerschap
 Scenario: Ik wil een huwelijk of geregistreerd partnerschap plannen
-Gegeven Ik ben op de utrecht huwelijksplanner pagina #Regel je huwelijk of geregistreerd partnerschap Step 0 
-    En Ik kan een Start button zien
-Wanneer Ik klik op Start
-Dan Ik word naar de Trouw Opties pagina gestuurd #step 1
+Gegeven ik ben op de "utrecht huwelijksplanner" pagina 
+    En ik zie de heading "regel je huwelijk of geregistreerd partnerschap" 
+    En ik ben op step "0" 
+    En ik kan een "Start" button zien
+Wanneer ik op de "Start" button klik
+Dan word ik naar de "trouw opties" pagina gestuurd 
+    En ik ben op step "1"
 
 ## Step 1
 Scenario: Ik wil een huwelijk plannen
 Gegeven Ik ben op de Trouw Opties pagina #Trouwen of geregistreerd partnerschap Step 1
     En Ik kan een Trouwen plannen button zien
-Wanneer Ik klik op de Trouwen plannen button
-Dan Ik word naar de Trouw Opties Huwelijk pagina gestuurd #step 2
+Wanneer Ik op de Trouwen plannen button klik
+Dan Word ik naar de Trouw Opties Huwelijk pagina gestuurd #step 2
 
 Scenario: Ik wil een geregistreerd partnerschap plannen
 Gegeven Ik ben op de Trouw Opties pagina #Trouwen of geregistreerd partnerschap Step 1 
@@ -22,13 +25,13 @@ Wanneer Ik klik op de Geregistreerd partnerschap plannen button
 Dan Ik word naar de Trouw Opties Geregistreerd partnerschap pagina gestuurd #Step 2
 
 ## Step 2
-Scenario: Ik wil zien op welk datum ik kan trouwen
+Scenario: Ik wil zien op welk datum ik kan trouwen door op de kalendericoon te klikken
 Gegeven Ik ben op de Trouw Opties Huwelijk pagina #Wanneer en Hoe Step 2
-    En Er is een Trouwdatum input field date op de pagina
-Wanneer Ik de kalender icon klikt 
-Dan Ik kan de beschikbare trouwdatums zien
+    En Er is een Trouwdatum prikker op de pagina
+Wanneer Ik op de kalender icon klik
+Dan Kan ik de beschikbare trouwdatums zien
 
-Scenario: Ik wil zien op welk datum ik kan trouwen
+Scenario: Ik wil zien op welk datum ik kan trouwen door een datum in te voeren
 Gegeven Ik ben op de Trouw Opties Huwelijk pagina #Wanneer en Hoe Step 2
     En Er is een Trouwdatum input field op de pagina
 Wanneer Ik het Trouwdatum input field gefocussed heb
