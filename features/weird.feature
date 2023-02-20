@@ -5,7 +5,7 @@
 #   Mag het dan?
 
 Scenario: Huwelijksdatum wijziging na de datumgrens voor Getuigen 
-Gegeven Dat ik mijn huwelijksreservering heb "geannuleert/" #Annuleer huwelijksreservering Step 5
+Gegeven dat ik mijn huwelijksreservering heb "geannuleert/" #Annuleer huwelijksreservering Step 5
     En Ik ga terug naar de de Trouw Opties Huwelijk pagina #Wanneer en Hoe Step 2
     En Ik wil binnen de komende twee weken trouwen
     En Ik selecteer een geldig trouwdatum en tijdslot
@@ -22,5 +22,4 @@ Dan Word ik naar de Voorgenomen Huwelijk Getuigen Succes pagina gestuurd #Step 5
 
 # Huwelijk tussen de  2-3 weken
 # Krijg ik een melding dat ik over de datumgrens van de getuigensuitnodigingen ben?
-
-!! fix with new cleaner formatting!!!
+NEEDS CLEANING!
