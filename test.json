@@ -1,0 +1,100 @@
+[
+    {
+        "Id": "sha256:8c13607cdf9dc73e06c732ad7a470fc1d9878cb7d6fe0045a6f2a991f4352dea",
+        "RepoTags": [],
+        "RepoDigests": [],
+        "Parent": "",
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2023-02-08T12:20:58.345935216Z",
+        "Container": "",
+        "ContainerConfig": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": null,
+            "Cmd": null,
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": null
+        },
+        "DockerVersion": "",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "node",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "3000/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NODE_VERSION=18.14.0",
+                "YARN_VERSION=1.22.19",
+                "TZ=Europe/Amsterdam"
+            ],
+            "Cmd": [
+                "start"
+            ],
+            "ArgsEscaped": true,
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "/var/www",
+            "Entrypoint": [
+                "npm",
+                "run"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "com.docker.compose.project": "utrecht-huwelijksplanner2",
+                "com.docker.compose.service": "dev",
+                "com.docker.compose.version": "2.13.0"
+            }
+        },
+        "Architecture": "arm64",
+        "Variant": "v8",
+        "Os": "linux",
+        "Size": 408950822,
+        "VirtualSize": 408950822,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/ho3mrc9zyfdctboc8czkm52mq/diff:/var/lib/docker/overlay2/po8wqvfln6mez5d47u551vles/diff:/var/lib/docker/overlay2/0puxvljm68ejwvxk5ssk011jp/diff:/var/lib/docker/overlay2/yu9o4atem2ixk4219guxgr7l8/diff:/var/lib/docker/overlay2/6a94254d2288191ee92615ff36bd61ebe1e2a7aa750e6ea9440ffd725faf6db6/diff:/var/lib/docker/overlay2/e3a6db866a6b09861398159fe4cd9de74174ea37cfcd6046b6707d5ab0279c8d/diff:/var/lib/docker/overlay2/f4d2468558cfbd9fb014b979bbf2f47d803d06a3464ae1765feb2887280a422d/diff:/var/lib/docker/overlay2/1871c1c7f8d3887d349c002607b5fac6b7f85c0c60d7bfeb2de1f3beddd28687/diff",
+                "MergedDir": "/var/lib/docker/overlay2/yyoah5p2l2xsgjjd7ktnpx455/merged",
+                "UpperDir": "/var/lib/docker/overlay2/yyoah5p2l2xsgjjd7ktnpx455/diff",
+                "WorkDir": "/var/lib/docker/overlay2/yyoah5p2l2xsgjjd7ktnpx455/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:0a24540c1e5a47e5a8116c43151cb45c985f7a65afe5d4d65127d9c6fea2ffcf",
+                "sha256:920f1923645e68de6bce5f3b0ad5f77469310aa05fe4fb9d5d257b3362695542",
+                "sha256:67726154c7bc2cbd42889fb4a898fee5f164aad3f4a466d9a1e9bd553c16d441",
+                "sha256:4bb0a83ece736b14861970eb46398490df9da98462c675c94659470f2587e41e",
+                "sha256:71abbe381e070cf578d67b44e4a5ff2d31a94dcf8b76108f5798eeb6c9aab731",
+                "sha256:aa33f37466796a1760bfa7a744d55374b2bd15a945d2a4e96fbb308b296f051a",
+                "sha256:36a3fb23ec7885c573f2a36b2ab41aa5c98870301c9701ff60d55d3d9cd15c82",
+                "sha256:8c687eaf323bb4e01eeb45b349c9f7b7c809695477f20996247a5bad10f703ad",
+                "sha256:79a151cb6a5b0e47ca9be99283354cd4ecff19d7f33f79c812506bd98c9a6c62"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
