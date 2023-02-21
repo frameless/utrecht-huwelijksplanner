@@ -7,6 +7,7 @@ on:
 jobs:
   test:
     timeout-minutes: 60
+    needs: continuous-integration
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,6 +18,11 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: "Restore build artifact"
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: .next/
       - name: Run Playwright tests
         run: npm run test:e2e
       - uses: actions/upload-artifact@v3
