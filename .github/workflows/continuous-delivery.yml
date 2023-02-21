@@ -44,40 +44,35 @@ jobs:
 
   continuous-deployment:
     runs-on: ubuntu-latest
-
+    env:
+      APP_NAME: utrecht-huwelijksplanner
     steps:
       - uses: actions/checkout@v2
-
-      - name: Get current date
-        id: date
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-
-      - name: "Continuous Deployment: build Docker image"
-        env:
-          BUILD_DATE: "${{ steps.date.outputs.date }}"
-          VCS_REF: "${{ github.event.workflow_run.head_sha }}"
-        run: |
-          docker-compose build
-
-      - name: Login to Container Registry
-        id: containerregistry-login
-        run: |
-          if [ "${{ secrets.GITHUB_TOKEN }}" != "" ]; then
-            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $(cut -d'/' -f1 <<< $GITHUB_REPOSITORY) --password-stdin
-            echo "success=true" >> $GITHUB_OUTPUT
-          else
-            echo "success=false" >> $GITHUB_OUTPUT
-          fi
-
-      - if: steps.containerregistry-login.outputs.success == 'true'
-        name: Push to Container Registry
-        run: docker-compose push
-
-      - if: steps.containerregistry-login.outputs.success == 'true'
-        name: Push versioned containers to Container Registry
-        run: |
-          images=$(docker-compose images -q | xargs docker inspect --format='{{ index .RepoTags 0}}' | cut -d':' -f1 | grep $APP_NAME)
-          for image in $images
-          do
-            docker push "${image}":"${APP_BUILD}"
-          done
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            name/app
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
