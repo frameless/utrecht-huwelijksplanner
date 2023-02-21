@@ -75,7 +75,7 @@
     "@nl-design-system-unstable/amsterdam-design-tokens": "1.0.0-alpha.64",
     "@playwright/test": "1.31.0",
     "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/react": "13.4.0",
+    "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
     "@types/lodash.merge": "4.6.7",
     "@types/node": "18.14.0",
