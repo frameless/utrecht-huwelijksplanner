@@ -5,11 +5,10 @@ ENV SHELL /bin/bash
 ARG TZ=Europe/Amsterdam
 ENV TZ Europe/Amsterdam
 
-USER node
 
 WORKDIR /var/www
 
-COPY --chown=node:node package.json package-lock.json ./
+COPY package.json package-lock.json ./
 
 ARG HUSKY_SKIP_INSTALL=true
 ARG NODE_ENV
@@ -29,7 +28,7 @@ then \
 # for when NODE_ENV is "production" using a production mode install,
 # leaving only the packages needed for production.
 
-ADD --chown=node:node ./ /var/www/
+ADD ./ /var/www/
 
 RUN if test "$NODE_ENV" != 'development'; \
 then \
@@ -40,6 +39,21 @@ then \
     && npm config set "//registry.npmjs.org/:_authToken" "" \
     && npm cache clean --force 2> /dev/null \
 ; fi
+
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL \
+    org.label-schema.build-date="${BUILD_DATE}" \
+    org.label-schema.description="Utrecht Huwelijksplanner front-end" \
+    org.label-schema.name="utrecht-huwelijksplanner" \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.url="https://github.com/frameless/utrecht-huwelijksplanner/" \
+    org.label-schema.usage="https://github.com/frameless/utrecht-huwelijksplanner/blob/develop/README.md" \
+    org.label-schema.vcs-ref="${VCS_REF}" \
+    org.label-schema.vcs-url="https://github.com/frameless/utrecht-huwelijksplanner.git" \
+    org.label-schema.vendor="Frameless B.V." \
+    org.label-schema.version="8.10"
 
 EXPOSE 3000
 
