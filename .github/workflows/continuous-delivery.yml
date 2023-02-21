@@ -44,6 +44,8 @@ jobs:
 
   continuous-deployment:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       - uses: actions/checkout@v2
       - name: Docker meta
