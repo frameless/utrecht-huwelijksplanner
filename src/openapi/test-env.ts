@@ -3,7 +3,6 @@ export type { Accomodation } from '../../src/generated/openapi/Overige-Objecten'
 export type { SDG as Product } from '../../src/generated/openapi/Overige-Objecten';
 export type { huwelijk as Huwelijk } from '../../src/generated/openapi/trouwservice';
 export type { Klant } from '../generated/openapi/klanten';
-import { HuwelijksplannerInterface } from './api-interface';
 import { Assent as AssentNamespace } from '../../src/generated/openapi/Overige-Objecten';
 import type { Assent } from '../../src/generated/openapi/Overige-Objecten';
 import type { SDG as Product } from '../../src/generated/openapi/Overige-Objecten';
@@ -14,6 +13,7 @@ import { DefaultService as AgendaService } from '../generated/openapi/Agenda-Ser
 import { DefaultService as OverigeObjecten } from '../generated/openapi/Overige-Objecten/services/DefaultService';
 import type { Klant } from '../generated/openapi/klanten';
 import { KlantenService } from '../generated/openapi/klanten';
+import { HuwelijksplannerInterface } from './api-interface';
 
 const MissingIdError = () => new TypeError('Argument must have `id` property');
 
