@@ -44,8 +44,6 @@ jobs:
 
   continuous-deployment:
     runs-on: ubuntu-latest
-    env:
-      APP_NAME: utrecht-huwelijksplanner
     steps:
       - uses: actions/checkout@v2
       - name: Docker meta
@@ -53,7 +51,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            name/utrecht-huwelijksplanner
+            name/ghcr.io/utrecht-huwelijksplanner
           tags: |
             type=ref,event=branch
             type=ref,event=pr
