@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { appWithTranslation } from "next-i18next";
 import type { AppProps } from "next/app";
+import { appWithTranslation } from "next-i18next";
 import "@utrecht/design-tokens/dist/index.css";
 import "@utrecht/component-library-css/dist/index.css";
 import "@utrecht/component-library-css/dist/html.css";
