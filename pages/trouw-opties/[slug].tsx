@@ -42,7 +42,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 });
 
 const BlogPost: NextPage = () => {
-  const { query, locale = "nl", push } = useRouter();
+  const { locale = "nl", push } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
 
   const getEvents = (type: CeremonyType, date: string) => {
@@ -55,7 +55,6 @@ const BlogPost: NextPage = () => {
   const [selectedLocationAndDate, setSelectedLocationAndDate] = useState<string | undefined>();
 
   const loadEvents = useCallback(() => {
-    console.log("load events for: ", selectedDate);
     const today = new Date().toISOString().replace(/T.+/, "");
     HuwelijksplannerAPI.getAvailability({
       interval: "PT1H",
@@ -63,11 +62,11 @@ const BlogPost: NextPage = () => {
     }).then((data) => {
       setResults(data);
     });
-  }, [selectedDate]);
+  }, []);
 
   useEffect(() => {
     loadEvents();
-  }, [selectedDate]);
+  }, [selectedDate, loadEvents]);
 
   const onChangeDateHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedLocationAndDate(event.target.value);
@@ -75,18 +74,17 @@ const BlogPost: NextPage = () => {
 
   const onSelectedDateAndLocationSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = {
-      trouw_optie: query.slug,
-      locatie_id: selectedLocationAndDate,
-    };
-    console.log(data);
+    // const data = {
+    //   trouw_optie: query.slug,
+    //   locatie_id: selectedLocationAndDate,
+    // };
+
     if (selectedLocationAndDate) {
       push("/voorgenomen-huwelijk");
     } else {
-      console.log("please, select a date!");
+      throw new Error("please, select a date!");
     }
   };
-  console.log({ selectedDate });
 
   return (
     <Surface>

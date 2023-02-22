@@ -174,7 +174,6 @@ export default function MultistepForm1() {
 
   const onContactDetailsSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(declarationCheckboxData);
 
     if (!partnerDetails?.partner) {
       push("/voorgenomen-huwelijk/partner");

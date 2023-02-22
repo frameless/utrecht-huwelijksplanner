@@ -26,7 +26,7 @@ const ProductOverview: NextPage = () => {
     HuwelijksplannerAPI.getProducten().then((data) => {
       setResults(data);
     });
-  }, [42]);
+  }, []);
 
   return (
     <Page>
