@@ -9,6 +9,7 @@ import {
   Button,
   ButtonGroup,
   ButtonLink,
+  Calendar,
   Document,
   Fieldset,
   FieldsetLegend,
@@ -24,18 +25,16 @@ import {
   PageFooter,
   PageHeader,
   Paragraph,
-  RadioButton,
   SkipLink,
   Surface,
   TimeValue,
 } from "../../src/components";
-import { DateInput } from "../../src/components/DateInput";
+import { RadioButton2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
 import { Availability } from "../../src/generated/openapi/Agenda-Service";
 import { HuwelijksplannerAPI } from "../../src/openapi/index";
-
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common", "huwelijksplanner-step-2"])),
@@ -87,6 +86,7 @@ const BlogPost: NextPage = () => {
       console.log("please, select a date!");
     }
   };
+  console.log({ selectedDate });
 
   return (
     <Surface>
@@ -122,82 +122,55 @@ const BlogPost: NextPage = () => {
                 </Paragraph>
                 <section>
                   <FormField>
-                    <FormLabel htmlFor="date">Trouwdatum</FormLabel>
-                    <DateInput
-                      id="date"
-                      onInput={(event) => setSelectedDate((event.target as HTMLInputElement).value)}
-                      defaultValue={selectedDate}
-                    />
+                    <Calendar onCalendarClick={(date: string) => setSelectedDate(date)} />
                   </FormField>
                   <Fieldset>
-                    <FieldsetLegend>Kies je datum en tijd</FieldsetLegend>
-                    {/*<Fieldset>
-                      <FieldsetLegend>TODO</FieldsetLegend>
-                      {results.map((event) => (
-                        <FormField key={event.id}>
-                          <RadioButton
-                            id={event.id}
-                            name="event"
-                            value={event.id}
-                            required
-                            onChange={onChangeDateHandler}
-                          />
-                          <FormLabel htmlFor={event.id}>
-                            <span aria-label="negen uur tot tien over negen">
-                              <TimeValue dateTime={event.startDateTime} locale={locale} />
-                              {" – "}
-                              <TimeValue dateTime={event.endDateTime} locale={locale} />
-                              {" uur"}
-                            </span>
-                          </FormLabel>
-                        </FormField>
-                      ))}
-                    </Fieldset>*/}
-                    <Fieldset>
-                      <FieldsetLegend>Flits/balie-huwelijk — Stadskantoor</FieldsetLegend>
-                      {getEvents("flits-balie-huwelijk", selectedDate).map((event) => (
-                        <FormField key={event.id}>
-                          <RadioButton
-                            id={event.id}
-                            name="event"
-                            value={event.id}
-                            required
-                            onChange={onChangeDateHandler}
-                          />
-                          <FormLabel htmlFor={event.id}>
-                            <span aria-label="negen uur tot tien over negen">
-                              <TimeValue dateTime={event.startDateTime} locale={locale} />
-                              {" – "}
-                              <TimeValue dateTime={event.endDateTime} locale={locale} />
-                              {" uur"}
-                            </span>
-                          </FormLabel>
-                        </FormField>
-                      ))}
-                    </Fieldset>
-                    <Fieldset>
-                      <FieldsetLegend>Uitgebreid trouwen — Zelf de plaats bepalen</FieldsetLegend>
-                      {getEvents("uitgebreid-huwelijk", selectedDate).map((event) => (
-                        <FormField key={event.id}>
-                          <RadioButton
-                            id={event.id}
-                            name="event"
-                            value={event.id}
-                            required
-                            onChange={onChangeDateHandler}
-                          />
-                          <FormLabel htmlFor={event.id}>
-                            <span aria-label="negen uur tot tien over negen">
-                              <TimeValue dateTime={event.startDateTime} locale={locale} />
-                              {" – "}
-                              <TimeValue dateTime={event.endDateTime} locale={locale} />
-                              {" uur"}
-                            </span>
-                          </FormLabel>
-                        </FormField>
-                      ))}
-                    </Fieldset>
+                    <FieldsetLegend>Flits/balie-huwelijk — Stadskantoor</FieldsetLegend>
+                    {getEvents("flits-balie-huwelijk", selectedDate).map((event) => (
+                      <FormField key={event.id} type="radio">
+                        <RadioButton2
+                          novalidate={true}
+                          id={event.id}
+                          name="event"
+                          value={event.id}
+                          required
+                          onChange={onChangeDateHandler}
+                        />
+                        <FormLabel htmlFor={event.id} type="radio">
+                          <span aria-label="negen uur tot tien over negen">
+                            <TimeValue dateTime={event.startDateTime} locale={locale} />
+                            {" – "}
+                            <TimeValue dateTime={event.endDateTime} locale={locale} />
+                            {" uur"}
+                          </span>
+                        </FormLabel>
+                      </FormField>
+                    ))}
                   </Fieldset>
+                  <Fieldset>
+                    <FieldsetLegend>Uitgebreid trouwen — Zelf de plaats bepalen</FieldsetLegend>
+                    {getEvents("uitgebreid-huwelijk", selectedDate).map((event) => (
+                      <FormField key={event.id}>
+                        <RadioButton2
+                          novalidate={true}
+                          id={event.id}
+                          name="event"
+                          value={event.id}
+                          required
+                          onChange={onChangeDateHandler}
+                        />
+                        <FormLabel htmlFor={event.id}>
+                          <span aria-label="negen uur tot tien over negen">
+                            <TimeValue dateTime={event.startDateTime} locale={locale} />
+                            {" – "}
+                            <TimeValue dateTime={event.endDateTime} locale={locale} />
+                            {" uur"}
+                          </span>
+                        </FormLabel>
+                      </FormField>
+                    ))}
+                  </Fieldset>
+
                   <ButtonGroup>
                     <Button type="submit" appearance="primary-action-button">
                       Ja, dit wil ik!

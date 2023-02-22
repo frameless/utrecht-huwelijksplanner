@@ -10,6 +10,16 @@
 @import "./src/components/HeadingGroup.scss";
 @import "./src/components/PageContentMain.scss";
 
+.utrecht-form-fieldset {
+  --utrecht-form-fieldset-margin-block-start: var(--utrecht-space-block-sm) !important;
+  --utrecht-form-fieldset-margin-block-end: var(--utrecht-space-block-sm) !important;
+}
+
+.utrecht-button-group:not(.utrecht-button-group--vertical) .utrecht-button-link {
+  --utrecht-button-padding-inline-end: 16px !important;
+  --utrecht-button-padding-inline-start: 16px !important;
+}
+
 body {
   margin-block-end: 0;
   margin-block-start: 0;
