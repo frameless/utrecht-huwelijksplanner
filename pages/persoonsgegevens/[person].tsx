@@ -1,6 +1,5 @@
 import {
   Button,
-  Checkbox,
   DataList,
   DataListItem,
   DataListKey,
@@ -31,6 +30,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ChangeEventHandler, FormEvent, useState } from "react";
 import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
+import { Checkbox2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
@@ -339,7 +339,7 @@ export const DeclarationCheckboxGroup = ({ name, checkboxData, onChange }: Decla
         checkboxData.length > 0 &&
         checkboxData.map(({ id, label, value }, index) => (
           <FormField key={index} type="checkbox">
-            <Checkbox id={id} name={name || groupName} defaultValue={value} onChange={onChange} required />
+            <Checkbox2 novalidate id={id} name={name || groupName} defaultValue={value} onChange={onChange} required />
             <FormLabel htmlFor={id} type="checkbox">
               {label}
             </FormLabel>

@@ -1,4 +1,4 @@
-import { Checkbox, FormField, FormLabel, RadioButton } from "@utrecht/component-library-react";
+import { FormField, FormLabel } from "@utrecht/component-library-react";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -21,6 +21,7 @@ import {
   Paragraph,
   Surface,
 } from "../../src/components";
+import { Checkbox2, RadioButton2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
@@ -75,33 +76,35 @@ export default function MultistepForm1() {
                   </Paragraph>
                   <Fieldset style={{ width: "fit-content" }}>
                     <FieldsetLegend>Trouwboekje</FieldsetLegend>
-                    <Image src="/img/voorbeeld-trouwboekjes.jpg" width={600} height={385} alt="" />
-                    <FormField>
-                      <Checkbox id="marriage-certificate-agreement" />
+                    <Paragraph>
+                      <Image src="/img/voorbeeld-trouwboekjes.jpg" width={600} height={385} alt="trouwboekjes" />
+                    </Paragraph>
+                    <FormField type="checkbox">
+                      <Checkbox2 id="marriage-certificate-agreement" />
                       <FormLabel htmlFor="marriage-certificate-agreement" type="checkbox">
                         Ja, wij willen een trouwboekje
                       </FormLabel>
                     </FormField>
-                    <FormField>
-                      <RadioButton id="1" name="marriage-certificate-kind" />
+                    <FormField type="radio">
+                      <RadioButton2 id="1" name="marriage-certificate-kind" />
                       <FormLabel htmlFor="1" type="radio">
                         Wit lederen omslag (€ 32,50)
                       </FormLabel>
                     </FormField>
-                    <FormField>
-                      <RadioButton id="2" name="marriage-certificate-kind" />
+                    <FormField type="radio">
+                      <RadioButton2 id="2" name="marriage-certificate-kind" />
                       <FormLabel htmlFor="2" type="radio">
                         Wit lederen omslag (€ 32,50)
                       </FormLabel>
                     </FormField>
-                    <FormField>
-                      <RadioButton id="3" name="marriage-certificate-kind" />
+                    <FormField type="radio">
+                      <RadioButton2 id="3" name="marriage-certificate-kind" />
                       <FormLabel htmlFor="3" type="radio">
                         Donkerblauw lederen omslag (€ 32,50)
                       </FormLabel>
                     </FormField>
-                    <FormField>
-                      <RadioButton id="4" name="marriage-certificate-kind" />
+                    <FormField type="radio">
+                      <RadioButton2 id="4" name="marriage-certificate-kind" />
                       <FormLabel htmlFor="4" type="radio">
                         Rood kunstlederen omslag (€ 30,00)
                       </FormLabel>
