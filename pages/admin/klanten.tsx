@@ -46,7 +46,7 @@ const KlantOverview: NextPage = () => {
     HuwelijksplannerAPI.getKlanten().then((data) => {
       setResults(data);
     });
-  }, [42]);
+  }, []);
 
   return (
     <Page>

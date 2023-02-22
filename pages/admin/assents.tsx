@@ -26,7 +26,7 @@ const AssentOverview: NextPage = () => {
     HuwelijksplannerAPI.getAssents().then((data) => {
       setResults(data);
     });
-  }, [42]);
+  }, []);
 
   const deleteAssentAction = (assent: Assent) => {
     setDeleteBusy(true);

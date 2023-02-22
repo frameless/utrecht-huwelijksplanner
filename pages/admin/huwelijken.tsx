@@ -20,12 +20,10 @@ const MarriageOverview: NextPage = () => {
   const [results, setResults] = useState<Huwelijk[]>([]);
 
   useEffect(() => {
-    console.log("load", HuwelijksplannerAPI.getHuwelijken);
     HuwelijksplannerAPI.getHuwelijken().then((data) => {
-      console.log("loaded", data);
       setResults(data);
     });
-  }, [42]);
+  }, []);
 
   const deleteHuwelijk = (huwelijkData: Huwelijk) => {
     deleteHuwelijk(huwelijkData);

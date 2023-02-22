@@ -24,7 +24,7 @@ const AccomodationOverview: NextPage = () => {
     HuwelijksplannerAPI.getAccommodations().then((data) => {
       setResults(data);
     });
-  }, [42]);
+  }, []);
 
   return (
     <Page>

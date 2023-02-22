@@ -2,6 +2,7 @@
   "rules": {
     "array-callback-return": ["error", { "checkForEach": false }],
     "block-scoped-var": "error",
+    "no-console": "error",
     "consistent-return": "error",
     "constructor-super": "error",
     "eqeqeq": "error",

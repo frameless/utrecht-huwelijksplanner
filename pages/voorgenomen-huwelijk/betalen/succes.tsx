@@ -58,9 +58,8 @@ export default function HuwelijksplannerStep0() {
 
   useEffect(() => {
     const huwelijkId = "6e69d32c-afdb-4aef-85cc-fd5ff743a84b";
-    console.log("load");
+
     HuwelijksplannerAPI.getHuwelijk(huwelijkId).then((huwelijk) => {
-      console.log("loaded", huwelijk);
       setData(
         merge(data, {
           "ceremony-start": huwelijk.moment,
@@ -70,7 +69,7 @@ export default function HuwelijksplannerStep0() {
         })
       );
     });
-  }, [42]);
+  }, [data]);
 
   const isValidMinWitnesses = (data: HuwelijksplannerState) => {
     // Return `true` for valid when every partner has reached the minimum amount of witnesses

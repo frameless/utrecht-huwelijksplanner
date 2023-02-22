@@ -54,10 +54,5 @@ export const HuwelijksplannerAPI: HuwelijksplannerInterface = {
 
   getKlant: (uuid: string): Promise<Klant> => KlantenService.klantRead(uuid),
 
-  getAvailability: ({ interval = 'PT1H', start = undefined, stop = undefined } = {}) => {
-    console.log(interval, start, stop);
-    return AgendaService.getAvailabilities().then((data) => data.results || []);
-
-    // AgendaService.getAvailabilities(interval, start, stop),
-  },
+  getAvailability: () => AgendaService.getAvailabilities().then((data) => data.results || []),
 };
