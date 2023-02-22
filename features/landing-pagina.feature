@@ -4,7 +4,6 @@ Functionaliteit: Overzicht van huwelijksmogelijkheden
 Scenario: Ik wil een huwelijk of geregistreerd partnerschap plannen
 Gegeven dat ik ben op de "utrecht huwelijksplanner" pagina 
     En ik zie de heading "Regel je huwelijk of geregistreerd partnerschap" 
-    En ik ben op step "0" 
     En ik kan een "Start" button zien
 Wanneer ik op de "Start" button klik
 Dan word ik naar de "trouw opties" pagina gestuurd 
