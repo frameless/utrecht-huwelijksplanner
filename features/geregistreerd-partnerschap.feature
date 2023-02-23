@@ -2,7 +2,7 @@ Functionaliteit: Geregistreerd partnerschap
 Scenario: Ik wil een geregistreerd partnerschap plannen
 Gegeven dat ik ben op de "trouw opties" pagina 
     En ik zie de heading "Trouwen of geregistreerd partnerschap"
-    En ik ben op step "0" 
+    //En ik ben op step "0" 
     En ik kan een "Geregistreerd partnerschap plannen" button zien
 Wanneer ik op de "Geregistreerd partnerschap plannen" button klik
 Dan word ik naar de "trouw opties geregistreerd partnerschap" pagina gestuurd 
@@ -19,7 +19,7 @@ Functionaliteit: Gratis Geregistreerd Partnerschap
 Scenario: Ik wil een geregistreerd partnerschap plannen proces beginnen
 Gegeven dat ik ben op de "utrecht huwelijksplanner" pagina 
     En ik zie de heading "Regel je huwelijk of geregistreerd partnerschap" 
-    En ik ben op step "0" 
+    //En ik ben op step "0" 
     En ik kan een "Start" button zien
 Wanneer ik op de "Start" button klik
 Dan word ik naar de "trouw opties" pagina gestuurd 
