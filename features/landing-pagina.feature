@@ -14,7 +14,7 @@ Functionaliteit: Gratis Huwelijk
 Scenario: Ik wil een gratis huwelijk plannen 
 Gegeven dat ik ben op de "utrecht huwelijksplanner" pagina 
     En ik zie de heading "Regel je gratis huwelijk" 
-    En ik ben op step "0" 
+   
     En ik kan een "Start" button zien
 Wanneer ik op de "Start" button klik
 Dan word ik naar de "trouw opties" pagina gestuurd 
@@ -25,7 +25,6 @@ Functionaliteit: Overzicht van huwelijksmogelijkheden
 Scenario: Ik wil een huwelijk of geregistreerd partnerschap plannen
 Gegeven dat ik ben op de "utrecht huwelijksplanner" pagina 
     En ik zie de heading "Regel je huwelijk of geregistreerd partnerschap" 
-    En ik ben op step "0" 
     En ik zie een lijst met verwachte stappen voor al de trouwopties
     En ik zie een "Meer informatie" infobox 
     En ik kan een "Start" button zien

@@ -29,11 +29,18 @@ test('Scenario: Ik wil een huwelijk of geregistreerd partnerschap plannen', asyn
   await page.goto('http://localhost:3000/');
 
   // En ik zie de heading "Regel je huwelijk of geregistreerd partnerschap"
-  const heading = await page.getByRole('heading', { name: 'Regel je huwelijk of geregistreerd partnerschap' });
+  const heading = await page
+    .getByRole('heading', {
+      name: 'Regel je huwelijk of geregistreerd partnerschap',
+      exact: true,
+    })
+    .innerText();
   expect(heading).toBeDefined();
-
+  console.log(heading);
   // En ik kan een "Start" button zien
-  const startButton = await page.getByRole('button', { name: /Start/i });
+
+  // En "Start" button gedraagt zich als een link
+  const startButton = await page.getByRole('link', { name: /Start/i });
   expect(startButton).toBeDefined();
 
   // Wanneer ik op de "Start" button klik
