@@ -35,13 +35,15 @@ test('Scenario: Ik wil een huwelijk of geregistreerd partnerschap plannen', asyn
       exact: true,
     })
     .innerText();
-  expect(heading).toBeDefined();
-  console.log(heading);
-  // En ik kan een "Start" button zien
 
+  expect(heading).toBeDefined(); //this is the test
+  expect(heading).toBe('Regel je huwelijk of geregistreerd partnerschap');
+  // console.log(heading);
+
+  // En ik kan een "Start" button zien
   // En "Start" button gedraagt zich als een link
   const startButton = await page.getByRole('link', { name: /Start/i });
-  expect(startButton).toBeDefined();
+  expect(startButton).toBeDefined(); //this is the test
 
   // Wanneer ik op de "Start" button klik
   await startButton.click();

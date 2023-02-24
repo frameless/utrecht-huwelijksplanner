@@ -1,7 +1,8 @@
 # language: nl
 
-## step "0" 
 Functionaliteit: Gratis Huwelijk 
+
+## step "0" 
 Scenario: Ik wil een huwelijk plannen proces beginnen
 Gegeven dat ik ben op de "utrecht huwelijksplanner" pagina 
     En ik zie de heading "Regel je huwelijk of geregistreerd partnerschap" 

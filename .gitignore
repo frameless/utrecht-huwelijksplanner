@@ -40,3 +40,9 @@ src/generated/
 /public/favicon.ico
 playwright-report/
 .cache/
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/test-results/
+/playwright-report/
+/playwright/.cache/
