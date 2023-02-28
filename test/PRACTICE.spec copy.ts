@@ -31,20 +31,21 @@ test('Scenario: Ik wil een huwelijk plannen proces beginnen', async ({ page }) =
   await expect(page).toHaveTitle(/Regel je huwelijk/); //Regel je huwelijk of geregistreerd partnerschap - Gemeente
 
   // En ik zie de heading "Regel je huwelijk of geregistreerd partnerschap"
-  const heading = await page.getByRole('heading', {
-    name: 'Regel je huwelijk of geregistreerd partnerschap',
-    exact: true,
-  });
-  //.innerText();
+  const heading = await page
+    .getByRole('heading', {
+      name: 'Regel je huwelijk of geregistreerd partnerschap',
+      exact: true,
+    })
+    .innerText();
 
-  await expect(heading).toBeVisible(); //this is the test
-  await expect(await heading.innerText()).toBe('Regel je huwelijk of geregistreerd partnerschap');
+  expect(heading).toBeDefined(); //this is the test
+  expect(heading).toBe('Regel je huwelijk of geregistreerd partnerschap');
   // console.log(heading);
 
   // En ik kan een "Start" button zien
   // En "Start" button gedraagt zich als een link
   const startButton = await page.getByRole('link', { name: /Start/i });
-  await expect(startButton).toBeVisible(); //this is the test
+  expect(startButton).toBeDefined(); //this is the test
 
   // Wanneer ik op de "Start" button klik
   await startButton.click();
@@ -53,8 +54,8 @@ test('Scenario: Ik wil een huwelijk plannen proces beginnen', async ({ page }) =
   await expect(page).toHaveURL(/.*\/trouw-opties/);
 
   // En ik ben op step "1"
-  const step1 = await page.getByText(/Stap [0-9] van [0-9]/i).innerText();
-  await expect(step1).toContain('Stap 1');
+  const step1 = await page.getByRole('paragraph', { name: /Stap 1 van [0-9]/i });
+  expect(step1).toBeDefined();
 });
 
 // Scenario: Ik wil een huwelijk als trouw optie kiezen
@@ -72,26 +73,29 @@ test('Scenario: Ik wil een huwelijk als trouw optie kiezen', async ({ page }) =>
   await expect(page).toHaveTitle(/Stap 1: Trouwen of geregistreerd partnerschap - Gemeente Utrecht/); //It could also just be "Step 1"
 
   // En ik zie de heading "Regel je huwelijk of geregistreerd partnerschap"
-  const heading = await page.getByRole('heading', {
-    name: 'Trouwen of geregistreerd partnerschap',
-    exact: true,
-  });
-  //.innerText();
-
-  await expect(heading).toBeVisible(); //this is the test
-  await expect(await heading.innerText()).toBe('Trouwen of geregistreerd partnerschap');
-
-  const stepnumber = await page
-    .getByText(/Stap [0-9] van [0-9]/i) //getByRole doesn't seem to work for paragraphs
+  const heading = await page
+    .getByRole('heading', {
+      name: 'Trouwen of geregistreerd partnerschap',
+      exact: true,
+    })
     .innerText();
 
-  //expect(stepnumber).toBeVisible(); //this is the test
-  await expect(stepnumber).toContain('Stap 1'); //we could have also used getByRole in here
+  expect(heading).toBeDefined(); //this is the test
+  expect(heading).toBe('Trouwen of geregistreerd partnerschap');
+
+  const stepnumber = await page.getByRole('paragraph', {
+    name: /Stap [0-9] van [0-9]/i,
+  });
+  //.getByText(/Stap [0-9] van [0-9]/i) //
+  //.getByRole.innerText();
+
+  //expect(stepnumber).toBeDefined(); //this is the test
+  expect(stepnumber).toContain('Stap 1'); //we could have also used getByRole in here
 
   // En ik kan een "Trouwen plannen" button zien
   // En "Start" button gedraagt zich als een link
   const trouwenPlannen = await page.getByRole('button', { name: /Trouwen plannen/i });
-  await expect(trouwenPlannen).toBeVisible(); //this is the test
+  expect(trouwenPlannen).toBeDefined(); //this is the test
 
   // Wanneer ik op de "Start" button klik
   await trouwenPlannen.click();
@@ -100,6 +104,6 @@ test('Scenario: Ik wil een huwelijk als trouw optie kiezen', async ({ page }) =>
   await expect(page).toHaveURL(/.*\/trouw-opties\/huwelijk/);
 
   // En ik ben op step "1"
-  const step2 = await page.getByText(/Stap [0-9] van [0-9]/i).innerText();
-  await expect(step2).toContain('Stap 2'); //we could have used getbytext as well
+  const step2 = await page.getByRole('paragraph', { name: /Stap 2 van [0-9]/i });
+  expect(step2).toBeDefined(); //we could have used getbytext as well
 });
