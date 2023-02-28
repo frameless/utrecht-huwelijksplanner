@@ -5,6 +5,5 @@ Gegeven('dat ik een broodkruimel menu zie', () => {
 });
 
 Dan('word ik naar de homepagina van de gemeente Utrecht gestuurd', () => {
-  cy.intercept('https://utrecht.nl/', 'success').as('homepage');
-  cy.wait('@homepage').should('have.been.calledOnce');
+  cy.get('@clicked-external-link').should('match', /https?:\/\/utrecht\.nl\/$/);
 });
