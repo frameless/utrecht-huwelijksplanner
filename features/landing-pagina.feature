@@ -30,7 +30,7 @@ Gegeven dat ik ben op de "utrecht huwelijksplanner" pagina
     En ik kan een "Start" button zien
 Wanneer ik op de "Start" button klik
 Dan word ik naar de "trouw opties" pagina gestuurd 
-    En ik ben op step "1"
+    En ben ik op step "1"
 
 #https://utrecht-huwelijksplanner.frameless.io/en
 #Hier zou ik kunnen zien:
@@ -38,4 +38,4 @@ Dan word ik naar de "trouw opties" pagina gestuurd
 #waar krijg ik meer informatie
 #wat moet ik hebben/weten voor ik begin
 #startknop
-NEEDS CLEANING!
+# NEEDS CLEANING!

@@ -14,7 +14,7 @@ Dan word ik naar de "trouw opties" pagina gestuurd
 
 ## step "1" 
 Scenario: Ik wil een huwelijk als trouw optie kiezen 
-Gegeven dat ik ben op de "trouw opties" pagina 
+Gegeven dat ik ben op de "/trouw-opties" pagina 
     En ik zie de heading "Trouwen of geregistreerd partnerschap"
     En ik ben op step "1" 
     En ik kan een "Trouwen plannen" button zien
