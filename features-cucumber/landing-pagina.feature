@@ -1,8 +1,9 @@
 # language: nl
 ## step "0"
+@e2e
 Functionaliteit: Landingspagina
 
-@e2e
+#@e2e
 Scenario: Ik wil zien wat ik van de huwelijksplanner van Utrecht kan verwachten
 Gegeven dat ik op de "utrecht huwelijksplanner" pagina ben
 Dan zie ik de heading "Regel je huwelijk of geregistreerd partnerschap" 
@@ -11,7 +12,7 @@ Dan zie ik de heading "Regel je huwelijk of geregistreerd partnerschap"
     En zie ik een "Meer informatie" infobox 
     En zie ik een "Start" button die zich gedraagd als link
 
-@e2e
+#@e2e
 Scenario: Ik wil de huwelijksplanner kunnen starten
 Gegeven dat ik op de "utrecht huwelijksplanner" pagina ben
 Wanneer ik op de "Start" link klik

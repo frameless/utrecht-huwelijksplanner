@@ -7,3 +7,7 @@ Wanneer('ik op de {string} link klik', (text: string) => {
 Wanneer('ik op de externe {string} link klik', (text: string) => {
   cy.findByRole('link', { name: text }).invoke('attr', 'href').as('clicked-external-link');
 });
+
+Wanneer('ik op de {string} button klik', (text: string) => {
+  cy.findByRole('button', { name: text }).click();
+});

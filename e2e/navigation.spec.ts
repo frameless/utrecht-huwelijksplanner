@@ -1,4 +1,4 @@
-import { Given as Gegeven, Then as Dan } from '@badeball/cypress-cucumber-preprocessor';
+import { Then as Dan, Given as Gegeven } from '@badeball/cypress-cucumber-preprocessor';
 
 Gegeven('dat ik een broodkruimel menu zie', () => {
   cy.findByRole('navigation', { name: 'Kruimelpad' }).should('have.class', 'utrecht-breadcrumb');
