@@ -24,11 +24,26 @@ Dan('zie ik een {string} button', (text: string) => {
 });
 
 Dan('word ik naar de {string} pagina gestuurd', (path: string) => {
-  //cy.url().should('contain', path);
-  expect(cy.url()).to.include(path);
+  // console.log(path);
+  // cy.url().should('include', path);
+  cy.location('pathname').should('include', path);
+  //expect(cy.url()).to.include(path);
 });
 
 Dan('ben ik op stap {string}', (stepNumber: string) => {
   //cy.findByText(/Stap [0-9] van [0-9]/i).should('include.text', `Stap ${stepNumber}`);
   cy.findByText(new RegExp(`Stap ${stepNumber} van [0-9]+`, 'i')).should('be.visible');
+});
+
+Dan('is er een {string} datum prikker op de pagina', (datumType: string) => {
+  cy.findByLabelText(datumType).as('datePicker').should('be.visible');
+  // cy.get('@datePicker').its('type').should('equal', 'date');
+
+  cy.get('@datePicker').should(`have.attr`, `type`, `date`);
+
+  // cy.get('@datePicker').invoke('attr', 'type').should('equal', 'date');
+});
+
+Dan('kan ik de beschikbare trouwdatums zien', () => {
+  cy.log('TODO');
 });
