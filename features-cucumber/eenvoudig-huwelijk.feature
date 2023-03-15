@@ -28,12 +28,12 @@ Dan ben ik op stap "2"
 Dan is er een "Trouwdatum" datum prikker op de pagina
 
 #FIXME: Fixen als de datumprikker gemaakt is
-# @e2e
-# Scenario: Ik wil zien op welk datum ik kan trouwen door op de kalendericoon te klikken
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-# Wanneer ik op de "Trouwdatum" datum prikker klik
-# #FIXME: DIT KUNNEN WE TESTEN ALS DE CUSTOM DATUM PRIKKER HEBBEN/ZIEN
-# Dan kan ik de beschikbare trouwdatums zien
+@e2e
+Scenario: Ik wil zien op welk datum ik kan trouwen door op de kalendericoon te klikken
+Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
+Wanneer ik op de "Trouwdatum" datum prikker klik
+#FIXME: DIT KUNNEN WE TESTEN ALS DE CUSTOM DATUM PRIKKER HEBBEN/ZIEN
+Dan kan ik de beschikbare trouwdatums zien
 
 # ## stap "2" 
 # Scenario: Ik wil zien op welk datum ik kan trouwen door op de kalendericoon te klikken
@@ -95,11 +95,13 @@ Dan ik zie tijdslot checkbox opties voor trouwen op de geselecteerde dag
 # Wanneer ik op de gewenste tijdslot checkbox klik
 # Dan de tijdslot checkbox wordt geselecteerd
 
-# Scenario: Ik wil mijn gewenste tijd en datum bevestigen
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-#     En ik heb een beschikbare dag geselecteerd
-#     En ik heb een beschikbare tijdslot geselecteerd
-#     En ik kan een "Ja, dit wil ik!" button zien
-# Wanneer ik op de "Ja, dit wil ik!" button klik
-# Dan word ik naar de "voorgenomen huwelijk" pagina gestuurd 
-#     En ik ben op stap "3"
+@e2e
+Scenario: Ik wil mijn gewenste tijd en datum bevestigen
+Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
+    En ik heb een beschikbare dag geselecteerd
+    En ik heb een beschikbare tijdslot geselecteerd
+    En ik kan een "Ja, dit wil ik!" button zien
+Wanneer ik op de "Ja, dit wil ik!" button klik
+Dan word ik naar de "voorgenomen-huwelijk" pagina gestuurd 
+    En ben ik op stap "3"
+

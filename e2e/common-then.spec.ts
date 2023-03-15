@@ -45,9 +45,13 @@ Dan('is er een {string} datum prikker op de pagina', (datumType: string) => {
 });
 
 Dan('kan ik de beschikbare trouwdatums zien', () => {
-  cy.log('TODO');
+  cy.log('TODO FIXME: DIT KUNNEN WE TESTEN ALS DE CUSTOM DATUM PRIKKER HEBBEN/ZIEN');
 });
 
-Dan('ik zie tijdslot checkbox opties voor trouwen op de geselecteerde dag', {
-    cy.get('time').should('be.visible');
+//!!!Empty tests written just so Cypress doesn't complain
+Dan('ik zie tijdslot checkbox opties voor trouwen op de geselecteerde dag', () => {
+  cy.get('time').should('be.visible');
+  // cy.get('[data-test-id="test-example"]').should('have.length', 6) <- for reference
 });
+
+//line 26 right line 105 left I should be sent to the right webpage voorgenomen-huwelijk
