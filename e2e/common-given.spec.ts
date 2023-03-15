@@ -21,3 +21,8 @@ Gegeven('ik ben op stap {string}', (step: string) => {
 //Playwright equivalent
 //const step1 = await page.getByRole('paragraph', { name: /Stap 1 van [0-9]/i });
 //expect(step1).toBeDefined();
+
+Gegeven('ik heb een beschikbare dag geselecteerd', () => {
+  //datum prikker selecteren input type date
+  //waarde invullen 14/04/2021
+});

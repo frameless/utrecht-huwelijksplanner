@@ -15,3 +15,7 @@ Wanneer('ik op de {string} button klik', (text: string) => {
 Wanneer('ik op de {string} datum prikker klik', (text: string) => {
   cy.findByLabelText(text).click();
 });
+
+Wanneer('ik een beschikbare {string} heb geselecteerd', (text: string) => {
+  cy.findByLabelText(text).type('2021-04-14');
+});

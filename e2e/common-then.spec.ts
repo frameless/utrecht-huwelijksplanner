@@ -47,3 +47,7 @@ Dan('is er een {string} datum prikker op de pagina', (datumType: string) => {
 Dan('kan ik de beschikbare trouwdatums zien', () => {
   cy.log('TODO');
 });
+
+Dan('ik zie tijdslot checkbox opties voor trouwen op de geselecteerde dag', {
+    cy.get('time').should('be.visible');
+});
