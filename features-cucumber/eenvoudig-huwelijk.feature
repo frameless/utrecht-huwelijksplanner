@@ -10,6 +10,7 @@ Dan zie ik de heading "Trouwen of geregistreerd partnerschap"
 Dan ben ik op stap "1" 
 Dan zie ik een "Trouwen plannen" button 
 
+#@wip
 @e2e
 Scenario: Ik wil een huwelijk als trouw optie kiezen 
 Gegeven dat ik op de "/trouw-opties" pagina ben
@@ -45,12 +46,12 @@ Dan kan ik de beschikbare trouwdatums zien
 #FIXME: DIT KUNNEN WE TESTEN ALS DE CUSTOM DATUM PRIKKER HEBBEN/ZIEN
 
 # Scenario: Ik kan mijn gekozen trouwdatum niet selecteren
-# Gegeven ik ben op de "trouw opties huwelijk" pagina  
+# Gegeven dat ik ben op de "trouw opties huwelijk" pagina  
 # Wanneer ik probeer een niet beschikbare dag te selecteren
 # Dan zie ik dat ik dat dag niet selecteren kan
 
 # Scenario: Ik kan tijdsloten voor mijn gekozen trouwdatum niet selecteren
-# Gegeven ik ben op de "trouw opties huwelijk" pagina  
+# Gegeven dat ik ben op de "trouw opties huwelijk" pagina  
 #     En ik zie de heading "Wanneer en Hoe"
 #     En ik ben op stap "2"
 #     En er is een "Trouwdatum" datum prikker op de pagina
@@ -60,7 +61,7 @@ Dan kan ik de beschikbare trouwdatums zien
 # Dan zie ik dat er geen tijdsloten checkbox opties op de pagina verschijnen
 
 # Scenario: Ik wil een trouwdatum selecteren
-# Gegeven ik ben op de "trouw opties huwelijk" pagina  
+# Gegeven dat ik ben op de "trouw opties huwelijk" pagina  
 #     En ik zie de heading "Wanneer en Hoe"
 #     En ik ben op stap "2"
 #     En er is een "Trouwdatum" datum prikker op de pagina
@@ -72,31 +73,43 @@ Dan kan ik de beschikbare trouwdatums zien
 Scenario: Ik wil een tijdslot zien voor de geselecteerde dag
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
 Wanneer ik een beschikbare "Trouwdatum" heb geselecteerd
-Dan ik zie tijdslot checkbox opties voor trouwen op de geselecteerde dag
- 
-# Scenario: Ik wil een tijdslot selecteren
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-#     En ik heb een beschikbare dag geselecteerd
-# Wanneer ik op de gewenste tijdslot checkbox klik
-# Dan de tijdslot checkbox wordt geselecteerd
+Dan zie ik tijdslot checkbox opties voor trouwen op de geselecteerde dag
+#FIXME: DIT KUNNEN WE TESTEN ALS DE CUSTOM DATUM PRIKKER HEBBEN/ZIEN
+
+@e2e 
+Scenario: Ik wil een tijdslot selecteren
+Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
+    En ik heb een beschikbare dag geselecteerd
+Wanneer ik op de gewenste tijdslot checkbox klik
+Dan de tijdslot checkbox wordt geselecteerd
+#the dan confirms a radio button has been clicked vs ln89 
 
 @e2e
 Scenario: Ik wil mijn gewenste tijd en datum bevestigen
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-    En ik heb een beschikbare dag geselecteerd
     En ik heb een beschikbare tijdslot geselecteerd
-    En ik kan een "Ja, dit wil ik!" button zien
 Wanneer ik op de "Ja, dit wil ik!" button klik
 Dan word ik naar de "voorgenomen-huwelijk" pagina gestuurd 
-    En ben ik op stap "3"
+Dan ben ik op stap "3"
+Dan zie ik de correcte vroeger geselecteerde "tijd en datum" combinatie
 
-@e2e
-Scenario: Ik wil over een jaar trouwen
-Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-    En ik zie de heading "Wanneer en hoe"
-    En ik ben op stap "2"
-    En er is een "Trouwdatum" datum prikker op de pagina
-    En ik kan de beschikbare trouwdata zien 
-Wanneer ik probeer een datum over een jaar te selecteren
-Dan kan ik geen datum selecteren
-    En ik krijg een melding om een datum tussen een jaar te selecteren
+# Scenario: Ik wil over een jaar trouwen
+# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
+#     En er is een "Trouwdatum" datum prikker op de pagina
+#     En ik kan de beschikbare trouwdata zien 
+# Wanneer ik probeer een datum over een jaar te selecteren
+# Dan kan ik geen datum selecteren
+#     En ik krijg een melding om een datum tussen een jaar te selecteren
+
+# ## stap "3" 
+# Scenario: Ik wil de bruiloft overzicht zien
+# Gegeven dat ik op de "voorgenomen-huwelijk" pagina ben
+#     En ik heb een beschikbare tijdslot geselecteerd
+# Dan zie ik de correcte vroeger geselecteerde "tijd en datum" combinatie
+# Dan zie ik een Inloggen met DigID button
+
+# Scenario: Ik wil naar de DigID login pagina
+# Gegeven dat ik op de "voorgenomen-huwelijk" pagina ben
+# Wanneer ik op de button klik
+# Dan ik word naar de DigID login pagina doorgestuurd 
+# # stap " " 3

@@ -29,8 +29,11 @@ Dan('word ik naar de {string} pagina gestuurd', (path: string) => {
   // cy.url().should('include', path);
 
   if (path === 'trouw-opties/huwelijk') {
-    cy.log(
-      `TODO, FIXME: De bug zorgt dat we niet kan werken https://github.com/frameless/utrecht-huwelijksplanner/issues/147`,
+    // cy.log(
+    //   `TODO, FIXME: De bug zorgt dat we niet kan werken https://github.com/frameless/utrecht-huwelijksplanner/issues/147`,
+    // );
+    throw new Error(
+      'TODO, FIXME: De bug zorgt dat we niet kan werken https://github.com/frameless/utrecht-huwelijksplanner/issues/147',
     );
   } else {
     cy.location('pathname').should('include', path);
@@ -56,8 +59,26 @@ Dan('kan ik de beschikbare trouwdatums zien', () => {
   cy.log('TODO FIXME: DIT KUNNEN WE TESTEN ALS DE CUSTOM DATUM PRIKKER HEBBEN/ZIEN');
 });
 
+// Dan('de tijdslot checkbox wordt geselecteerd', () => {
+//   if (cy.get('[type="radio"]').first().check()) {
+//     return true;
+//     cy.get('@datePicker').should(`have.attr`, `type`, `date`);
+//   }
+//   cy.should('be.true');
+//   // radio value true? should be visible??
+//   // return 'pending';
+//   // cy.pause();
+//REPLACEMENT SEE BELOW
+// });
+
+Dan('de tijdslot checkbox wordt geselecteerd', () => {
+  cy.get('[type="radio"]').first().as('first-radio-button');
+
+  cy.get('@first-radio-button').should('be.checked');
+});
+
 //!!!Empty tests written just so Cypress doesn't complain
-Dan('ik zie tijdslot checkbox opties voor trouwen op de geselecteerde dag', () => {
+Dan('zie ik tijdslot checkbox opties voor trouwen op de geselecteerde dag', () => {
   cy.get('time').should('be.visible');
   // cy.get('[data-test-id="test-example"]').should('have.length', 6) <- for reference
 });
@@ -67,5 +88,9 @@ Dan('kan ik geen datum selecteren', () => {
 });
 
 Dan('ik krijg een melding om een datum tussen een jaar te selecteren', () => {
+  cy.log('TODO');
+});
+
+Dan('zie ik de correcte vroeger geselecteerde {string} combinatie', () => {
   cy.log('TODO');
 });

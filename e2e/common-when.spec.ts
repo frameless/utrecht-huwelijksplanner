@@ -28,6 +28,12 @@ Wanneer('ik een beschikbare {string} heb geselecteerd', (text: string) => {
   //This passes because it says Trouwdatum next to the datum prikker
 });
 
+Wanneer('ik op de gewenste tijdslot checkbox klik', () => {
+  cy.get('[type="radio"]').first().check();
+  // return 'pending';
+  // cy.pause();
+});
+
 //!!!Empty tests written just so Cypress doesn't complain
 
 Wanneer('ik probeer een datum over een jaar te selecteren', () => {
