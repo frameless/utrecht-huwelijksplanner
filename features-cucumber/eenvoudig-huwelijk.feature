@@ -76,22 +76,38 @@ Wanneer ik een beschikbare "Trouwdatum" heb geselecteerd
 Dan zie ik tijdslot checkbox opties voor trouwen op de geselecteerde dag
 #FIXME: DIT KUNNEN WE TESTEN ALS DE CUSTOM DATUM PRIKKER HEBBEN/ZIEN
 
-@e2e 
-Scenario: Ik wil een tijdslot selecteren
-Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-    En ik heb een beschikbare dag geselecteerd
-Wanneer ik op de gewenste tijdslot checkbox klik
-Dan de tijdslot checkbox wordt geselecteerd
-#the dan confirms the 1st radio button has been clicked  
+# @e2e 
+# Scenario: Ik wil een tijdslot selecteren
+# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
+#     En ik heb een beschikbare dag geselecteerd
+# Wanneer ik op de gewenste tijdslot checkbox klik
+# Dan de tijdslot checkbox wordt geselecteerd
+# #the dan confirms the 1st radio button has been clicked  
+
+# @e2e
+# Scenario: Ik wil mijn gewenste tijd en datum bevestigen
+# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
+#     En ik heb een beschikbare tijdslot geselecteerd
+# Wanneer ik op de "Ja, dit wil ik!" button klik
+# Dan word ik naar de "voorgenomen-huwelijk" pagina gestuurd 
+# Dan ben ik op stap "3"
+# Dan zie ik de correcte vroeger geselecteerde "tijd en datum" combinatie
 
 @e2e
-Scenario: Ik wil mijn gewenste tijd en datum bevestigen
-Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-    En ik heb een beschikbare tijdslot geselecteerd
-Wanneer ik op de "Ja, dit wil ik!" button klik
-Dan word ik naar de "voorgenomen-huwelijk" pagina gestuurd 
-Dan ben ik op stap "3"
-Dan zie ik de correcte vroeger geselecteerde "tijd en datum" combinatie
+Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
+  Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
+    En ik heb de "<datum>" geselecteerd
+    En ik heb een beschikbare "<tijd>" geselecteerd voor een "<typeHuwelijk>" huwelijk
+  Wanneer ik op de "Ja, dit wil ik!" button klik
+  Dan word ik naar de "voorgenomen-huwelijk" pagina gestuurd 
+  Dan ben ik op stap "3"
+  Dan zie ik de correcte vroeger geselecteerde "<datum>" en "<tijd>" combinatie
+  Voorbeelden: 
+    | datum           | tijd                | typeHuwelijk    |
+    | '2021-04-14'    | '12:00 – 12:15 uur' | 'Eenvoudig'     |
+    | '2021-04-14'    | '13:30 – 13:45 uur' | 'Eenvoudig'     | 
+    | '2021-04-14'    | '12:00 – 12:15 uur' | 'Uitgebreid'    |  
+
 
 # Scenario: Ik wil over een jaar trouwen
 # Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben

@@ -27,6 +27,7 @@ Dan('word ik naar de {string} pagina gestuurd', (path: string) => {
       'TODO, FIXME: De bug zorgt dat we niet kan werken https://github.com/frameless/utrecht-huwelijksplanner/issues/147',
     );
   } else {
+    cy.log(path);
     cy.location('pathname').should('include', path);
   }
   //expect(cy.url()).to.include(path);
