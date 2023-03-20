@@ -34,6 +34,16 @@ Gegeven('ik heb een beschikbare dag geselecteerd', () => {
   //waarde invullen 14/04/2021
 });
 
+Gegeven('ik heb een beschikbare tijdslot geselecteerd', () => {
+  if (cy.get('[type="radio"]').first().check()) {
+    return true;
+  }
+  cy.should('be.true');
+  // radio value true? should be visible??
+  // return 'pending';
+  // cy.pause();
+});
+
 Gegeven('ik kan een {string} button zien', (string) => {
   cy.log('TODO', string);
   // cy.pause();
@@ -48,16 +58,6 @@ Gegeven('er is een {string} datum prikker op de pagina', (datumType: string) => 
 
 Gegeven('ik kan de beschikbare trouwdata zien', () => {
   cy.log('TODO');
-  // return 'pending';
-  // cy.pause();
-});
-
-Gegeven('ik heb een beschikbare tijdslot geselecteerd', () => {
-  if (cy.get('[type="radio"]').first().check()) {
-    return true;
-  }
-  cy.should('be.true');
-  // radio value true? should be visible??
   // return 'pending';
   // cy.pause();
 });

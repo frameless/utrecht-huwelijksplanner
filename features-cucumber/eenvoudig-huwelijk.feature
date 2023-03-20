@@ -82,7 +82,7 @@ Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
     En ik heb een beschikbare dag geselecteerd
 Wanneer ik op de gewenste tijdslot checkbox klik
 Dan de tijdslot checkbox wordt geselecteerd
-#the dan confirms a radio button has been clicked vs ln89 
+#the dan confirms the 1st radio button has been clicked  
 
 @e2e
 Scenario: Ik wil mijn gewenste tijd en datum bevestigen
