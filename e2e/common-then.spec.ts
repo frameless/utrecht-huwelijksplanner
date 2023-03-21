@@ -20,9 +20,7 @@ Dan('word ik naar de {string} pagina gestuurd', (path: string) => {
   // cy.url().should('include', path);
 
   if (path === 'trouw-opties/huwelijk') {
-    // cy.log(
-    //   `TODO, FIXME: De bug zorgt dat we niet kan werken https://github.com/frameless/utrecht-huwelijksplanner/issues/147`,
-    // );
+    // cy.log(`TODO, FIXME: De bug zorgt dat we niet kan werken https://github.com/frameless/utrecht-huwelijksplanner/issues/147`);
     throw new Error(
       'TODO, FIXME: De bug zorgt dat we niet kan werken https://github.com/frameless/utrecht-huwelijksplanner/issues/147',
     );

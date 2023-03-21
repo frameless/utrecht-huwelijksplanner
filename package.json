@@ -43,6 +43,8 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --verbose src/",
     "test:e2e": "cypress run --env tags=@e2e",
     "cypress": "cypress open --env tags=@e2e",
+    "test:wip": "cypress run --env tags=@wip",
+    "cypress:wip": "cypress open --env tags=@wip",
     "update-patch": "npm-check-updates --configFileName .ncurc.patch.js --deep --dep dev,prod --target patch --upgrade && npm install",
     "update-minor": "npm-check-updates --configFileName .ncurc.minor.js --deep --dep dev,prod --target minor --upgrade && npm install",
     "update-major": "npm-check-updates --configFileName .ncurc.major.js --deep --dep dev,prod --target latest --upgrade && npm install",

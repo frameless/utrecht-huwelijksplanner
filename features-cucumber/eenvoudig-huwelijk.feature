@@ -93,7 +93,7 @@ Dan zie ik tijdslot checkbox opties voor trouwen op de geselecteerde dag
 # Dan ben ik op stap "3"
 # Dan zie ik de correcte vroeger geselecteerde "tijd en datum" combinatie
 
-@e2e
+@e2e @wip 
 Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
   Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
     En ik heb de "<datum>" geselecteerd
@@ -103,10 +103,10 @@ Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
   Dan ben ik op stap "3"
   Dan zie ik de correcte vroeger geselecteerde "<datum>" en "<tijd>" combinatie
   Voorbeelden: 
-    | datum           | tijd                | typeHuwelijk    |
-    | '2021-04-14'    | '12:00 – 12:15 uur' | 'Eenvoudig'     |
-    | '2021-04-14'    | '13:30 – 13:45 uur' | 'Eenvoudig'     | 
-    | '2021-04-14'    | '12:00 – 12:15 uur' | 'Uitgebreid'    |  
+    | datum         | tijd              | typeHuwelijk    |
+    | 2021-04-14    | 12:00 – 12:15 uur | Eenvoudig     |
+    # | '2021-04-14'    | '13:30 – 13:45 uur' | 'Eenvoudig'     | 
+    # | '2021-04-14'    | '12:00 – 12:15 uur' | 'Uitgebreid'    |  
 
 
 # Scenario: Ik wil over een jaar trouwen

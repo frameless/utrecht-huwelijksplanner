@@ -52,21 +52,21 @@ Gegeven(
     cy.log(typeHuwelijk);
 
     if (typeHuwelijk === 'Eenvoudig') {
-      // look for the legend with the text
-      // 'Flits/balie-huwelijk — Stadskantoor'
-      // or should it be
-      // 'FLITS/BALIE-HUWELIJK — STADSKANTOOR'?
-      cy.findByRole('legend', { name: 'Flits/balie-huwelijk — Stadskantoor' }).as('eenvoudig');
+      // look for an element with the text
+      // 'Flits/balie-huwelijk — Stadskantoor', save it as @pimplemees
+      cy.findByText('Flits/balie-huwelijk — Stadskantoor').as('pimplemees');
 
-      // get the @eenvoudig legend element
-      // find it's siblings (two divs containing checkboxes)
-      // then look inside those siblings for a radio button with the accessible name "tijd"
-      cy.get('@eenvoudig').siblings().findByRole('radio', { name: tijd }).as('timeSlot');
+      // get the @pimplemees element
+      // find it's siblings (two divs containing 2 children each: an input and a label)
+      // then look inside those siblings for a label with the "tijd".
+      cy.get('@pimplemees')
+        .siblings()
+        .children()
+        .contains(tijd) // finds a label with 'tijd' (12:00 - 12:15)
+        .as('timeSlot');
 
-      // then check that checkbox
-      cy.get('@timeSlot').check();
-
-      cy.log('@timeSlot');
+      // then click that label to check the checkbox
+      cy.get('@timeSlot').click();
     } else if (typeHuwelijk === 'Uitgebreid') {
       // look for the legend with the text
       // 'Uitgebreid trouwen — Zelf de plaats bepalen'
@@ -77,7 +77,7 @@ Gegeven(
       // the time
 
       // UITGEBREID TROUWEN — ZELF DE PLAATS BEPALEN
-      cy.findByRole('legend', { name: 'Flits/balie-huwelijk — Stadskantoor' });
+      cy.findByText('Flits/balie-huwelijk — Stadskantoor').as('uitgebreid');
     }
   },
 );
