@@ -26,9 +26,17 @@ Wanneer('ik op de gewenste tijdslot checkbox klik', () => {
   // cy.pause();
 });
 
+//////The button is actually a link but somehow the code below doesn't select it nor click anything
 Wanneer('ik op de {string} link klik', (text: string) => {
-  cy.findByRole('link', { name: text }).click();
+  cy.log(text);
+  // cy.findByRole('link', { name: text }).click();
+  cy.get('utrecht-digid-button a').findByText(text).click();
+  //cy.findByText(text).click();
 });
+// //////suggested test from cypress, doesn't work either
+// Dan('word ik naar de DigID {string} pagina gestuurd', function (string) {
+//   return 'pending';
+// });
 
 Wanneer('ik op de externe {string} link klik', (text: string) => {
   cy.findByRole('link', { name: text }).invoke('attr', 'href').as('clicked-external-link');

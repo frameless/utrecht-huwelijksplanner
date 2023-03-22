@@ -88,7 +88,7 @@ Dan(
     // with the value '2021-04-14'
     // cy.get('[datetime]').should(`have.attr`, `datetime`, datum);
 
-    // get an element with a datetime attribute
+    // get an element with a datetime attribute with CSS attribute selectors
     // whose value starts with '2021-04-14'
     cy.get(`[datetime^=${datum}]`).should('be.true');
   },

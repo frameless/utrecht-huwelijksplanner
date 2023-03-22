@@ -92,7 +92,7 @@ Dan zie ik tijdslot checkbox opties voor trouwen op de geselecteerde dag
 # Dan ben ik op stap "3"
 # Dan zie ik de correcte vroeger geselecteerde "tijd en datum" combinatie
 
-@e2e @wip 
+@e2e 
 Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
   Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
     En ik heb de "<datum>" geselecteerd
@@ -115,16 +115,13 @@ Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
 # Wanneer ik probeer een datum over een jaar te selecteren
 # Dan kan ik geen datum selecteren
 #     En ik krijg een melding om een datum tussen een jaar te selecteren
+#FIXME: Fixen als de datumprikker gemaakt is
 
-# ## stap "3" 
-# Scenario: Ik wil de bruiloft overzicht zien
-# Gegeven dat ik op de "voorgenomen-huwelijk" pagina ben
-#     En ik heb een beschikbare tijdslot geselecteerd
-# Dan zie ik de correcte vroeger geselecteerde "tijd en datum" combinatie
-# Dan zie ik een Inloggen met DigID button
+## stap "3" 
 
-# Scenario: Ik wil naar de DigID login pagina
-# Gegeven dat ik op de "voorgenomen-huwelijk" pagina ben
-# Wanneer ik op de button klik
-# Dan ik word naar de DigID login pagina doorgestuurd 
-# # stap " " 3
+@e2e @wip 
+Scenario: Ik wil naar de DigID login pagina
+Gegeven dat ik op de "voorgenomen-huwelijk" pagina ben
+Wanneer ik op de "Inloggen met DigiD" link klik
+Dan word ik naar de "login" pagina gestuurd
+#TODO: add "real" DigID address
