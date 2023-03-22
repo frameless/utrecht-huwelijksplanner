@@ -10,7 +10,6 @@ Dan zie ik de heading "Trouwen of geregistreerd partnerschap"
 Dan ben ik op stap "1" 
 Dan zie ik een "Trouwen plannen" button 
 
-#@wip
 @e2e
 Scenario: Ik wil een huwelijk als trouw optie kiezen 
 Gegeven dat ik op de "/trouw-opties" pagina ben
@@ -97,16 +96,16 @@ Dan zie ik tijdslot checkbox opties voor trouwen op de geselecteerde dag
 Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
   Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
     En ik heb de "<datum>" geselecteerd
-    En ik heb een beschikbare "<tijd>" geselecteerd voor een "<typeHuwelijk>" huwelijk
+    En ik heb een beschikbare "<tijd>" geselecteerd voor een "<type>" huwelijk
   Wanneer ik op de "Ja, dit wil ik!" button klik
   Dan word ik naar de "voorgenomen-huwelijk" pagina gestuurd 
   Dan ben ik op stap "3"
-  Dan zie ik de correcte vroeger geselecteerde "<datum>" en "<tijd>" combinatie
+  Dan zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie
   Voorbeelden: 
-    | datum         | tijd              | typeHuwelijk    |
+    | datum         | tijd              | type          |
     | 2021-04-14    | 12:00 – 12:15 uur | Eenvoudig     |
-    # | '2021-04-14'    | '13:30 – 13:45 uur' | 'Eenvoudig'     | 
-    # | '2021-04-14'    | '12:00 – 12:15 uur' | 'Uitgebreid'    |  
+    | 2021-04-14    | 13:30 – 13:45 uur | Eenvoudig     | 
+    | 2021-04-14    | 12:00 – 12:15 uur | Uitgebreid    |  
 
 
 # Scenario: Ik wil over een jaar trouwen

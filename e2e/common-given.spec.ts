@@ -68,16 +68,13 @@ Gegeven(
       // then click that label to check the checkbox
       cy.get('@timeSlot').click();
     } else if (typeHuwelijk === 'Uitgebreid') {
-      // look for the legend with the text
-      // 'Uitgebreid trouwen — Zelf de plaats bepalen'
-      // save the legend in a cypress variable thingy
-      // then use that variable to look for the next
-      // sibling element (psst it's a div) and then
-      // from that div find the input element with
-      // the time
-
-      // UITGEBREID TROUWEN — ZELF DE PLAATS BEPALEN
       cy.findByText('Flits/balie-huwelijk — Stadskantoor').as('uitgebreid');
+      cy.get('@uitgebreid')
+        .siblings()
+        .children()
+        .contains(tijd) // finds a label with 'tijd' (12:00 - 12:15)
+        .as('timeSlot');
+      cy.get('@timeSlot').click();
     }
   },
 );

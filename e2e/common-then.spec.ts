@@ -67,9 +67,32 @@ Dan('de tijdslot checkbox wordt geselecteerd', () => {
   cy.get('@first-radio-button').should('be.checked');
 });
 
-Dan('zie ik de correcte vroeger geselecteerde {string} combinatie', () => {
-  cy.log('TODO');
-});
+Dan(
+  'zie ik het correcte {string} huwelijk met de vroeger geselecteerde {string} en {string} combinatie',
+  (typeHuwelijk: string, datum: string, tijd: string) => {
+    cy.log('TODO', datum, tijd, typeHuwelijk);
+
+    cy.get('.utrecht-spotlight-section > :nth-child(1)').contains(typeHuwelijk);
+
+    // .should('contain', typeHuwelijk);
+
+    // datum is written like yyyy-mm-dd, but we want to look for
+    // day month year
+    // cy.get('.utrecht-spotlight-section > :nth-child(2)').contains(datum);
+
+    // cy.get('[datetime]').contains(datum);
+    // <time datetime="">2021-04-14</time>
+
+    // get an element that has a datetime attribute
+    // and then check it has a datetime attribute
+    // with the value '2021-04-14'
+    // cy.get('[datetime]').should(`have.attr`, `datetime`, datum);
+
+    // get an element with a datetime attribute
+    // whose value starts with '2021-04-14'
+    cy.get(`[datetime^=${datum}]`).should('be.true');
+  },
+);
 
 //
 // Extra tests voor commented Scenarios
