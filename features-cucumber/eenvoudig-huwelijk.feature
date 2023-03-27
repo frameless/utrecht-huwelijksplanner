@@ -92,7 +92,7 @@ Dan zie ik tijdslot checkbox opties voor trouwen op de geselecteerde dag
 # Dan ben ik op stap "3"
 # Dan zie ik de correcte vroeger geselecteerde "tijd en datum" combinatie
 
-@e2e 
+@e2e @wip
 Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
   Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
     En ik heb de "<datum>" geselecteerd
@@ -102,10 +102,10 @@ Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
   Dan ben ik op stap "3"
   Dan zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie
   Voorbeelden: 
-    | datum         | tijd              | type          |
-    | 2021-04-14    | 12:00 – 12:15 uur | Eenvoudig     |
-    | 2021-04-14    | 13:30 – 13:45 uur | Eenvoudig     | 
-    | 2021-04-14    | 12:00 – 12:15 uur | Uitgebreid    |  
+    | datum         | tijd           | type          |
+    | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
+    | 2021-04-14    | 13:30 – 13:45  | Eenvoudig     | 
+    | 2021-04-14    | 12:00 – 12:15  | Uitgebreid    |  
 
 
 # Scenario: Ik wil over een jaar trouwen
@@ -125,3 +125,14 @@ Gegeven dat ik op de "voorgenomen-huwelijk" pagina ben
 Wanneer ik op de "Inloggen met DigiD" link klik
 Dan word ik naar de "login" pagina gestuurd
 #TODO: add "real" DigID address
+
+Scenario: Ik wil Partner 1 met DigID inloggen
+Gegeven ik ben op de DigID Login pagina 
+# Inloggen bij DigID stap " " 3
+    En Partner 1 heeft een DigID 
+    En ik zie de DigID Inloggen interface 
+    En ik zie de DigID inloggen opties buttons   
+# <---Meer info TBD
+Wanneer ik klik op een van de inloggen opties
+Dan Partner 1 word ingelogd met DigID
+    En ik word naar de Persoonsgegevens voor Partner 1 pagina gestuurd

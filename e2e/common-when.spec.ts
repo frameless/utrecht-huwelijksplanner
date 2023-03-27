@@ -6,18 +6,19 @@ Wanneer('ik op de {string} button klik', (text: string) => {
 
 Wanneer('ik op de {string} datum prikker klik', (text: string) => {
   cy.findByLabelText(text).click();
-  cy.log('TODO FIXME: DIT KUNNEN WE TESTEN ALS DE CUSTOM DATUM PRIKKER HEBBEN/ZIEN');
+  cy.log('TODO: FIXME: wachten op een datumprikker');
 });
 
 Wanneer('ik het {string} datum prikker gefocust heb', (text: string) => {
   cy.findByLabelText(text).focus();
   // cy.focused().click();
-  cy.log('TODO FIXME: DIT KUNNEN WE TESTEN ALS DE CUSTOM DATUM PRIKKER HEBBEN/ZIEN');
+  cy.log('TODO: FIXME: wachten op een datumprikker');
 });
 
 Wanneer('ik een beschikbare {string} heb geselecteerd', (text: string) => {
   cy.findByLabelText(text).type('2021-04-14');
   //This passes because it says Trouwdatum next to the datum prikker
+  cy.log('TODO: FIXME: wachten op een datumprikker');
 });
 
 Wanneer('ik op de gewenste tijdslot checkbox klik', () => {
@@ -28,10 +29,8 @@ Wanneer('ik op de gewenste tijdslot checkbox klik', () => {
 
 //////The button is actually a link but somehow the code below doesn't select it nor click anything
 Wanneer('ik op de {string} link klik', (text: string) => {
-  cy.log(text);
-  // cy.findByRole('link', { name: text }).click();
   cy.get('utrecht-digid-button a').findByText(text).click();
-  //cy.findByText(text).click();
+  // Previously tried: cy.findByRole('link', { name: text }).click();
 });
 // //////suggested test from cypress, doesn't work either
 // Dan('word ik naar de DigID {string} pagina gestuurd', function (string) {
@@ -43,5 +42,5 @@ Wanneer('ik op de externe {string} link klik', (text: string) => {
 });
 
 Wanneer('ik probeer een datum over een jaar te selecteren', () => {
-  cy.log('TODO');
+  cy.log('TODO: FIXME: wachten op een datumprikker');
 });

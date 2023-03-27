@@ -28,7 +28,7 @@ Gegeven('ik ben op stap {string}', (stepNumber: string) => {
 
 //!!!Empty tests written just so Cypress doesn't complain
 Gegeven('ik heb de {string} geselecteerd', (datum: string) => {
-  cy.log('TODO');
+  cy.log('TODO: FIXME: wachten op een datumprikker');
   cy.log(datum);
   //cy.pause();
   //datum prikker selecteren input type date
@@ -79,20 +79,19 @@ Gegeven(
   },
 );
 
-Gegeven('ik kan een {string} button zien', (string) => {
-  cy.log('TODO', string);
-  // cy.pause();
-  // return 'pending';
+Gegeven('ik kan een {string} button zien', (text: string) => {
+  cy.findByRole('button', { name: text }).should('be.visible');
 });
 
 Gegeven('er is een {string} datum prikker op de pagina', (datumType: string) => {
-  cy.log('TODO');
+  cy.log('TODO: FIXME: wachten op een datumprikker');
+  cy.log(datumType);
   // cy.findByLabelText(datumType).as('datePicker').should('be.visible');
   // cy.get('@datePicker').should(`have.attr`, `type`, `date`);
 });
 
 Gegeven('ik kan de beschikbare trouwdata zien', () => {
-  cy.log('TODO');
+  cy.log('TODO: FIXME: wachten op een datumprikker');
   // return 'pending';
   // cy.pause();
 });

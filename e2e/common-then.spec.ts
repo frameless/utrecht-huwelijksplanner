@@ -20,9 +20,8 @@ Dan('word ik naar de {string} pagina gestuurd', (path: string) => {
   // cy.url().should('include', path);
 
   if (path === 'trouw-opties/huwelijk') {
-    // cy.log(`TODO, FIXME: De bug zorgt dat we niet kan werken https://github.com/frameless/utrecht-huwelijksplanner/issues/147`);
     throw new Error(
-      'TODO, FIXME: De bug zorgt dat we niet kan werken https://github.com/frameless/utrecht-huwelijksplanner/issues/147',
+      'TODO: FIXME: De bug zorgt dat we niet kan werken https://github.com/frameless/utrecht-huwelijksplanner/issues/147',
     );
   } else {
     cy.log(path);
@@ -41,7 +40,7 @@ Dan('is er een {string} datum prikker op de pagina', (datumType: string) => {
 });
 
 Dan('kan ik de beschikbare trouwdatums zien', () => {
-  cy.log('TODO FIXME: DIT KUNNEN WE TESTEN ALS DE CUSTOM DATUM PRIKKER HEBBEN/ZIEN');
+  cy.log('TODO: FIXME: wachten op een datumprikker');
 });
 
 Dan('zie ik tijdslot checkbox opties voor trouwen op de geselecteerde dag', () => {
@@ -70,9 +69,9 @@ Dan('de tijdslot checkbox wordt geselecteerd', () => {
 Dan(
   'zie ik het correcte {string} huwelijk met de vroeger geselecteerde {string} en {string} combinatie',
   (typeHuwelijk: string, datum: string, tijd: string) => {
-    cy.log('TODO', datum, tijd, typeHuwelijk);
+    cy.log(datum, tijd, typeHuwelijk);
 
-    cy.get('.utrecht-spotlight-section > :nth-child(1)').contains(typeHuwelijk);
+    cy.get('.utrecht-spotlight-section').should('contain', typeHuwelijk);
 
     // .should('contain', typeHuwelijk);
 
@@ -90,7 +89,13 @@ Dan(
 
     // get an element with a datetime attribute with CSS attribute selectors
     // whose value starts with '2021-04-14'
-    cy.get(`[datetime^=${datum}]`).should('be.true');
+    //cy.get(`[datetime^=${datum}]`).should('be.visible');
+
+    cy.get('.utrecht-spotlight-section time').should('have.attr', 'datetime').and('contain', datum);
+
+    // cy.get('.utrecht-spotlight-section').should('contain', '10:00 -  10:10');
+    cy.get('.utrecht-spotlight-section').should('contain', tijd);
+    //'Locatie Stadskantoor - Eenvoudig huwelijkwoensdag 14 april 2021, 10:00 -  10:10Kosten: € 168,00';
   },
 );
 
@@ -111,9 +116,9 @@ Dan('zie ik een {string} button die zich gedraagd als link', (text: string) => {
 });
 
 Dan('kan ik geen datum selecteren', () => {
-  cy.log('TODO');
+  cy.log('TODO: FIXME: wachten op een datumprikker');
 });
 
 Dan('ik krijg een melding om een datum tussen een jaar te selecteren', () => {
-  cy.log('TODO');
+  cy.log('TODO: FIXME: wachten op een datumprikker');
 });
