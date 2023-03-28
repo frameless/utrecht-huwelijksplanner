@@ -1,0 +1,4 @@
+{
+  "stepDefinitions": "e2e/**/*.spec.ts",
+  "filterSpecs": true
+}
