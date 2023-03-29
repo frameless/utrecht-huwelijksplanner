@@ -7,11 +7,19 @@ import "@utrecht/component-library-css/dist/html.css";
 
 import "../styles/globals.scss";
 import "../styles/utrecht-theme.css";
+import { MarriageOptionsProps, MarriageOptionsProvider } from "../src/context/marriageOptions";
+import {  useState } from "react";
 
-const MyApp = ({ Component, pageProps }: AppProps) => (
-  <div className={clsx("example-debugging-disabled", "utrecht-theme", "utrecht-theme--media-query-color-scheme")}>
-    <Component {...pageProps} />
-  </div>
-);
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  const [marriageOptions, setMarriageOptions] = useState<MarriageOptionsProps>({});
+
+  return (
+    <div className={clsx("example-debugging-disabled", "utrecht-theme", "utrecht-theme--media-query-color-scheme")}>
+      <MarriageOptionsProvider value={[marriageOptions, setMarriageOptions]}>
+        <Component {...pageProps} />
+      </MarriageOptionsProvider>
+    </div>
+  );
+};
 
 export default appWithTranslation(MyApp);
