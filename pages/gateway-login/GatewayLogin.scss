@@ -1,0 +1,14 @@
+.gateway-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+
+  form {
+    gap: 24px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+}

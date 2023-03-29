@@ -1,4 +1,4 @@
-import { Accommodation, Assent, Availability, Huwelijk, Klant, SDGProduct } from "../generated";
+import { Accommodation, Assent, Availability, Huwelijk, Klant, SDGProduct } from '../generated';
 
 export interface HuwelijksplannerInterface {
   getProducten(): Promise<SDGProduct[]>;
