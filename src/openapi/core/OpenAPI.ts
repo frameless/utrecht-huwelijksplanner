@@ -18,16 +18,21 @@ export type OpenAPIConfig = {
   ENCODE_PATH?: (path: string) => string;
 };
 
-export const OpenAPI: OpenAPIConfig = {
-  BASE: process.env.NEXT_PUBLIC_API_URL ?? '',
-  VERSION: '1.0',
-  WITH_CREDENTIALS: false,
-  CREDENTIALS: 'include',
-  TOKEN: undefined,
-  USERNAME: undefined,
-  PASSWORD: undefined,
-  HEADERS: {
-    Authorization: process.env.NEXT_PUBLIC_API_TOKEN ?? '',
-  },
-  ENCODE_PATH: undefined,
+export const getOpenAPI = (JWT?: string | null): OpenAPIConfig => {
+  let config: OpenAPIConfig = {
+    BASE: process.env.NEXT_PUBLIC_API_URL ?? '',
+    VERSION: '1.0',
+    WITH_CREDENTIALS: false,
+    CREDENTIALS: 'include',
+    TOKEN: undefined,
+    USERNAME: undefined,
+    PASSWORD: undefined,
+    ENCODE_PATH: undefined,
+  };
+
+  if (JWT) {
+    config = { ...config, HEADERS: { Authorization: `Bearer ${JWT}` } };
+  }
+
+  return config;
 };
