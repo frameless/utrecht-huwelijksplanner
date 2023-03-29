@@ -1,22 +1,28 @@
 import { Button, FormField, FormLabel, Textbox } from "@utrecht/component-library-react";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
+import { useState } from "react";
+// import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { OpenAPI } from "../../src/generated/core/OpenAPI";
+import { getOpenAPI } from "../../src/generated/core/OpenAPI";
 import { request as __request } from "../../src/generated/core/request";
 
 const GatewayLogin: NextPage = () => {
-  const { push } = useRouter();
+  const [error, setError] = useState<boolean>(false);
+  // const { push } = useRouter();
 
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
-    __request(OpenAPI, {
+    setError(false);
+
+    __request(getOpenAPI(), {
       method: "POST",
       url: "/users/login",
       body: data,
       mediaType: "application/json",
-    }).then((res) => console.log({res}));
+    })
+      .then((res: any) => window.sessionStorage.setItem("JWT", res.jwtToken))
+      .catch(() => setError(true));
   };
 
   return (
@@ -47,6 +53,8 @@ const GatewayLogin: NextPage = () => {
         </FormField>
 
         <Button type="submit">Submit</Button>
+
+        {error && <span className="error">Something went wrong.</span>}
       </form>
     </div>
   );
