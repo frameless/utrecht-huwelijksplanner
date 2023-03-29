@@ -1,14 +1,15 @@
 import { Button, FormField, FormLabel, Textbox } from "@utrecht/component-library-react";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useState } from "react";
-// import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { getOpenAPI } from "../../src/generated/core/OpenAPI";
 import { request as __request } from "../../src/generated/core/request";
 
 const GatewayLogin: NextPage = () => {
   const [error, setError] = useState<boolean>(false);
-  // const { push } = useRouter();
+  const { push, query } = useRouter();
+  const { redirectPath } = query;
 
   const { register, handleSubmit } = useForm();
 
@@ -21,7 +22,10 @@ const GatewayLogin: NextPage = () => {
       body: data,
       mediaType: "application/json",
     })
-      .then((res: any) => window.sessionStorage.setItem("JWT", res.jwtToken))
+      .then((res: any) => {
+        window.sessionStorage.setItem("JWT", res.jwtToken);
+        push(`/${redirectPath}`);
+      })
       .catch(() => setError(true));
   };
 
