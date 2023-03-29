@@ -1,24 +1,34 @@
-export type {Assent} from "../generated";
+export type { Assent } from '../generated';
 
 import { HuwelijksplannerInterface } from './api-interface';
 import { resolveEmbedded } from '../embedded';
-import type { Assent } from "../generated";
-import { AccommodationService, Assent as AssentNamespace, AssentService, CalendarService, Huwelijk, HuwelijkService, Klant, KlantService, SDGProduct, SdgproductService  } from "../generated";
+import { Assent, AvailabilityService } from '../generated';
+import {
+  AccommodationService,
+  Assent as AssentNamespace,
+  AssentService,
+  Huwelijk,
+  HuwelijkService,
+  Klant,
+  KlantService,
+  SDGProduct,
+  SdgproductService,
+} from '../generated';
 
 const MissingIdError = () => new TypeError('Argument must have `id` property');
 
 const putAssent = (data: Assent) =>
-  data.id ? AssentService.assentPut(data.id, data) : Promise.reject(MissingIdError());
+  data.id ? AssentService.assentPutItem(data.id, data) : Promise.reject(MissingIdError());
 
 export const HuwelijksplannerAPI: HuwelijksplannerInterface = {
-  getProducten: () => SdgproductService.getProducten().then((data): SDGProduct[] => resolveEmbedded(data.results || [])),
+  getProducten: () =>
+    SdgproductService.sdgproductGetCollection().then((data): SDGProduct[] => resolveEmbedded(data.results || [])),
 
-  getAccommodations: () => AccommodationService.getAccommodations().then((data) => resolveEmbedded(data.results || [])),
+  getAccommodations: () => AccommodationService.accommodationGetCollection().then((data) => resolveEmbedded(data.results || [])),
 
-  getAssents: () => AssentService.getAssents().then((data): Assent[] => resolveEmbedded(data.results || [])),
+  getAssents: () => AssentService.assentGetCollection().then((data): Assent[] => resolveEmbedded(data.results || [])),
 
-  deleteAssent: (data: Assent) =>
-    data.id ? AssentService.deleteAssentsId(data.id) : Promise.reject(MissingIdError()),
+  deleteAssent: (data: Assent) => (data.id ? AssentService.assentDeleteItem(data.id) : Promise.reject(MissingIdError())),
 
   putAssent,
 
@@ -34,15 +44,15 @@ export const HuwelijksplannerAPI: HuwelijksplannerInterface = {
       status: AssentNamespace.status.GRANTED,
     }),
 
-  getHuwelijk: (id: string) => HuwelijkService.huwelijkGet(id).then((data): Huwelijk => resolveEmbedded(data)),
+  getHuwelijk: (id: string) => HuwelijkService.huwelijkGetItem(id).then((data): Huwelijk => resolveEmbedded(data)),
 
-  getHuwelijken: () => HuwelijkService.getHuwelijken().then((data): Huwelijk[] => resolveEmbedded(data.results || [])),
+  getHuwelijken: () => HuwelijkService.huwelijkGetCollection().then((data): Huwelijk[] => resolveEmbedded(data.results || [])),
 
-  deleteHuwelijk: (huwelijk: Huwelijk) => HuwelijkService.huwelijkDelete(huwelijk.id || ''),
+  deleteHuwelijk: (huwelijk: Huwelijk) => HuwelijkService.huwelijkDeleteItem(huwelijk.id || ''),
 
-  getKlanten: () => KlantService.klantList().then((data) => resolveEmbedded(data.results)),
+  getKlanten: () => KlantService.klantGetCollection().then((data) => resolveEmbedded(data.results)),
 
-  getKlant: (uuid: string): Promise<Klant> => KlantService.klantRead(uuid),
+  getKlant: (uuid: string): Promise<Klant> => KlantService.klantGetItem(uuid),
 
-  getAvailability: () => CalendarService.getAvailabilities().then((data) => data.results || []),
+  getAvailability: () => AvailabilityService.availabilityGetCollection().then((data) => data.results || []),
 };
