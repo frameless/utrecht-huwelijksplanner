@@ -1,8 +1,9 @@
 import { createContext } from 'react';
+import { CeremonyType, RegistrationType } from '../data/huwelijksplanner-state';
 
 export interface MarriageOptionsProps {
-  type?: string;
-  ceremony?: string;
+  type?: RegistrationType;
+  ceremony?: CeremonyType;
   official?: string;
   location?: string;
   date?: string;
