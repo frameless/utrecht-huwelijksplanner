@@ -8,7 +8,7 @@ import "@utrecht/component-library-css/dist/html.css";
 import "../styles/globals.scss";
 import "../styles/utrecht-theme.css";
 import { MarriageOptionsProps, MarriageOptionsProvider } from "../src/context/marriageOptions";
-import {  useState } from "react";
+import { useState } from "react";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [marriageOptions, setMarriageOptions] = useState<MarriageOptionsProps>({});
