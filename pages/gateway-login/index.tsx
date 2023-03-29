@@ -9,7 +9,7 @@ import { request as __request } from "../../src/generated/core/request";
 const GatewayLogin: NextPage = () => {
   const [error, setError] = useState<boolean>(false);
   const { push, query } = useRouter();
-  const { redirectPath } = query;
+  const { userId } = query;
 
   const { register, handleSubmit } = useForm();
 
@@ -24,7 +24,7 @@ const GatewayLogin: NextPage = () => {
     })
       .then((res: any) => {
         window.sessionStorage.setItem("JWT", res.jwtToken);
-        push(`/${redirectPath}`);
+        push(`/persoonsgegevens/${userId}`);
       })
       .catch(() => setError(true));
   };
