@@ -1,17 +1,11 @@
-export type { Assent } from '../../src/generated/openapi/Overige-Objecten';
-export type { Accomodation } from '../../src/generated/openapi/Overige-Objecten';
-export type { SDG as Product } from '../../src/generated/openapi/Overige-Objecten';
-export type { huwelijk as Huwelijk } from '../../src/generated/openapi/trouwservice';
-export type { Klant } from '../generated/openapi/klanten';
 import { HuwelijksplannerInterface } from './api-interface';
 import agendaJSON from './mock/agenda.json';
 import assentsJSON from './mock/assents.json';
 import huwelijkenJSON from './mock/huwelijken.json';
 import klantenJSON from './mock/klanten.json';
 import productenJSON from './mock/producten.json';
-import type { Assent } from '../../src/generated/openapi/Overige-Objecten';
-import type { huwelijk as Huwelijk } from '../../src/generated/openapi/trouwservice';
 import { resolveEmbedded } from '../embedded';
+import { Assent, Huwelijk } from '../generated';
 
 const NotImplemented = () => new Error('This mock API is not implemented');
 

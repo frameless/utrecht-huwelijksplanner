@@ -34,6 +34,6 @@ Open [localhost:3000](http://localhost:3000/)
 Configure the following environment variables to connect with the API:
 
 ```text
-NEXT_PUBLIC_API_URL=https://huwelijksplanner-gateway.commonground.nu/api
+NEXT_PUBLIC_API_URL=https://api.huwelijksplanner.online/api
 NEXT_PUBLIC_API_TOKEN=...
 ```
