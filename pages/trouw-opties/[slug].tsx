@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState, useContext } from "react";
 import {
   Aside,
   Button,
@@ -35,6 +35,7 @@ import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHe
 import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
 import { Availability } from "../../src/generated/openapi/Agenda-Service";
 import { HuwelijksplannerAPI } from "../../src/openapi/index";
+import { MarriageOptionsContext } from "../../src/context/marriageOptions";
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common", "huwelijksplanner-step-2"])),
@@ -42,7 +43,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 });
 
 const BlogPost: NextPage = () => {
-  const { locale = "nl", push } = useRouter();
+  const { locale = "nl", replace } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
 
   const getEvents = (type: CeremonyType, date: string) => {
@@ -52,7 +53,10 @@ const BlogPost: NextPage = () => {
   const [, setResults] = useState<Availability[]>([]);
 
   const [selectedDate, setSelectedDate] = useState("2021-04-14");
-  const [selectedLocationAndDate, setSelectedLocationAndDate] = useState<string | undefined>();
+  const [selectedLocation, setSelectedLocation] = useState<string | undefined>();
+  const [selectedStartTime, setSelectedStartTime] = useState<string | undefined>();
+  const [selectedEndTime, setSelectedEndTime] = useState<string | undefined>();
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   const loadEvents = useCallback(() => {
     const today = new Date().toISOString().replace(/T.+/, "");
@@ -68,23 +72,36 @@ const BlogPost: NextPage = () => {
     loadEvents();
   }, [selectedDate, loadEvents]);
 
-  const onChangeDateHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedLocationAndDate(event.target.value);
+  const onChangeDateHandler = (location: string, startTime: string, endTime: string) => {
+    setSelectedLocation(location);
+    setSelectedStartTime(startTime);
+    setSelectedEndTime(endTime);
   };
 
   const onSelectedDateAndLocationSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // const data = {
     //   trouw_optie: query.slug,
-    //   locatie_id: selectedLocationAndDate,
+    //   locatie_id: selectedLocation,
     // };
 
-    if (selectedLocationAndDate) {
-      push("/voorgenomen-huwelijk");
+    if (selectedLocation && selectedStartTime && selectedEndTime && selectedDate) {
+      setMarriageOptions({
+        ...marriageOptions,
+        location: selectedLocation,
+        startTime: selectedStartTime,
+        endTime: selectedEndTime,
+        date: selectedDate,
+      });
+      replace(`/voorgenomen-huwelijk`);
     } else {
       throw new Error("please, select a date!");
     }
   };
+
+  const back = () => {
+    replace("/trouw-opties/")
+  }
 
   return (
     <Surface>
@@ -101,7 +118,7 @@ const BlogPost: NextPage = () => {
           </PageHeader>
           <PageContent>
             <ButtonGroup>
-              <ButtonLink href="/trouw-opties/" appearance="subtle-button">
+              <ButtonLink onClick={back} appearance="subtle-button">
                 ← Terug
               </ButtonLink>
             </ButtonGroup>
@@ -132,7 +149,7 @@ const BlogPost: NextPage = () => {
                           name="event"
                           value={event.id}
                           required
-                          onChange={onChangeDateHandler}
+                          onChange={() => onChangeDateHandler(event.id, event.startDateTime, event.endDateTime)}
                         />
                         <FormLabel htmlFor={event.id} type="radio">
                           <span aria-label="negen uur tot tien over negen">
@@ -155,7 +172,7 @@ const BlogPost: NextPage = () => {
                           name="event"
                           value={event.id}
                           required
-                          onChange={onChangeDateHandler}
+                          onChange={() => onChangeDateHandler(event.id, event.startDateTime, event.endDateTime)}
                         />
                         <FormLabel htmlFor={event.id}>
                           <span aria-label="negen uur tot tien over negen">
