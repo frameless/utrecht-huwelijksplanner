@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useId } from "react";
+import { useContext, useId } from "react";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -29,6 +29,8 @@ import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/Pag
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
 import { exampleState } from "../../../src/data/huwelijksplanner-state";
+import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
+import { HuwelijkService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -40,9 +42,10 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen", "form"]);
   const data = { ...exampleState };
-  const { locale, push } = useRouter();
+  const { locale } = useRouter();
 
   const { register, handleSubmit } = useForm();
+  const [marriageOptions] = useContext(MarriageOptionsContext);
 
   const onWitnessSubmit = (data) => {
     // TODO: PATCH naar gateway met `data`.then() push("/voorgenomen-huwelijk/getuigen/succes");
