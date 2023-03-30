@@ -198,7 +198,7 @@ Gegeven ik ben op de Persoonsgegevens pagina
     En ik zie een checkbox voor de alleenstaand verklaring van Partner 1
 Wanneer ik op de checkbox klik
 Dan Het checkbox wordt ingevuld
--------
+
 Scenario: Ik Partner 1 wil mijn alleenstaand verklaring terugnemen
 Gegeven ik ben op de Persoonsgegevens pagina 
 # Melding Voorgenomen Huwelijk stap " " 3
