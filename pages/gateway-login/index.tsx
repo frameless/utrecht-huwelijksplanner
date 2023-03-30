@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { getOpenAPI } from "../../src/generated/core/OpenAPI";
+import { OpenAPI } from "../../src/generated/core/OpenAPI";
 import { request as __request } from "../../src/generated/core/request";
 
 const GatewayLogin: NextPage = () => {
@@ -16,18 +16,23 @@ const GatewayLogin: NextPage = () => {
 
   const onSubmit = (data: any) => {
     setError(false);
+    window.sessionStorage.removeItem("JWT");
 
-    __request(getOpenAPI(), {
-      method: "POST",
-      url: "/users/login",
-      body: data,
-      mediaType: "application/json",
-    })
-      .then((res: any) => {
-        window.sessionStorage.setItem("JWT", res.jwtToken);
+    window.setTimeout(
+      () =>
+        __request(OpenAPI, {
+          method: "POST",
+          url: "/users/login",
+          body: data,
+          mediaType: "application/json",
+        })
+          .then((res: any) => {
+            window.sessionStorage.setItem("JWT", res.jwtToken);
         push(`/persoonsgegevens/${userId}${huwelijksId ? `?huwelijksId=${huwelijksId}` : ""}`);
-      })
-      .catch(() => setError(true));
+          })
+          .catch(() => setError(true)),
+      1000
+    );
   };
 
   return (

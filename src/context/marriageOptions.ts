@@ -7,7 +7,8 @@ export interface MarriageOptionsProps {
   official?: string;
   location?: string;
   date?: string;
-  time?: string;
+  startTime?: string;
+  endTime?: string;
 }
 
 export const marriageOptions = {} as MarriageOptionsProps;
