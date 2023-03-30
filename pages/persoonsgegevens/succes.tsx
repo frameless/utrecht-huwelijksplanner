@@ -35,7 +35,6 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
   const data = { ...exampleState };
   const { locale } = useRouter();
-  // const applicant = data.partners[1];
   const partner = data.partners[0];
 
   return (
@@ -61,11 +60,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {data["reservation"] ? (
-                  <ReservationCard reservation={data["reservation"]} locale={locale || "en"} />
-                ) : (
-                  ""
-                )}
+                <ReservationCard locale={locale || "en"} />
                 <section>
                   <Heading2>Gelukt</Heading2>
                   <Paragraph>

@@ -9,8 +9,7 @@ import { request as __request } from "../../src/generated/core/request";
 const GatewayLogin: NextPage = () => {
   const [error, setError] = useState<boolean>(false);
   const { push, query } = useRouter();
-  const { userId } = query;
-  const { huwelijksId } = query;
+  const { huwelijkId } = query;
 
   const { register, handleSubmit } = useForm();
 
@@ -28,7 +27,14 @@ const GatewayLogin: NextPage = () => {
         })
           .then((res: any) => {
             window.sessionStorage.setItem("JWT", res.jwtToken);
-            push(`/persoonsgegevens/${userId}${huwelijksId ? `?huwelijksId=${huwelijksId}` : ""}`);
+
+            let baseURL = "/persoonsgegevens/persoon";
+
+            if (huwelijkId) {
+              baseURL += `?huwelijkId=${huwelijkId}`;
+            }
+
+            push(baseURL);
           })
           .catch(() => setError(true)),
       1000

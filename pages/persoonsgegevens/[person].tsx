@@ -38,6 +38,7 @@ import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHe
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { Huwelijk, HuwelijkService, IngeschrevenPersoon, IngeschrevenpersoonService } from "../../src/generated";
+import { getBsnFromJWT } from "../../src/services/getBsnFromJWT";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -50,49 +51,76 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
   const { query, locale = "nl", push } = useRouter();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
   const [ingeschrevenPersoon, setIngeschrevenPersoon] = useState<IngeschrevenPersoon | null>(null);
 
-  const { person } = query;
+  const { huwelijkId } = query;
 
-  const [marriageOptions] = useContext(MarriageOptionsContext);
-
-  useEffect(() => {
-    console.log({marriageOptions})
-  }, [marriageOptions])
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   useEffect(() => {
-    if (!huwelijk) return;
+    if (!getBsnFromJWT() || ingeschrevenPersoon) return;
 
-    IngeschrevenpersoonService.ingeschrevenpersoonGetItem(huwelijk.partners[0].requester).then((res: any) => {
-      console.log({ res: res.results[0] });
+    IngeschrevenpersoonService.ingeschrevenpersoonGetItem(getBsnFromJWT()).then((res: any) => {
       setIngeschrevenPersoon(res.results[0]);
     });
-  }, [huwelijk]);
+  }, [huwelijk, ingeschrevenPersoon]);
 
   useEffect(() => {
-    if (person === "new") handleNewPersonLogin();
-  }, [person]);
+    if (huwelijk) return;
 
-  const handleNewPersonLogin = () => {
-    HuwelijkService.huwelijkPostItem({
-      type: "5d016a26-7ac1-4520-a962-601057acfb6d", // marriageOptions.type holds the current type
-      ceremonie: "1a4c93d4-4f79-48a9-8299-5ecb7c152505", // Ceremonie is "flits-balie" of "uitgebreid-trouwen"; uuid
-      moment: marriageOptions?.startTime ?? "2019-08-24T14:15:22",
-      "ambtenaar": "e4c2f87c-fb22-484f-9748-87242f7b3d53", // TODO: Sarai stuurt id door
-      "locatie": marriageOptions?.location ?? "",
-    }).then((res) => {
-      const _res = JSON.parse(res as string);
+    const handleNewPersonLogin = () => {
+      setIsLoading(true);
 
-      setHuwelijk(_res);
-    });
-  };
+      HuwelijkService.huwelijkPostItem({
+        type: "5877dfa1-bcd9-4673-bb4e-e9a4da98ec0d", // marriageOptions.type holds the current type
+        ceremonie: "868da2b9-242d-4053-8e21-8a9ef66bd15c", // Ceremonie is "flits-balie" of "uitgebreid-trouwen"; uuid
+        moment: marriageOptions?.startTime ?? "2019-08-24T14:15:22",
+        ambtenaar: "4a96dcc4-66e4-46b9-b785-3cc89931a3e2", // TODO: Sarai stuurt id door
+        locatie: "e1b2aa89-dcd8-4b77-96fc-d41501cbc57f", //marriageOptions?.location ?? "",
+      })
+        .then((res) => {
+          const _res = JSON.parse(res as string);
+
+          setMarriageOptions({
+            ...marriageOptions,
+            huwelijk: {
+              id: _res._self.id,
+              expiry: "FIXME: over 2 uur",
+              "ceremony-type": _res.ceremonie.upnLabel,
+              "ceremony-start": _res.moment ?? "",
+              "ceremony-end": _res.moment ? moment(_res.moment).add(15, "m").toDate().toString() : "",
+              "ceremony-location": "Locatie Stadskantoor",
+              "ceremony-price-currency": "EUR",
+              "ceremony-price-amount": _res.kosten ? _res.kosten.replace("EUR ", "") : "-",
+            },
+          });
+
+          if (!huwelijk) setHuwelijk(_res); // TODO: two are being created, this ensures its not overwritten
+        })
+        .finally(() => setIsLoading(false));
+    };
+
+    const handleSecondPersonLogin = () => {
+      setIsLoading(true);
+      HuwelijkService.huwelijkGetItem(huwelijkId as string)
+        .then((res) => {
+          setHuwelijk(res);
+        })
+        .finally(() => setIsLoading(false));
+    };
+
+    if (!huwelijkId) handleNewPersonLogin();
+    if (huwelijkId) handleSecondPersonLogin();
+  }, [huwelijk, huwelijkId, marriageOptions, setMarriageOptions]);
 
   const onDeclarationCheckboxChange = (event: any) => {
     setDeclarationCheckboxData({ ...declarationCheckboxData, [event.target.name]: event.target.checked });
   };
 
-  const PersonalDataList = ({ ingeschrevenPersoon }: { ingeschrevenPersoon: IngeschrevenPersoon }) => (
+  const PersonalDataList = ({ ingeschrevenPersoon }: { ingeschrevenPersoon: any }) => (
     <DataList aria-describedby="personal-details" className="utrecht-data-list--rows">
       <DataListItem>
         <DataListKey>{t("form:bsn")}</DataListKey>
@@ -192,7 +220,7 @@ export default function MultistepForm1() {
     </DataList>
   );
 
-  const AddressDataList = ({ ingeschrevenPersoon }: { ingeschrevenPersoon: IngeschrevenPersoon }) => (
+  const AddressDataList = ({ ingeschrevenPersoon }: { ingeschrevenPersoon: any }) => (
     <DataList aria-describedby="address" className="utrecht-data-list--rows">
       <DataListItem>
         <DataListKey>{t("form:street")}</DataListKey>
@@ -235,13 +263,28 @@ export default function MultistepForm1() {
     </DataList>
   );
 
-  const onContactDetailsSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onContactDetailsSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (person === "new") {
+    if (!huwelijkId) {
       push("/voorgenomen-huwelijk/partner");
     } else {
-      push(`/persoonsgegevens/succes`);
+      setIsLoading(true);
+
+      HuwelijkService.huwelijkPatchItem(huwelijkId as string, {
+        partners: [
+          {
+            requester: getBsnFromJWT(),
+            contact: {
+              subjectIdentificatie: {
+                inpBsn: getBsnFromJWT(),
+              },
+            },
+          },
+        ],
+      }).then(() => {
+        push(`/persoonsgegevens/succes?huwelijkId=${huwelijkId}`);
+      });
     }
   };
 
@@ -269,18 +312,7 @@ export default function MultistepForm1() {
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
                 {huwelijk ? (
-                  <ReservationCard
-                    reservation={{
-                      expiry: "FIXME: over 2 uur",
-                      "ceremony-type": huwelijk.ceremonie.upnLabel,
-                      "ceremony-start": huwelijk.moment ?? "",
-                      "ceremony-end": huwelijk.moment ? moment(huwelijk.moment).add(15, "m").toDate().toString() : "",
-                      "ceremony-location": "Locatie Stadskantoor",
-                      "ceremony-price-currency": "EUR",
-                      "ceremony-price-amount": huwelijk.kosten ? huwelijk.kosten.replace("EUR ", "") : "-",
-                    }}
-                    locale={locale}
-                  />
+                  <ReservationCard locale={locale} />
                 ) : (
                   "Loading..."
                 )}
@@ -360,8 +392,8 @@ export default function MultistepForm1() {
                   {/*<Button type="submit" name="type" appearance="primary-action-button">
                     Deze gegevens kloppen
                   </Button>*/}
-                  <Button type="submit" name="type" appearance="primary-action-button">
-                    Contactgegevens opslaan
+                  <Button disabled={isLoading} type="submit" name="type" appearance="primary-action-button">
+                    {isLoading ? "Loading..." : "Contactgegevens opslaan"}
                   </Button>
                 </section>
                 <Aside>

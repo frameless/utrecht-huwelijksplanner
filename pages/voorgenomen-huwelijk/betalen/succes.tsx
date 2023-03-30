@@ -180,12 +180,12 @@ export default function HuwelijksplannerStep0() {
               <div>1</div>
             </ProcessSteps.StepMarker>
             <ProcessSteps.StepHeading>
-              
-              
+
+
             </ProcessSteps.StepHeading>
             <ProcessSteps.StepExpandedIcon />
           </ProcessSteps.StepHeader>
-          
+
         </ProcessSteps.StepSection>
       </ProcessSteps.Step>
       <ProcessSteps.Step>
@@ -389,7 +389,7 @@ export default function HuwelijksplannerStep0() {
                   <PreHeading>Gelukt</PreHeading>
                 </HeadingGroup>
               </Alert>
-              {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale} /> : ""}
+              <ReservationCard locale={locale} />
               <Paragraph>
                 Jullie reservering is geslaagd en we hebben de melding van het voorgenomen huwelijk ontvangen.
               </Paragraph>

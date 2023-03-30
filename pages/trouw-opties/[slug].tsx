@@ -59,7 +59,6 @@ const BlogPost: NextPage = () => {
   const [selectedEndTime, setSelectedEndTime] = useState<string | undefined>();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
-
   const formatDateToString = (date: any) => {
     const newDate = date.split("T")[0];
     setSelectedDate(newDate);

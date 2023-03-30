@@ -1,10 +1,11 @@
 import { UtrechtDigidButton, UtrechtIconArrow } from "@utrecht/web-component-library-react";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useContext } from "react";
 import {
+  Button,
   ButtonGroup,
   ButtonLink,
   Document,
@@ -23,7 +24,7 @@ import {
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
-import { exampleState } from "../../../src/data/huwelijksplanner-state";
+import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -33,9 +34,9 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
-  const data = { ...exampleState };
   const { locale, push } = useRouter();
-  const huwelijksId = "largeId1082u98r1po8-up28u";
+
+  const [marriageOptions] = useContext(MarriageOptionsContext);
 
   // FIXME: personId from state
   const personId = "xxxx";
@@ -67,26 +68,22 @@ export default function MultistepForm1() {
                 <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
               </HeadingGroup>
               {/*TODO: Banner / card */}
-              {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale || "en"} /> : ""}
+              <ReservationCard locale={locale || "en"} />
               <section>
                 <Paragraph>
                   We hebben jouw gegevens ontvangen. Laat nu je partner inloggen met DigiD om zijn/haar gegevens te
                   bevestigen.
                 </Paragraph>
                 <ButtonGroup>
-                  <UtrechtDigidButton
-                    onClick={() =>
-                      push(
-                        `/gateway-login?userId=67EEFC1C-A28A-43E7-8950-76C289E905C7${
-                          huwelijksId ? `&huwelijksId=${huwelijksId}` : ""
-                        }`
-                      )
-                    }
-                  >
+                  <UtrechtDigidButton>
                     <ButtonLink appearance="primary-action-button">
                       Partner inloggen met DigiD <UtrechtIconArrow />
                     </ButtonLink>
                   </UtrechtDigidButton>
+
+                  <Button onClick={() => push(`/gateway-login?huwelijkId=${marriageOptions.huwelijk.id}`)}>
+                    Testomgeving login
+                  </Button>
                 </ButtonGroup>
                 <Paragraph>
                   Of{" "}
