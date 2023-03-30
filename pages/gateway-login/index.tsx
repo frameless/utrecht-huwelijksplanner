@@ -10,6 +10,7 @@ const GatewayLogin: NextPage = () => {
   const [error, setError] = useState<boolean>(false);
   const { push, query } = useRouter();
   const { userId } = query;
+  const { huwelijksId } = query;
 
   const { register, handleSubmit } = useForm();
 
@@ -24,7 +25,7 @@ const GatewayLogin: NextPage = () => {
     })
       .then((res: any) => {
         window.sessionStorage.setItem("JWT", res.jwtToken);
-        push(`/persoonsgegevens/${userId}`);
+        push(`/persoonsgegevens/${userId}${huwelijksId ? `?huwelijksId=${huwelijksId}` : ""}`);
       })
       .catch(() => setError(true));
   };
