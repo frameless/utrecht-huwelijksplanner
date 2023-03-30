@@ -20,6 +20,7 @@ import {
   SkipLink,
   Surface,
   Link as UtrechtLink,
+  Button,
 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
@@ -80,11 +81,13 @@ export default function MultistepForm1() {
                 </Paragraph>
                 <Paragraph>Na deze stap vragen we ook aan je partner om in te loggen met DigiD.</Paragraph>
                 <ButtonGroup>
-                  <UtrechtDigidButton onClick={() => push("/gateway-login?userId=new")}>
+                  <UtrechtDigidButton>
                     <ButtonLink appearance="primary-action-button">
                       Inloggen met DigiD <UtrechtIconArrow />
                     </ButtonLink>
                   </UtrechtDigidButton>
+
+                  <Button onClick={() => push("/gateway-login")}>Testomgeving login</Button>
                 </ButtonGroup>
               </section>
               <Aside>

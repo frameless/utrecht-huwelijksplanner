@@ -53,26 +53,53 @@ export default function MultistepForm1() {
   const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
   const [ingeschrevenPersoon, setIngeschrevenPersoon] = useState<IngeschrevenPersoon | null>(null);
 
-  const { person } = query;
+  const { huwelijkId } = query;
 
-  const [marriageOptions] = useContext(MarriageOptionsContext);
-
-  useEffect(() => {
-    console.log({marriageOptions})
-  }, [marriageOptions])
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   useEffect(() => {
     if (!huwelijk) return;
 
-    IngeschrevenpersoonService.ingeschrevenpersoonGetItem(huwelijk.partners[0].requester).then((res: any) => {
-      console.log({ res: res.results[0] });
+    IngeschrevenpersoonService.ingeschrevenpersoonGetItem(!huwelijkId ? huwelijk.partners[0].requester : getBSNFromJWT).then((res: any) => {
+      console.log({ ingeschrevenPersoonCall: res });
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk]);
 
+  const getBSNFromJWT = (): string => {
+    const JWT = sessionStorage.getItem("JWT");
+
+    const jwtJSON = JSON.parse(atob(JWT?.split(".")[1]));
+
+    return jwtJSON.person
+  }
+
   useEffect(() => {
-    if (person === "new") handleNewPersonLogin();
-  }, [person]);
+    if (!huwelijkId) handleNewPersonLogin();
+    if (huwelijkId) {
+      handleSecondPersonLogin();
+
+      /**
+       *
+  PATCH /huwelijk/{id}
+        {
+            "partners": [
+                {
+                    "requester": "999990172"
+                    "contact": {
+                        "telefoonnummers": [{ name: "telefoonnummer-1", telefoonnummer: "0619304814" }], // <= OPTIONAL
+                        "emails": [{ name: "email-1", email: "abc@lkj.com" }], // <= OPTIONAL
+                        "subjectIdentificatie": {
+                            "inpBsn": "999990172"
+                        }
+                    }
+                }
+            ]
+        }
+       */
+
+    }
+  }, [huwelijkId]);
 
   const handleNewPersonLogin = () => {
     HuwelijkService.huwelijkPostItem({
@@ -84,9 +111,17 @@ export default function MultistepForm1() {
     }).then((res) => {
       const _res = JSON.parse(res as string);
 
+      setMarriageOptions({ ...marriageOptions, huwelijkId: _res._self.id });
+
       setHuwelijk(_res);
     });
   };
+
+  const handleSecondPersonLogin = () => {
+    HuwelijkService.huwelijkGetItem(huwelijkId as string).then((res) => {
+      setHuwelijk(res);
+    })
+  }
 
   const onDeclarationCheckboxChange = (event: any) => {
     setDeclarationCheckboxData({ ...declarationCheckboxData, [event.target.name]: event.target.checked });
@@ -238,7 +273,7 @@ export default function MultistepForm1() {
   const onContactDetailsSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (person === "new") {
+    if (!huwelijkId) {
       push("/voorgenomen-huwelijk/partner");
     } else {
       push(`/persoonsgegevens/succes`);
