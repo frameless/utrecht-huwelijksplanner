@@ -50,6 +50,10 @@ export default function MultistepForm1() {
     setWeddingOptions(event.target.value);
   };
 
+  const back = () => {
+    replace("/trouw-opties/");
+  };
+
   return (
     <Surface>
       <Document>
@@ -66,7 +70,7 @@ export default function MultistepForm1() {
             </PageHeader>
             <PageContent>
               <ButtonGroup>
-                <ButtonLink href="/" appearance="subtle-button">
+                <ButtonLink onClick={back} appearance="subtle-button">
                   ← Terug
                 </ButtonLink>
               </ButtonGroup>
