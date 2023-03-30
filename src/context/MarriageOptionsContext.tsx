@@ -4,6 +4,7 @@ import { Reservation } from "../data/huwelijksplanner-state";
 
 interface Huwelijk extends Reservation {
   id: string;
+  firstPartnerName: string;
 }
 
 export interface MarriageOptionsProps {
