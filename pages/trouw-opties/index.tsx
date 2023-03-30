@@ -51,8 +51,8 @@ export default function MultistepForm1() {
   };
 
   const back = () => {
-    replace("/trouw-opties/")
-  }
+    replace("/trouw-opties/");
+  };
 
   return (
     <Surface>
