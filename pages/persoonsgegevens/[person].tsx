@@ -50,6 +50,8 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
   const { query, locale = "nl", push } = useRouter();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
   const [ingeschrevenPersoon, setIngeschrevenPersoon] = useState<IngeschrevenPersoon | null>(null);
 
@@ -58,76 +60,65 @@ export default function MultistepForm1() {
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   useEffect(() => {
-    if (!huwelijk) return;
+    if (!getBSN() || ingeschrevenPersoon) return;
 
-    IngeschrevenpersoonService.ingeschrevenpersoonGetItem(!huwelijkId ? huwelijk.partners[0].requester : getBSNFromJWT).then((res: any) => {
+    IngeschrevenpersoonService.ingeschrevenpersoonGetItem(getBSN()).then((res: any) => {
       console.log({ ingeschrevenPersoonCall: res });
       setIngeschrevenPersoon(res.results[0]);
     });
-  }, [huwelijk]);
+  }, [huwelijk, ingeschrevenPersoon]);
 
-  const getBSNFromJWT = (): string => {
+  const getBSN = (): string => {
     const JWT = sessionStorage.getItem("JWT");
-
-    const jwtJSON = JSON.parse(atob(JWT?.split(".")[1]));
-
-    return jwtJSON.person
-  }
-
-  useEffect(() => {
-    if (!huwelijkId) handleNewPersonLogin();
-    if (huwelijkId) {
-      handleSecondPersonLogin();
-
-      /**
-       *
-  PATCH /huwelijk/{id}
-        {
-            "partners": [
-                {
-                    "requester": "999990172"
-                    "contact": {
-                        "telefoonnummers": [{ name: "telefoonnummer-1", telefoonnummer: "0619304814" }], // <= OPTIONAL
-                        "emails": [{ name: "email-1", email: "abc@lkj.com" }], // <= OPTIONAL
-                        "subjectIdentificatie": {
-                            "inpBsn": "999990172"
-                        }
-                    }
-                }
-            ]
-        }
-       */
-
+    const jwtArray = JWT?.split(".");
+    if (jwtArray && jwtArray.length >= 2) {
+      const jwtJSON = JSON.parse(decodeURIComponent(escape(window.atob(jwtArray[1]))));
+      return jwtJSON.person; // BSN
     }
-  }, [huwelijkId]);
-
-  const handleNewPersonLogin = () => {
-    HuwelijkService.huwelijkPostItem({
-      type: "5d016a26-7ac1-4520-a962-601057acfb6d", // marriageOptions.type holds the current type
-      ceremonie: "1a4c93d4-4f79-48a9-8299-5ecb7c152505", // Ceremonie is "flits-balie" of "uitgebreid-trouwen"; uuid
-      moment: marriageOptions?.startTime ?? "2019-08-24T14:15:22",
-      "ambtenaar": "e4c2f87c-fb22-484f-9748-87242f7b3d53", // TODO: Sarai stuurt id door
-      "locatie": marriageOptions?.location ?? "",
-    }).then((res) => {
-      const _res = JSON.parse(res as string);
-
-      setMarriageOptions({ ...marriageOptions, huwelijkId: _res._self.id });
-
-      setHuwelijk(_res);
-    });
+    return "";
   };
 
-  const handleSecondPersonLogin = () => {
-    HuwelijkService.huwelijkGetItem(huwelijkId as string).then((res) => {
-      setHuwelijk(res);
-    })
-  }
+  useEffect(() => {
+    if (huwelijk) return;
+
+    const handleNewPersonLogin = () => {
+      setIsLoading(true);
+
+      HuwelijkService.huwelijkPostItem({
+        type: "5877dfa1-bcd9-4673-bb4e-e9a4da98ec0d", // marriageOptions.type holds the current type
+        ceremonie: "868da2b9-242d-4053-8e21-8a9ef66bd15c", // Ceremonie is "flits-balie" of "uitgebreid-trouwen"; uuid
+        moment: marriageOptions?.startTime ?? "2019-08-24T14:15:22",
+        ambtenaar: "4a96dcc4-66e4-46b9-b785-3cc89931a3e2", // TODO: Sarai stuurt id door
+        locatie: "e1b2aa89-dcd8-4b77-96fc-d41501cbc57f", //marriageOptions?.location ?? "",
+      })
+        .then((res) => {
+          const _res = JSON.parse(res as string);
+
+          setMarriageOptions({ ...marriageOptions, huwelijkId: _res._self.id });
+
+          if (!huwelijk) setHuwelijk(_res); // TODO: two are being created, this ensures its not overwritten
+        })
+        .finally(() => setIsLoading(false));
+    };
+
+    const handleSecondPersonLogin = () => {
+      setIsLoading(true);
+      HuwelijkService.huwelijkGetItem(huwelijkId as string)
+        .then((res) => {
+          setHuwelijk(res);
+        })
+        .finally(() => setIsLoading(false));
+    };
+
+    if (!huwelijkId) handleNewPersonLogin();
+    if (huwelijkId) handleSecondPersonLogin();
+  }, [huwelijk, huwelijkId, marriageOptions, setMarriageOptions]);
 
   const onDeclarationCheckboxChange = (event: any) => {
     setDeclarationCheckboxData({ ...declarationCheckboxData, [event.target.name]: event.target.checked });
   };
 
-  const PersonalDataList = ({ ingeschrevenPersoon }: { ingeschrevenPersoon: IngeschrevenPersoon }) => (
+  const PersonalDataList = ({ ingeschrevenPersoon }: { ingeschrevenPersoon: any }) => (
     <DataList aria-describedby="personal-details" className="utrecht-data-list--rows">
       <DataListItem>
         <DataListKey>{t("form:bsn")}</DataListKey>
@@ -227,7 +218,7 @@ export default function MultistepForm1() {
     </DataList>
   );
 
-  const AddressDataList = ({ ingeschrevenPersoon }: { ingeschrevenPersoon: IngeschrevenPersoon }) => (
+  const AddressDataList = ({ ingeschrevenPersoon }: { ingeschrevenPersoon: any }) => (
     <DataList aria-describedby="address" className="utrecht-data-list--rows">
       <DataListItem>
         <DataListKey>{t("form:street")}</DataListKey>
@@ -270,13 +261,30 @@ export default function MultistepForm1() {
     </DataList>
   );
 
-  const onContactDetailsSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onContactDetailsSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!huwelijkId) {
       push("/voorgenomen-huwelijk/partner");
     } else {
-      push(`/persoonsgegevens/succes`);
+      setIsLoading(true);
+
+      HuwelijkService.huwelijkPatchItem(huwelijkId as string, {
+        partners: [
+          {
+            requester: getBSN(),
+            contact: {
+              subjectIdentificatie: {
+                inpBsn: getBSN(),
+              },
+            },
+          },
+        ],
+      }).then(() => {
+        push(`/persoonsgegevens/succes?huwelijkId=${huwelijkId}`);
+      });
+
+
     }
   };
 
@@ -395,8 +403,8 @@ export default function MultistepForm1() {
                   {/*<Button type="submit" name="type" appearance="primary-action-button">
                     Deze gegevens kloppen
                   </Button>*/}
-                  <Button type="submit" name="type" appearance="primary-action-button">
-                    Contactgegevens opslaan
+                  <Button disabled={isLoading} type="submit" name="type" appearance="primary-action-button">
+                    {isLoading ? "Loading..." : "Contactgegevens opslaan"}
                   </Button>
                 </section>
                 <Aside>

@@ -83,7 +83,9 @@ export default function MultistepForm1() {
                     </ButtonLink>
                   </UtrechtDigidButton>
 
-                  <Button onClick={() => push(`/gateway-login?huwelijkId=${marriageOptions.huwelijkId}`)}>Testomgeving login</Button>
+                  <Button onClick={() => push(`/gateway-login?huwelijkId=${marriageOptions.huwelijkId}`)}>
+                    Testomgeving login
+                  </Button>
                 </ButtonGroup>
                 <Paragraph>
                   Of{" "}
