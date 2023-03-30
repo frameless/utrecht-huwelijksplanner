@@ -7,6 +7,7 @@ import { OpenAPI } from "../../src/generated/core/OpenAPI";
 import { request as __request } from "../../src/generated/core/request";
 
 const GatewayLogin: NextPage = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const { push, query } = useRouter();
   const { huwelijkId } = query;
@@ -15,6 +16,7 @@ const GatewayLogin: NextPage = () => {
 
   const onSubmit = (data: any) => {
     setError(false);
+    setIsLoading(true);
     window.sessionStorage.removeItem("JWT");
 
     window.setTimeout(
@@ -35,6 +37,8 @@ const GatewayLogin: NextPage = () => {
             }
 
             push(baseURL);
+
+            setIsLoading(false);
           })
           .catch(() => setError(true)),
       1000
@@ -49,6 +53,7 @@ const GatewayLogin: NextPage = () => {
             <FormLabel htmlFor="username">Email</FormLabel>
           </p>
           <Textbox
+          disabled={isLoading}
             className="utrecht-form-field__input"
             id="username"
             type="email"
@@ -61,6 +66,7 @@ const GatewayLogin: NextPage = () => {
             <FormLabel htmlFor="password">Password</FormLabel>
           </p>
           <Textbox
+          disabled={isLoading}
             className="utrecht-form-field__input"
             id="password"
             type="password"
@@ -68,7 +74,7 @@ const GatewayLogin: NextPage = () => {
           />
         </FormField>
 
-        <Button type="submit">Submit</Button>
+        <Button disabled={isLoading} type="submit">{isLoading ? "Loading..." : "Submit"}</Button>
 
         {error && <span className="error">Something went wrong.</span>}
       </form>
