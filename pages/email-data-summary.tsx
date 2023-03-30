@@ -167,7 +167,7 @@ export default function HuwelijksplannerStep0() {
           <PageContent>
             <PageContentMain>
               <Heading1>Melding Voorgenomen Huwelijk</Heading1>
-              {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale} /> : ""}
+              <ReservationCard locale={locale} />
               <section>
                 <Heading2>{t("huwelijksplanner:aanstaande")} 1</Heading2>
                 {data.partners[0] ? (

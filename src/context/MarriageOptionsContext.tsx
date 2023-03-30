@@ -1,5 +1,10 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { CeremonyType, RegistrationType } from "../data/huwelijksplanner-state";
+import { Reservation } from "../data/huwelijksplanner-state";
+
+interface Huwelijk extends Reservation {
+  id: string;
+}
 
 export interface MarriageOptionsProps {
   type?: RegistrationType;
@@ -9,7 +14,7 @@ export interface MarriageOptionsProps {
   date?: string;
   startTime?: string;
   endTime?: string;
-  huwelijkId?: string;
+  huwelijk: Huwelijk;
 }
 
 const myWindow = typeof window !== "undefined" ? window : undefined;

@@ -63,11 +63,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>Stap 3 — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {data["reservation"] ? (
-                  <ReservationCard reservation={data["reservation"]} locale={locale || "en"} />
-                ) : (
-                  ""
-                )}
+                <ReservationCard locale={locale || "en"} />
                 <section>
                   <Heading2>Kies je extra’s</Heading2>
                   <Paragraph>

@@ -84,7 +84,19 @@ export default function MultistepForm1() {
         .then((res) => {
           const _res = JSON.parse(res as string);
 
-          setMarriageOptions({ ...marriageOptions, huwelijkId: _res._self.id });
+          setMarriageOptions({
+            ...marriageOptions,
+            huwelijk: {
+              id: _res._self.id,
+              expiry: "FIXME: over 2 uur",
+              "ceremony-type": _res.ceremonie.upnLabel,
+              "ceremony-start": _res.moment ?? "",
+              "ceremony-end": _res.moment ? moment(_res.moment).add(15, "m").toDate().toString() : "",
+              "ceremony-location": "Locatie Stadskantoor",
+              "ceremony-price-currency": "EUR",
+              "ceremony-price-amount": _res.kosten ? _res.kosten.replace("EUR ", "") : "-",
+            },
+          });
 
           if (!huwelijk) setHuwelijk(_res); // TODO: two are being created, this ensures its not overwritten
         })
@@ -300,18 +312,7 @@ export default function MultistepForm1() {
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
                 {huwelijk ? (
-                  <ReservationCard
-                    reservation={{
-                      expiry: "FIXME: over 2 uur",
-                      "ceremony-type": huwelijk.ceremonie.upnLabel,
-                      "ceremony-start": huwelijk.moment ?? "",
-                      "ceremony-end": huwelijk.moment ? moment(huwelijk.moment).add(15, "m").toDate().toString() : "",
-                      "ceremony-location": "Locatie Stadskantoor",
-                      "ceremony-price-currency": "EUR",
-                      "ceremony-price-amount": huwelijk.kosten ? huwelijk.kosten.replace("EUR ", "") : "-",
-                    }}
-                    locale={locale}
-                  />
+                  <ReservationCard locale={locale} />
                 ) : (
                   "Loading..."
                 )}

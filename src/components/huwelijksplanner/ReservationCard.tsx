@@ -4,17 +4,20 @@
  * Copyright (c) 2021 Robbert Broersma
  */
 
-import { HTMLAttributes } from "react";
-import { Reservation } from "../../data/huwelijksplanner-state";
+import { HTMLAttributes, useContext } from "react";
+import { MarriageOptionsContext } from "../../context/MarriageOptionsContext";
 import { ValueCurrency } from "../ValueCurrency";
 import { SpotlightSection } from "../index";
 
 interface ReservationCardProps extends HTMLAttributes<HTMLElement> {
-  reservation: Reservation;
   locale: string;
 }
 
-export const ReservationCard = ({ reservation, locale }: ReservationCardProps) => {
+export const ReservationCard = ({ locale }: ReservationCardProps) => {
+  const [marriageOptions] = useContext(MarriageOptionsContext);
+
+  const { huwelijk: reservation } = marriageOptions;
+
   return (
     <SpotlightSection type="info">
       <div>

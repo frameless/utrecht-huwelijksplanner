@@ -65,11 +65,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {data["reservation"] ? (
-                  <ReservationCard reservation={data["reservation"]} locale={locale || "en"} />
-                ) : (
-                  ""
-                )}
+                <ReservationCard locale={locale || "en"} />
                 <PartnerInvitation
                   title="Nodig je partner uit"
                   body="Je kunt nu je partner uitnodigen om ook in te loggen met DigID. Zo bevestigt je partner dat jullie het huwelijk willen regelen."
