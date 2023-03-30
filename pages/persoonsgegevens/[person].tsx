@@ -63,7 +63,6 @@ export default function MultistepForm1() {
     if (!getBSN() || ingeschrevenPersoon) return;
 
     IngeschrevenpersoonService.ingeschrevenpersoonGetItem(getBSN()).then((res: any) => {
-      console.log({ ingeschrevenPersoonCall: res });
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
@@ -283,8 +282,6 @@ export default function MultistepForm1() {
       }).then(() => {
         push(`/persoonsgegevens/succes?huwelijkId=${huwelijkId}`);
       });
-
-
     }
   };
 
