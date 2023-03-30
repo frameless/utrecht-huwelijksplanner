@@ -29,7 +29,11 @@ export const OpenAPI: OpenAPIConfig = {
   USERNAME: undefined,
   PASSWORD: undefined,
   ENCODE_PATH: undefined,
-  ...(myWindow?.sessionStorage.getItem("JWT") ? { HEADERS: {
-    Authorization: `Bearer ${myWindow.sessionStorage.getItem("JWT")}`
-  }} : {})
+  ...(myWindow?.sessionStorage.getItem('JWT')
+    ? {
+        HEADERS: {
+          Authorization: `Bearer ${myWindow.sessionStorage.getItem('JWT')}`,
+        },
+      }
+    : {}),
 };
