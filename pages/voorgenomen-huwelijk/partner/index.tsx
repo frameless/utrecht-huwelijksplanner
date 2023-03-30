@@ -34,7 +34,8 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
   const data = { ...exampleState };
-  const { locale } = useRouter();
+  const { locale, push } = useRouter();
+  const huwelijksId = "largeId1082u98r1po8-up28u";
 
   // FIXME: personId from state
   const personId = "xxxx";
@@ -73,13 +74,19 @@ export default function MultistepForm1() {
                   bevestigen.
                 </Paragraph>
                 <ButtonGroup>
-                  <Link passHref href="/login">
-                    <UtrechtDigidButton>
-                      <ButtonLink appearance="primary-action-button">
-                        Partner inloggen met DigiD <UtrechtIconArrow />
-                      </ButtonLink>
-                    </UtrechtDigidButton>
-                  </Link>
+                  <UtrechtDigidButton
+                    onClick={() =>
+                      push(
+                        `/gateway-login?userId=67EEFC1C-A28A-43E7-8950-76C289E905C7${
+                          huwelijksId ? `&huwelijksId=${huwelijksId}` : ""
+                        }`
+                      )
+                    }
+                  >
+                    <ButtonLink appearance="primary-action-button">
+                      Partner inloggen met DigiD <UtrechtIconArrow />
+                    </ButtonLink>
+                  </UtrechtDigidButton>
                 </ButtonGroup>
                 <Paragraph>
                   Of{" "}

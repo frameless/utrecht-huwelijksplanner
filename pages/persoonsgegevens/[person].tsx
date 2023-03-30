@@ -65,10 +65,10 @@ export default function MultistepForm1() {
     if (!huwelijk) return;
 
     IngeschrevenpersoonService.ingeschrevenpersoonGetItem(huwelijk.partners[0].requester).then((res: any) => {
-      console.log({res: res.results[0]})
+      console.log({ res: res.results[0] });
       setIngeschrevenPersoon(res.results[0]);
-    })
-  }, [huwelijk])
+    });
+  }, [huwelijk]);
 
   useEffect(() => {
     if (person === "new") handleNewPersonLogin();
@@ -96,7 +96,10 @@ export default function MultistepForm1() {
     <DataList aria-describedby="personal-details" className="utrecht-data-list--rows">
       <DataListItem>
         <DataListKey>{t("form:bsn")}</DataListKey>
-        <DataListValue value={ingeschrevenPersoon.burgerservicenummer ?? ""} emptyDescription={t("form:data-item-unknown")}>
+        <DataListValue
+          value={ingeschrevenPersoon.burgerservicenummer ?? ""}
+          emptyDescription={t("form:data-item-unknown")}
+        >
           <NumberValue>{ingeschrevenPersoon.burgerservicenummer}</NumberValue>
         </DataListValue>
       </DataListItem>
@@ -186,7 +189,6 @@ export default function MultistepForm1() {
           {ingeschrevenPersoon.gezagsverhouding ?? "-"}
         </DataListValue>
       </DataListItem>
-
     </DataList>
   );
 
@@ -201,7 +203,7 @@ export default function MultistepForm1() {
       <DataListItem>
         <DataListKey>{t("form:house-number")}</DataListKey>
         <DataListValue value={'partner["house-number"]'} emptyDescription={t("form:data-item-unknown")}>
-        {ingeschrevenPersoon.embedded.verblijfplaats.huisnummer ?? "-"}
+          {ingeschrevenPersoon.embedded.verblijfplaats.huisnummer ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
@@ -217,7 +219,7 @@ export default function MultistepForm1() {
       <DataListItem>
         <DataListKey>{t("form:postal-code")}</DataListKey>
         <DataListValue value={'partner["postal-code"]'} emptyDescription={t("form:data-item-unknown")}>
-        {ingeschrevenPersoon.embedded.verblijfplaats.postcode ?? "-"}
+          {ingeschrevenPersoon.embedded.verblijfplaats.postcode ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
@@ -272,10 +274,10 @@ export default function MultistepForm1() {
                       expiry: "FIXME: over 2 uur",
                       "ceremony-type": huwelijk.ceremonie.upnLabel,
                       "ceremony-start": huwelijk.moment ?? "",
-                      "ceremony-end": huwelijk.moment ? moment(huwelijk.moment).add(15, 'm').toDate().toString() : "",
+                      "ceremony-end": huwelijk.moment ? moment(huwelijk.moment).add(15, "m").toDate().toString() : "",
                       "ceremony-location": "Locatie Stadskantoor",
                       "ceremony-price-currency": "EUR",
-                      "ceremony-price-amount": huwelijk.kosten ? huwelijk.kosten.replace("EUR ", "") : "-"
+                      "ceremony-price-amount": huwelijk.kosten ? huwelijk.kosten.replace("EUR ", "") : "-",
                     }}
                     locale={locale}
                   />
@@ -298,11 +300,9 @@ export default function MultistepForm1() {
 
                   {ingeschrevenPersoon ? <PersonalDataList ingeschrevenPersoon={ingeschrevenPersoon} /> : "Loading..."}
 
-
                   <Heading2 id="address">Adresgegevens</Heading2>
 
                   {ingeschrevenPersoon ? <AddressDataList ingeschrevenPersoon={ingeschrevenPersoon} /> : "Loading..."}
-
 
                   <Heading2 id="contact">Contactgegevens</Heading2>
                   <dl>
@@ -313,12 +313,7 @@ export default function MultistepForm1() {
                           {t("form:tel")} <OptionalIndicator title={t("form:optional")} />
                         </FormLabel>
                       </p>
-                      <Textbox
-                        className="utrecht-form-field__input"
-                        id="tel"
-                        type="tel"
-                        autoComplete="tel"
-                      />
+                      <Textbox className="utrecht-form-field__input" id="tel" type="tel" autoComplete="tel" />
                     </FormField>
                     <FormField>
                       <p className="utrecht-form-field__label">
