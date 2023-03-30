@@ -30,13 +30,13 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEventHandler, FormEvent, useEffect, useState } from "react";
+import { ChangeEventHandler, FormEvent, useContext, useEffect, useState } from "react";
 import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
 import { Checkbox2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
-// import { exampleState } from "../../src/data/huwelijksplanner-state";
+import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { Huwelijk, HuwelijkService, IngeschrevenPersoon, IngeschrevenpersoonService } from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -55,6 +55,12 @@ export default function MultistepForm1() {
 
   const { person } = query;
 
+  const [marriageOptions] = useContext(MarriageOptionsContext);
+
+  useEffect(() => {
+    console.log({marriageOptions})
+  }, [marriageOptions])
+
   useEffect(() => {
     if (!huwelijk) return;
 
@@ -70,11 +76,11 @@ export default function MultistepForm1() {
 
   const handleNewPersonLogin = () => {
     HuwelijkService.huwelijkPostItem({
-      type: "5d016a26-7ac1-4520-a962-601057acfb6d", // Type is "trouwen" of "geregistreerd-partnerschap"; voor de demo hardcoded de uuid van "trouwen"
-      ceremonie: "183511b2-e861-4f15-a9a6-618988ab024c", // Ceremonie is "flits-balie" of "uitgebreid-trouwen"; uuid
-      moment: "2019-08-24T14:15:22", // TODO: Remko stopt dit in state
+      type: "5d016a26-7ac1-4520-a962-601057acfb6d", // marriageOptions.type holds the current type
+      ceremonie: "1a4c93d4-4f79-48a9-8299-5ecb7c152505", // Ceremonie is "flits-balie" of "uitgebreid-trouwen"; uuid
+      moment: marriageOptions?.startTime ?? "2019-08-24T14:15:22",
       "ambtenaar": "e4c2f87c-fb22-484f-9748-87242f7b3d53", // TODO: Sarai stuurt id door
-      "locatie": "", // Stadskantoor is default; niks meer aan doen
+      "locatie": marriageOptions?.location ?? "",
     }).then((res) => {
       const _res = JSON.parse(res as string);
 

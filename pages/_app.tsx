@@ -6,15 +6,12 @@ import "@utrecht/component-library-css/dist/index.css";
 import "@utrecht/component-library-css/dist/html.css";
 import "../styles/globals.scss";
 import "../styles/utrecht-theme.css";
-import { useState } from "react";
-import { MarriageOptionsProps, MarriageOptionsProvider } from "../src/context/marriageOptions";
+import { MarriageOptionsProvider } from "../src/context/MarriageOptionsContext";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const [marriageOptions, setMarriageOptions] = useState<MarriageOptionsProps>({});
-
   return (
     <div className={clsx("example-debugging-disabled", "utrecht-theme", "utrecht-theme--media-query-color-scheme")}>
-      <MarriageOptionsProvider value={[marriageOptions, setMarriageOptions]}>
+      <MarriageOptionsProvider>
         <Component {...pageProps} />
       </MarriageOptionsProvider>
     </div>

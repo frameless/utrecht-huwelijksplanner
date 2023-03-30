@@ -427,6 +427,78 @@ export const exampleEventsFlitsBalieHuwelijk = [
     startDateTime: '2023-04-05T10:00Z',
     endDateTime: '2023-04-05T10:15Z',
   },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-06T14:15Z',
+    endDateTime: '2023-04-06T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-06T10:00Z',
+    endDateTime: '2023-04-06T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-07T14:15Z',
+    endDateTime: '2023-04-07T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-07T10:00Z',
+    endDateTime: '2023-04-07T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-08T14:15Z',
+    endDateTime: '2023-04-08T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-08T10:00Z',
+    endDateTime: '2023-04-08T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-09T14:15Z',
+    endDateTime: '2023-04-09T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-09T10:00Z',
+    endDateTime: '2023-04-09T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-10T14:15Z',
+    endDateTime: '2023-04-10T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-10T10:00Z',
+    endDateTime: '2023-04-10T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-11T14:15Z',
+    endDateTime: '2023-04-11T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-11T10:00Z',
+    endDateTime: '2023-04-11T10:15Z',
+  },
 ];
 
 export const calendars = {
