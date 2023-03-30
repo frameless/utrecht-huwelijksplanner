@@ -121,7 +121,7 @@ export default function MultistepForm1() {
                 <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
               </HeadingGroup>
               {/*TODO: Banner / card */}
-              {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale || "en"} /> : ""}
+              <ReservationCard locale={locale || "en"} />
               <section>
                 <form onSubmit={onWitnessSubmit} aria-labelledby={formHeaderId}>
                   <Heading2 id={formHeaderId}>Nodig alvast getuigen uit</Heading2>

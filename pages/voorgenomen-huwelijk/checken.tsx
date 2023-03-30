@@ -22,7 +22,6 @@ import {
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
-import { exampleState } from "../../src/data/huwelijksplanner-state";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -32,7 +31,6 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
-  const data = { ...exampleState };
   const locale = useRouter().locale || "en";
 
   return (
@@ -55,7 +53,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale} /> : ""}
+                <ReservationCard locale={locale} />
                 <section>
                   <Heading2>Gelukt</Heading2>
                   <Paragraph>De gemeente heeft de volgende punten gecontroleerd:</Paragraph>

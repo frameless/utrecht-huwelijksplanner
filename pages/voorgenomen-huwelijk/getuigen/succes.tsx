@@ -64,7 +64,7 @@ export default function MultistepForm1() {
                 </Paragraph>
               </HeadingGroup>
               {/*TODO: Banner / card */}
-              {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale} /> : ""}
+              <ReservationCard locale={locale} />
               <section>
                 <Heading2>Gelukt!</Heading2>
                 <Paragraph>
