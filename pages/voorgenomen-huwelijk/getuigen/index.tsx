@@ -2,7 +2,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEvent, FormEvent, useId, useState } from "react";
+import { useId } from "react";
+import { useForm } from "react-hook-form";
 import {
   Button,
   ButtonGroup,
@@ -35,30 +36,20 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   },
 });
 
-type WitnessType = {
-  name?: string;
-  email?: string;
-};
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen", "form"]);
   const data = { ...exampleState };
   const { locale, push } = useRouter();
 
-  const [witness, setWitness] = useState<WitnessType>();
+  const { register, handleSubmit } = useForm();
 
-  const onWitnessSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (witness) {
-      push("/voorgenomen-huwelijk/getuigen/succes");
-    }
+  const onWitnessSubmit = (data) => {
+    // TODO: PATCH naar gateway met `data`.then() push("/voorgenomen-huwelijk/getuigen/succes");
   };
 
-  const onWitnessChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setWitness({ ...witness, [event.target.name]: event.target.value });
-  };
 
-  const WitnessFieldset = ({ index, onChange }: { index: number; onChange: any }) => {
+  const WitnessFieldset = ({ index }: { index: number; }) => {
     const witnessId = useId();
     const nameId = useId();
     const emailId = useId();
@@ -77,8 +68,7 @@ export default function MultistepForm1() {
             id={nameId}
             type="text"
             autoComplete={`name ${witnessId}`}
-            name={`getuige-${index}-naam}`}
-            onChange={onChange}
+            {...register(`getuige-${index}-naam}`, { required: index <= 2 })}
           />
         </FormField>
         <FormField>
@@ -88,9 +78,8 @@ export default function MultistepForm1() {
           <Textbox
             id={emailId}
             type="email"
-            name={`getuige-${index}-email}`}
             autoComplete={`email ${witnessId}`}
-            onChange={onChange}
+            {...register(`getuige-${index}-email}`, { required: index <= 2 })}
           />
         </FormField>
       </Fieldset>
@@ -123,7 +112,7 @@ export default function MultistepForm1() {
               {/*TODO: Banner / card */}
               {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale || "en"} /> : ""}
               <section>
-                <form onSubmit={onWitnessSubmit} aria-labelledby={formHeaderId}>
+                <form onSubmit={handleSubmit(onWitnessSubmit)} aria-labelledby={formHeaderId}>
                   <Heading2 id={formHeaderId}>Nodig alvast getuigen uit</Heading2>
                   <Paragraph>Bij je huwelijk zijn minimaal twee en maximaal vier getuigen nodig.</Paragraph>
                   <Paragraph>
@@ -131,10 +120,10 @@ export default function MultistepForm1() {
                     moet je de getuigen aanmelden.
                   </Paragraph>
                   {/*TODO: Dynamisch tonen hoe lang er nog is om getuigen aan te melden*/}
-                  <WitnessFieldset index={1} onChange={onWitnessChange} />
-                  <WitnessFieldset index={2} onChange={onWitnessChange} />
-                  <WitnessFieldset index={3} onChange={onWitnessChange} />
-                  <WitnessFieldset index={4} onChange={onWitnessChange} />
+                  <WitnessFieldset index={1} />
+                  <WitnessFieldset index={2} />
+                  <WitnessFieldset index={3} />
+                  <WitnessFieldset index={4} />
                   {/* <div>
                     <Button type="submit">Later uitnodigen</Button>
                   </div> */}
