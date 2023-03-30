@@ -18,6 +18,10 @@ export const ReservationCard = ({ locale }: ReservationCardProps) => {
 
   const { huwelijk: reservation } = marriageOptions;
 
+  if (!reservation) {
+    return <>No reservation found.</>
+  }
+
   return (
     <SpotlightSection type="info">
       <div>

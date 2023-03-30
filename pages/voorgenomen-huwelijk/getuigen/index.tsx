@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useContext, useId } from "react";
+import { useContext, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -28,9 +28,8 @@ import {
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
-import { exampleState } from "../../../src/data/huwelijksplanner-state";
 import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
-import { HuwelijkService } from "../../../src/generated";
+import { Huwelijk, HuwelijkService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -41,14 +40,19 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen", "form"]);
-  const data = { ...exampleState };
-  const { locale } = useRouter();
+  const { push, locale } = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { register, handleSubmit } = useForm();
   const [marriageOptions] = useContext(MarriageOptionsContext);
 
-  const onWitnessSubmit = (data) => {
-    // TODO: PATCH naar gateway met `data`.then() push("/voorgenomen-huwelijk/getuigen/succes");
+  const onWitnessSubmit = (data: any) => {
+    setIsLoading(true);
+
+    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { getuigen: mapGetuigen(data) } as Huwelijk).then(() => {
+      push("/voorgenomen-huwelijk/getuigen/succes");
+      setIsLoading(false);
+    })
   };
 
 
@@ -68,6 +72,7 @@ export default function MultistepForm1() {
             <FormLabel htmlFor={nameId}>{t("form:name")}</FormLabel>
           </p>
           <Textbox
+            disabled={isLoading}
             id={nameId}
             type="text"
             autoComplete={`name ${witnessId}`}
@@ -79,6 +84,7 @@ export default function MultistepForm1() {
             <FormLabel htmlFor={emailId}>{t("form:email")}</FormLabel>
           </p>
           <Textbox
+            disabled={isLoading}
             id={emailId}
             type="email"
             autoComplete={`email ${witnessId}`}
@@ -131,8 +137,8 @@ export default function MultistepForm1() {
                     <Button type="submit">Later uitnodigen</Button>
                   </div> */}
                   <ButtonGroup>
-                    <Button appearance="primary-action-button" type="submit">
-                      Verstuur uitnodiging
+                    <Button disabled={isLoading} appearance="primary-action-button" type="submit">
+                      {isLoading ? "Loading..." : "Verstuur uitnodiging"}
                     </Button>
                   </ButtonGroup>
                 </form>
@@ -146,4 +152,26 @@ export default function MultistepForm1() {
       </Document>
     </Surface>
   );
+}
+
+const mapGetuigen = (data: any) => {
+  const getuigen = Array.from({ length: 4 }, (_, i) => {
+    const naam = data[`getuige-${i+1}-naam}`];
+    const email = data[`getuige-${i+1}-email}`];
+
+    if (naam && email) {
+      return {
+        name: naam,
+        requester: null,
+        contact: {
+          voornaam: naam,
+          emails: [{ naam, email }]
+        }
+      };
+    }
+
+    return undefined;
+  }).filter(Boolean);
+
+  return getuigen.filter((g) => g);
 }
