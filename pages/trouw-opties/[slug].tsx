@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState, useContext } from "react";
+import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
 import {
   Aside,
   Button,
@@ -32,10 +32,11 @@ import {
 import { RadioButton2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
+import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
 import { Availability } from "../../src/generated";
 import { HuwelijksplannerAPI } from "../../src/openapi/index";
-import { MarriageOptionsContext } from "../../src/context/marriageOptions";
+
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common", "huwelijksplanner-step-2"])),
@@ -57,6 +58,7 @@ const BlogPost: NextPage = () => {
   const [selectedStartTime, setSelectedStartTime] = useState<string | undefined>();
   const [selectedEndTime, setSelectedEndTime] = useState<string | undefined>();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+
 
   const formatDateToString = (date: any) => {
     const newDate = date.split("T")[0];
