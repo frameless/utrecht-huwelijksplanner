@@ -33,7 +33,7 @@ import { RadioButton2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
-import { Availability } from "../../src/generated/openapi/Agenda-Service";
+import { Availability } from "../../src/generated";
 import { HuwelijksplannerAPI } from "../../src/openapi/index";
 import { MarriageOptionsContext } from "../../src/context/marriageOptions";
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -52,11 +52,16 @@ const BlogPost: NextPage = () => {
 
   const [, setResults] = useState<Availability[]>([]);
 
-  const [selectedDate, setSelectedDate] = useState("2021-04-14");
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().replace(/T.+/, ""));
   const [selectedLocation, setSelectedLocation] = useState<string | undefined>();
   const [selectedStartTime, setSelectedStartTime] = useState<string | undefined>();
   const [selectedEndTime, setSelectedEndTime] = useState<string | undefined>();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+
+  const formatDateToString = (date: any) => {
+    const newDate = date.split("T")[0];
+    setSelectedDate(newDate);
+  };
 
   const loadEvents = useCallback(() => {
     const today = new Date().toISOString().replace(/T.+/, "");
@@ -100,8 +105,8 @@ const BlogPost: NextPage = () => {
   };
 
   const back = () => {
-    replace("/trouw-opties/")
-  }
+    replace("/trouw-opties/");
+  };
 
   return (
     <Surface>
@@ -137,7 +142,7 @@ const BlogPost: NextPage = () => {
                 </Paragraph>
                 <section>
                   <FormField>
-                    <Calendar onCalendarClick={(date: string) => setSelectedDate(date)} />
+                    <Calendar onCalendarClick={(date: string) => formatDateToString(date)} />
                   </FormField>
                   <Fieldset>
                     <FieldsetLegend>Flits/balie-huwelijk — Stadskantoor</FieldsetLegend>
