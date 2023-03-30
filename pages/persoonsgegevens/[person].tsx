@@ -38,6 +38,7 @@ import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHe
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { Huwelijk, HuwelijkService, IngeschrevenPersoon, IngeschrevenpersoonService } from "../../src/generated";
+import { getBsnFromJWT } from "../../src/services/getBsnFromJWT";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -60,22 +61,12 @@ export default function MultistepForm1() {
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   useEffect(() => {
-    if (!getBSN() || ingeschrevenPersoon) return;
+    if (!getBsnFromJWT() || ingeschrevenPersoon) return;
 
-    IngeschrevenpersoonService.ingeschrevenpersoonGetItem(getBSN()).then((res: any) => {
+    IngeschrevenpersoonService.ingeschrevenpersoonGetItem(getBsnFromJWT()).then((res: any) => {
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
-
-  const getBSN = (): string => {
-    const JWT = sessionStorage.getItem("JWT");
-    const jwtArray = JWT?.split(".");
-    if (jwtArray && jwtArray.length >= 2) {
-      const jwtJSON = JSON.parse(decodeURIComponent(escape(window.atob(jwtArray[1]))));
-      return jwtJSON.person; // BSN
-    }
-    return "";
-  };
 
   useEffect(() => {
     if (huwelijk) return;
@@ -271,10 +262,10 @@ export default function MultistepForm1() {
       HuwelijkService.huwelijkPatchItem(huwelijkId as string, {
         partners: [
           {
-            requester: getBSN(),
+            requester: getBsnFromJWT(),
             contact: {
               subjectIdentificatie: {
-                inpBsn: getBSN(),
+                inpBsn: getBsnFromJWT(),
               },
             },
           },
