@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FormEvent, useState, useContext } from "react";
+import { FormEvent, useContext, useState } from "react";
 import {
   Aside,
   Button,
@@ -36,14 +36,14 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-1"]);
-  const { push } = useRouter();
+  const { replace } = useRouter();
   const [weddingOptions, setWeddingOptions] = useState<RegistrationType | undefined>();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   const onWeddingOptionsSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setMarriageOptions({ ...marriageOptions, type: weddingOptions });
-    push(`/trouw-opties/${weddingOptions}`);
+    replace(`/trouw-opties/${weddingOptions}`);
   };
 
   const onWeddingOptionsClick = (event: any) => {

@@ -81,9 +81,7 @@ export default function MultistepForm1() {
                 </Paragraph>
                 <Paragraph>Na deze stap vragen we ook aan je partner om in te loggen met DigiD.</Paragraph>
                 <ButtonGroup>
-                  <UtrechtDigidButton
-                    onClick={() => push("/gateway-login?userId=EC4D6AEF-0E23-4686-8778-71D2C02D7A38")}
-                  >
+                  <UtrechtDigidButton onClick={() => push("/gateway-login?userId=new")}>
                     <ButtonLink appearance="primary-action-button">
                       Inloggen met DigiD <UtrechtIconArrow />
                     </ButtonLink>
