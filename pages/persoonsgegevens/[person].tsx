@@ -88,6 +88,7 @@ export default function MultistepForm1() {
             ...marriageOptions,
             huwelijk: {
               id: _res._self.id,
+              firstPartnerName: `${_res?.partners[0]?.contact?.voornaam} ${_res?.partners[0]?.contact?.achternaam}`,
               expiry: "FIXME: over 2 uur",
               "ceremony-type": _res.ceremonie.upnLabel,
               "ceremony-start": _res.moment ?? "",
@@ -311,7 +312,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {huwelijk ? (
+                {marriageOptions.huwelijk ? (
                   <ReservationCard locale={locale} />
                 ) : (
                   "Loading..."
