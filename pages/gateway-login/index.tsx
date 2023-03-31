@@ -5,12 +5,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { OpenAPI } from "../../src/generated/core/OpenAPI";
 import { request as __request } from "../../src/generated/core/request";
+import { authenticate, unauthenticate } from "../../src/services/authentication";
 
 const GatewayLogin: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const { push, query } = useRouter();
-  const { huwelijkId } = query;
+  const { redirectUrl } = query;
 
   const { register, handleSubmit } = useForm();
 
@@ -18,8 +19,7 @@ const GatewayLogin: NextPage = () => {
     setError(false);
     setIsLoading(true);
 
-    OpenAPI.HEADERS = {}; // remove authentication BEFORE sending login request
-    window.sessionStorage.removeItem("JWT"); // for consistency sake
+    unauthenticate();
 
     __request(OpenAPI, {
       method: "POST",
@@ -28,23 +28,13 @@ const GatewayLogin: NextPage = () => {
       mediaType: "application/json",
     })
       .then((res: any) => {
-        window.sessionStorage.setItem("JWT", res.jwtToken); // still required for getBsnFromJWT();
+        authenticate(res.jwtToken);
 
-        OpenAPI.HEADERS = {
-          Authorization: `Bearer ${res.jwtToken}`
-        }
-
-        let baseURL = "/persoonsgegevens/persoon";
-
-        if (huwelijkId) {
-          baseURL += `?huwelijkId=${huwelijkId}`;
-        }
-
-        push(baseURL);
+        push(redirectUrl as string);
 
         setIsLoading(false);
       })
-      .catch(() => setError(true))
+      .catch(() => setError(true));
   };
 
   return (
