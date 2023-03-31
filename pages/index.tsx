@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useContext, useEffect } from "react";
 import {
   ButtonLink,
   Document,
@@ -24,6 +25,7 @@ import {
 } from "../src/components";
 import { PageFooterTemplate } from "../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../src/components/huwelijksplanner/PageHeaderTemplate";
+import { MarriageOptionsContext, MarriageOptionsProps } from "../src/context/MarriageOptionsContext";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -33,6 +35,11 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function HuwelijksplannerStep0() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-0"]);
+  const [, setMarriageOptions] = useContext(MarriageOptionsContext);
+
+  useEffect(() => {
+    setMarriageOptions({} as MarriageOptionsProps);
+  }, [setMarriageOptions])
 
   return (
     <Surface>
