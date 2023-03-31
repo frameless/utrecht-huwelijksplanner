@@ -63,7 +63,7 @@ export default function MultistepForm1() {
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
 
-    IngeschrevenpersoonService.ingeschrevenpersoonGetItem(getBsnFromJWT()).then((res: any) => {
+    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection(undefined, getBsnFromJWT()).then((res: any) => {
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
