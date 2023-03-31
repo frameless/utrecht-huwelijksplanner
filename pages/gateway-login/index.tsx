@@ -5,55 +5,47 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { OpenAPI } from "../../src/generated/core/OpenAPI";
 import { request as __request } from "../../src/generated/core/request";
+import { authenticate, unauthenticate } from "../../src/services/authentication";
 
 const GatewayLogin: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const { push, query } = useRouter();
-  const { huwelijkId } = query;
+  const { redirectUrl } = query;
 
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
     setError(false);
     setIsLoading(true);
-    window.sessionStorage.removeItem("JWT");
 
-    window.setTimeout(
-      () =>
-        __request(OpenAPI, {
-          method: "POST",
-          url: "/users/login",
-          body: data,
-          mediaType: "application/json",
-        })
-          .then((res: any) => {
-            window.sessionStorage.setItem("JWT", res.jwtToken);
+    unauthenticate();
 
-            let baseURL = "/persoonsgegevens/persoon";
+    __request(OpenAPI, {
+      method: "POST",
+      url: "/users/login",
+      body: data,
+      mediaType: "application/json",
+    })
+      .then((res: any) => {
+        authenticate(res.jwtToken);
 
-            if (huwelijkId) {
-              baseURL += `?huwelijkId=${huwelijkId}`;
-            }
+        push(redirectUrl as string);
 
-            push(baseURL);
-
-            setIsLoading(false);
-          })
-          .catch(() => setError(true)),
-      1000
-    );
+        setIsLoading(false);
+      })
+      .catch(() => setError(true));
   };
 
   return (
-    <div className="gateway-login">
+    <div className="example-login">
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormField>
           <p className="utrecht-form-field__label">
             <FormLabel htmlFor="username">Email</FormLabel>
           </p>
           <Textbox
-          disabled={isLoading}
+            disabled={isLoading}
             className="utrecht-form-field__input"
             id="username"
             type="email"
@@ -66,7 +58,7 @@ const GatewayLogin: NextPage = () => {
             <FormLabel htmlFor="password">Password</FormLabel>
           </p>
           <Textbox
-          disabled={isLoading}
+            disabled={isLoading}
             className="utrecht-form-field__input"
             id="password"
             type="password"
@@ -74,9 +66,11 @@ const GatewayLogin: NextPage = () => {
           />
         </FormField>
 
-        <Button disabled={isLoading} type="submit">{isLoading ? "Loading..." : "Submit"}</Button>
+        <Button disabled={isLoading} type="submit">
+          {isLoading ? "Loading..." : "Submit"}
+        </Button>
 
-        {error && <span className="error">Something went wrong.</span>}
+        {error && <span className="example-error">Something went wrong.</span>}
       </form>
     </div>
   );

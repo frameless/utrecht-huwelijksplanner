@@ -39,7 +39,7 @@ export default function HuwelijksplannerStep0() {
 
   useEffect(() => {
     setMarriageOptions({} as MarriageOptionsProps);
-  }, [setMarriageOptions])
+  }, [setMarriageOptions]);
 
   return (
     <Surface>

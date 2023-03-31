@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   Button,
   DataList,
@@ -31,6 +30,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ChangeEventHandler, FormEvent, useContext, useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
 import { Checkbox2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
@@ -63,7 +63,28 @@ export default function MultistepForm1() {
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
 
-    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection(undefined, getBsnFromJWT()).then((res: any) => {
+    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      getBsnFromJWT() // passing { burgerservicenummer: "bsn" } breaks the call
+    ).then((res: any) => {
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
@@ -312,11 +333,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {marriageOptions.huwelijk ? (
-                  <ReservationCard locale={locale} />
-                ) : (
-                  "Loading..."
-                )}
+                {marriageOptions.huwelijk ? <ReservationCard locale={locale} /> : <Skeleton height="200px" />}
                 <section>
                   {/*TODO: Banner / card */}
                   <SpotlightSection type="info">
@@ -331,11 +348,19 @@ export default function MultistepForm1() {
                   </SpotlightSection>
                   <Heading2 id="personal-details">Persoonsgegevens</Heading2>
 
-                  {ingeschrevenPersoon ? <PersonalDataList ingeschrevenPersoon={ingeschrevenPersoon} /> : "Loading..."}
+                  {ingeschrevenPersoon ? (
+                    <PersonalDataList ingeschrevenPersoon={ingeschrevenPersoon} />
+                  ) : (
+                    <Skeleton height="100px" />
+                  )}
 
                   <Heading2 id="address">Adresgegevens</Heading2>
 
-                  {ingeschrevenPersoon ? <AddressDataList ingeschrevenPersoon={ingeschrevenPersoon} /> : "Loading..."}
+                  {ingeschrevenPersoon ? (
+                    <AddressDataList ingeschrevenPersoon={ingeschrevenPersoon} />
+                  ) : (
+                    <Skeleton height="100px" />
+                  )}
 
                   <Heading2 id="contact">Contactgegevens</Heading2>
                   <dl>
