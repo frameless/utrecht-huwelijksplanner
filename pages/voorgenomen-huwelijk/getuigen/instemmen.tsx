@@ -36,7 +36,7 @@ export default function MultistepForm1() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [assent, setAssent] = useState<Assent | null>(null);
 
-  const { push,query } = useRouter();
+  const { push, query } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen-success", "form"]);
 
   const { assentId } = query;
@@ -44,11 +44,12 @@ export default function MultistepForm1() {
   const handleResponseSubmit = (response: AssentNamespace.status) => {
     setIsLoading(true);
 
-    AssentService.assentPatchItem(assentId as string, {
-      name: "",
-      requester: "",
-      status: response,
-    })
+    AssentService.assentPatchItem(
+      assentId as string,
+      {
+        status: response,
+      } as Assent
+    )
       .then(() => {
         unauthenticate();
         setIsCompleted(true);
@@ -75,7 +76,7 @@ export default function MultistepForm1() {
   }, []);
 
   if (!assentId) {
-    return <>Did not receive a "assentId" param.</>
+    return <>Did not receive a "assentId" param.</>;
   }
 
   const BeforeCompleted: React.FC = () => (
@@ -83,16 +84,11 @@ export default function MultistepForm1() {
       {assent && !isLoading && (
         <>
           <HeadingGroup>
-            <Heading1>
-              U bent gevraagd om getuigen te zijn bij het huwelijk van "partner1.naam" & "partner2.naam".
-            </Heading1>
+            <Heading1>{assent.name}</Heading1>
           </HeadingGroup>
 
-          <Paragraph lead>"Op huwelijk.datum in huwelijk.locatie."</Paragraph>
+          <Paragraph lead>{assent.description}</Paragraph>
 
-          <Paragraph>
-            "partner1.naam" & "partner2.naam" hebben u gevraagd om een reactie te geven op dit verzoek.
-          </Paragraph>
 
           <ButtonGroup>
             <Button
@@ -131,7 +127,9 @@ export default function MultistepForm1() {
 
               {isCompleted && <>Bedankt voor uw reactie, uw sessie is afgesloten. U kunt deze pagina verlaten.</>}
 
-              {!isAuthenticated() && !isCompleted && <>Een ogenblik geduld, u wordt doorverwezen naar de inlogpagina...</>}
+              {!isAuthenticated() && !isCompleted && (
+                <>Een ogenblik geduld, u wordt doorverwezen naar de inlogpagina...</>
+              )}
             </PageContentMain>
           </PageContent>
           <PageFooter>

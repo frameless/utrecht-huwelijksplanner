@@ -11,7 +11,7 @@ const GatewayLogin: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const { push, query } = useRouter();
-  const { huwelijkId } = query;
+  const { redirectUrl } = query;
 
   const { register, handleSubmit } = useForm();
 
@@ -30,13 +30,7 @@ const GatewayLogin: NextPage = () => {
       .then((res: any) => {
         authenticate(res.jwtToken);
 
-        let baseURL = "/persoonsgegevens/persoon";
-
-        if (huwelijkId) {
-          baseURL += `?huwelijkId=${huwelijkId}`;
-        }
-
-        push(baseURL);
+        push(redirectUrl as string);
 
         setIsLoading(false);
       })

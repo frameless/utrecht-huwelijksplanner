@@ -82,7 +82,9 @@ export default function MultistepForm1() {
                     </ButtonLink>
                   </UtrechtDigidButton>
 
-                  <Button onClick={() => push("/gateway-login")}>Testomgeving login</Button>
+                  <Button onClick={() => push("/gateway-login?redirectUrl=/persoonsgegevens/persoon")}>
+                    Testomgeving login
+                  </Button>
                 </ButtonGroup>
               </section>
               <Aside>
