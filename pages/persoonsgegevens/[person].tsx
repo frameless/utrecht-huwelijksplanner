@@ -30,6 +30,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ChangeEventHandler, FormEvent, useContext, useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
 import { Checkbox2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
@@ -38,7 +39,6 @@ import { ReservationCard } from "../../src/components/huwelijksplanner/Reservati
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { Huwelijk, HuwelijkService, IngeschrevenPersoon, IngeschrevenpersoonService } from "../../src/generated";
 import { getBsnFromJWT } from "../../src/services/getBsnFromJWT";
-import Skeleton from "react-loading-skeleton";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -348,11 +348,19 @@ export default function MultistepForm1() {
                   </SpotlightSection>
                   <Heading2 id="personal-details">Persoonsgegevens</Heading2>
 
-                  {ingeschrevenPersoon ? <PersonalDataList ingeschrevenPersoon={ingeschrevenPersoon} /> : <Skeleton height="100px" />}
+                  {ingeschrevenPersoon ? (
+                    <PersonalDataList ingeschrevenPersoon={ingeschrevenPersoon} />
+                  ) : (
+                    <Skeleton height="100px" />
+                  )}
 
                   <Heading2 id="address">Adresgegevens</Heading2>
 
-                  {ingeschrevenPersoon ? <AddressDataList ingeschrevenPersoon={ingeschrevenPersoon} /> : <Skeleton height="100px" />}
+                  {ingeschrevenPersoon ? (
+                    <AddressDataList ingeschrevenPersoon={ingeschrevenPersoon} />
+                  ) : (
+                    <Skeleton height="100px" />
+                  )}
 
                   <Heading2 id="contact">Contactgegevens</Heading2>
                   <dl>
