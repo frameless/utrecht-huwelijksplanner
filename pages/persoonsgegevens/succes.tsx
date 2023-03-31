@@ -64,8 +64,9 @@ export default function MultistepForm1() {
                 <section>
                   <Heading2>Gelukt</Heading2>
                   <Paragraph>
-                    We hebben jouw gegevens gekoppeld aan die van <DataNoTranslate>{marriageOptions.huwelijk.firstPartnerName}</DataNoTranslate>.
-                    Jullie kunnen nu verder gaan met het plannen van jullie huwelijk.
+                    We hebben jouw gegevens gekoppeld aan die van{" "}
+                    <DataNoTranslate>{marriageOptions.huwelijk.firstPartnerName}</DataNoTranslate>. Jullie kunnen nu
+                    verder gaan met het plannen van jullie huwelijk.
                   </Paragraph>
                   <ButtonGroup>
                     <Link passHref href="/voorgenomen-huwelijk/getuigen">

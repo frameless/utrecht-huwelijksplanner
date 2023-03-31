@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   Button,
   DataList,
@@ -63,7 +62,28 @@ export default function MultistepForm1() {
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
 
-    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection(undefined, getBsnFromJWT()).then((res: any) => {
+    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      getBsnFromJWT() // passing { burgerservicenummer: "bsn" } breaks the call
+    ).then((res: any) => {
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
@@ -312,11 +332,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {marriageOptions.huwelijk ? (
-                  <ReservationCard locale={locale} />
-                ) : (
-                  "Loading..."
-                )}
+                {marriageOptions.huwelijk ? <ReservationCard locale={locale} /> : "Loading..."}
                 <section>
                   {/*TODO: Banner / card */}
                   <SpotlightSection type="info">
