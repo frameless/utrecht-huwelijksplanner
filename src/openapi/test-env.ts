@@ -18,23 +18,22 @@ import {
 const MissingIdError = () => new TypeError('Argument must have `id` property');
 
 const putAssent = (data: Assent) =>
-// @ts-ignore
+  // @ts-ignore
   data.id ? AssentService.assentPutItem(data.id, data) : Promise.reject(MissingIdError());
 
 export const HuwelijksplannerAPI: HuwelijksplannerInterface = {
   getProducten: () =>
     SdgproductService.sdgproductGetCollection().then((data): SDGProduct[] => resolveEmbedded(data.results || [])),
 
-
   getAccommodations: () =>
-  // @ts-ignore
+    // @ts-ignore
     AccommodationService.accommodationGetCollection().then((data) => resolveEmbedded(data.results || [])),
 
-    // @ts-ignore
+  // @ts-ignore
   getAssents: () => AssentService.assentGetCollection().then((data): Assent[] => resolveEmbedded(data.results || [])),
 
   deleteAssent: (data: Assent) =>
-  // @ts-ignore
+    // @ts-ignore
     data.id ? AssentService.assentDeleteItem(data.id) : Promise.reject(MissingIdError()),
 
   putAssent,
@@ -56,7 +55,7 @@ export const HuwelijksplannerAPI: HuwelijksplannerInterface = {
   getHuwelijken: () =>
     HuwelijkService.huwelijkGetCollection().then((data): Huwelijk[] => resolveEmbedded(data.results || [])),
 
-    // @ts-ignore
+  // @ts-ignore
   deleteHuwelijk: (huwelijk: Huwelijk) => HuwelijkService.huwelijkDeleteItem(huwelijk.id || ''),
 
   getKlanten: () => KlantService.klantGetCollection().then((data) => resolveEmbedded(data.results)),
