@@ -40,7 +40,7 @@ const GatewayLogin: NextPage = () => {
 
         setIsLoading(false);
       })
-      .catch(() => setError(true))
+      .catch(() => setError(true));
   };
 
   return (
