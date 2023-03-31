@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { OpenAPI } from "../../src/generated/core/OpenAPI";
 import { request as __request } from "../../src/generated/core/request";
+import { authenticate, unauthenticate } from "../../src/services/authentication";
 
 const GatewayLogin: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -18,8 +19,7 @@ const GatewayLogin: NextPage = () => {
     setError(false);
     setIsLoading(true);
 
-    OpenAPI.HEADERS = {}; // remove authentication BEFORE sending login request
-    window.sessionStorage.removeItem("JWT"); // for consistency sake
+    unauthenticate();
 
     __request(OpenAPI, {
       method: "POST",
@@ -28,11 +28,7 @@ const GatewayLogin: NextPage = () => {
       mediaType: "application/json",
     })
       .then((res: any) => {
-        window.sessionStorage.setItem("JWT", res.jwtToken); // still required for getBsnFromJWT();
-
-        OpenAPI.HEADERS = {
-          Authorization: `Bearer ${res.jwtToken}`
-        }
+        authenticate(res.jwtToken);
 
         let baseURL = "/persoonsgegevens/persoon";
 
