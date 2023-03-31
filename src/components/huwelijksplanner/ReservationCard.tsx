@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * @license EUPL-1.2
  * Copyright (c) 2021 Robbert Broersma
@@ -19,7 +18,7 @@ export const ReservationCard = ({ locale }: ReservationCardProps) => {
   const { huwelijk: reservation } = marriageOptions;
 
   if (!reservation) {
-    return <>No reservation found.</>
+    return <>No reservation found.</>;
   }
 
   return (

@@ -1,18 +1,18 @@
-.gateway-login {
-  display: flex;
+.example-login {
   align-items: center;
+  display: flex;
+  height: 100vh;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
 
   form {
-    gap: 24px;
-    width: 300px;
     display: flex;
     flex-direction: column;
+    gap: 24px;
+    width: 300px;
   }
 
-  .error {
+  .example-error {
     color: red;
   }
 }

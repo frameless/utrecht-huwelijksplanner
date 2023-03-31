@@ -46,14 +46,14 @@ const GatewayLogin: NextPage = () => {
   };
 
   return (
-    <div className="gateway-login">
+    <div className="example-login">
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormField>
           <p className="utrecht-form-field__label">
             <FormLabel htmlFor="username">Email</FormLabel>
           </p>
           <Textbox
-          disabled={isLoading}
+            disabled={isLoading}
             className="utrecht-form-field__input"
             id="username"
             type="email"
@@ -66,7 +66,7 @@ const GatewayLogin: NextPage = () => {
             <FormLabel htmlFor="password">Password</FormLabel>
           </p>
           <Textbox
-          disabled={isLoading}
+            disabled={isLoading}
             className="utrecht-form-field__input"
             id="password"
             type="password"
@@ -74,9 +74,11 @@ const GatewayLogin: NextPage = () => {
           />
         </FormField>
 
-        <Button disabled={isLoading} type="submit">{isLoading ? "Loading..." : "Submit"}</Button>
+        <Button disabled={isLoading} type="submit">
+          {isLoading ? "Loading..." : "Submit"}
+        </Button>
 
-        {error && <span className="error">Something went wrong.</span>}
+        {error && <span className="example-error">Something went wrong.</span>}
       </form>
     </div>
   );

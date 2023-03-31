@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   Button,
   DataList,
@@ -312,11 +311,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {marriageOptions.huwelijk ? (
-                  <ReservationCard locale={locale} />
-                ) : (
-                  "Loading..."
-                )}
+                {marriageOptions.huwelijk ? <ReservationCard locale={locale} /> : "Loading..."}
                 <section>
                   {/*TODO: Banner / card */}
                   <SpotlightSection type="info">

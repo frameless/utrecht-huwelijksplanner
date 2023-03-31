@@ -69,13 +69,14 @@ export default function MultistepForm1() {
               <section>
                 <Heading2>Gelukt!</Heading2>
                 <Paragraph>
-                  <DataNoTranslate>{marriageOptions.huwelijk.firstPartnerName}</DataNoTranslate> heeft met DigID ingelogd. Nu
-                  kunnen jullie verder met het plannen van het huwelijk. Er volgen nog een paar stappen:
+                  <DataNoTranslate>{marriageOptions.huwelijk.firstPartnerName}</DataNoTranslate> heeft met DigID
+                  ingelogd. Nu kunnen jullie verder met het plannen van het huwelijk. Er volgen nog een paar stappen:
                 </Paragraph>
                 <OrderedList>
                   <OrderedListItem>
                     De gemeente Utrecht checkt een aantal dingen, bijvoorbeeld of{" "}
-                    <DataNoTranslate>{marriageOptions.huwelijk.firstPartnerName}</DataNoTranslate> geen broer of zus van je is
+                    <DataNoTranslate>{marriageOptions.huwelijk.firstPartnerName}</DataNoTranslate> geen broer of zus van
+                    je is
                   </OrderedListItem>
                   <OrderedListItem>Dan kun je betalen en is de reservering van je huwelijk klaar.</OrderedListItem>
                   <OrderedListItem>

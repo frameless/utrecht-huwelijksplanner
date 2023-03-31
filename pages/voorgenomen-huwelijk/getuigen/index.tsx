@@ -37,7 +37,6 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   },
 });
 
-
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen", "form"]);
   const { push, locale } = useRouter();
@@ -49,14 +48,15 @@ export default function MultistepForm1() {
   const onWitnessSubmit = (data: any) => {
     setIsLoading(true);
 
-    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { getuigen: mapGetuigen(data) } as Huwelijk).then(() => {
-      push("/voorgenomen-huwelijk/getuigen/succes");
-      setIsLoading(false);
-    })
+    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { getuigen: mapGetuigen(data) } as Huwelijk).then(
+      () => {
+        push("/voorgenomen-huwelijk/getuigen/succes");
+        setIsLoading(false);
+      }
+    );
   };
 
-
-  const WitnessFieldset = ({ index }: { index: number; }) => {
+  const WitnessFieldset = ({ index }: { index: number }) => {
     const witnessId = useId();
     const nameId = useId();
     const emailId = useId();
@@ -156,8 +156,8 @@ export default function MultistepForm1() {
 
 const mapGetuigen = (data: any) => {
   const getuigen = Array.from({ length: 4 }, (_, i) => {
-    const naam = data[`getuige-${i+1}-naam}`];
-    const email = data[`getuige-${i+1}-email}`];
+    const naam = data[`getuige-${i + 1}-naam}`];
+    const email = data[`getuige-${i + 1}-email}`];
 
     if (naam && email) {
       return {
@@ -165,8 +165,8 @@ const mapGetuigen = (data: any) => {
         requester: null,
         contact: {
           voornaam: naam,
-          emails: [{ naam, email }]
-        }
+          emails: [{ naam, email }],
+        },
       };
     }
 
@@ -174,4 +174,4 @@ const mapGetuigen = (data: any) => {
   }).filter(Boolean);
 
   return getuigen.filter((g) => g);
-}
+};
