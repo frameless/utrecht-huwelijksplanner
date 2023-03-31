@@ -62,7 +62,28 @@ export default function MultistepForm1() {
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
 
-    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection(undefined, getBsnFromJWT()).then((res: any) => {
+    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      getBsnFromJWT() // passing { burgerservicenummer: "bsn" } breaks the call
+    ).then((res: any) => {
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
