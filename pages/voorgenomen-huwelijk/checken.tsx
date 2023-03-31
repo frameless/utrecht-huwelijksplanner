@@ -1,12 +1,10 @@
 import { Button, UnorderedList, UnorderedListItem } from "@utrecht/component-library-react";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import {
   ButtonGroup,
-  ButtonLink,
   Document,
   Heading1,
   Heading2,
@@ -24,7 +22,7 @@ import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHe
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { useContext, useState } from "react";
-import { MollieService } from "../../src/generated";
+// import { MollieService } from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -38,36 +36,35 @@ export default function MultistepForm1() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [marriageOptions] = useContext(MarriageOptionsContext);
 
-  console.log(marriageOptions.huwelijk);
-
   const onGoToPaymentClick = () => {
-    setIsLoading(true);
-    MollieService.mollieGetCollection(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      marriageOptions.huwelijk.id
-    )
-      .then((res) => {
-        console.log(res);
-        push("/voorgenomen-huwelijk/betalen/succes");
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsLoading(false);
-      });
+    push("/voorgenomen-huwelijk/betalen/succes")
+    // setIsLoading(true);
+    // MollieService.mollieGetCollection(
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   undefined,
+    //   marriageOptions.huwelijk.id
+    // )
+    //   .then((res) => {
+    //     console.log(res);
+    //     // push(res?.redirectUrl);
+    //     setIsLoading(false);
+    //   })
+    //   .catch(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
   return (
