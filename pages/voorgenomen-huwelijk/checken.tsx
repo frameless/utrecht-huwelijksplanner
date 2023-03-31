@@ -1,4 +1,4 @@
-import { UnorderedList, UnorderedListItem } from "@utrecht/component-library-react";
+import { Button, UnorderedList, UnorderedListItem } from "@utrecht/component-library-react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -22,6 +22,9 @@ import {
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
+import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import { useContext, useState } from "react";
+import { MollieService } from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -31,7 +34,41 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
-  const locale = useRouter().locale || "en";
+  const { push, locale } = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [marriageOptions] = useContext(MarriageOptionsContext);
+
+  console.log(marriageOptions.huwelijk);
+
+  const onGoToPaymentClick = () => {
+    setIsLoading(true);
+    MollieService.mollieGetCollection(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      marriageOptions.huwelijk.id
+    )
+      .then((res) => {
+        console.log(res);
+        push("/voorgenomen-huwelijk/betalen/succes");
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <Surface>
@@ -53,7 +90,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                <ReservationCard locale={locale} />
+                <ReservationCard locale={locale || "en"} />
                 <section>
                   <Heading2>Gelukt</Heading2>
                   <Paragraph>De gemeente heeft de volgende punten gecontroleerd:</Paragraph>
@@ -78,9 +115,15 @@ export default function MultistepForm1() {
                   </UnorderedList>
                   <Paragraph>Je kunt nu je reservering voor datum en tijd vastleggen door te betalen.</Paragraph>
                   <ButtonGroup>
-                    <Link passHref href="/voorgenomen-huwelijk/betalen">
-                      <ButtonLink appearance="primary-action-button">Ga betalen</ButtonLink>
-                    </Link>
+                    <Button
+                      disabled={isLoading}
+                      onClick={onGoToPaymentClick}
+                      type="submit"
+                      name="type"
+                      appearance="primary-action-button"
+                    >
+                      {isLoading ? "Loading..." : "Ga betalen"}
+                    </Button>
                   </ButtonGroup>
                 </section>
               </form>
