@@ -25,8 +25,6 @@ import Skeleton from "react-loading-skeleton";
 import { isAuthenticated, unauthenticate } from "../../../src/services/authentication";
 import { useRouter } from "next/router";
 
-const TEMPORARY_ASSENT_ID = "31988c82-a197-44d5-b7a6-e9caa57d4c92";
-
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common", "huwelijksplanner-step-getuigen-success", "form"])),
@@ -38,13 +36,15 @@ export default function MultistepForm1() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [assent, setAssent] = useState<Assent | null>(null);
 
-  const { push } = useRouter();
+  const { push,query } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen-success", "form"]);
+
+  const { assentId } = query;
 
   const handleResponseSubmit = (response: AssentNamespace.status) => {
     setIsLoading(true);
 
-    AssentService.assentPatchItem(TEMPORARY_ASSENT_ID, {
+    AssentService.assentPatchItem(assentId as string, {
       name: "",
       requester: "",
       status: response,
@@ -59,18 +59,24 @@ export default function MultistepForm1() {
   const handleGetAssent = () => {
     setIsLoading(true);
 
-    AssentService.assentGetItem(TEMPORARY_ASSENT_ID)
+    AssentService.assentGetItem(assentId as string)
       .then((res) => setAssent(res))
       .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
+    if (!assentId) return; // all logic requires the assentId.
+
     if (!isAuthenticated()) {
-      push("/gateway-login");
+      push(`/gateway-login?redirectUrl=/voorgenomen-huwelijk/getuigen/instemmen?assentId=${assentId}`);
     }
 
     isAuthenticated() && handleGetAssent();
   }, []);
+
+  if (!assentId) {
+    return <>Did not receive a "assentId" param.</>
+  }
 
   const BeforeCompleted: React.FC = () => (
     <>
@@ -125,7 +131,7 @@ export default function MultistepForm1() {
 
               {isCompleted && <>Bedankt voor uw reactie, uw sessie is afgesloten. U kunt deze pagina verlaten.</>}
 
-              {!isAuthenticated() && <>Een ogenblik geduld, u wordt doorverwezen naar de inlogpagina...</>}
+              {!isAuthenticated() && !isCompleted && <>Een ogenblik geduld, u wordt doorverwezen naar de inlogpagina...</>}
             </PageContentMain>
           </PageContent>
           <PageFooter>
