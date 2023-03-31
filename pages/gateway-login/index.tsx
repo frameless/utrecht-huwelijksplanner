@@ -17,32 +17,34 @@ const GatewayLogin: NextPage = () => {
   const onSubmit = (data: any) => {
     setError(false);
     setIsLoading(true);
-    window.sessionStorage.removeItem("JWT");
 
-    window.setTimeout(
-      () =>
-        __request(OpenAPI, {
-          method: "POST",
-          url: "/users/login",
-          body: data,
-          mediaType: "application/json",
-        })
-          .then((res: any) => {
-            window.sessionStorage.setItem("JWT", res.jwtToken);
+    OpenAPI.HEADERS = {}; // remove authentication BEFORE sending login request
+    window.sessionStorage.removeItem("JWT"); // for consistency sake
 
-            let baseURL = "/persoonsgegevens/persoon";
+    __request(OpenAPI, {
+      method: "POST",
+      url: "/users/login",
+      body: data,
+      mediaType: "application/json",
+    })
+      .then((res: any) => {
+        window.sessionStorage.setItem("JWT", res.jwtToken); // still required for getBsnFromJWT();
 
-            if (huwelijkId) {
-              baseURL += `?huwelijkId=${huwelijkId}`;
-            }
+        OpenAPI.HEADERS = {
+          Authorization: `Bearer ${res.jwtToken}`
+        }
 
-            push(baseURL);
+        let baseURL = "/persoonsgegevens/persoon";
 
-            setIsLoading(false);
-          })
-          .catch(() => setError(true)),
-      1000
-    );
+        if (huwelijkId) {
+          baseURL += `?huwelijkId=${huwelijkId}`;
+        }
+
+        push(baseURL);
+
+        setIsLoading(false);
+      })
+      .catch(() => setError(true))
   };
 
   return (
