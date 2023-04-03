@@ -228,8 +228,6 @@ Dan wordt ik naar de "voorgenomen-huwelijk/partner/invitation-email-partner" pag
   En krijg ik een bevestiging dat de e-mail verzonden is
   En zie ik een "Inloggen met DigiD" button
 
-#-- line 228 which webpage am I sent to???
-#--add scenario back where i re-send the invitation to partner 2
 
 Scenario: Ik Partner 2 wil voor het huwelijk via email inloggen **Optioneel**
 Gegeven dat ik op de "voorgenomen-huwelijk/partner/invitation-email-partner" pagina ben
@@ -325,8 +323,8 @@ Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 Scenario: We willen de gegevens van Getuige 2 invullen
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
-  En dat ik in de tweede text input field de naam van Getuige 1 heb ingevuld 
-Wanneer ik in de tweede type email input field de email van Getuige 1 invul
+  En dat ik in de tweede text input field de naam van Getuige 2 heb ingevuld 
+Wanneer ik in de tweede type email input field de email van Getuige 2 invul
 Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 Scenario: We willen de uitnodigingen naar de getuigen sturen
@@ -361,3 +359,32 @@ Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
 Dan zie ik de heading  "Betaling ontvangen"
   En zie ik de heading "Dit hebben jullie doorgegeven" 
   En zie ik de heading "Deze pagina is automatisch bewaard" 
+
+Scenario: We willen extras aanvullen
+Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/succes" pagina ben
+Wanneer ik op de "Vul aan met extra's" link klik
+Dan word ik naar de "extra" pagina gestuurd
+
+Scenario: We willen zien dat we op de "extra" pagina zijn 
+Gegeven dat ik op de "extra" pagina ben
+Dan zie ik de heading  "Kies je extra’s"
+  En zie ik een "trouwboekjes" image
+  En zie ik een type checkbox input field voor de indicatie dat wij een trouwboekje willen
+  En zie ik een vier type radio button input fields 
+  En zie ik een "Deze wil ik hebben" button
+
+Scenario: We willen verklaren dat wij een trouwboekje willen
+Gegeven dat ik op de "extra" pagina ben
+  En dat ik een type checkbox input field voor de alleenstaand verklaring van mij zie
+Wanneer ik op de checkbox klik
+Dan wordt het checkbox ingevuld
+
+Scenario: We willen een van de trouwboekje opties kiezen 
+Gegeven dat ik op de "extra" pagina ben
+Wanneer ik op één van de radio buttons klik
+Dan wordt alleen dat radio button ingevuld
+
+Scenario: We willen onze trouwboekje keuze hebben 
+Gegeven dat ik op de "extra" pagina ben
+Wanneer ik op "Deze wil ik hebben" button klik
+Dan word ik naar de "voorgenomen-huwelijk/checken" pagina gestuurd
