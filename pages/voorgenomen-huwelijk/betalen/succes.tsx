@@ -43,7 +43,6 @@ import {
   HuwelijksplannerPartner,
   HuwelijksplannerState,
   Invitee,
-  Reservation,
 } from "../../../src/data/huwelijksplanner-state";
 import { Huwelijk, HuwelijkService } from "../../../src/generated";
 
@@ -55,7 +54,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function HuwelijksplannerStep0() {
   const { t } = useTranslation(["huwelijksplanner-step-0", "huwelijksplanner", "form", "common"]);
-  const [data, setData] = useState({ ...exampleState });
+  const [data] = useState({ ...exampleState });
   const locale = useRouter().locale || "en";
 
   const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
