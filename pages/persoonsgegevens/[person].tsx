@@ -47,7 +47,12 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 });
 
 export default function MultistepForm1() {
-  const [declarationCheckboxData, setDeclarationCheckboxData] = useState<any>();
+  const [declarationCheckboxData, setDeclarationCheckboxData] = useState<any>({
+    "correct-information-and-complete": false,
+    "not-marrying-relative": false,
+    unmarried: false,
+  });
+  const [declarationCheckboxChecked, setDeclarationCheckboxChecked] = useState<boolean>(false);
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
   const { query, locale = "nl", push } = useRouter();
 
@@ -88,6 +93,18 @@ export default function MultistepForm1() {
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
+
+  useEffect(() => {
+    if (
+      declarationCheckboxData["correct-information-and-complete"] === true &&
+      declarationCheckboxData["not-marrying-relative"] === true &&
+      declarationCheckboxData["unmarried"] === true
+    ) {
+      setDeclarationCheckboxChecked(true);
+    } else {
+      setDeclarationCheckboxChecked(false);
+    }
+  }, [declarationCheckboxData]);
 
   useEffect(() => {
     if (huwelijk) return;
@@ -394,7 +411,6 @@ export default function MultistepForm1() {
                     </FormField>
                   </dl>
                   <DeclarationCheckboxGroup
-                    name="checks"
                     onChange={onDeclarationCheckboxChange}
                     checkboxData={[
                       {
@@ -418,7 +434,12 @@ export default function MultistepForm1() {
                   {/*<Button type="submit" name="type" appearance="primary-action-button">
                     Deze gegevens kloppen
                   </Button>*/}
-                  <Button disabled={isLoading} type="submit" name="type" appearance="primary-action-button">
+                  <Button
+                    disabled={isLoading || !declarationCheckboxChecked}
+                    type="submit"
+                    name="type"
+                    appearance="primary-action-button"
+                  >
                     {isLoading ? "Loading..." : "Contactgegevens opslaan"}
                   </Button>
                 </section>
@@ -471,7 +492,7 @@ export const DeclarationCheckboxGroup = ({ name, checkboxData, onChange }: Decla
         checkboxData.length > 0 &&
         checkboxData.map(({ id, label, value }, index) => (
           <FormField key={index} type="checkbox">
-            <Checkbox2 novalidate id={id} name={name || groupName} defaultValue={value} onChange={onChange} required />
+            <Checkbox2 novalidate id={id} name={value || groupName} defaultValue={value} onChange={onChange} required />
             <FormLabel htmlFor={id} type="checkbox">
               {label}
             </FormLabel>
