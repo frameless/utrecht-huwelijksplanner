@@ -74,11 +74,7 @@ export default function HuwelijksplannerStep0() {
         setHuwelijk(res);
       })
       .finally(() => setIsLoading(false));
-  }, [huwelijk]);
-
-  useEffect(() => {
-    console.log({huwelijk});
-  }, [huwelijk])
+  }, [huwelijk, marriageOptions.huwelijk?.id]);
 
   const isValidMinWitnesses = (data: HuwelijksplannerState) => {
     // Return `true` for valid when every partner has reached the minimum amount of witnesses
@@ -98,7 +94,7 @@ export default function HuwelijksplannerStep0() {
               <Paragraph>
                 tussen vandaag en{" "}
                 {data["inviteWitnessEndDate"] ? (
-                  <DateValue dateTime={data["inviteWitnessEndDate"]} locale={locale} />
+                  <DateValue dateTime={marriageOptions.date ?? ""} locale={locale} />
                 ) : (
                   ""
                 )}{" "}
@@ -108,13 +104,13 @@ export default function HuwelijksplannerStep0() {
           ) : (
             ""
           ),
-          steps: [
-            {
-              id: "dc18f54d-aadd-498f-b518-2fc74ce8e9b6",
-              status: isValidMinWitnesses(data) ? "checked" : undefined,
-              title: `tussen vandaag en ${data["inviteWitnessEndDate"]}`,
-            },
-          ],
+          // steps: [
+          //   {
+          //     id: "dc18f54d-aadd-498f-b518-2fc74ce8e9b6",
+          //     status: undefined,
+          //     title: `tussen vandaag en ${data["inviteWitnessEndDate"]}`,
+          //   },
+          // ],
         },
         {
           id: "12ca94b2-7179-4ae8-9032-dad49c294ff2",
@@ -131,14 +127,11 @@ export default function HuwelijksplannerStep0() {
           title: "Trouwdag",
           marker: 4,
           date: data.reservation
-            ? ((<DateValue dateTime={data.reservation["ceremony-start"]} locale={locale} />) as any)
+            ? ((<DateValue dateTime={marriageOptions.huwelijk["ceremony-start"]} locale={locale} />) as any)
             : "",
           meta:
             data.reservation && data.reservation["ceremony-location"] === "Locatie Stadskantoor" ? (
-              <Paragraph>
-                Jullie gaan trouwen op de vierde verdieping van het{" "}
-                <Link href="https://www.utrecht.nl/contact/stadskantoor">Stadskantoor Utrecht</Link>.
-              </Paragraph>
+              <Paragraph>Jullie gaan trouwen op de vierde verdieping van het Stadskantoor Utrecht.</Paragraph>
             ) : (
               ""
             ),
@@ -156,7 +149,7 @@ export default function HuwelijksplannerStep0() {
       <DataListItem>
         <DataListKey>{t("form:tel")}</DataListKey>
         <DataListValue>
-          <NumberValue>{partner.tel}</NumberValue>
+          <NumberValue>-</NumberValue>
         </DataListValue>
         <DataListActions>
           <Link
@@ -170,7 +163,7 @@ export default function HuwelijksplannerStep0() {
       <DataListItem>
         <DataListKey>{t("form:email")}</DataListKey>
         <DataListValue>
-          <URLValue>{partner.email}</URLValue>
+          <URLValue>-</URLValue>
         </DataListValue>
         <DataListActions>
           <Link
@@ -215,49 +208,6 @@ export default function HuwelijksplannerStep0() {
     </DataList>
   );
 
-  const CeremonyDataList = ({
-    data,
-    reservation,
-  }: {
-    data: HuwelijksplannerState;
-    reservation: Reservation;
-    locale: string;
-  }) => (
-    <DataList className="utrecht-data-list--grid">
-      <DataListItem>
-        <DataListKey>{t("huwelijksplanner:ceremony-type")}</DataListKey>
-        <DataListValue>{reservation["ceremony-type"]}</DataListValue>
-        {data.cancelable ? (
-          <DataListActions>
-            <Link href="#">
-              {t("huwelijksplanner:cancel-ceremony-link", { context: "eenvoudig-huwelijk" })}
-            </Link>
-          </DataListActions>
-        ) : (
-          ""
-        )}
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("huwelijksplanner:ceremony-date")}</DataListKey>
-        <DataListValue>
-          <DateValue dateTime={reservation["ceremony-start"]} locale={locale} />
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("huwelijksplanner:ceremony-time")}</DataListKey>
-        <DataListValue>
-          <TimeValue dateTime={reservation["ceremony-start"]} locale={locale} />
-          {" \u2013 "}
-          <TimeValue dateTime={reservation["ceremony-end"]} locale={locale} />
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("huwelijksplanner:ceremony-location")}</DataListKey>
-        <DataListValue>{reservation["ceremony-location"]}</DataListValue>
-      </DataListItem>
-    </DataList>
-  );
-
   return (
     <Surface>
       <Document>
@@ -272,15 +222,16 @@ export default function HuwelijksplannerStep0() {
             <PageContentMain>
               <Heading1>Melding Voorgenomen Huwelijk</Heading1>
               <Paragraph>Stap 5 van 5 – Je huwelijksdatum is geregeld</Paragraph>
-              <Alert type="ok">
+
+              {huwelijk && (
+                <>
+                <Alert type="ok">
                 <HeadingGroup>
                   <Heading2>Betaling ontvangen</Heading2>
                   <PreHeading>Gelukt</PreHeading>
                 </HeadingGroup>
               </Alert>
 
-              {huwelijk && (
-                <>
                   <ReservationCard locale={locale} />
                   <Paragraph>
                     Jullie reservering is geslaagd en we hebben de melding van het voorgenomen huwelijk ontvangen.
@@ -296,22 +247,52 @@ export default function HuwelijksplannerStep0() {
 
                   <section>
                     <Heading2>Dit hebben jullie doorgegeven</Heading2>
-                    {data.reservation ? (
-                      <CeremonyDataList data={data} reservation={data.reservation} locale={locale} />
-                    ) : (
-                      ""
-                    )}
+                    <DataList className="utrecht-data-list--grid">
+                      <DataListItem>
+                        <DataListKey>{t("huwelijksplanner:ceremony-type")}</DataListKey>
+                        <DataListValue>{marriageOptions.huwelijk["ceremony-type"]}</DataListValue>
+                        {data.cancelable ? (
+                          <DataListActions>
+                            <Link href="#">
+                              {t("huwelijksplanner:cancel-ceremony-link", { context: "eenvoudig-huwelijk" })}
+                            </Link>
+                          </DataListActions>
+                        ) : (
+                          ""
+                        )}
+                      </DataListItem>
+                      <DataListItem>
+                        <DataListKey>{t("huwelijksplanner:ceremony-date")}</DataListKey>
+                        <DataListValue>
+                          <DateValue dateTime={marriageOptions.huwelijk["ceremony-start"]} locale={locale} />
+                        </DataListValue>
+                      </DataListItem>
+                      <DataListItem>
+                        <DataListKey>{t("huwelijksplanner:ceremony-time")}</DataListKey>
+                        <DataListValue>
+                          <TimeValue dateTime={marriageOptions.huwelijk["ceremony-start"]} locale={locale} />
+                          {" \u2013 "}
+                          <TimeValue dateTime={marriageOptions.huwelijk["ceremony-end"]} locale={locale} />
+                        </DataListValue>
+                      </DataListItem>
+                      <DataListItem>
+                        <DataListKey>{t("huwelijksplanner:ceremony-location")}</DataListKey>
+                        <DataListValue>{marriageOptions.huwelijk["ceremony-location"]}</DataListValue>
+                      </DataListItem>
+                    </DataList>
                     <section>
                       <Heading3>Partners</Heading3>
-                      {data.partners.map((partner, index) => (
-                        <PartnerDataList key={index} partner={partner} />
+                      {/* @ts-ignore */}
+                      {huwelijk.embedded?.partners?.map((partner, index) => (
+                        <PartnerDataList key={index} partner={{name: `${partner?.embedded?.contact?.voornaam} ${partner?.embedded?.contact?.achternaam}`}} />
                       ))}
                     </section>
 
                     <section>
                       <Heading3>Getuigen</Heading3>
-                      {data.witnesses.map((witness, index) => (
-                        <WitnessDataList key={index} locale={locale} witness={witness} />
+                      {/* @ts-ignore */}
+                      {huwelijk.embedded?.getuigen?.map((getuige, index) => (
+                        <WitnessDataList key={index} locale={locale} witness={{name: getuige?.embedded?.contact?.embedded?.emails[0]?.naam, email: getuige?.embedded?.contact?.embedded?.emails[0]?.email}} />
                       ))}
                     </section>
                   </section>
