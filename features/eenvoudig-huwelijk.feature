@@ -375,7 +375,7 @@ Dan zie ik de heading  "Kies je extra’s"
 
 Scenario: We willen verklaren dat wij een trouwboekje willen
 Gegeven dat ik op de "extra" pagina ben
-  En dat ik een type checkbox input field voor de alleenstaand verklaring van mij zie
+  En dat ik een type checkbox input field voor de bevestiging dat een trouwboekje is gewild zie
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
