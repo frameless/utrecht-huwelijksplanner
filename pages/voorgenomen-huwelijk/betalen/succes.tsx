@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-/* eslint-disable no-console */
+
 import { UtrechtBadgeStatus } from "@utrecht/web-component-library-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
