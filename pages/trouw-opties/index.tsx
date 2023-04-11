@@ -27,6 +27,7 @@ import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFo
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { RegistrationType } from "../../src/data/huwelijksplanner-state";
+import { SdgproductService } from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -37,13 +38,22 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-1"]);
   const { replace } = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [weddingOptions, setWeddingOptions] = useState<RegistrationType | undefined>();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   const onWeddingOptionsSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMarriageOptions({ ...marriageOptions, type: weddingOptions });
-    replace(`/trouw-opties/${weddingOptions}`);
+
+    setIsLoading(true);
+
+    SdgproductService.sdgproductGetCollection(undefined, undefined, weddingOptions)
+      .then((res) => {
+        // @ts-ignore
+        setMarriageOptions({ ...marriageOptions, type: res.results[0].id });
+        replace(`/trouw-opties/${weddingOptions}`);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const onWeddingOptionsClick = (event: any) => {
@@ -88,8 +98,10 @@ export default function MultistepForm1() {
                     value="huwelijk"
                     appearance="primary-action-button"
                     onClick={onWeddingOptionsClick}
+                    disabled={isLoading}
                   >
-                    Trouwen plannen <UtrechtIconArrow />
+                    {!isLoading ? "Trouwen plannen" : "Loading..."}
+                    <UtrechtIconArrow />
                   </Button>
                   <Heading2>Wij willen een geregistreerd partnerschap</Heading2>
                   <Button
@@ -98,8 +110,10 @@ export default function MultistepForm1() {
                     value="geregistreerd-partnerschap"
                     appearance="primary-action-button"
                     onClick={onWeddingOptionsClick}
+                    disabled={isLoading}
                   >
-                    Geregistreerd partnerschap plannen
+                    {!isLoading ? "Geregistreerd partnerschap plannen" : "Loading..."}
+
                     <UtrechtIconArrow />
                   </Button>
                 </form>
