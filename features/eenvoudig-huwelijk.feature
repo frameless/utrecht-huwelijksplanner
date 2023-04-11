@@ -136,26 +136,26 @@ Wanneer ik in de type email input field mijn email invul
 Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 Scenario: Ik Partner 1 wil verklaren dat ik niet getrouwd ben
-Gegeven dat ik op de Persoonsgegevens pagina ben
+Gegeven dat ik op de "persoonsgegevens" pagina ben
   En dat ik een type checkbox input field voor de alleenstaand verklaring van mij zie
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
 Scenario: Ik Partner 1 wil verklaren dat ik niet binnen mijn familie ga trouwen
-Gegeven dat ik op de Persoonsgegevens pagina ben
+Gegeven dat ik op de "persoonsgegevens" pagina ben
     En dat ik een checkbox voor de niet familie trouwen verklaring voor mij zie 
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
 Scenario: Ik Partner 1 wil al de gegevens in het formulier bevestigen
-Gegeven dat ik op de Persoonsgegevens pagina ben 
+Gegeven dat ik op de "persoonsgegevens" pagina ben
     En dat ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie zie
     En dat al de ingevulde gegevens in het formulier kloppen
 Wanneer ik op de gegevensbevestiging checkbox klik
 Dan wordt het checkbox ingevuld
 
 Scenario: Ik Partner 1 wil mijn contactgegevens opslaan
-Gegeven ik ben op de Persoonsgegevens pagina 
+Gegeven dat ik op de "persoonsgegevens" pagina ben
     En dat ik al de verklaring checkboxes ingevuld heb 
     En dat ik de gegevensbevestiging checkbox ingevuld heb 
     En dat ik een "Contactgegevens opslaan" button zie 
