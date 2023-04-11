@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { UtrechtBadgeStatus } from "@utrecht/web-component-library-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -8,6 +9,7 @@ import Skeleton from "react-loading-skeleton";
 import {
   Alert,
   Aside,
+  Button,
   DataList,
   DataListActions,
   DataListItem,
@@ -78,6 +80,13 @@ export default function HuwelijksplannerStep0() {
     // Return `true` for valid when every partner has reached the minimum amount of witnesses
     return data.witnesses.length >= data.minWitnessPerPartner * 2;
   };
+
+  const handleVoorgenomenHuwelijkBevesitigen = () => {
+    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, {
+      // @ts-ignore
+      melding: true,
+    })
+  }
 
   const MarriageProcessSteps = ({ data }: { data: HuwelijksplannerState; locale: string }) => (
     <ProcessSteps
@@ -314,6 +323,11 @@ export default function HuwelijksplannerStep0() {
                       pagina verlaten.
                     </Paragraph>
                   </Aside>
+
+                  <Heading2>Melding voorgenomen huwelijk afronden</Heading2>
+                  <Button onClick={handleVoorgenomenHuwelijkBevesitigen} appearance="primary-action-button">
+                    Voorgenomen huwelijk bevestigen
+                  </Button>
                 </>
               )}
 
