@@ -1,10 +1,10 @@
 import { UtrechtBadgeStatus } from "@utrecht/web-component-library-react";
-import merge from "lodash.merge";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import {
   Alert,
   Aside,
@@ -36,14 +36,14 @@ import {
 } from "../../../src/components";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
+import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
 import {
   exampleState,
   HuwelijksplannerPartner,
   HuwelijksplannerState,
   Invitee,
-  Reservation,
 } from "../../../src/data/huwelijksplanner-state";
-import { HuwelijksplannerAPI } from "../../../src/openapi/index";
+import { Huwelijk, HuwelijkService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -53,23 +53,26 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function HuwelijksplannerStep0() {
   const { t } = useTranslation(["huwelijksplanner-step-0", "huwelijksplanner", "form", "common"]);
-  const [data, setData] = useState({ ...exampleState });
+  const [data] = useState({ ...exampleState });
   const locale = useRouter().locale || "en";
 
-  useEffect(() => {
-    const huwelijkId = "6e69d32c-afdb-4aef-85cc-fd5ff743a84b";
+  const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    HuwelijksplannerAPI.getHuwelijk(huwelijkId).then((huwelijk) => {
-      setData(
-        merge(data, {
-          "ceremony-start": huwelijk.moment,
-          reservation: {
-            "ceremony-start": huwelijk.moment,
-          },
-        })
-      );
-    });
-  }, [data]);
+  const [marriageOptions] = useContext(MarriageOptionsContext);
+
+  useEffect(() => {
+    if (huwelijk) return;
+
+    setIsLoading(true);
+
+    HuwelijkService.huwelijkGetItem(marriageOptions.huwelijk.id)
+      .then((res) => {
+        setIsLoading(true);
+        setHuwelijk(res);
+      })
+      .finally(() => setIsLoading(false));
+  }, [huwelijk, marriageOptions.huwelijk?.id]);
 
   const isValidMinWitnesses = (data: HuwelijksplannerState) => {
     // Return `true` for valid when every partner has reached the minimum amount of witnesses
@@ -89,7 +92,7 @@ export default function HuwelijksplannerStep0() {
               <Paragraph>
                 tussen vandaag en{" "}
                 {data["inviteWitnessEndDate"] ? (
-                  <DateValue dateTime={data["inviteWitnessEndDate"]} locale={locale} />
+                  <DateValue dateTime={marriageOptions.date ?? ""} locale={locale} />
                 ) : (
                   ""
                 )}{" "}
@@ -99,13 +102,13 @@ export default function HuwelijksplannerStep0() {
           ) : (
             ""
           ),
-          steps: [
-            {
-              id: "dc18f54d-aadd-498f-b518-2fc74ce8e9b6",
-              status: isValidMinWitnesses(data) ? "checked" : undefined,
-              title: `tussen vandaag en ${data["inviteWitnessEndDate"]}`,
-            },
-          ],
+          // steps: [
+          //   {
+          //     id: "dc18f54d-aadd-498f-b518-2fc74ce8e9b6",
+          //     status: undefined,
+          //     title: `tussen vandaag en ${data["inviteWitnessEndDate"]}`,
+          //   },
+          // ],
         },
         {
           id: "12ca94b2-7179-4ae8-9032-dad49c294ff2",
@@ -122,140 +125,17 @@ export default function HuwelijksplannerStep0() {
           title: "Trouwdag",
           marker: 4,
           date: data.reservation
-            ? ((<DateValue dateTime={data.reservation["ceremony-start"]} locale={locale} />) as any)
+            ? ((<DateValue dateTime={marriageOptions.huwelijk["ceremony-start"]} locale={locale} />) as any)
             : "",
           meta:
             data.reservation && data.reservation["ceremony-location"] === "Locatie Stadskantoor" ? (
-              <Paragraph>
-                Jullie gaan trouwen op de vierde verdieping van het{" "}
-                <Link href="https://www.utrecht.nl/contact/stadskantoor">Stadskantoor Utrecht</Link>.
-              </Paragraph>
+              <Paragraph>Jullie gaan trouwen op de vierde verdieping van het Stadskantoor Utrecht.</Paragraph>
             ) : (
               ""
             ),
         },
       ]}
     />
-    /*(
-                <>
-                  tussen vandaag en{" "}
-                  {data["inviteWitnessEndDate"] ? (
-                    <DateValue dateTime={data["inviteWitnessEndDate"]} locale={locale} />
-                  ) : (
-                    ""
-                  )}{" "}
-                  <UtrechtBadgeStatus status="neutral">niet verplicht</UtrechtBadgeStatus>
-                </>
-              ),*/
-    /*, {
-      id: "5cec92c5-73d1-485b-bf49-549472e211dc",
-      marker: 2,
-      status: "current",
-      steps: [{
-        status: "checked",
-        title: "Afspraak meten geluidsoverlast gemaakt"
-      }, {
-        status: "checked",
-        title: "Geluidsoverlast gemeten"
-      }, {
-        status: "checked",
-        title: "Onderzoek resultaten verwerkt"
-      }],
-      title: "Onderzoek naar geluidsoverlast"
-    }, {
-      id: "41ed3247-830e-408a-b2e0-5666a47a3631",
-      marker: 3,
-      title: "Uitvoeren van maatregelen"
-    }, {
-      id: "8ff216a2-9ccd-4ada-a1b2-00eb824b1e9b",
-      marker: 4,
-      title: "Maatregelen zijn uitgevoerd"
-    }]} />*/
-    /*
-    <ProcessSteps.StepList>
-      <ProcessSteps.Step checked={}>
-        <ProcessSteps.StepSection>
-          <ProcessSteps.StepHeader>
-            <ProcessSteps.StepMarker>
-              <div>1</div>
-            </ProcessSteps.StepMarker>
-            <ProcessSteps.StepHeading>
-
-
-            </ProcessSteps.StepHeading>
-            <ProcessSteps.StepExpandedIcon />
-          </ProcessSteps.StepHeader>
-
-        </ProcessSteps.StepSection>
-      </ProcessSteps.Step>
-      <ProcessSteps.Step>
-        <ProcessSteps.StepSection>
-          <ProcessSteps.StepHeader>
-            <ProcessSteps.StepMarker>
-              <div>2</div>
-            </ProcessSteps.StepMarker>
-            <ProcessSteps.StepHeading>
-              {data["acceptWitnessEndDate"] ? (
-                <DateValue dateTime={data["acceptWitnessEndDate"]} locale={locale} />
-              ) : (
-                ""
-              )}{" "}
-              <UtrechtBadgeStatus status="warning">regel het vóór deze datum</UtrechtBadgeStatus>
-            </ProcessSteps.StepHeading>
-            <ProcessSteps.StepExpandedIcon />
-          </ProcessSteps.StepHeader>
-          <div>
-            <Paragraph>
-              <Link href="/huwelijksplanner-step-invite-witness">
-                Getuigen zijn definitief en bevestigingen van getuigen ontvangen
-              </Link>
-            </Paragraph>
-          </div>
-        </ProcessSteps.StepSection>
-      </ProcessSteps.Step>
-      <ProcessSteps.Step>
-        <ProcessSteps.StepSection>
-          <ProcessSteps.StepHeader>
-            <ProcessSteps.StepMarker>3</ProcessSteps.StepMarker>
-            <ProcessSteps.StepHeading>
-              vóór{" "}
-              {data["orderProductEndDate"] ? <DateValue dateTime={data["orderProductEndDate"]} locale={locale} /> : ""}
-            </ProcessSteps.StepHeading>
-          </ProcessSteps.StepHeader>
-          {data.canOrderProducts ? (
-            <div>
-              <Paragraph>
-                <Link href="/huwelijksplanner-step-products">Eventuele extra’s bestellen</Link>
-                <UtrechtBadgeStatus status="neutral">niet verplicht</UtrechtBadgeStatus>
-              </Paragraph>
-            </div>
-          ) : (
-            ""
-          )}
-        </ProcessSteps.StepSection>
-      </ProcessSteps.Step>
-      <ProcessSteps.Step>
-        <ProcessSteps.StepSection>
-          <ProcessSteps.StepHeader>
-            <ProcessSteps.StepMarker>4</ProcessSteps.StepMarker>
-            <ProcessSteps.StepHeading>
-              {data.reservation ? <DateValue dateTime={data.reservation["ceremony-start"]} locale={locale} /> : ""}
-            </ProcessSteps.StepHeading>
-          </ProcessSteps.StepHeader>
-          {data.reservation && data.reservation["ceremony-location"] === "Locatie Stadskantoor" ? (
-            <div>
-              <Paragraph>
-                Jullie gaan trouwen op de vierde verdieping van het{" "}
-                <Link href="https://www.utrecht.nl/contact/stadskantoor">Stadskantoor Utrecht</Link>.
-              </Paragraph>
-            </div>
-          ) : (
-            ""
-          )}
-        </ProcessSteps.StepSection>
-      </ProcessSteps.Step>
-    </ProcessSteps.StepList>
-    */
   );
 
   const PartnerDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => (
@@ -267,7 +147,7 @@ export default function HuwelijksplannerStep0() {
       <DataListItem>
         <DataListKey>{t("form:tel")}</DataListKey>
         <DataListValue>
-          <NumberValue>{partner.tel}</NumberValue>
+          <NumberValue>-</NumberValue>
         </DataListValue>
         <DataListActions>
           <Link
@@ -281,7 +161,7 @@ export default function HuwelijksplannerStep0() {
       <DataListItem>
         <DataListKey>{t("form:email")}</DataListKey>
         <DataListValue>
-          <URLValue>{partner.email}</URLValue>
+          <URLValue>-</URLValue>
         </DataListValue>
         <DataListActions>
           <Link
@@ -326,49 +206,6 @@ export default function HuwelijksplannerStep0() {
     </DataList>
   );
 
-  const CeremonyDataList = ({
-    data,
-    reservation,
-  }: {
-    data: HuwelijksplannerState;
-    reservation: Reservation;
-    locale: string;
-  }) => (
-    <DataList className="utrecht-data-list--grid">
-      <DataListItem>
-        <DataListKey>{t("huwelijksplanner:ceremony-type")}</DataListKey>
-        <DataListValue>{reservation["ceremony-type"]}</DataListValue>
-        {data.cancelable ? (
-          <DataListActions>
-            <Link href="/huwelijksplanner-cancel">
-              {t("huwelijksplanner:cancel-ceremony-link", { context: "eenvoudig-huwelijk" })}
-            </Link>
-          </DataListActions>
-        ) : (
-          ""
-        )}
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("huwelijksplanner:ceremony-date")}</DataListKey>
-        <DataListValue>
-          <DateValue dateTime={reservation["ceremony-start"]} locale={locale} />
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("huwelijksplanner:ceremony-time")}</DataListKey>
-        <DataListValue>
-          <TimeValue dateTime={reservation["ceremony-start"]} locale={locale} />
-          {" \u2013 "}
-          <TimeValue dateTime={reservation["ceremony-end"]} locale={locale} />
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("huwelijksplanner:ceremony-location")}</DataListKey>
-        <DataListValue>{reservation["ceremony-location"]}</DataListValue>
-      </DataListItem>
-    </DataList>
-  );
-
   return (
     <Surface>
       <Document>
@@ -383,51 +220,104 @@ export default function HuwelijksplannerStep0() {
             <PageContentMain>
               <Heading1>Melding Voorgenomen Huwelijk</Heading1>
               <Paragraph>Stap 5 van 5 – Je huwelijksdatum is geregeld</Paragraph>
-              <Alert type="ok">
-                <HeadingGroup>
-                  <Heading2>Betaling ontvangen</Heading2>
-                  <PreHeading>Gelukt</PreHeading>
-                </HeadingGroup>
-              </Alert>
-              <ReservationCard locale={locale} />
-              <Paragraph>
-                Jullie reservering is geslaagd en we hebben de melding van het voorgenomen huwelijk ontvangen.
-              </Paragraph>
-              <Paragraph>
-                Je krijgt van ons een e-mail met daarin een link naar deze pagina. Zo kunnen jullie de gegevens later
-                wijzigen of aanvullen.
-              </Paragraph>
-              <section>
-                <Heading2>Nog te doen</Heading2>
-                <MarriageProcessSteps data={data} locale={locale} />
-              </section>
-              <section>
-                <Heading2>Dit hebben jullie doorgegeven</Heading2>
-                {data.reservation ? (
-                  <CeremonyDataList data={data} reservation={data.reservation} locale={locale} />
-                ) : (
-                  ""
-                )}
-                <section>
-                  <Heading3>Partners</Heading3>
-                  {data.partners.map((partner, index) => (
-                    <PartnerDataList key={index} partner={partner} />
-                  ))}
-                </section>
-                <section>
-                  <Heading3>Getuigen</Heading3>
-                  {data.witnesses.map((witness, index) => (
-                    <WitnessDataList key={index} locale={locale} witness={witness} />
-                  ))}
-                </section>
-              </section>
-              <Aside>
-                <Heading2>Deze pagina is automatisch bewaard</Heading2>
-                <Paragraph>
-                  We hebben een e-mail naar jullie gestuurd met daarin een link naar deze pagina. Je kunt veilig de
-                  pagina verlaten.
-                </Paragraph>
-              </Aside>
+
+              {huwelijk && (
+                <>
+                  <Alert type="ok">
+                    <HeadingGroup>
+                      <Heading2>Betaling ontvangen</Heading2>
+                      <PreHeading>Gelukt</PreHeading>
+                    </HeadingGroup>
+                  </Alert>
+
+                  <ReservationCard locale={locale} />
+                  <Paragraph>
+                    Jullie reservering is geslaagd en we hebben de melding van het voorgenomen huwelijk ontvangen.
+                  </Paragraph>
+                  <Paragraph>
+                    Je krijgt van ons een e-mail met daarin een link naar deze pagina. Zo kunnen jullie de gegevens
+                    later wijzigen of aanvullen.
+                  </Paragraph>
+                  <section>
+                    <Heading2>Nog te doen</Heading2>
+                    <MarriageProcessSteps data={data} locale={locale} />
+                  </section>
+
+                  <section>
+                    <Heading2>Dit hebben jullie doorgegeven</Heading2>
+                    <DataList className="utrecht-data-list--grid">
+                      <DataListItem>
+                        <DataListKey>{t("huwelijksplanner:ceremony-type")}</DataListKey>
+                        <DataListValue>{marriageOptions.huwelijk["ceremony-type"]}</DataListValue>
+                        {data.cancelable ? (
+                          <DataListActions>
+                            <Link href="#">
+                              {t("huwelijksplanner:cancel-ceremony-link", { context: "eenvoudig-huwelijk" })}
+                            </Link>
+                          </DataListActions>
+                        ) : (
+                          ""
+                        )}
+                      </DataListItem>
+                      <DataListItem>
+                        <DataListKey>{t("huwelijksplanner:ceremony-date")}</DataListKey>
+                        <DataListValue>
+                          <DateValue dateTime={marriageOptions.huwelijk["ceremony-start"]} locale={locale} />
+                        </DataListValue>
+                      </DataListItem>
+                      <DataListItem>
+                        <DataListKey>{t("huwelijksplanner:ceremony-time")}</DataListKey>
+                        <DataListValue>
+                          <TimeValue dateTime={marriageOptions.huwelijk["ceremony-start"]} locale={locale} />
+                          {" \u2013 "}
+                          <TimeValue dateTime={marriageOptions.huwelijk["ceremony-end"]} locale={locale} />
+                        </DataListValue>
+                      </DataListItem>
+                      <DataListItem>
+                        <DataListKey>{t("huwelijksplanner:ceremony-location")}</DataListKey>
+                        <DataListValue>{marriageOptions.huwelijk["ceremony-location"]}</DataListValue>
+                      </DataListItem>
+                    </DataList>
+                    <section>
+                      <Heading3>Partners</Heading3>
+                      {/* @ts-ignore */}
+                      {huwelijk.embedded?.partners?.map((partner, index) => (
+                        <PartnerDataList
+                          key={index}
+                          partner={{
+                            name: `${partner?.embedded?.contact?.voornaam} ${partner?.embedded?.contact?.achternaam}`,
+                          }}
+                        />
+                      ))}
+                    </section>
+
+                    <section>
+                      <Heading3>Getuigen</Heading3>
+                      {/* @ts-ignore */}
+                      {huwelijk.embedded?.getuigen?.map((getuige, index) => (
+                        <WitnessDataList
+                          key={index}
+                          locale={locale}
+                          witness={{
+                            name: getuige?.embedded?.contact?.embedded?.emails[0]?.naam,
+                            email: getuige?.embedded?.contact?.embedded?.emails[0]?.email,
+                          }}
+                        />
+                      ))}
+                    </section>
+                  </section>
+
+                  <Aside>
+                    <Heading2>Deze pagina is automatisch bewaard</Heading2>
+                    <Paragraph>
+                      We hebben een e-mail naar jullie gestuurd met daarin een link naar deze pagina. Je kunt veilig de
+                      pagina verlaten.
+                    </Paragraph>
+                  </Aside>
+                </>
+              )}
+
+              {!huwelijk && isLoading && <Skeleton height="300px" />}
             </PageContentMain>
           </PageContent>
           <PageFooter>
