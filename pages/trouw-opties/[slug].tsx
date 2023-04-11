@@ -36,7 +36,7 @@ import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFo
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
-import { Availability, SdgproductService } from "../../src/generated";
+import { Availability, AvailabilitycheckService, SdgproductService } from "../../src/generated";
 import { HuwelijksplannerAPI } from "../../src/openapi/index";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -78,8 +78,15 @@ const BlogPost: NextPage = () => {
   }, [marriageOptions.type]);
 
   useEffect(() => {
-    console.log({ ceremonyIds });
-  }, [ceremonyIds]);
+    if (!ceremonyIds) return;
+
+    ceremonyIds.forEach((ceremonyId) => {
+      AvailabilitycheckService.availabilitycheckGetCollection(ceremonyId, "PT1H", selectedDate, selectedDate).then(
+        (res) => console.log({ res })
+      );
+      // AvailabilityService.availabilityGetCollection(selectedDate, selectedDate, true, ceremonyId).then((res) => console.log({res}))
+    });
+  }, [ceremonyIds, selectedDate]);
 
   const formatDateToString = (date: any) => {
     const newDate = date.split("T")[0];
