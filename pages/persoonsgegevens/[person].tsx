@@ -113,7 +113,7 @@ export default function MultistepForm1() {
       setIsLoading(true);
 
       HuwelijkService.huwelijkPostItem({
-        type: "5877dfa1-bcd9-4673-bb4e-e9a4da98ec0d", // marriageOptions.type holds the current type
+        type: marriageOptions.type,
         ceremonie: "868da2b9-242d-4053-8e21-8a9ef66bd15c", // Ceremonie is "flits-balie" of "uitgebreid-trouwen"; uuid
         moment: marriageOptions?.startTime ?? "2019-08-24T14:15:22",
         ambtenaar: "4a96dcc4-66e4-46b9-b785-3cc89931a3e2", // TODO: Sarai stuurt id door
