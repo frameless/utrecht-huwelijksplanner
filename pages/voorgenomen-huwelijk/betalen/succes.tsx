@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { UtrechtBadgeStatus } from "@utrecht/web-component-library-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -224,12 +223,12 @@ export default function HuwelijksplannerStep0() {
 
               {huwelijk && (
                 <>
-                <Alert type="ok">
-                <HeadingGroup>
-                  <Heading2>Betaling ontvangen</Heading2>
-                  <PreHeading>Gelukt</PreHeading>
-                </HeadingGroup>
-              </Alert>
+                  <Alert type="ok">
+                    <HeadingGroup>
+                      <Heading2>Betaling ontvangen</Heading2>
+                      <PreHeading>Gelukt</PreHeading>
+                    </HeadingGroup>
+                  </Alert>
 
                   <ReservationCard locale={locale} />
                   <Paragraph>
@@ -283,7 +282,12 @@ export default function HuwelijksplannerStep0() {
                       <Heading3>Partners</Heading3>
                       {/* @ts-ignore */}
                       {huwelijk.embedded?.partners?.map((partner, index) => (
-                        <PartnerDataList key={index} partner={{name: `${partner?.embedded?.contact?.voornaam} ${partner?.embedded?.contact?.achternaam}`}} />
+                        <PartnerDataList
+                          key={index}
+                          partner={{
+                            name: `${partner?.embedded?.contact?.voornaam} ${partner?.embedded?.contact?.achternaam}`,
+                          }}
+                        />
                       ))}
                     </section>
 
@@ -291,7 +295,14 @@ export default function HuwelijksplannerStep0() {
                       <Heading3>Getuigen</Heading3>
                       {/* @ts-ignore */}
                       {huwelijk.embedded?.getuigen?.map((getuige, index) => (
-                        <WitnessDataList key={index} locale={locale} witness={{name: getuige?.embedded?.contact?.embedded?.emails[0]?.naam, email: getuige?.embedded?.contact?.embedded?.emails[0]?.email}} />
+                        <WitnessDataList
+                          key={index}
+                          locale={locale}
+                          witness={{
+                            name: getuige?.embedded?.contact?.embedded?.emails[0]?.naam,
+                            email: getuige?.embedded?.contact?.embedded?.emails[0]?.email,
+                          }}
+                        />
                       ))}
                     </section>
                   </section>
