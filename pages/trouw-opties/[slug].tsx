@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import {
   Aside,
   Button,
@@ -34,7 +36,7 @@ import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFo
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
-import { Availability } from "../../src/generated";
+import { Availability, SdgproductService } from "../../src/generated";
 import { HuwelijksplannerAPI } from "../../src/openapi/index";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -58,6 +60,26 @@ const BlogPost: NextPage = () => {
   const [selectedStartTime, setSelectedStartTime] = useState<string | undefined>();
   const [selectedEndTime, setSelectedEndTime] = useState<string | undefined>();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [ceremonyIds, setCeremonyIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!marriageOptions.type) return;
+
+    setIsLoading(true);
+
+    SdgproductService.sdgproductGetItem(marriageOptions.type)
+      .then((res) => {
+        // @ts-ignore
+        setCeremonyIds(res.embedded.gerelateerdeProducten.map((ceremony: any) => ceremony._self.id));
+      })
+      .finally(() => setIsLoading(false));
+  }, [marriageOptions.type]);
+
+  useEffect(() => {
+    console.log({ ceremonyIds });
+  }, [ceremonyIds]);
 
   const formatDateToString = (date: any) => {
     const newDate = date.split("T")[0];
@@ -129,84 +151,88 @@ const BlogPost: NextPage = () => {
               </ButtonLink>
             </ButtonGroup>
             <PageContentMain>
-              <form onSubmit={onSelectedDateAndLocationSubmit}>
-                <HeadingGroup>
-                  <Heading1>{t("huwelijksplanner-step-2:heading-1")}</Heading1>
-                  {/*TODO: Step indicator component */}
-                  <Paragraph lead>
-                    {t("common:step-n-of-m", { n: 2, m: 5 })} — {t("huwelijksplanner-step-2:title")}
-                  </Paragraph>
-                </HeadingGroup>
-                <Paragraph lead>
-                  Kies hier de datum waarop jullie willen trouwen. Als je op de datum klikt zie je de beschikbare
-                  tijden, plaatsen en manieren waarop je kunt trouwen.
-                </Paragraph>
-                <section>
-                  <FormField>
-                    <Calendar onCalendarClick={(date: string) => formatDateToString(date)} />
-                  </FormField>
-                  <Fieldset>
-                    <FieldsetLegend>Flits/balie-huwelijk — Stadskantoor</FieldsetLegend>
-                    {getEvents("flits-balie-huwelijk", selectedDate).map((event) => (
-                      <FormField key={event.id} type="radio">
-                        <RadioButton2
-                          novalidate={true}
-                          id={event.id}
-                          name="event"
-                          value={event.id}
-                          required
-                          onChange={() => onChangeDateHandler(event.id, event.startDateTime, event.endDateTime)}
-                        />
-                        <FormLabel htmlFor={event.id} type="radio">
-                          <span aria-label="negen uur tot tien over negen">
-                            <TimeValue dateTime={event.startDateTime} locale={locale} />
-                            {" – "}
-                            <TimeValue dateTime={event.endDateTime} locale={locale} />
-                            {" uur"}
-                          </span>
-                        </FormLabel>
-                      </FormField>
-                    ))}
-                  </Fieldset>
-                  <Fieldset>
-                    <FieldsetLegend>Uitgebreid trouwen — Zelf de plaats bepalen</FieldsetLegend>
-                    {getEvents("uitgebreid-huwelijk", selectedDate).map((event) => (
-                      <FormField key={event.id}>
-                        <RadioButton2
-                          novalidate={true}
-                          id={event.id}
-                          name="event"
-                          value={event.id}
-                          required
-                          onChange={() => onChangeDateHandler(event.id, event.startDateTime, event.endDateTime)}
-                        />
-                        <FormLabel htmlFor={event.id}>
-                          <span aria-label="negen uur tot tien over negen">
-                            <TimeValue dateTime={event.startDateTime} locale={locale} />
-                            {" – "}
-                            <TimeValue dateTime={event.endDateTime} locale={locale} />
-                            {" uur"}
-                          </span>
-                        </FormLabel>
-                      </FormField>
-                    ))}
-                  </Fieldset>
+              {isLoading && <Skeleton height="200px" />}
 
-                  <ButtonGroup>
-                    <Button type="submit" appearance="primary-action-button">
-                      Ja, dit wil ik!
-                    </Button>
-                  </ButtonGroup>
-                </section>
-                <Aside>
-                  <Heading2>Meer informatie</Heading2>
-                  <Paragraph>
-                    <Link href="/" external>
-                      Trouwen of partnerschap registreren in Utrecht
-                    </Link>
+              {!isLoading && (
+                <form onSubmit={onSelectedDateAndLocationSubmit}>
+                  <HeadingGroup>
+                    <Heading1>{t("huwelijksplanner-step-2:heading-1")}</Heading1>
+                    {/*TODO: Step indicator component */}
+                    <Paragraph lead>
+                      {t("common:step-n-of-m", { n: 2, m: 5 })} — {t("huwelijksplanner-step-2:title")}
+                    </Paragraph>
+                  </HeadingGroup>
+                  <Paragraph lead>
+                    Kies hier de datum waarop jullie willen trouwen. Als je op de datum klikt zie je de beschikbare
+                    tijden, plaatsen en manieren waarop je kunt trouwen.
                   </Paragraph>
-                </Aside>
-              </form>
+                  <section>
+                    <FormField>
+                      <Calendar onCalendarClick={(date: string) => formatDateToString(date)} />
+                    </FormField>
+                    <Fieldset>
+                      <FieldsetLegend>Flits/balie-huwelijk — Stadskantoor</FieldsetLegend>
+                      {getEvents("flits-balie-huwelijk", selectedDate).map((event) => (
+                        <FormField key={event.id} type="radio">
+                          <RadioButton2
+                            novalidate={true}
+                            id={event.id}
+                            name="event"
+                            value={event.id}
+                            required
+                            onChange={() => onChangeDateHandler(event.id, event.startDateTime, event.endDateTime)}
+                          />
+                          <FormLabel htmlFor={event.id} type="radio">
+                            <span aria-label="negen uur tot tien over negen">
+                              <TimeValue dateTime={event.startDateTime} locale={locale} />
+                              {" – "}
+                              <TimeValue dateTime={event.endDateTime} locale={locale} />
+                              {" uur"}
+                            </span>
+                          </FormLabel>
+                        </FormField>
+                      ))}
+                    </Fieldset>
+                    <Fieldset>
+                      <FieldsetLegend>Uitgebreid trouwen — Zelf de plaats bepalen</FieldsetLegend>
+                      {getEvents("uitgebreid-huwelijk", selectedDate).map((event) => (
+                        <FormField key={event.id}>
+                          <RadioButton2
+                            novalidate={true}
+                            id={event.id}
+                            name="event"
+                            value={event.id}
+                            required
+                            onChange={() => onChangeDateHandler(event.id, event.startDateTime, event.endDateTime)}
+                          />
+                          <FormLabel htmlFor={event.id}>
+                            <span aria-label="negen uur tot tien over negen">
+                              <TimeValue dateTime={event.startDateTime} locale={locale} />
+                              {" – "}
+                              <TimeValue dateTime={event.endDateTime} locale={locale} />
+                              {" uur"}
+                            </span>
+                          </FormLabel>
+                        </FormField>
+                      ))}
+                    </Fieldset>
+
+                    <ButtonGroup>
+                      <Button type="submit" appearance="primary-action-button">
+                        Ja, dit wil ik!
+                      </Button>
+                    </ButtonGroup>
+                  </section>
+                  <Aside>
+                    <Heading2>Meer informatie</Heading2>
+                    <Paragraph>
+                      <Link href="/" external>
+                        Trouwen of partnerschap registreren in Utrecht
+                      </Link>
+                    </Paragraph>
+                  </Aside>
+                </form>
+              )}
             </PageContentMain>
           </PageContent>
           <PageFooter>
