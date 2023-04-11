@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
 import { UtrechtBadgeStatus } from "@utrecht/web-component-library-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -8,6 +10,7 @@ import Skeleton from "react-loading-skeleton";
 import {
   Alert,
   Aside,
+  Button,
   DataList,
   DataListActions,
   DataListItem,
@@ -77,6 +80,18 @@ export default function HuwelijksplannerStep0() {
   const isValidMinWitnesses = (data: HuwelijksplannerState) => {
     // Return `true` for valid when every partner has reached the minimum amount of witnesses
     return data.witnesses.length >= data.minWitnessPerPartner * 2;
+  };
+
+  const handleHuwelijkAnnuleren = () => {
+    const confirmHuwelijkAnnuleren = confirm("Are you sure you want to cancel the ceremony?");
+
+    if (confirmHuwelijkAnnuleren) {
+      setIsLoading(true);
+
+      HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { status: Huwelijk.status.CANCELLED })
+        .then((res) => setHuwelijk(res))
+        .finally(() => setIsLoading(false));
+    }
   };
 
   const MarriageProcessSteps = ({ data }: { data: HuwelijksplannerState; locale: string }) => (
@@ -223,6 +238,14 @@ export default function HuwelijksplannerStep0() {
 
               {huwelijk && (
                 <>
+                  {huwelijk.status === Huwelijk.status.CANCELLED && (
+                    <Alert type="error">
+                      <HeadingGroup>
+                        <Heading2>This ceremony has been cancelled.</Heading2>
+                      </HeadingGroup>
+                    </Alert>
+                  )}
+
                   <Alert type="ok">
                     <HeadingGroup>
                       <Heading2>Betaling ontvangen</Heading2>
@@ -249,14 +272,12 @@ export default function HuwelijksplannerStep0() {
                       <DataListItem>
                         <DataListKey>{t("huwelijksplanner:ceremony-type")}</DataListKey>
                         <DataListValue>{marriageOptions.huwelijk["ceremony-type"]}</DataListValue>
-                        {data.cancelable ? (
+                        {huwelijk.status !== Huwelijk.status.CANCELLED && (
                           <DataListActions>
-                            <Link href="#">
-                              {t("huwelijksplanner:cancel-ceremony-link", { context: "eenvoudig-huwelijk" })}
-                            </Link>
+                            <Button disabled={isLoading} onClick={handleHuwelijkAnnuleren}>
+                              {!isLoading ? "Cancel ceremony" : "Loading..."}
+                            </Button>
                           </DataListActions>
-                        ) : (
-                          ""
                         )}
                       </DataListItem>
                       <DataListItem>
