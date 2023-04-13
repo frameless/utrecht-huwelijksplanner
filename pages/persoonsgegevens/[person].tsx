@@ -29,7 +29,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEventHandler, FormEvent, useContext, useEffect, useState } from "react";
+import { ChangeEventHandler, FormEvent, useContext, useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
 import { Checkbox2 } from "../../src/components";
@@ -56,6 +56,7 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
   const { query, locale = "nl", push } = useRouter();
 
+  const hasCalledHuwelijkPost = useRef(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
@@ -120,24 +121,23 @@ export default function MultistepForm1() {
         locatie: "e1b2aa89-dcd8-4b77-96fc-d41501cbc57f", //marriageOptions?.location ?? "",
       })
         .then((res) => {
-          const _res = JSON.parse(res as string);
-
           setMarriageOptions({
             ...marriageOptions,
             huwelijk: {
-              id: _res._self.id,
-              firstPartnerName: `${_res?.partners[0]?.contact?.voornaam} ${_res?.partners[0]?.contact?.achternaam}`,
+              // @ts-ignore
+              id: res._self.id,
+              firstPartnerName: `${res?.partners[0]?.contact?.voornaam} ${res?.partners[0]?.contact?.achternaam}`,
               expiry: "FIXME: over 2 uur",
-              "ceremony-type": _res.ceremonie.upnLabel,
-              "ceremony-start": _res.moment ?? "",
-              "ceremony-end": _res.moment ? moment(_res.moment).add(15, "m").toDate().toString() : "",
+              "ceremony-type": res.ceremonie.upnLabel,
+              "ceremony-start": res.moment ?? "",
+              "ceremony-end": res.moment ? moment(res.moment).add(15, "m").toDate().toString() : "",
               "ceremony-location": "Locatie Stadskantoor",
               "ceremony-price-currency": "EUR",
-              "ceremony-price-amount": _res.kosten ? _res.kosten.replace("EUR ", "") : "-",
+              "ceremony-price-amount": res.kosten ? res.kosten.replace("EUR ", "") : "-",
             },
           });
 
-          if (!huwelijk) setHuwelijk(_res); // TODO: two are being created, this ensures its not overwritten
+          if (!huwelijk) setHuwelijk(res); // TODO: two are being created, this ensures its not overwritten
         })
         .finally(() => setIsLoading(false));
     };
@@ -151,7 +151,11 @@ export default function MultistepForm1() {
         .finally(() => setIsLoading(false));
     };
 
-    if (!huwelijkId) handleNewPersonLogin();
+    if (!huwelijkId && hasCalledHuwelijkPost.current === false) {
+      handleNewPersonLogin()
+      hasCalledHuwelijkPost.current = true;
+    }
+
     if (huwelijkId) handleSecondPersonLogin();
   }, [huwelijk, huwelijkId, marriageOptions, setMarriageOptions]);
 
