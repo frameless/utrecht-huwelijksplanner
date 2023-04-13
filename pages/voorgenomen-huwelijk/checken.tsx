@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { UnorderedList, UnorderedListItem } from "@utrecht/component-library-react";
 import Head from "next/head";
 import Link from "next/link";
@@ -50,8 +49,8 @@ export default function MultistepForm1() {
 
     HuwelijkService.huwelijkGetItem(marriageOptions.huwelijk.id)
       .then((res) => {
-        // @ts-ignore
         const {
+          // @ts-ignore
           embedded: {
             checklist: { embedded: items },
           },
