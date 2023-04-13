@@ -1,30 +1,44 @@
 import { NextPage } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { useContext } from "react";
+import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
+import { MollieService } from "../../../src/generated";
 
 const Betalen: NextPage = () => {
+  const [marriageOptions] = useContext(MarriageOptionsContext);
+
+  const handlePaymentClick = () => {
+    MollieService.mollieGetCollection(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      marriageOptions.huwelijk.id
+    // eslint-disable-next-line no-console
+    ).then((res) => console.log({ res }));
+  };
+
   return (
-    <Link passHref href="/voorgenomen-huwelijk/betalen/succes">
-      <a
-        style={{
-          backgroundColor: "#fbfbfb",
-          textAlign: "center",
-          height: "100%",
-          width: "100%",
-          position: "absolute",
-        }}
-      >
-        <Image
-          src="/img/ideal-scherm.png"
-          alt=""
-          width={870}
-          height={1205}
-          style={{
-            boxShadow: "0 0 6px 0 rgba(0,0,0,0.16)",
-          }}
-        />
-      </a>
-    </Link>
+    <Image
+      onClick={handlePaymentClick}
+      src="/img/ideal-scherm.png"
+      alt=""
+      width={870}
+      height={1205}
+      style={{
+        boxShadow: "0 0 6px 0 rgba(0,0,0,0.16)",
+      }}
+    />
   );
 };
 
