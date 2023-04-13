@@ -152,7 +152,7 @@ export default function MultistepForm1() {
     };
 
     if (!huwelijkId && hasCalledHuwelijkPost.current === false) {
-      handleNewPersonLogin()
+      handleNewPersonLogin();
       hasCalledHuwelijkPost.current = true;
     }
 
