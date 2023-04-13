@@ -56,6 +56,8 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
   const { query, locale = "nl", push } = useRouter();
 
+  const [email, setEmail] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
@@ -105,6 +107,19 @@ export default function MultistepForm1() {
       setDeclarationCheckboxChecked(false);
     }
   }, [declarationCheckboxData]);
+
+  useEffect(() => {
+    if (!huwelijk) return;
+
+    const { partners } = huwelijk;
+
+    const currentPartner = partners.find((p: any) => p.contact?.subjectIdentificatie?.inpBsn === getBsnFromJWT());
+
+    if (!currentPartner) return;
+
+    setEmail(currentPartner.contact.emails[0].email);
+    setPhoneNumber(currentPartner.contact.telefoonnummers[0].telefoonnummer);
+  }, [huwelijk]);
 
   useEffect(() => {
     if (huwelijk) return;
@@ -305,26 +320,32 @@ export default function MultistepForm1() {
   const onContactDetailsSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!huwelijkId) {
-      push("/voorgenomen-huwelijk/partner");
-    } else {
-      setIsLoading(true);
+    // TODO: dit had een PATCH naar Assent moeten zijn denk ik
 
-      HuwelijkService.huwelijkPatchItem(huwelijkId as string, {
-        partners: [
-          {
-            requester: getBsnFromJWT(),
-            contact: {
-              subjectIdentificatie: {
-                inpBsn: getBsnFromJWT(),
-              },
-            },
-          },
-        ],
-      }).then(() => {
-        push(`/persoonsgegevens/succes?huwelijkId=${huwelijkId}`);
-      });
+    const payload: any = {
+      contact: {
+        emails: [{ email: email, naam: email }],
+        telefoonnummers: [{ telefoonnummer: phoneNumber, naam: phoneNumber }],
+      },
+    };
+
+    if (huwelijkId) {
+      payload.requester = getBsnFromJWT();
+      payload.contact.subjectIdentificatie = { inpBsn: getBsnFromJWT() };
     }
+
+    console.log({huwelijk})
+
+    // @ts-ignore
+    HuwelijkService.huwelijkPatchItem(huwelijk?._self.id as string, {
+      partners: [payload],
+    }).then(() => {
+      if (!huwelijkId) {
+        push("/voorgenomen-huwelijk/partner");
+      } else {
+        push(`/persoonsgegevens/succes?huwelijkId=${huwelijkId}`);
+      }
+    });
   };
 
   return (
@@ -388,7 +409,14 @@ export default function MultistepForm1() {
                           {t("form:tel")} <OptionalIndicator title={t("form:optional")} />
                         </FormLabel>
                       </p>
-                      <Textbox className="utrecht-form-field__input" id="tel" type="tel" autoComplete="tel" />
+                      <Textbox
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        className="utrecht-form-field__input"
+                        id="tel"
+                        type="tel"
+                        autoComplete="tel"
+                      />
                     </FormField>
                     <FormField>
                       <p className="utrecht-form-field__label">
@@ -402,6 +430,8 @@ export default function MultistepForm1() {
                         De mail heeft een link om nog veranderingen door te geven.
                       </FormFieldDescription>
                       <Textbox
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="utrecht-form-field__input"
                         id="email"
                         type="email"
