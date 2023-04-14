@@ -22,7 +22,6 @@ import {
   Heading2,
   Heading3,
   HeadingGroup,
-  Link,
   Page,
   PageContent,
   PageContentMain,
@@ -46,7 +45,7 @@ import {
   HuwelijksplannerState,
   Invitee,
 } from "../../../src/data/huwelijksplanner-state";
-import { AssentService, Huwelijk, HuwelijkService } from "../../../src/generated";
+import { Assent, AssentService, Huwelijk, HuwelijkService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -207,36 +206,60 @@ export default function HuwelijksplannerStep0() {
     );
   };
 
-  const WitnessDataList = ({ witness }: { witness: Invitee; locale: string }) => (
-    <DataList className="utrecht-data-list--grid">
-      <DataListItem>
-        <DataListKey>{t("form:name")}</DataListKey>
-        <DataListValue>{witness.name}</DataListValue>
-        <DataListActions>
-          <Link
-            href="/huwelijksplanner-witness-edit#name"
-            title={t("form:data-list-actions-edit-subject", { subject: t("form:name") })}
-          >
-            {t("form:data-list-actions-edit")}
-          </Link>
-        </DataListActions>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:email")}</DataListKey>
-        <DataListValue>
-          <URLValue>{witness.email}</URLValue>
-        </DataListValue>
-        <DataListActions>
-          <Link
-            href="/huwelijksplanner-witness-edit#email"
-            title={t("form:data-list-actions-edit-subject", { subject: t("form:email") })}
-          >
-            {t("form:data-list-actions-edit")}
-          </Link>
-        </DataListActions>
-      </DataListItem>
-    </DataList>
-  );
+  const WitnessDataList = ({ witness }: { witness: Invitee; locale: string }) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [name, setName] = useState<string>(witness.name);
+    const [email, setEmail] = useState<string>(witness.email);
+
+    const handleNameChange = () => {
+      setIsLoading(true);
+
+      // @ts-ignore
+      AssentService.assentPatchItem(witness.id, {
+        contact: { voornaam: name },
+      } as Assent).finally(() => setIsLoading(false));
+    };
+
+    const handleEmailChange = () => {
+      setIsLoading(true);
+
+      // @ts-ignore
+      AssentService.assentPatchItem(witness.id, {
+        contact: {
+          emails: [{ naam: email, email: email }],
+        },
+      } as Assent).finally(() => setIsLoading(false));
+    };
+
+    return (
+      <DataList className="utrecht-data-list--grid">
+        <DataListItem>
+          <DataListKey>{t("form:name")}</DataListKey>
+          <DataListValue>
+            <Textbox value={name} onChange={(e) => setName(e.target.value)} />
+          </DataListValue>
+          <DataListActions>
+            <Button disabled={isLoading || !name} onClick={handleNameChange}>
+              Update name
+            </Button>
+          </DataListActions>
+        </DataListItem>
+        <DataListItem>
+          <DataListKey>{t("form:email")}</DataListKey>
+          <DataListValue>
+            <URLValue>
+              <Textbox value={email} onChange={(e) => setEmail(e.target.value)} />
+            </URLValue>
+          </DataListValue>
+          <DataListActions>
+            <Button disabled={isLoading || !email} onClick={handleEmailChange}>
+              Update email
+            </Button>
+          </DataListActions>
+        </DataListItem>
+      </DataList>
+    );
+  };
 
   return (
     <Surface>
@@ -340,7 +363,9 @@ export default function HuwelijksplannerStep0() {
                           key={index}
                           locale={locale}
                           witness={{
-                            name: getuige?.embedded?.contact?.embedded?.emails[0]?.naam,
+                            // @ts-ignore
+                            id: getuige?._self.id,
+                            name: getuige?.embedded?.contact?.embedded?.voornaam,
                             email: getuige?.embedded?.contact?.embedded?.emails[0]?.email,
                           }}
                         />

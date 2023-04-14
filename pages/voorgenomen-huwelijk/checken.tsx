@@ -60,6 +60,7 @@ export default function MultistepForm1() {
         setUncheckedItems(Object.values(items).filter((item: any) => !item.result));
       })
       .finally(() => setIsLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
