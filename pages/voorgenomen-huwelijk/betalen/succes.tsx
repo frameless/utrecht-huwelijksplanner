@@ -23,7 +23,6 @@ import {
   Heading3,
   HeadingGroup,
   Link,
-  NumberValue,
   Page,
   PageContent,
   PageContentMain,
@@ -34,6 +33,7 @@ import {
   ProcessSteps,
   ReservationCard,
   Surface,
+  Textbox,
   TimeValue,
   URLValue,
 } from "../../../src/components";
@@ -46,7 +46,7 @@ import {
   HuwelijksplannerState,
   Invitee,
 } from "../../../src/data/huwelijksplanner-state";
-import { Huwelijk, HuwelijkService } from "../../../src/generated";
+import { AssentService, Huwelijk, HuwelijkService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -153,42 +153,59 @@ export default function HuwelijksplannerStep0() {
     />
   );
 
-  const PartnerDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => (
-    <DataList className="utrecht-data-list--grid">
-      <DataListItem>
-        <DataListKey>{t("form:name")}</DataListKey>
-        <DataListValue>{partner.name}</DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:tel")}</DataListKey>
-        <DataListValue>
-          <NumberValue>-</NumberValue>
-        </DataListValue>
-        <DataListActions>
-          <Link
-            href="/huwelijksplanner-edit#tel"
-            title={t("form:data-list-actions-edit-subject", { subject: t("form:tel") })}
-          >
-            {t("form:data-list-actions-edit")}
-          </Link>
-        </DataListActions>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:email")}</DataListKey>
-        <DataListValue>
-          <URLValue>-</URLValue>
-        </DataListValue>
-        <DataListActions>
-          <Link
-            href="/huwelijksplanner-edit#email"
-            title={t("form:data-list-actions-edit-subject", { subject: t("form:email") })}
-          >
-            {t("form:data-list-actions-edit")}
-          </Link>
-        </DataListActions>
-      </DataListItem>
-    </DataList>
-  );
+  const PartnerDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const [phoneNumber, setPhoneNumber] = useState<string | undefined>(partner.tel);
+    const [email, setEmail] = useState<string | undefined>(partner.email);
+
+    const handleUpdateEmail = () => {
+      setIsLoading(true);
+      AssentService.assentPatchItem(
+        partner.id as string,
+        { contact: { emails: [{ naam: email, email: email }] } } as any
+      ).finally(() => setIsLoading(false));
+    };
+
+    const handleUpdatePhoneNumber = () => {
+      setIsLoading(true);
+      AssentService.assentPatchItem(
+        partner.id as string,
+        { contact: { telefoonnummers: [{ naam: phoneNumber, telefoonnummer: phoneNumber }] } } as any
+      ).finally(() => setIsLoading(false));
+    };
+
+    return (
+      <DataList className="utrecht-data-list--grid">
+        <DataListItem>
+          <DataListKey>{t("form:name")}</DataListKey>
+          <DataListValue>{partner.name}</DataListValue>
+        </DataListItem>
+        <DataListItem>
+          <DataListKey>{t("form:tel")}</DataListKey>
+          <DataListValue>
+            <Textbox value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+          </DataListValue>
+          <DataListActions>
+            <Button disabled={isLoading || !phoneNumber} onClick={handleUpdatePhoneNumber}>
+              Update phone number
+            </Button>
+          </DataListActions>
+        </DataListItem>
+        <DataListItem>
+          <DataListKey>{t("form:email")}</DataListKey>
+          <DataListValue>
+            <Textbox value={email} onChange={(e) => setEmail(e.target.value)} />
+          </DataListValue>
+          <DataListActions>
+            <Button disabled={isLoading || !email} onClick={handleUpdateEmail}>
+              Update email
+            </Button>
+          </DataListActions>
+        </DataListItem>
+      </DataList>
+    );
+  };
 
   const WitnessDataList = ({ witness }: { witness: Invitee; locale: string }) => (
     <DataList className="utrecht-data-list--grid">
@@ -306,7 +323,10 @@ export default function HuwelijksplannerStep0() {
                         <PartnerDataList
                           key={index}
                           partner={{
+                            id: partner._self.id,
                             name: `${partner?.embedded?.contact?.voornaam} ${partner?.embedded?.contact?.achternaam}`,
+                            tel: partner?.embedded?.contact?.embedded?.telefoonnummers[0]?.telefoonnummer,
+                            email: partner?.embedded?.contact?.embedded?.emails[0]?.email,
                           }}
                         />
                       ))}
