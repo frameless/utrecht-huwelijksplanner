@@ -47,7 +47,7 @@ export default function MultistepForm1() {
 
     setIsLoading(true);
 
-    SdgproductService.sdgproductGetCollection(undefined, undefined, weddingOptions)
+    SdgproductService.sdgproductGetCollection(undefined, undefined, undefined, weddingOptions)
       .then((res) => {
         // @ts-ignore
         setMarriageOptions({ ...marriageOptions, type: res.results[0].id });
