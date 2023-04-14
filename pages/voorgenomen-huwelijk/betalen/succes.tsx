@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable no-alert */
 
 import { UtrechtBadgeStatus } from "@utrecht/web-component-library-react";
@@ -174,7 +173,7 @@ export default function HuwelijksplannerStep0() {
         partner.id as string,
         { contact: { telefoonnummers: [{ naam: phoneNumber, telefoonnummer: phoneNumber }] } } as any
       ).finally(() => setIsLoading(false));
-    }
+    };
 
     return (
       <DataList className="utrecht-data-list--grid">
@@ -188,7 +187,9 @@ export default function HuwelijksplannerStep0() {
             <Textbox value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           </DataListValue>
           <DataListActions>
-            <Button disabled={isLoading || !phoneNumber} onClick={handleUpdatePhoneNumber}>Update phone number</Button>
+            <Button disabled={isLoading || !phoneNumber} onClick={handleUpdatePhoneNumber}>
+              Update phone number
+            </Button>
           </DataListActions>
         </DataListItem>
         <DataListItem>
