@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   Button,
   DataList,
@@ -37,7 +38,13 @@ import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFo
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
-import { Huwelijk, HuwelijkService, IngeschrevenPersoon, IngeschrevenpersoonService } from "../../src/generated";
+import {
+  AssentService,
+  Huwelijk,
+  HuwelijkService,
+  IngeschrevenPersoon,
+  IngeschrevenpersoonService,
+} from "../../src/generated";
 import { getBsnFromJWT } from "../../src/services/getBsnFromJWT";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -56,6 +63,9 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
   const { query, locale = "nl", push } = useRouter();
 
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
   const hasCalledHuwelijkPost = useRef(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -65,6 +75,44 @@ export default function MultistepForm1() {
   const { huwelijkId } = query;
 
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+
+  const getContactObject = () => {
+    let contactObject: any = {};
+
+    if (email) {
+      contactObject.emails = [
+        {
+          naam: email,
+          email: email,
+        },
+      ];
+    }
+
+    if (phoneNumber) {
+      contactObject.telefoonnummers = [
+        {
+          naam: phoneNumber,
+          telefoonnummer: phoneNumber,
+        },
+      ];
+    }
+
+    return contactObject;
+  };
+
+  const getResultsChecklist = () => {
+    return [
+      {
+        display: "Ik verklaar dat ik niet trouw met mijn neef, nicht, oom of tante.",
+        result: true,
+      },
+      {
+        display:
+          "Ik verklaar dat ik nu niet met iemand anders getrouwd ben (in Nederland of in een ander land). Ik heb nu ook geen geregistreerd partnerschap.",
+        result: true,
+      },
+    ];
+  };
 
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
@@ -309,11 +357,22 @@ export default function MultistepForm1() {
   const onContactDetailsSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!huwelijkId) {
-      push("/voorgenomen-huwelijk/partner");
-    } else {
-      setIsLoading(true);
+    setIsLoading(true);
 
+    if (!huwelijkId) {
+      AssentService.assentPatchItem(huwelijk?.partners[0]._self.id, {
+        requester: getBsnFromJWT(),
+        contact: {
+          subjectIdentificatie: {
+            inpBsn: getBsnFromJWT(),
+          },
+          ...getContactObject(),
+        },
+        results: getResultsChecklist(),
+      } as any).then(() => {
+        push("/voorgenomen-huwelijk/partner");
+      });
+    } else {
       HuwelijkService.huwelijkPatchItem(huwelijkId as string, {
         partners: [
           {
@@ -322,7 +381,9 @@ export default function MultistepForm1() {
               subjectIdentificatie: {
                 inpBsn: getBsnFromJWT(),
               },
+              ...getContactObject(),
             },
+            results: getResultsChecklist(),
           },
         ],
       }).then(() => {
@@ -392,7 +453,14 @@ export default function MultistepForm1() {
                           {t("form:tel")} <OptionalIndicator title={t("form:optional")} />
                         </FormLabel>
                       </p>
-                      <Textbox className="utrecht-form-field__input" id="tel" type="tel" autoComplete="tel" />
+                      <Textbox
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        className="utrecht-form-field__input"
+                        id="tel"
+                        type="tel"
+                        autoComplete="tel"
+                      />
                     </FormField>
                     <FormField>
                       <p className="utrecht-form-field__label">
@@ -406,6 +474,8 @@ export default function MultistepForm1() {
                         De mail heeft een link om nog veranderingen door te geven.
                       </FormFieldDescription>
                       <Textbox
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="utrecht-form-field__input"
                         id="email"
                         type="email"
