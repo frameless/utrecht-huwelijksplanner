@@ -29,7 +29,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEventHandler, FormEvent, useContext, useEffect, useState } from "react";
+import { ChangeEventHandler, FormEvent, useContext, useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
 import { Checkbox2 } from "../../src/components";
@@ -37,7 +37,13 @@ import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFo
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
-import { Huwelijk, HuwelijkService, IngeschrevenPersoon, IngeschrevenpersoonService } from "../../src/generated";
+import {
+  AssentService,
+  Huwelijk,
+  HuwelijkService,
+  IngeschrevenPersoon,
+  IngeschrevenpersoonService,
+} from "../../src/generated";
 import { getBsnFromJWT } from "../../src/services/getBsnFromJWT";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -56,6 +62,10 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
   const { query, locale = "nl", push } = useRouter();
 
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  const hasCalledHuwelijkPost = useRef(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
@@ -64,6 +74,44 @@ export default function MultistepForm1() {
   const { huwelijkId } = query;
 
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+
+  const getContactObject = () => {
+    let contactObject: any = {};
+
+    if (email) {
+      contactObject.emails = [
+        {
+          naam: email,
+          email: email,
+        },
+      ];
+    }
+
+    if (phoneNumber) {
+      contactObject.telefoonnummers = [
+        {
+          naam: phoneNumber,
+          telefoonnummer: phoneNumber,
+        },
+      ];
+    }
+
+    return contactObject;
+  };
+
+  const getResultsChecklist = () => {
+    return [
+      {
+        display: "Ik verklaar dat ik niet trouw met mijn neef, nicht, oom of tante.",
+        result: true,
+      },
+      {
+        display:
+          "Ik verklaar dat ik nu niet met iemand anders getrouwd ben (in Nederland of in een ander land). Ik heb nu ook geen geregistreerd partnerschap.",
+        result: true,
+      },
+    ];
+  };
 
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
@@ -120,24 +168,23 @@ export default function MultistepForm1() {
         locatie: "e1b2aa89-dcd8-4b77-96fc-d41501cbc57f", //marriageOptions?.location ?? "",
       })
         .then((res) => {
-          const _res = JSON.parse(res as string);
-
           setMarriageOptions({
             ...marriageOptions,
             huwelijk: {
-              id: _res._self.id,
-              firstPartnerName: `${_res?.partners[0]?.contact?.voornaam} ${_res?.partners[0]?.contact?.achternaam}`,
+              // @ts-ignore
+              id: res._self.id,
+              firstPartnerName: `${res?.partners[0]?.contact?.voornaam} ${res?.partners[0]?.contact?.achternaam}`,
               expiry: "FIXME: over 2 uur",
-              "ceremony-type": _res.ceremonie.upnLabel,
-              "ceremony-start": _res.moment ?? "",
-              "ceremony-end": _res.moment ? moment(_res.moment).add(15, "m").toDate().toString() : "",
+              "ceremony-type": res.ceremonie.upnLabel,
+              "ceremony-start": res.moment ?? "",
+              "ceremony-end": res.moment ? moment(res.moment).add(15, "m").toDate().toString() : "",
               "ceremony-location": "Locatie Stadskantoor",
               "ceremony-price-currency": "EUR",
-              "ceremony-price-amount": _res.kosten ? _res.kosten.replace("EUR ", "") : "-",
+              "ceremony-price-amount": res.kosten ? res.kosten.replace("EUR ", "") : "-",
             },
           });
 
-          if (!huwelijk) setHuwelijk(_res); // TODO: two are being created, this ensures its not overwritten
+          if (!huwelijk) setHuwelijk(res); // TODO: two are being created, this ensures its not overwritten
         })
         .finally(() => setIsLoading(false));
     };
@@ -151,7 +198,11 @@ export default function MultistepForm1() {
         .finally(() => setIsLoading(false));
     };
 
-    if (!huwelijkId) handleNewPersonLogin();
+    if (!huwelijkId && hasCalledHuwelijkPost.current === false) {
+      handleNewPersonLogin();
+      hasCalledHuwelijkPost.current = true;
+    }
+
     if (huwelijkId) handleSecondPersonLogin();
   }, [huwelijk, huwelijkId, marriageOptions, setMarriageOptions]);
 
@@ -305,11 +356,22 @@ export default function MultistepForm1() {
   const onContactDetailsSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!huwelijkId) {
-      push("/voorgenomen-huwelijk/partner");
-    } else {
-      setIsLoading(true);
+    setIsLoading(true);
 
+    if (!huwelijkId) {
+      AssentService.assentPatchItem(huwelijk?.partners[0]._self.id, {
+        requester: getBsnFromJWT(),
+        contact: {
+          subjectIdentificatie: {
+            inpBsn: getBsnFromJWT(),
+          },
+          ...getContactObject(),
+        },
+        results: getResultsChecklist(),
+      } as any).then(() => {
+        push("/voorgenomen-huwelijk/partner");
+      });
+    } else {
       HuwelijkService.huwelijkPatchItem(huwelijkId as string, {
         partners: [
           {
@@ -318,7 +380,9 @@ export default function MultistepForm1() {
               subjectIdentificatie: {
                 inpBsn: getBsnFromJWT(),
               },
+              ...getContactObject(),
             },
+            results: getResultsChecklist(),
           },
         ],
       }).then(() => {
@@ -388,7 +452,15 @@ export default function MultistepForm1() {
                           {t("form:tel")} <OptionalIndicator title={t("form:optional")} />
                         </FormLabel>
                       </p>
-                      <Textbox className="utrecht-form-field__input" id="tel" type="tel" autoComplete="tel" />
+                      <Textbox
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        className="utrecht-form-field__input"
+                        id="tel"
+                        type="tel"
+                        autoComplete="tel"
+                        required
+                      />
                     </FormField>
                     <FormField>
                       <p className="utrecht-form-field__label">
@@ -402,11 +474,14 @@ export default function MultistepForm1() {
                         De mail heeft een link om nog veranderingen door te geven.
                       </FormFieldDescription>
                       <Textbox
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="utrecht-form-field__input"
                         id="email"
                         type="email"
                         autoComplete="email"
                         aria-describedby="email-description"
+                        required
                       />
                     </FormField>
                   </dl>

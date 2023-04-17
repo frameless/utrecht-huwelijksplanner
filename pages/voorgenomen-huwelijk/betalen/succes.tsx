@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+
 import { UtrechtBadgeStatus } from "@utrecht/web-component-library-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -8,6 +10,7 @@ import Skeleton from "react-loading-skeleton";
 import {
   Alert,
   Aside,
+  Button,
   DataList,
   DataListActions,
   DataListItem,
@@ -19,8 +22,6 @@ import {
   Heading2,
   Heading3,
   HeadingGroup,
-  Link,
-  NumberValue,
   Page,
   PageContent,
   PageContentMain,
@@ -31,6 +32,7 @@ import {
   ProcessSteps,
   ReservationCard,
   Surface,
+  Textbox,
   TimeValue,
   URLValue,
 } from "../../../src/components";
@@ -43,7 +45,7 @@ import {
   HuwelijksplannerState,
   Invitee,
 } from "../../../src/data/huwelijksplanner-state";
-import { Huwelijk, HuwelijkService } from "../../../src/generated";
+import { Assent, AssentService, Huwelijk, HuwelijkService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -77,6 +79,18 @@ export default function HuwelijksplannerStep0() {
   const isValidMinWitnesses = (data: HuwelijksplannerState) => {
     // Return `true` for valid when every partner has reached the minimum amount of witnesses
     return data.witnesses.length >= data.minWitnessPerPartner * 2;
+  };
+
+  const handleHuwelijkAnnuleren = () => {
+    const confirmHuwelijkAnnuleren = confirm("Are you sure you want to cancel the ceremony?");
+
+    if (confirmHuwelijkAnnuleren) {
+      setIsLoading(true);
+
+      HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { status: Huwelijk.status.CANCELLED })
+        .then((res) => setHuwelijk(res))
+        .finally(() => setIsLoading(false));
+    }
   };
 
   const MarriageProcessSteps = ({ data }: { data: HuwelijksplannerState; locale: string }) => (
@@ -138,73 +152,114 @@ export default function HuwelijksplannerStep0() {
     />
   );
 
-  const PartnerDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => (
-    <DataList className="utrecht-data-list--grid">
-      <DataListItem>
-        <DataListKey>{t("form:name")}</DataListKey>
-        <DataListValue>{partner.name}</DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:tel")}</DataListKey>
-        <DataListValue>
-          <NumberValue>-</NumberValue>
-        </DataListValue>
-        <DataListActions>
-          <Link
-            href="/huwelijksplanner-edit#tel"
-            title={t("form:data-list-actions-edit-subject", { subject: t("form:tel") })}
-          >
-            {t("form:data-list-actions-edit")}
-          </Link>
-        </DataListActions>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:email")}</DataListKey>
-        <DataListValue>
-          <URLValue>-</URLValue>
-        </DataListValue>
-        <DataListActions>
-          <Link
-            href="/huwelijksplanner-edit#email"
-            title={t("form:data-list-actions-edit-subject", { subject: t("form:email") })}
-          >
-            {t("form:data-list-actions-edit")}
-          </Link>
-        </DataListActions>
-      </DataListItem>
-    </DataList>
-  );
+  const PartnerDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const WitnessDataList = ({ witness }: { witness: Invitee; locale: string }) => (
-    <DataList className="utrecht-data-list--grid">
-      <DataListItem>
-        <DataListKey>{t("form:name")}</DataListKey>
-        <DataListValue>{witness.name}</DataListValue>
-        <DataListActions>
-          <Link
-            href="/huwelijksplanner-witness-edit#name"
-            title={t("form:data-list-actions-edit-subject", { subject: t("form:name") })}
-          >
-            {t("form:data-list-actions-edit")}
-          </Link>
-        </DataListActions>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:email")}</DataListKey>
-        <DataListValue>
-          <URLValue>{witness.email}</URLValue>
-        </DataListValue>
-        <DataListActions>
-          <Link
-            href="/huwelijksplanner-witness-edit#email"
-            title={t("form:data-list-actions-edit-subject", { subject: t("form:email") })}
-          >
-            {t("form:data-list-actions-edit")}
-          </Link>
-        </DataListActions>
-      </DataListItem>
-    </DataList>
-  );
+    const [phoneNumber, setPhoneNumber] = useState<string | undefined>(partner.tel);
+    const [email, setEmail] = useState<string | undefined>(partner.email);
+
+    const handleUpdateEmail = () => {
+      setIsLoading(true);
+      AssentService.assentPatchItem(
+        partner.id as string,
+        { contact: { emails: [{ naam: email, email: email }] } } as any
+      ).finally(() => setIsLoading(false));
+    };
+
+    const handleUpdatePhoneNumber = () => {
+      setIsLoading(true);
+      AssentService.assentPatchItem(
+        partner.id as string,
+        { contact: { telefoonnummers: [{ naam: phoneNumber, telefoonnummer: phoneNumber }] } } as any
+      ).finally(() => setIsLoading(false));
+    };
+
+    return (
+      <DataList className="utrecht-data-list--grid">
+        <DataListItem>
+          <DataListKey>{t("form:name")}</DataListKey>
+          <DataListValue>{partner.name}</DataListValue>
+        </DataListItem>
+        <DataListItem>
+          <DataListKey>{t("form:tel")}</DataListKey>
+          <DataListValue>
+            <Textbox value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+          </DataListValue>
+          <DataListActions>
+            <Button disabled={isLoading || !phoneNumber} onClick={handleUpdatePhoneNumber}>
+              Update phone number
+            </Button>
+          </DataListActions>
+        </DataListItem>
+        <DataListItem>
+          <DataListKey>{t("form:email")}</DataListKey>
+          <DataListValue>
+            <Textbox value={email} onChange={(e) => setEmail(e.target.value)} />
+          </DataListValue>
+          <DataListActions>
+            <Button disabled={isLoading || !email} onClick={handleUpdateEmail}>
+              Update email
+            </Button>
+          </DataListActions>
+        </DataListItem>
+      </DataList>
+    );
+  };
+
+  const WitnessDataList = ({ witness }: { witness: Invitee; locale: string }) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [name, setName] = useState<string>(witness.name);
+    const [email, setEmail] = useState<string>(witness.email);
+
+    const handleNameChange = () => {
+      setIsLoading(true);
+
+      // @ts-ignore
+      AssentService.assentPatchItem(witness.id, {
+        contact: { voornaam: name },
+      } as Assent).finally(() => setIsLoading(false));
+    };
+
+    const handleEmailChange = () => {
+      setIsLoading(true);
+
+      // @ts-ignore
+      AssentService.assentPatchItem(witness.id, {
+        contact: {
+          emails: [{ naam: email, email: email }],
+        },
+      } as Assent).finally(() => setIsLoading(false));
+    };
+
+    return (
+      <DataList className="utrecht-data-list--grid">
+        <DataListItem>
+          <DataListKey>{t("form:name")}</DataListKey>
+          <DataListValue>
+            <Textbox value={name} onChange={(e) => setName(e.target.value)} />
+          </DataListValue>
+          <DataListActions>
+            <Button disabled={isLoading || !name} onClick={handleNameChange}>
+              Update name
+            </Button>
+          </DataListActions>
+        </DataListItem>
+        <DataListItem>
+          <DataListKey>{t("form:email")}</DataListKey>
+          <DataListValue>
+            <URLValue>
+              <Textbox value={email} onChange={(e) => setEmail(e.target.value)} />
+            </URLValue>
+          </DataListValue>
+          <DataListActions>
+            <Button disabled={isLoading || !email} onClick={handleEmailChange}>
+              Update email
+            </Button>
+          </DataListActions>
+        </DataListItem>
+      </DataList>
+    );
+  };
 
   return (
     <Surface>
@@ -223,6 +278,14 @@ export default function HuwelijksplannerStep0() {
 
               {huwelijk && (
                 <>
+                  {huwelijk.status === Huwelijk.status.CANCELLED && (
+                    <Alert type="error">
+                      <HeadingGroup>
+                        <Heading2>This ceremony has been cancelled.</Heading2>
+                      </HeadingGroup>
+                    </Alert>
+                  )}
+
                   <Alert type="ok">
                     <HeadingGroup>
                       <Heading2>Betaling ontvangen</Heading2>
@@ -249,14 +312,12 @@ export default function HuwelijksplannerStep0() {
                       <DataListItem>
                         <DataListKey>{t("huwelijksplanner:ceremony-type")}</DataListKey>
                         <DataListValue>{marriageOptions.huwelijk["ceremony-type"]}</DataListValue>
-                        {data.cancelable ? (
+                        {huwelijk.status !== Huwelijk.status.CANCELLED && (
                           <DataListActions>
-                            <Link href="#">
-                              {t("huwelijksplanner:cancel-ceremony-link", { context: "eenvoudig-huwelijk" })}
-                            </Link>
+                            <Button disabled={isLoading} onClick={handleHuwelijkAnnuleren}>
+                              {!isLoading ? "Cancel ceremony" : "Loading..."}
+                            </Button>
                           </DataListActions>
-                        ) : (
-                          ""
                         )}
                       </DataListItem>
                       <DataListItem>
@@ -285,7 +346,10 @@ export default function HuwelijksplannerStep0() {
                         <PartnerDataList
                           key={index}
                           partner={{
+                            id: partner._self.id,
                             name: `${partner?.embedded?.contact?.voornaam} ${partner?.embedded?.contact?.achternaam}`,
+                            tel: partner?.embedded?.contact?.embedded?.telefoonnummers[0]?.telefoonnummer,
+                            email: partner?.embedded?.contact?.embedded?.emails[0]?.email,
                           }}
                         />
                       ))}
@@ -299,7 +363,9 @@ export default function HuwelijksplannerStep0() {
                           key={index}
                           locale={locale}
                           witness={{
-                            name: getuige?.embedded?.contact?.embedded?.emails[0]?.naam,
+                            // @ts-ignore
+                            id: getuige?._self.id,
+                            name: getuige?.embedded?.contact?.embedded?.voornaam,
                             email: getuige?.embedded?.contact?.embedded?.emails[0]?.email,
                           }}
                         />
