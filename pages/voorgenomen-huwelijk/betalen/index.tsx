@@ -13,7 +13,6 @@ const Betalen: NextPage = () => {
 
   const [marriageOptions] = useContext(MarriageOptionsContext);
 
-
   const handleBetalenClick = () => {
     setIsLoading(true);
 
@@ -38,10 +37,9 @@ const Betalen: NextPage = () => {
       const json = JSON.parse(res);
 
       const path = new URL(json.redirectUrl).pathname;
-      push(path);
+
+      push(path.replace("api/", ""));
     });
-
-
   };
 
   if (isLoading) return <Skeleton height="200px" />;

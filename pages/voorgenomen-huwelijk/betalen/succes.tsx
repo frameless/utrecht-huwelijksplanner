@@ -365,7 +365,7 @@ export default function HuwelijksplannerStep0() {
                           witness={{
                             // @ts-ignore
                             id: getuige?._self.id,
-                            name: getuige?.embedded?.contact?.embedded?.voornaam,
+                            name: getuige?.embedded?.contact?.voornaam,
                             email: getuige?.embedded?.contact?.embedded?.emails[0]?.email,
                           }}
                         />
