@@ -1,137 +1,92 @@
-#non-existings links included
-#does each Anpassen link need a more specific name for testing purposes?
-
-Scenario: We willen de telefoonnummer van Partner 1 aanpassen
+@validate-flow 
+Abstract Scenario: We willen het "<veld>" van elke partner aanpassen
 Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
     En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "Telefoonnummer aanpassen Partner 1" na de naam van Partner 1 zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "persoonsgegevens/partner1" pagina gestuurd
-    En word ik op de input field met label "Telefoonnummer aanpassen" beland
+    En dat ik een link "Aanpassen" zie om het "<veld>" van partner "<partner>" aan te passen
+  Wanneer ik op de link "Aanpassen" klik
+  Dan word ik naar de "<pagina>" gestuurd
+    En focus ik op het "<veld>" input field met "<label>"
+  Voorbeelden: 
+    | veld           | partner | pagina                    | label                              |
+    | telefoonnummer | 1       | persoonsgegevens/partner1 | Telefoonnummer aanpassen Partner 1 |
+    | telefoonnummer | 2       | persoonsgegevens/partner2 | Telefoonnummer aanpassen Partner 2 |
+    | email          | 1       | persoonsgegevens/partner1 | Telefoonnummer aanpassen Partner 1 |
+    | email          | 2       | persoonsgegevens/partner2 | Telefoonnummer aanpassen Partner 2 |
 
-Scenario: We willen de email van Partner 1 aanpassen
+
+@validate-flow 
+Abstract Scenario: We willen het "<veld>" van elke partner controleren
+Gegeven dat ik op de "<pagina>" ben
+    En dat ik op het "<veld>" input field met "<label>" ben gefocust
+  Wanneer ik het "<veld>" met "<content>" invul 
+  Dan wordt het ingevulde "<veld>" gecontroleerd voor geldigheid
+  Voorbeelden: 
+    | veld           | partner | pagina                    | label                              | content        |
+    | telefoonnummer | 1       | persoonsgegevens/partner1 | Telefoonnummer aanpassen Partner 1 | 0612345678     |
+    | telefoonnummer | 2       | persoonsgegevens/partner2 | Telefoonnummer aanpassen Partner 2 | 0612345678     |
+    | email          | 1       | persoonsgegevens/partner1 | Telefoonnummer aanpassen Partner 1 | jan@gmail.com  |
+    | email          | 2       | persoonsgegevens/partner2 | Telefoonnummer aanpassen Partner 2 | jane@gmail.com |
+
+@validate-flow 
+Abstract Scenario: We willen terug naar het overzicht als we klaar met de aanpassing van de gegevens van "<partner>" zijn
+Gegeven dat ik op de "<pagina>" ben
+    En dat het "<veld>" veld met label "<label>" de waarde "<content>" heeft
+    En dat ik de link "Terug naar het huwelijksoverzicht" zie
+Wanneer ik op de "Terug naar het huwelijksoverzicht" link klik
+Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
+    En zie ik de "<content>" in het huwelijksoverzicht 
+  Voorbeelden: 
+    | veld           | partner | pagina                    | label                              | content        |
+    | telefoonnummer | 1       | persoonsgegevens/partner1 | Telefoonnummer aanpassen Partner 1 | 0612345678     |
+    | telefoonnummer | 2       | persoonsgegevens/partner2 | Telefoonnummer aanpassen Partner 2 | 0612345678     |
+    | email          | 1       | persoonsgegevens/partner1 | Telefoonnummer aanpassen Partner 1 | jan@gmail.com  |
+    | email          | 2       | persoonsgegevens/partner2 | Telefoonnummer aanpassen Partner 2 | jane@gmail.com |
+
+
+# --
+Abstract Scenario: We willen de naam van Getuige 1 aanpassen
 Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
     En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "E-mailadres aanpassen Partner 1" na de naam van Partner 1 zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "persoonsgegevens/partner1" pagina gestuurd
-    En word ik op de input field met label "E-mailadres aanpassen" beland
+    En dat ik een link "Aanpassen" zie om het "<veld>" van getuige "<getuige>" aan te passen
+Wanneer ik op de link "Aanpassen" klik
+Dan word ik naar de "voorgenomen-huwelijk/getuigen/aanpassen" pagina gestuurd
+    En focus ik op het "<veld>" input field met "<label>"
+  Voorbeelden: 
+  | veld       | getuige | label                                  |
+  | naam       | 1       | Telefoonnummer aanpassen Getuige 1     |
+  | email      | 1       | E-mailadres aanpassen Getuige 1        |
+  | naam       | 2       | Telefoonnummer aanpassen Getuige 2     |
+  | email      | 2       | E-mailadres aanpassen Getuige 2        |
+  | naam       | 3       | Telefoonnummer aanpassen Getuige 3     |
+  | email      | 3       | E-mailadres aanpassen Getuige 3        |
+  | naam       | 4       | Telefoonnummer aanpassen Getuige 4     |
+  | email      | 4       | E-mailadres aanpassen Getuige 4        |
 
-Scenario: We willen de telefoonnummer van Partner 2 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
-    En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "Telefoonnummer aanpassen Partner 2" na de naam van Partner 2 zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "persoonsgegevens/partner2" pagina gestuurd
-    En word ik op de input field met label "Telefoonnummer aanpassen" beland
-
-Scenario: We willen de email van Partner 2 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
-    En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "E-mailadres aanpassen Partner 2" na de naam van Partner 2 zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "persoonsgegevens/partner2" pagina gestuurd
-    En word ik op de input field met label "E-mailadres aanpassen" beland
-
-
-Scenario: We willen de naam van Getuige 1 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
-    En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "Naam aanpassen Getuige 1" zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "voorgenomen-huwelijk/getuigen/anpassen" pagina gestuurd
-    En word ik op de input field met label "Naam aanpassen Getuige 1" beland
-
-Scenario: We willen de email van Getuige 1 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
-    En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "E-mailadres aanpassen Getuige 1" zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "voorgenomen-huwelijk/getuigen/anpassen" pagina gestuurd
-    En word ik op de input field met label "E-mailadres aanpassen Getuige 1" beland
-
-Scenario: We willen de naam van Getuige 2 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
-    En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "Naam aanpassen Getuige 2" zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "voorgenomen-huwelijk/getuigen/anpassen" pagina gestuurd
-    En word ik op de input field met label "Naam aanpassen Getuige 2" beland
-
-Scenario: We willen de email van Getuige 2 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
-    En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "E-mailadres aanpassen Getuige 2" zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "voorgenomen-huwelijk/getuigen/anpassen" pagina gestuurd
-    En word ik op de input field met label "E-mailadres aanpassen Getuige 2" beland
-
-Scenario: We willen de naam van Getuige 3 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
-    En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "Naam aanpassen Getuige 3" zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "voorgenomen-huwelijk/getuigen/anpassen" pagina gestuurd
-    En word ik op de input field met label "Naam aanpassen Getuige 3" beland
-
-Scenario: We willen de email van Getuige 3 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
-    En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "E-mailadres aanpassen Getuige 3" zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "voorgenomen-huwelijk/getuigen/anpassen" pagina gestuurd
-    En word ik op de input field met label "E-mailadres aanpassen Getuige 3" beland
-
-Scenario: We willen de naam van Getuige 4 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
-    En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "Naam aanpassen Getuige 4" zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "voorgenomen-huwelijk/getuigen/anpassen" pagina gestuurd
-    En word ik op de input field met label "Naam aanpassen Getuige 4" beland
-
-Scenario: We willen de email van Getuige 4 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
-    En dat ik de heading "Betaling ontvangen" zie
-    En dat ik een link "Anpassen" met label "E-mailadres aanpassen Getuige 4" zie
-Wanneer ik op een van de "Anpassen" link klik
-Dan word ik naar de "voorgenomen-huwelijk/getuigen/anpassen" pagina gestuurd
-    En word ik op de input field met label "E-mailadres aanpassen Getuige 4" beland
-
-Scenario: We willen naar het overzicht zonder de gegevens aan te passen
+Scenario: We willen terug naar het overzicht zonder de gegevens aan te passen
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
     En dat ik de link "Terug naar het huwelijksoverzicht" zie
 Wanneer ik op de "Terug naar het huwelijksoverzicht" link klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
-###---
-Scenario: We willen de gegevens van Getuige 1 controleren
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de text input field met label "Naam aanpassen Getuige 1" de naam van Getuige 1 heb ingevuld 
-Wanneer ik in de type email input field met label "E-mailadres aanpassen Getuige 1" de email van Getuige 1 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
-
-Scenario: We willen de gegevens van Getuige 2 controleren
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de text input field met label "Naam aanpassen Getuige 2" de naam van Getuige 2 heb ingevuld 
-Wanneer ik in de type email input field met label "E-mailadres aanpassen Getuige 2" de email van Getuige 2 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
-
-Scenario: We willen de gegevens van Getuige 3 controleren
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de text input field met label "Naam aanpassen Getuige 3" de naam van Getuige 3 heb ingevuld 
-Wanneer ik in de type email input field met label "E-mailadres aanpassen Getuige 3" de email van Getuige 3 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
-
-Scenario: We willen de gegevens van Getuige 4 controleren
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de text input field met label "Naam aanpassen Getuige 4" de naam van Getuige 4 heb ingevuld 
-Wanneer ik in de type email input field met label "E-mailadres aanpassen Getuige 4" de email van Getuige 4 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
-
+@validate-flow 
+Abstract Scenario: We willen het "<veld>" van elke getuige controleren
+Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/aanpassen" ben
+    En dat ik het "<veld>" input field met label "<label>" heb ingevuld
+Wanneer ik het "<veld>" met "<content>" invul 
+Dan wordt het ingevulde "<veld>" gecontroleerd voor geldigheid
+Voorbeelden: 
+    | veld           | getuige | label                           | content        |
+    | naam           | 1       | Naam aanpassen Getuige 1        | Johan          |
+    | naam           | 2       | Naam aanpassen Getuige 2        | Django         |
+    | naam           | 3       | Naam aanpassen Getuige 1        | Hans           |
+    | naam           | 4       | Naam aanpassen Getuige 2        | Nies           |
+    | email          | 1       | E-mailadres aanpassen Getuige 3 | jan@gmail.com  |
+    | email          | 2       | E-mailadres aanpassen Getuige 4 | jane@gmail.com |
+    | email          | 3       | E-mailadres aanpassen Getuige 3 | jan@gmail.com  |
+    | email          | 4       | E-mailadres aanpassen Getuige 4 | jane@gmail.com |
 
 Scenario: We willen de aangepaste uitnodigingen naar de getuigen sturen
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
+Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/aanpassen" pagina ben
   En dat ik meer dan een set van text en email input fields heb ingevuld
 Wanneer ik op de "Verstuur uitnodiging" button klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd

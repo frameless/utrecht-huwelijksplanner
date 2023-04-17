@@ -1,5 +1,5 @@
 @validate-flow
-Scenario: We willen extras voor de huwelijk na het betaling toevoegen
+Scenario: We willen extras voor het huwelijk na het betaling toevoegen
 Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
     En dat ik de heading "Betaling ontvangen" zie
     En dat ik de link "Terug naar het huwelijksoverzicht" zie
@@ -14,12 +14,12 @@ Gegeven dat ik op de "extra-laat" pagina ben
 Dan zie ik de heading  "Kies je extra’s"
   En zie ik een "trouwboekjes" image
   En zie ik een type checkbox input field voor de indicatie dat wij een trouwboekje willen
-  En zie ik een vier type radio button input fields 
+  En zie ik vier type radio button input fields 
   En zie ik een "Deze wil ik hebben" button
 
 
 @validate-flow
-Scenario: We willen naar het overzicht zonder extras voor de huwelijk aan te passen
+Scenario: We willen naar het overzicht zonder extras voor het huwelijk aan te passen
 Gegeven dat ik op de "extra-laat" pagina ben
     En dat ik de link "Terug naar het huwelijksoverzicht" zie
 Wanneer ik op de "Terug naar het huwelijksoverzicht" link klik

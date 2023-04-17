@@ -1,6 +1,6 @@
 ##timeline 1 waarin je kan al de getuigendata in een keer aanpassen
 
-Scenario: We willen de getuigensgegevens voor de huwelijk wijzigen
+Scenario: We willen de getuigensgegevens voor het huwelijk wijzigen
 Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
     En dat ik de heading "Betaling ontvangen" zie
     En dat ik een link "Anpassen" in de getuigen sectie zie
@@ -53,7 +53,6 @@ Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 Scenario: We willen de aangepaste uitnodigingen naar de getuigen sturen
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  #En dat ik ten minste twee sets van text en email input fields heb ingevuld
   En dat ik ten minste een set van text en email input fields heb ingevuld
 Wanneer ik op de "Verstuur uitnodiging" button klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
@@ -64,15 +63,13 @@ Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 ##timeline 2 waarin je aanpast elk de getuigendata individuel
 #See also the gegevens-individueel-aanpassen-eenvoudig-huwelijk.feature
 
-Scenario: We willen de getuigensgegevens voor de huwelijk wijzigen
+Scenario: We willen de getuigensgegevens voor het huwelijk wijzigen
 Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
     En dat ik de heading "Betaling ontvangen" zie
     En dat ik een link "Anpassen" na elk getuigengegeven zie
 Wanneer ik op een van de "Anpassen" links klik
 Dan word ik naar de "voorgenomen-huwelijk/getuigen/anpassen" pagina gestuurd
     En word ik op de input field waarvan het accessibility label hetzelfde is met dat van de eerder geselecteerde "Anpassen" link beland
-    #add variables option
-    # add scenarios template add one scenario in which i land focus on label
 
 
 Scenario: We willen naar het overzicht zonder de getuigen aan te passen
@@ -112,7 +109,6 @@ Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 Scenario: We willen de aangepaste uitnodigingen naar de getuigen sturen
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  #En dat ik twee sets van text en email input fields heb ingevuld
   En dat ik ten minste een set van text en email input fields heb ingevuld
 Wanneer ik op de "Verstuur uitnodiging" button klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd

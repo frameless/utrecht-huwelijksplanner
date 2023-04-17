@@ -1,4 +1,4 @@
-Scenario: We willen de trouwdatum voor de huwelijk wijzigen
+Scenario: We willen de trouwdatum voor het huwelijk wijzigen
 Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
     En dat ik de heading "Betaling ontvangen" zie
     En dat ik de button "Trouwdatum aanpassen" zie
@@ -6,7 +6,7 @@ Wanneer ik op de "Trouwdatum aanpassen" button klik
 Dan word ik naar de "trouw-opties/huwelijk" pagina gestuurd
 
 
-Scenario: We willen de trouwdatum voor de huwelijk aanpassen
+Scenario: We willen de trouwdatum voor het huwelijk aanpassen
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
     En dat ik de heading "Wanneer en hoe" zie
     En dat ik de datum prikker "Trouwdatum" op de pagina zie
@@ -16,7 +16,7 @@ Wanneer ik op de "Trouwdatum" datum prikker klik
 Dan kan ik de beschikbare trouwdatums zien
 
 
-Scenario: We willen naar het overzicht zonder de trouwdatum voor de huwelijk aan te passen
+Scenario: We willen naar het overzicht zonder de trouwdatum voor het huwelijk aan te passen
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
     En dat ik de link "Terug naar het huwelijksoverzicht" zie
 Wanneer ik op de "Terug naar het huwelijksoverzicht" link klik
