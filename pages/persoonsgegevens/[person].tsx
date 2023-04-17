@@ -459,6 +459,7 @@ export default function MultistepForm1() {
                         id="tel"
                         type="tel"
                         autoComplete="tel"
+                        required
                       />
                     </FormField>
                     <FormField>
@@ -480,6 +481,7 @@ export default function MultistepForm1() {
                         type="email"
                         autoComplete="email"
                         aria-describedby="email-description"
+                        required
                       />
                     </FormField>
                   </dl>
