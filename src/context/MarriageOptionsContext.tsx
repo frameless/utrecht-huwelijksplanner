@@ -16,6 +16,8 @@ export interface MarriageOptionsProps {
   startTime?: string;
   endTime?: string;
   huwelijk: Huwelijk;
+  ambtenaar?: string;
+  ceremonyId?: string;
 }
 
 const myWindow = typeof window !== "undefined" ? window : undefined;
