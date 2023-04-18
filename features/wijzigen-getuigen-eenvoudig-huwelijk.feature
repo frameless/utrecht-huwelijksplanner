@@ -23,32 +23,18 @@ Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
 Wanneer ik op de "Terug naar het huwelijksoverzicht" link klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
-
-Scenario: We willen de gegevens van Getuige 1 aanpassen
+Abstract Scenario: We willen de gegevens van elke getuigen aanpassen
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de eerste text input field de naam van Getuige 1 heb ingevuld 
-Wanneer ik in de eerste type email input field de email van Getuige 1 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
+  En dat ik de "<nummer>" text input field van "<getuige>" heb met "<name>" ingevuld
+Wanneer ik de "<nummer>" email input field de email van "<getuige>" heb met "<email>" ingevuld 
+Dan wordt het ingevulde "<email>" gecontroleerd voor geldigheid 
+  Voorbeelden: 
+    | nummer        | getuige   | name                    | email               | 
+    | eerste        | Getuige 1 | Carrie Bradshaw         | carrie@gmail.com    | 
+    | tweede        | Getuige 2 | Samantha Jones          | samantha@gmail.com  | 
+    | derde         | Getuige 3 | Charlotte York          | charlotte@gmail.com | 
+    | vierde        | Getuige 4 | Miranda Hobbes          | miranda@gmail.com   | 
 
-Scenario: We willen de gegevens van Getuige 2 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de tweede text input field de naam van Getuige 2 heb ingevuld 
-Wanneer ik in de tweede type email input field de email van Getuige 2 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
-
-
-Scenario: We willen de gegevens van Getuige 3 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de derde text input field de naam van Getuige 3 heb ingevuld 
-Wanneer ik in de derde type email input field de email van Getuige 3 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
-
-
-Scenario: We willen de gegevens van Getuige 4 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de vierte text input field de naam van Getuige 4 heb ingevuld 
-Wanneer ik in de vierde type email input field de email van Getuige 4 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 
 Scenario: We willen de aangepaste uitnodigingen naar de getuigen sturen
@@ -62,7 +48,7 @@ Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
 ##timeline 2 waarin je aanpast elk de getuigendata individuel
 #See also the gegevens-individueel-aanpassen-eenvoudig-huwelijk.feature
-
+@validate-flow 
 Scenario: We willen de getuigensgegevens voor het huwelijk wijzigen
 Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
     En dat ik de heading "Betaling ontvangen" zie
@@ -71,42 +57,27 @@ Wanneer ik op een van de "Anpassen" links klik
 Dan word ik naar de "voorgenomen-huwelijk/getuigen/anpassen" pagina gestuurd
     En word ik op de input field waarvan het accessibility label hetzelfde is met dat van de eerder geselecteerde "Anpassen" link beland
 
-
+@validate-flow 
 Scenario: We willen naar het overzicht zonder de getuigen aan te passen
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
     En dat ik de link "Terug naar het huwelijksoverzicht" zie
 Wanneer ik op de "Terug naar het huwelijksoverzicht" link klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
-
-Scenario: We willen de gegevens van Getuige 1 aanpassen
+@validate-flow 
+Abstract Scenario: We willen de gegevens van elke getuigen aanpassen
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de eerste text input field de naam van Getuige 1 heb ingevuld 
-Wanneer ik in de eerste type email input field de email van Getuige 1 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
+  En dat ik de "<nummer>" text input field van "<getuige>" heb met "<name>" ingevuld
+Wanneer ik de "<nummer>" email input field de email van "<getuige>" heb met "<email>" ingevuld 
+Dan wordt het ingevulde "<email>" gecontroleerd voor geldigheid 
+  Voorbeelden: 
+    | nummer        | getuige   | name                    | email               | 
+    | eerste        | Getuige 1 | Carrie Bradshaw         | carrie@gmail.com    | 
+    | tweede        | Getuige 2 | Samantha Jones          | samantha@gmail.com  | 
+    | derde         | Getuige 3 | Charlotte York          | charlotte@gmail.com | 
+    | vierde        | Getuige 4 | Miranda Hobbes          | miranda@gmail.com   | 
 
-
-Scenario: We willen de gegevens van Getuige 2 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de tweede text input field de naam van Getuige 2 heb ingevuld 
-Wanneer ik in de tweede type email input field de email van Getuige 2 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
-
-
-Scenario: We willen de gegevens van Getuige 3 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de derde text input field de naam van Getuige 3 heb ingevuld 
-Wanneer ik in de derde type email input field de email van Getuige 3 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
-
-
-Scenario: We willen de gegevens van Getuige 4 aanpassen
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
-  En dat ik in de vierte text input field de naam van Getuige 4 heb ingevuld 
-Wanneer ik in de vierde type email input field de email van Getuige 4 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
-
-
+@validate-flow 
 Scenario: We willen de aangepaste uitnodigingen naar de getuigen sturen
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/anpassen" pagina ben
   En dat ik ten minste een set van text en email input fields heb ingevuld

@@ -11,8 +11,7 @@ Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
     En dat ik de heading "Wanneer en hoe" zie
     En dat ik de datum prikker "Trouwdatum" op de pagina zie
     En dat ik de disabled button "Ja, dit wil ik!" zie
-    En dat ik de link "Terug naar het huwelijksoverzicht"
-Wanneer ik op de "Trouwdatum" datum prikker klik
+    En dat ik de link "Terug naar het huwelijksoverzicht" zie
 Dan kan ik de beschikbare trouwdatums zien
 
 
@@ -26,7 +25,6 @@ Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 Scenario: We willen de trouwdatum aanpassen door op de datum prikker te klikken
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
   En dat er is een "Trouwdatum" datum prikker op de pagina
-  En dat ik heb de datum prikker geopend
 Wanneer ik een beschikbare dag selecteer
 Dan wordt de datum op de datum prikker gezet
   En kan ik de beschikbare tijdsloten radio button opties voor de geselecteerde datum zien
@@ -35,7 +33,6 @@ Dan wordt de datum op de datum prikker gezet
 Scenario: We kunnen een niet beschikbare dag niet selecteren als aanpassing
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
   En dat er is een "Trouwdatum" datum prikker op de pagina
-  En dat ik heb de datum prikker geopend
 Wanneer ik probeer een niet beschikbare dag te selecteren
 Dan zie ik dat ik dat dag niet selecteren kan
 

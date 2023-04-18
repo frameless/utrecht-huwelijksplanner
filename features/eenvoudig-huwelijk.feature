@@ -25,10 +25,10 @@ Dan zie ik de heading "Wanneer en hoe"
   En kan ik een "Ja, dit wil ik!" button zien
 
 
-Scenario: Ik wil zien op welk datum ik kan trouwen door op de datum prikker te klikken
-Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-Wanneer ik op de "Trouwdatum" datum prikker klik
-Dan kan ik de beschikbare trouwdatums zien
+# Scenario: Ik wil zien op welk datum ik kan trouwen door op de datum prikker te klikken
+# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
+# Wanneer ik op de "Trouwdatum" datum prikker klik
+# Dan kan ik de beschikbare trouwdatums zien
 
 
 # Scenario: Ik wil zien op welk datum ik kan trouwen door een datum in te vullen
@@ -42,7 +42,7 @@ Dan kan ik de beschikbare trouwdatums zien
 Scenario: Ik wil een trouwdatum selecteren door op de datum prikker te klikken
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
   En dat er is een "Trouwdatum" datum prikker op de pagina
-  En dat ik heb de datum prikker geopend
+  En dat ik de beschikbare trouwdatums kan zien
 Wanneer ik een beschikbare dag selecteer
 Dan wordt de datum op de datum prikker gezet
   En kan ik de beschikbare tijdsloten radio button opties voor de geselecteerde datum zien
@@ -51,7 +51,6 @@ Dan wordt de datum op de datum prikker gezet
 Scenario: Ik kan een niet beschikbare dag niet selecteren
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
   En dat er is een "Trouwdatum" datum prikker op de pagina
-  En dat ik heb de datum prikker geopend
 Wanneer ik probeer een niet beschikbare dag te selecteren
 Dan zie ik dat ik dat dag niet selecteren kan
 
@@ -59,14 +58,12 @@ Dan zie ik dat ik dat dag niet selecteren kan
 Scenario: Ik wil in over een jaar trouwen
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
   En dat er is een "Trouwdatum" datum prikker op de pagina
-  En dat ik heb de datum prikker geopend
 Wanneer ik probeer een datum over een jaar te selecteren
 Dan krijg ik een melding om een datum maximaal tussen een jaar te selecteren
 
 Scenario: Ik wil in binnen 3 weken trouwen
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
   En dat er is een "Trouwdatum" datum prikker op de pagina
-  En dat ik heb de datum prikker geopend
 Wanneer ik probeer een datum binnen 3 weken van te voren te selecteren
 Dan krijg ik een melding om een datum minimaal 3 weken van te voren te selecteren
 

@@ -16,5 +16,5 @@ Gegeven dat het trouwdatum binnen de komende 3 werkdagen zal zijn
 Dan krijg Partner 1 een email bevestiging dat de bruiloft is geannuleerd omdat er niet op tijd genoeg getuigen waren aangegeven
     En krijg Partner 2 een email bevestiging dat de bruiloft is geannuleerd omdat er niet op tijd genoeg getuigen waren aangegeven
 
-#adding witnesses before the time limit after getting an email reminder
+
 

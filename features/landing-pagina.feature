@@ -18,8 +18,3 @@ Wanneer ik op de "Start" link klik
 Dan word ik naar de "/trouw-opties" pagina gestuurd 
     En ben ik op stap "1"
 
-#meer informatie aside - zou hier een link naar hoe je krijg een digID inbegrepen zijn?
-
-#ol van steps heeft verplicht en niet verplicht steps, dit is een beetje onduidelijk. "Wat heb je nodig", "*" kan later worden ingevuld.
-
-# "Let op:..." <- naar de volgende lijn zetten
