@@ -74,7 +74,7 @@ const BlogPost: NextPage = () => {
             name: ceremony.upnLabel,
             id: ceremony._self.id,
             locationId: ceremony?.embedded?.gerelateerdeProducten[0]?.id,
-            ambtenaarId: ceremony?.embedded?.gerelateerdeProducten[1]?.id,
+            ambtenaarId: ceremony?.embedded?.gerelateerdeProducten[0]?.embedded?.gerelateerdeProducten[0]?.id,
           }))
         );
       })
