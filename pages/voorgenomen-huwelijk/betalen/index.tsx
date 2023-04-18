@@ -2,7 +2,6 @@ import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
-import Skeleton from "react-loading-skeleton";
 import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
 import { MollieService } from "../../../src/generated";
 
@@ -38,11 +37,11 @@ const Betalen: NextPage = () => {
 
       const path = new URL(json.redirectUrl).pathname;
 
-      push(path.replace("api/", ""));
+      push(`${path}?paymentId=${json.paymentId}`);
     });
   };
 
-  if (isLoading) return <Skeleton height="200px" />;
+  if (isLoading) return <>Redirecting to payment provider...</>;
 
   return (
     <Image
