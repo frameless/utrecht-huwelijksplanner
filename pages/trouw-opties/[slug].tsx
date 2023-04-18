@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { format } from "date-fns";
 import { NextPage } from "next";
 import Head from "next/head";
@@ -56,7 +55,9 @@ const BlogPost: NextPage = () => {
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [ceremonyTypes, setCeremonyTypes] = useState<{ name: string; id: string, locationId: string, ambtenaarId: string }[]>([]);
+  const [ceremonyTypes, setCeremonyTypes] = useState<
+    { name: string; id: string; locationId: string; ambtenaarId: string }[]
+  >([]);
 
   const [availableSlots, setAvailableSlots] = useState<[]>([]);
 
@@ -102,7 +103,13 @@ const BlogPost: NextPage = () => {
     setSelectedDate(newDate);
   };
 
-  const onChangeDateHandler = (ceremonyId: string, location: string, ambtenaar: string, startTime: string, endTime: string) => {
+  const onChangeDateHandler = (
+    ceremonyId: string,
+    location: string,
+    ambtenaar: string,
+    startTime: string,
+    endTime: string
+  ) => {
     setSelectedCeremony(ceremonyId);
     setSelectedAmbtenaar(ambtenaar);
     setSelectedLocation(location);
@@ -191,12 +198,18 @@ const BlogPost: NextPage = () => {
                                 name="event"
                                 value={slot.id}
                                 required
-                                onChange={() => onChangeDateHandler(ceremonyType.id, ceremonyType.locationId, ceremonyType.ambtenaarId, slot.start, slot.stop)}
+                                onChange={() =>
+                                  onChangeDateHandler(
+                                    ceremonyType.id,
+                                    ceremonyType.locationId,
+                                    ceremonyType.ambtenaarId,
+                                    slot.start,
+                                    slot.stop
+                                  )
+                                }
                               />
                               <FormLabel htmlFor={slot.id} type="radio">
-                                <span aria-label="negen uur tot tien over negen">
-                                  {`${slot.start} - ${slot.stop}`}
-                                </span>
+                                <span aria-label="negen uur tot tien over negen">{`${slot.start} - ${slot.stop}`}</span>
                               </FormLabel>
                             </FormField>
                           ))}
