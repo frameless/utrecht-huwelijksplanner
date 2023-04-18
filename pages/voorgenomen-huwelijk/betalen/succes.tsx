@@ -37,10 +37,7 @@ import {
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
-import {
-  HuwelijksplannerPartner,
-  Invitee,
-} from "../../../src/data/huwelijksplanner-state";
+import { HuwelijksplannerPartner, Invitee } from "../../../src/data/huwelijksplanner-state";
 import { Assent, AssentService, Huwelijk, HuwelijkService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -314,7 +311,9 @@ export default function HuwelijksplannerStep0() {
                   <section>
                     <Heading2>Nog te doen</Heading2>
                     <ul>
-                      {todos.map((todo, idx) => (<li key={idx}>{todo.display}</li>))}
+                      {todos.map((todo, idx) => (
+                        <li key={idx}>{todo.display}</li>
+                      ))}
                     </ul>
                     {/* <MarriageProcessSteps data={data} locale={locale} /> */}
                   </section>
