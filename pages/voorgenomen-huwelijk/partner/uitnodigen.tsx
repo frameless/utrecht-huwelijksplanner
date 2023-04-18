@@ -14,12 +14,18 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FormEvent } from "react";
+import { FormEvent, useContext,  useState } from "react";
 import { ButtonGroup, ButtonLink, PageContentMain, PartnerInvitation } from "../../../src/components";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
-import { exampleState } from "../../../src/data/huwelijksplanner-state";
+import { HuwelijkService } from "../../../src/generated";
+import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
+
+type contactType = {
+  text?: string;
+  email?: string;
+};
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -29,12 +35,26 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
-  const data = { ...exampleState };
   const { locale, push } = useRouter();
+  const [contact, setContact] = useState<contactType | null>();
+  const [marriageOptions] = useContext(MarriageOptionsContext);
+
 
   const onPartnerInvitationSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    push("/voorgenomen-huwelijk/partner/succes");
+
+    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id as string, {
+      partners: [
+        {
+          contact: {
+            voornaam: contact?.text,
+            emails: [{ name: contact?.email, email: contact?.email }],
+          },
+        },
+      ],
+    }).then(() => {
+      push("/voorgenomen-huwelijk/getuigen");
+    });
   };
 
   return (
@@ -69,12 +89,13 @@ export default function MultistepForm1() {
                 <PartnerInvitation
                   title="Nodig je partner uit"
                   body="Je kunt nu je partner uitnodigen om ook in te loggen met DigID. Zo bevestigt je partner dat jullie het huwelijk willen regelen."
+                  onChange={(e) => setContact({ ...contact, [e.target.type]: e.target.value })}
                   partnerName={{
-                    value: (data.partnerInvitation && data.partnerInvitation["name"]) ?? "",
+                    value: "",
                     label: t("form:name"),
                   }}
                   partnerEmail={{
-                    value: (data.partnerInvitation && data.partnerInvitation["email"]) ?? "",
+                    value: "",
                     label: t("form:email"),
                   }}
                 />
