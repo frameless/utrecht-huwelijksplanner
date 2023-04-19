@@ -76,7 +76,7 @@ export default function MultistepForm1() {
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   const getContactObject = () => {
-    let contactObject: any = {};
+    const contactObject: any = {};
 
     if (email) {
       contactObject.emails = [
