@@ -1,13 +1,8 @@
-import type { Assent } from '../../src/generated/openapi/Overige-Objecten';
-import type { Accomodation } from '../../src/generated/openapi/Overige-Objecten';
-import type { SDG as Product } from '../../src/generated/openapi/Overige-Objecten';
-import type { huwelijk as Huwelijk } from '../../src/generated/openapi/trouwservice';
-import type { Availability } from '../generated/openapi/Agenda-Service';
-import type { Klant } from '../generated/openapi/klanten';
+import { Accommodation, Assent, Availability, Huwelijk, Klant, SDGProduct } from '../generated';
 
 export interface HuwelijksplannerInterface {
-  getProducten(): Promise<Product[]>;
-  getAccommodations(): Promise<Accomodation[]>;
+  getProducten(): Promise<SDGProduct[]>;
+  getAccommodations(): Promise<Accommodation[]>;
   getAssents(): Promise<Assent[]>;
   deleteAssent(_data: Assent): any;
   putAssent(_data: Assent): any;

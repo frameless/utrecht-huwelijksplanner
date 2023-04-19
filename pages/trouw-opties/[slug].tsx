@@ -33,8 +33,8 @@ import { RadioButton2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
-import { Availability } from "../../src/generated/openapi/Agenda-Service";
-import { HuwelijksplannerAPI } from "../../src/openapi/index";
+import { Availability } from "../../src/generated";
+import { HuwelijksplannerAPI } from "../../src/openapi";
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common", "huwelijksplanner-step-2"])),
