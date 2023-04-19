@@ -42,11 +42,14 @@
         "eslint-config-prettier",
         "./.eslintrc.js.json",
         "./.eslintrc.react.json",
-        "@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended"
       ],
       "files": ["*.ts", "*.tsx"],
       "parser": "@typescript-eslint/parser",
-      "plugins": ["@typescript-eslint", "import", "jest"]
+      "plugins": ["import", "jest"],
+      "rules": {
+        "@typescript-eslint/ban-ts-comment": ["warn"]
+      }
     }
   ]
 }
