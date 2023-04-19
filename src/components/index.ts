@@ -11,7 +11,6 @@ export * from '@gemeente-denhaag/process-steps';
 // Components for this project:
 export { Address } from './Address';
 export { Aside } from './Aside';
-export { BreadcrumbNav, BreadcrumbNavLink } from './BreadcrumbNav';
 export { ButtonGroup } from './ButtonGroup';
 export { Checkbox2 } from './Checkbox2';
 export { DataNoTranslate } from './DataNoTranslate';
