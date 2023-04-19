@@ -36,4 +36,6 @@ Configure the following environment variables to connect with the API:
 ```text
 NEXT_PUBLIC_API_URL=https://api.huwelijksplanner.online/api
 NEXT_PUBLIC_API_TOKEN=...
+NEXT_PUBLIC_MATOMO_URL=https://stats.utrecht.nl/analytics/
+NEXT_PUBLIC_MATOMO_SITE_ID=...
 ```
