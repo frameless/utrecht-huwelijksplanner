@@ -49,9 +49,9 @@ export default function HuwelijksplannerStep0() {
             <PageContentMain>
               <form>
                 <Heading1>{t("huwelijksplanner-step-0:heading-1")}</Heading1>
-                <Paragraph lead>
-                  Plan een datum en tijd. En doe een officiële melding bij de gemeente. <Strong>Let op:</Strong> hou je
-                  DigiD bij de hand.
+                <Paragraph lead>Plan een datum en tijd. En doe een officiële melding bij de gemeente.</Paragraph>
+                <Paragraph>
+                  <Strong>Let op:</Strong> hou je DigiD bij de hand.
                 </Paragraph>
                 <section>
                   <Heading2>Welke stappen kun je verwachten?</Heading2>
