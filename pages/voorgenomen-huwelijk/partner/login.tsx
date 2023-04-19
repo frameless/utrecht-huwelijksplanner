@@ -1,7 +1,10 @@
 import { UtrechtDigidButton, UtrechtIconArrow } from "@utrecht/web-component-library-react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import {
   Address,
   Button,
@@ -18,11 +21,8 @@ import {
   URLValue,
   UtrechtLogo,
 } from "../../../src/components";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { Assent, AssentService } from "../../../src/generated";
 import { isAuthenticated } from "../../../src/services/authentication";
-import Skeleton from "react-loading-skeleton";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {

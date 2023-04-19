@@ -19,8 +19,8 @@ import { ButtonGroup, ButtonLink, PageContentMain, PartnerInvitation } from "../
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
-import { HuwelijkService } from "../../../src/generated";
 import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
+import { HuwelijkService } from "../../../src/generated";
 
 type contactType = {
   text?: string;
