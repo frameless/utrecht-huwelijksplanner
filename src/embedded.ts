@@ -1,6 +1,6 @@
-const assign = require('lodash.assign');
-const cloneDeepWith = require('lodash.clonedeepwith');
-const isPlainObject = require('lodash.isplainobject');
+import assign from 'lodash.assign';
+import cloneDeepWith from 'lodash.clonedeepwith';
+import isPlainObject from 'lodash.isplainobject';
 
 type EmbeddedData = {
   embedded?: {
