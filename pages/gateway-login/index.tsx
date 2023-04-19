@@ -11,7 +11,7 @@ const GatewayLogin: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const { push, query } = useRouter();
-  const { redirectUrl } = query;
+  const { redirectUrl, assentId } = query;
 
   const { register, handleSubmit } = useForm();
 
@@ -30,7 +30,11 @@ const GatewayLogin: NextPage = () => {
       .then((res: any) => {
         authenticate(res.jwtToken);
 
-        push(redirectUrl as string);
+        if (assentId) {
+          push(`${redirectUrl}&assentId=${assentId}` as string);
+        } else {
+          push(redirectUrl as string);
+        }
 
         setIsLoading(false);
       })

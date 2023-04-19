@@ -14,7 +14,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FormEvent, useContext,  useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { ButtonGroup, ButtonLink, PageContentMain, PartnerInvitation } from "../../../src/components";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
@@ -38,7 +38,6 @@ export default function MultistepForm1() {
   const { locale, push } = useRouter();
   const [contact, setContact] = useState<contactType | null>();
   const [marriageOptions] = useContext(MarriageOptionsContext);
-
 
   const onPartnerInvitationSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
