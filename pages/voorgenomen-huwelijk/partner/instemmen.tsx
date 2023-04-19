@@ -27,7 +27,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEventHandler, useContext, useEffect, useRef, useState } from "react";
+import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Aside, PageContentMain } from "../../../src/components";
 import { Checkbox2 } from "../../../src/components";
@@ -44,8 +44,8 @@ import {
   IngeschrevenPersoon,
   IngeschrevenpersoonService,
 } from "../../../src/generated";
-import { getBsnFromJWT } from "../../../src/services/getBsnFromJWT";
 import { isAuthenticated, unauthenticate } from "../../../src/services/authentication";
+import { getBsnFromJWT } from "../../../src/services/getBsnFromJWT";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -67,7 +67,7 @@ export default function MultistepForm1() {
   const [ingeschrevenPersoon, setIngeschrevenPersoon] = useState<IngeschrevenPersoon | null>(null);
   const [assent, setAssent] = useState<Assent | null>(null);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
-
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
   const { huwelijkId, assentId } = query;
 
   const handleResponseSubmit = (response: AssentNamespace.status) => {
@@ -110,7 +110,6 @@ export default function MultistepForm1() {
     return <>Did not receive a "assentId" param.</>;
   }
 
-  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
@@ -136,7 +135,7 @@ export default function MultistepForm1() {
       undefined,
       undefined,
       getBsnFromJWT() // passing { burgerservicenummer: "bsn" } breaks the call
-    ).then((res: any) => {
+    ).then((res) => {
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
@@ -167,7 +166,7 @@ export default function MultistepForm1() {
     };
 
     if (huwelijkId) handleSecondPersonLogin();
-  }, [huwelijk, huwelijkId, marriageOptions, setMarriageOptions]);
+  }, [huwelijk, huwelijkId, assent, marriageOptions, setMarriageOptions]);
 
   const onDeclarationCheckboxChange = (event: any) => {
     setDeclarationCheckboxData({ ...declarationCheckboxData, [event.target.name]: event.target.checked });
