@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren } from "react";
 
-export interface PageContentMainProps extends HTMLAttributes<HTMLElement> {}
+export type PageContentMainProps = HTMLAttributes<HTMLElement>;
 
 export const PageContentMain = forwardRef(
   ({ children, ...restProps }: PropsWithChildren<PageContentMainProps>, ref: ForwardedRef<HTMLElement>) => (

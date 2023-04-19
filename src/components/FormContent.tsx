@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, HTMLAttributes, PropsWithChildren } from "react";
 
-export interface FormContentProps extends HTMLAttributes<HTMLElement> {}
+export type FormContentProps = HTMLAttributes<HTMLElement>;
 
 export const FormContent = forwardRef(
   ({ children, ...restProps }: PropsWithChildren<FormContentProps>, ref: ForwardedRef<HTMLFormElement>) => (

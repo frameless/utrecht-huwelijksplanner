@@ -52,7 +52,7 @@ export const ValueCurrency = forwardRef(
   ) => {
     const number = typeof amount === "string" ? parseFloat(amount) : amount;
     const labelFormatted = formatLabel(locale, currency, number);
-    let visuallyFormatted = formatVisually(locale, currency, number);
+    const visuallyFormatted = formatVisually(locale, currency, number);
 
     return (
       <data
