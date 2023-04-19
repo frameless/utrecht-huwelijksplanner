@@ -40,3 +40,7 @@ src/generated/
 /public/favicon.ico
 playwright-report/
 .cache/
+
+# ide files
+.idea/
+.vscode/
