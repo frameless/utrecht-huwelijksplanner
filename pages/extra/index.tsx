@@ -25,7 +25,6 @@ import { Checkbox2, RadioButton2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
-import { exampleState } from "../../src/data/huwelijksplanner-state";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -35,7 +34,6 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
-  const data = { ...exampleState };
   const { locale, push } = useRouter();
 
   const onMarriageCertificateKindSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -63,11 +61,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>Stap 3 — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {data["reservation"] ? (
-                  <ReservationCard reservation={data["reservation"]} locale={locale || "en"} />
-                ) : (
-                  ""
-                )}
+                <ReservationCard locale={locale || "en"} />
                 <section>
                   <Heading2>Kies je extra’s</Heading2>
                   <Paragraph>

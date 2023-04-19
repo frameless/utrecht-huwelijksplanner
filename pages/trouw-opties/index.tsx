@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import {
   Aside,
   Button,
@@ -25,6 +25,9 @@ import {
 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
+import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import { RegistrationType } from "../../src/data/huwelijksplanner-state";
+import { SdgproductService } from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -34,16 +37,31 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-1"]);
-  const { push } = useRouter();
-  const [weddingOptions, setWeddingOptions] = useState<string | undefined>();
+  const { replace } = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [weddingOptions, setWeddingOptions] = useState<RegistrationType | undefined>();
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   const onWeddingOptionsSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    push(`/trouw-opties/${weddingOptions}`);
+
+    setIsLoading(true);
+
+    SdgproductService.sdgproductGetCollection(undefined, undefined, undefined, weddingOptions)
+      .then((res) => {
+        // @ts-ignore
+        setMarriageOptions({ ...marriageOptions, type: res.results[0].id });
+        replace(`/trouw-opties/${weddingOptions}`);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const onWeddingOptionsClick = (event: any) => {
     setWeddingOptions(event.target.value);
+  };
+
+  const back = () => {
+    replace("/trouw-opties/");
   };
 
   return (
@@ -62,7 +80,7 @@ export default function MultistepForm1() {
             </PageHeader>
             <PageContent>
               <ButtonGroup>
-                <ButtonLink href="/" appearance="subtle-button">
+                <ButtonLink onClick={back} appearance="subtle-button">
                   ← Terug
                 </ButtonLink>
               </ButtonGroup>
@@ -80,8 +98,10 @@ export default function MultistepForm1() {
                     value="huwelijk"
                     appearance="primary-action-button"
                     onClick={onWeddingOptionsClick}
+                    disabled={isLoading}
                   >
-                    Trouwen plannen <UtrechtIconArrow />
+                    {!isLoading ? "Trouwen plannen" : "Loading..."}
+                    <UtrechtIconArrow />
                   </Button>
                   <Heading2>Wij willen een geregistreerd partnerschap</Heading2>
                   <Button
@@ -90,8 +110,10 @@ export default function MultistepForm1() {
                     value="geregistreerd-partnerschap"
                     appearance="primary-action-button"
                     onClick={onWeddingOptionsClick}
+                    disabled={isLoading}
                   >
-                    Geregistreerd partnerschap plannen
+                    {!isLoading ? "Geregistreerd partnerschap plannen" : "Loading..."}
+
                     <UtrechtIconArrow />
                   </Button>
                 </form>

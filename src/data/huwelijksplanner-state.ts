@@ -174,9 +174,9 @@ export interface TODO {
   orderProductEndDate?: string;
 }
 
-export interface HuwelijksplannerState extends TODO {}
+export type HuwelijksplannerState = TODO;
 
-export interface HuwelijksplannerInput extends Partial<TODO> {}
+export type HuwelijksplannerInput = Partial<TODO>;
 
 export const initialState: HuwelijksplannerState = {
   partners: [],
@@ -359,6 +359,145 @@ export const exampleEventsFlitsBalieHuwelijk = [
     location: 'Stadskantoor',
     startDateTime: '2021-04-30T10:00Z',
     endDateTime: '2021-04-30T10:15Z',
+  },
+
+  {
+    id: '1fe9bdfa-ced5-11ed-afa1-0242ac120002    ',
+    location: 'Stadskantoor',
+    startDateTime: '2023-03-30T10:00Z',
+    endDateTime: '2023-03-30T10:15Z',
+  },
+  {
+    id: '1fe9c368-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-03-30T11:00Z',
+    endDateTime: '2023-03-30T11:15Z',
+  },
+  {
+    id: '1fe9c57a-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-03-31T13:00Z',
+    endDateTime: '2023-03-31T13:15Z',
+  },
+  {
+    id: '1fe9c6d8-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-01T07:15Z',
+    endDateTime: '2023-04-01T07:30Z',
+  },
+  {
+    id: '1fe9c87c-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-03T10:00Z',
+    endDateTime: '2023-04-03T10:15Z',
+  },
+  {
+    id: '1fe9ca0c-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-01T11:30Z',
+    endDateTime: '2023-04-01T11:45Z',
+  },
+  {
+    id: '1fe9cb38-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-02T10:45Z',
+    endDateTime: '2023-04-02T11:00Z',
+  },
+  {
+    id: '1fe9cc6e-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-03T10:00Z',
+    endDateTime: '2023-04-03T10:15Z',
+  },
+  {
+    id: '1fe9d088-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-03T09:00Z',
+    endDateTime: '2023-04-03T09:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-05T14:15Z',
+    endDateTime: '2023-04-05T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-05T10:00Z',
+    endDateTime: '2023-04-05T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-06T14:15Z',
+    endDateTime: '2023-04-06T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-06T10:00Z',
+    endDateTime: '2023-04-06T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-07T14:15Z',
+    endDateTime: '2023-04-07T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-07T10:00Z',
+    endDateTime: '2023-04-07T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-08T14:15Z',
+    endDateTime: '2023-04-08T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-08T10:00Z',
+    endDateTime: '2023-04-08T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-09T14:15Z',
+    endDateTime: '2023-04-09T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-09T10:00Z',
+    endDateTime: '2023-04-09T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-10T14:15Z',
+    endDateTime: '2023-04-10T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-10T10:00Z',
+    endDateTime: '2023-04-10T10:15Z',
+  },
+  {
+    id: '1fe9d2fe-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-11T14:15Z',
+    endDateTime: '2023-04-11T14:30Z',
+  },
+  {
+    id: '1fe9d448-ced5-11ed-afa1-0242ac120002',
+    location: 'Stadskantoor',
+    startDateTime: '2023-04-11T10:00Z',
+    endDateTime: '2023-04-11T10:15Z',
   },
 ];
 

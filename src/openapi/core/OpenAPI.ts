@@ -18,6 +18,8 @@ export type OpenAPIConfig = {
   ENCODE_PATH?: (path: string) => string;
 };
 
+const myWindow = typeof window !== 'undefined' ? window : undefined;
+
 export const OpenAPI: OpenAPIConfig = {
   BASE: process.env.NEXT_PUBLIC_API_URL ?? '',
   VERSION: '1.0',
@@ -26,8 +28,5 @@ export const OpenAPI: OpenAPIConfig = {
   TOKEN: undefined,
   USERNAME: undefined,
   PASSWORD: undefined,
-  HEADERS: {
-    Authorization: process.env.NEXT_PUBLIC_API_TOKEN ?? '',
-  },
   ENCODE_PATH: undefined,
 };

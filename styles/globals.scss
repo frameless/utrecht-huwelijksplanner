@@ -9,6 +9,9 @@
 @import "./src/components/FormContent.scss";
 @import "./src/components/HeadingGroup.scss";
 @import "./src/components/PageContentMain.scss";
+@import "./pages/gateway-login/GatewayLogin.scss";
+
+@import "react-loading-skeleton/dist/skeleton.css";
 
 .utrecht-form-fieldset {
   --utrecht-form-fieldset-margin-block-start: var(--utrecht-space-block-sm) !important;

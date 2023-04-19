@@ -24,17 +24,28 @@ import {
   Surface,
   Textbox,
 } from "@utrecht/component-library-react";
+import moment from "moment";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEventHandler, FormEvent, useState } from "react";
+import { ChangeEventHandler, FormEvent, useContext, useEffect, useRef, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
 import { Checkbox2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
-import { exampleState, HuwelijksplannerPartner } from "../../src/data/huwelijksplanner-state";
+import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import {
+  AssentService,
+  Huwelijk,
+  HuwelijkService,
+  IngeschrevenPersoon,
+  IngeschrevenpersoonService,
+} from "../../src/generated";
+import { getBsnFromJWT } from "../../src/services/getBsnFromJWT";
+
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common", "huwelijksplanner-step-4", "form"])),
@@ -42,143 +53,341 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 });
 
 export default function MultistepForm1() {
-  const [declarationCheckboxData, setDeclarationCheckboxData] = useState<any>();
+  const [declarationCheckboxData, setDeclarationCheckboxData] = useState<any>({
+    "correct-information-and-complete": false,
+    "not-marrying-relative": false,
+    unmarried: false,
+  });
+  const [declarationCheckboxChecked, setDeclarationCheckboxChecked] = useState<boolean>(false);
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
-  const data = { ...exampleState };
   const { query, locale = "nl", push } = useRouter();
+
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  const hasCalledHuwelijkPost = useRef(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
+  const [ingeschrevenPersoon, setIngeschrevenPersoon] = useState<IngeschrevenPersoon | null>(null);
+
+  const { huwelijkId } = query;
+
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+
+  const getContactObject = () => {
+    const contactObject: any = {};
+
+    if (email) {
+      contactObject.emails = [
+        {
+          naam: email,
+          email: email,
+        },
+      ];
+    }
+
+    if (phoneNumber) {
+      contactObject.telefoonnummers = [
+        {
+          naam: phoneNumber,
+          telefoonnummer: phoneNumber,
+        },
+      ];
+    }
+
+    return contactObject;
+  };
+
+  const getResultsChecklist = () => {
+    return [
+      {
+        display: "Ik verklaar dat ik niet trouw met mijn neef, nicht, oom of tante.",
+        result: true,
+      },
+      {
+        display:
+          "Ik verklaar dat ik nu niet met iemand anders getrouwd ben (in Nederland of in een ander land). Ik heb nu ook geen geregistreerd partnerschap.",
+        result: true,
+      },
+    ];
+  };
+
+  useEffect(() => {
+    if (!getBsnFromJWT() || ingeschrevenPersoon) return;
+
+    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      getBsnFromJWT() // passing { burgerservicenummer: "bsn" } breaks the call
+    ).then((res: any) => {
+      setIngeschrevenPersoon(res.results[0]);
+    });
+  }, [huwelijk, ingeschrevenPersoon]);
+
+  useEffect(() => {
+    if (
+      declarationCheckboxData["correct-information-and-complete"] === true &&
+      declarationCheckboxData["not-marrying-relative"] === true &&
+      declarationCheckboxData["unmarried"] === true
+    ) {
+      setDeclarationCheckboxChecked(true);
+    } else {
+      setDeclarationCheckboxChecked(false);
+    }
+  }, [declarationCheckboxData]);
+
+  useEffect(() => {
+    if (huwelijk) return;
+
+    const handleNewPersonLogin = () => {
+      setIsLoading(true);
+
+      HuwelijkService.huwelijkPostItem({
+        type: marriageOptions.type,
+        ceremonie: marriageOptions.ceremonyId,
+        moment: marriageOptions?.startTime,
+        ambtenaar: marriageOptions.ambtenaar,
+        locatie: marriageOptions.location,
+      })
+        .then((res) => {
+          setMarriageOptions({
+            ...marriageOptions,
+            huwelijk: {
+              // @ts-ignore
+              id: res._self.id,
+              firstPartnerName: `${res?.partners[0]?.contact?.voornaam} ${res?.partners[0]?.contact?.achternaam}`,
+              expiry: "FIXME: over 2 uur",
+              "ceremony-type": res.ceremonie.upnLabel,
+              "ceremony-start": res.moment ?? "",
+              "ceremony-end": res.moment ? moment(res.moment).add(15, "m").toDate().toString() : "",
+              "ceremony-location": "Locatie Stadskantoor",
+              "ceremony-price-currency": "EUR",
+              "ceremony-price-amount": res.kosten ? res.kosten.replace("EUR ", "") : "-",
+            },
+          });
+
+          if (!huwelijk) setHuwelijk(res); // TODO: two are being created, this ensures its not overwritten
+        })
+        .finally(() => setIsLoading(false));
+    };
+
+    const handleSecondPersonLogin = () => {
+      setIsLoading(true);
+      HuwelijkService.huwelijkGetItem(huwelijkId as string)
+        .then((res) => {
+          setHuwelijk(res);
+        })
+        .finally(() => setIsLoading(false));
+    };
+
+    if (!huwelijkId && hasCalledHuwelijkPost.current === false) {
+      handleNewPersonLogin();
+      hasCalledHuwelijkPost.current = true;
+    }
+
+    if (huwelijkId) handleSecondPersonLogin();
+  }, [huwelijk, huwelijkId, marriageOptions, setMarriageOptions]);
 
   const onDeclarationCheckboxChange = (event: any) => {
     setDeclarationCheckboxData({ ...declarationCheckboxData, [event.target.name]: event.target.checked });
   };
 
-  const PersonalDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => (
+  const PersonalDataList = ({ ingeschrevenPersoon }: { ingeschrevenPersoon: any }) => (
     <DataList aria-describedby="personal-details" className="utrecht-data-list--rows">
       <DataListItem>
         <DataListKey>{t("form:bsn")}</DataListKey>
-        <DataListValue value={partner.bsn} emptyDescription={t("form:data-item-unknown")}>
-          <NumberValue>{partner.bsn}</NumberValue>
+        <DataListValue
+          value={ingeschrevenPersoon.burgerservicenummer ?? ""}
+          emptyDescription={t("form:data-item-unknown")}
+        >
+          <NumberValue>{ingeschrevenPersoon.burgerservicenummer}</NumberValue>
         </DataListValue>
       </DataListItem>
+
       <DataListItem>
-        <DataListKey>{t("form:salutation")}</DataListKey>
-        <DataListValue value={partner.salutation} emptyDescription={t("form:data-item-unknown")}>
-          {partner.salutation}
+        <DataListKey>Geslacht</DataListKey>
+        <DataListValue value={"partner.salutation"} emptyDescription={t("form:data-item-unknown")}>
+          {ingeschrevenPersoon.geslachtsaanduiding ?? "-"}
         </DataListValue>
       </DataListItem>
+
       <DataListItem>
         <DataListKey>{t("form:given-name")}</DataListKey>
-        <DataListValue value={partner["given-name"]} emptyDescription={t("form:data-item-unknown")} notranslate={true}>
-          {partner["given-name"]}
+        <DataListValue
+          value={'partner["given-name"]'}
+          emptyDescription={t("form:data-item-unknown")}
+          notranslate={true}
+        >
+          {ingeschrevenPersoon.embedded.naam.voornamen ?? "-"}
         </DataListValue>
       </DataListItem>
+
       <DataListItem>
         <DataListKey>{t("form:family-name-prefix")}</DataListKey>
         <DataListValue
-          value={partner["family-name-prefix"]}
+          value={'partner["family-name-prefix"]'}
           emptyDescription={t("form:data-item-empty")}
           notranslate={true}
         >
-          {partner["family-name-prefix"]}
+          {ingeschrevenPersoon.embedded.naam.voorvoegsel ?? "-"}
         </DataListValue>
       </DataListItem>
+
       <DataListItem>
         <DataListKey>{t("form:family-name")}</DataListKey>
-        <DataListValue value={partner["family-name"]} emptyDescription={t("form:data-item-unknown")} notranslate={true}>
-          {partner["family-name"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:marital-status")}</DataListKey>
-        <DataListValue value={partner["marital-status"]} emptyDescription={t("form:data-item-unknown")}>
-          {partner["marital-status"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:bday")}</DataListKey>
-        <DataListValue value={partner["bday"]} emptyDescription={t("form:data-item-unknown")}>
-          {partner["bday"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:place-of-birth")}</DataListKey>
         <DataListValue
-          value={partner["place-of-birth"]}
+          value={'partner["family-name"]'}
           emptyDescription={t("form:data-item-unknown")}
           notranslate={true}
         >
-          {partner["place-of-birth"]}
+          {ingeschrevenPersoon.embedded.naam.geslachtsnaam ?? "-"}
         </DataListValue>
       </DataListItem>
+
+      <DataListItem>
+        <DataListKey>{t("form:marital-status")}</DataListKey>
+        <DataListValue value={'partner["marital-status"]'} emptyDescription={t("form:data-item-unknown")}>
+          -
+        </DataListValue>
+      </DataListItem>
+
+      <DataListItem>
+        <DataListKey>{t("form:bday")}</DataListKey>
+        <DataListValue value={'partner["bday"]'} emptyDescription={t("form:data-item-unknown")}>
+          {ingeschrevenPersoon?.embedded?.geboorte?.embedded?.datumOnvolledig?.datum ?? "-"}
+        </DataListValue>
+      </DataListItem>
+
+      <DataListItem>
+        <DataListKey>{t("form:place-of-birth")}</DataListKey>
+        <DataListValue
+          value={'partner["place-of-birth"]'}
+          emptyDescription={t("form:data-item-unknown")}
+          notranslate={true}
+        >
+          {ingeschrevenPersoon?.embedded?.geboorte?.embedded?.datumOnvolledig?.plaats ?? "-"}
+        </DataListValue>
+      </DataListItem>
+
       <DataListItem>
         <DataListKey>{t("form:nationality")}</DataListKey>
-        <DataListValue value={partner["nationality"]} emptyDescription={t("form:data-item-unknown")} notranslate={true}>
-          {partner["nationality"]}
+        <DataListValue
+          value={'partner["nationality"]'}
+          emptyDescription={t("form:data-item-unknown")}
+          notranslate={true}
+        >
+          {ingeschrevenPersoon.nationaliteiten ?? "-"}
         </DataListValue>
       </DataListItem>
+
       <DataListItem>
         <DataListKey>{t("form:registered-guardianship")}</DataListKey>
         <DataListValue
-          value={partner["indicatie-curateleregister"] === 1 ? "Ja" : undefined}
+          value="Ja" //{partner["indicatie-curateleregister"] === 1 ? "Ja" : undefined}
           emptyDescription={t("form:data-item-unknown")}
         >
-          {/*TODO:What are the values and labels here?*/}
-          {partner["indicatie-curateleregister"] === 1 ? "Ja" : "Nee"}
+          {ingeschrevenPersoon.gezagsverhouding ?? "-"}
         </DataListValue>
       </DataListItem>
     </DataList>
   );
 
-  const AddressDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => (
+  const AddressDataList = ({ ingeschrevenPersoon }: { ingeschrevenPersoon: any }) => (
     <DataList aria-describedby="address" className="utrecht-data-list--rows">
       <DataListItem>
         <DataListKey>{t("form:street")}</DataListKey>
-        <DataListValue value={partner.street} emptyDescription={t("form:data-item-unknown")}>
-          {partner.street}
+        <DataListValue value={"partner.street"} emptyDescription={t("form:data-item-unknown")}>
+          {ingeschrevenPersoon.embedded.verblijfplaats.straat ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
         <DataListKey>{t("form:house-number")}</DataListKey>
-        <DataListValue value={partner["house-number"]} emptyDescription={t("form:data-item-unknown")}>
-          <NumberValue>{partner["house-number"]}</NumberValue>
+        <DataListValue value={'partner["house-number"]'} emptyDescription={t("form:data-item-unknown")}>
+          {ingeschrevenPersoon.embedded.verblijfplaats.huisnummer ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
         <DataListKey>{t("form:house-number-suffix")}</DataListKey>
         <DataListValue
-          value={partner["house-number-suffix"]}
+          value={'partner["house-number-suffix"]'}
           emptyDescription={t("form:data-item-empty")}
           notranslate={true}
         >
-          {partner["house-number-suffix"]}
+          {ingeschrevenPersoon.embedded.verblijfplaats.huisnummerToevoeging ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
         <DataListKey>{t("form:postal-code")}</DataListKey>
-        <DataListValue value={partner["postal-code"]} emptyDescription={t("form:data-item-unknown")}>
-          {partner["postal-code"]}
+        <DataListValue value={'partner["postal-code"]'} emptyDescription={t("form:data-item-unknown")}>
+          {ingeschrevenPersoon.embedded.verblijfplaats.postcode ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
         <DataListKey>{t("form:place-of-residence")}</DataListKey>
         <DataListValue
-          value={partner["place-of-residence"]}
+          value={'partner["place-of-residence"]'}
           emptyDescription={t("form:data-item-unknown")}
           notranslate={true}
         >
-          {partner["place-of-residence"]}
+          {ingeschrevenPersoon.embedded.verblijfplaats.woonplaats ?? "-"}
         </DataListValue>
       </DataListItem>
     </DataList>
   );
-  const partnerDetails = data.partners.find((p) => p.id === query.person);
 
-  const onContactDetailsSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onContactDetailsSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!partnerDetails?.partner) {
-      push("/voorgenomen-huwelijk/partner");
+    setIsLoading(true);
+
+    if (!huwelijkId) {
+      AssentService.assentPatchItem(huwelijk?.partners[0]._self.id, {
+        requester: getBsnFromJWT(),
+        contact: {
+          subjectIdentificatie: {
+            inpBsn: getBsnFromJWT(),
+          },
+          ...getContactObject(),
+        },
+        results: getResultsChecklist(),
+      } as any).then(() => {
+        push("/voorgenomen-huwelijk/partner");
+      });
     } else {
-      push(`/persoonsgegevens/succes`);
+      HuwelijkService.huwelijkPatchItem(huwelijkId as string, {
+        partners: [
+          {
+            requester: getBsnFromJWT(),
+            contact: {
+              subjectIdentificatie: {
+                inpBsn: getBsnFromJWT(),
+              },
+              ...getContactObject(),
+            },
+            results: getResultsChecklist(),
+          },
+        ],
+      }).then(() => {
+        push(`/persoonsgegevens/succes?huwelijkId=${huwelijkId}`);
+      });
     }
   };
 
@@ -205,7 +414,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale} /> : ""}
+                {marriageOptions.huwelijk ? <ReservationCard locale={locale} /> : <Skeleton height="200px" />}
                 <section>
                   {/*TODO: Banner / card */}
                   <SpotlightSection type="info">
@@ -219,9 +428,21 @@ export default function MultistepForm1() {
                     </Paragraph>
                   </SpotlightSection>
                   <Heading2 id="personal-details">Persoonsgegevens</Heading2>
-                  <PersonalDataList partner={partnerDetails as HuwelijksplannerPartner} />
+
+                  {ingeschrevenPersoon ? (
+                    <PersonalDataList ingeschrevenPersoon={ingeschrevenPersoon} />
+                  ) : (
+                    <Skeleton height="100px" />
+                  )}
+
                   <Heading2 id="address">Adresgegevens</Heading2>
-                  <AddressDataList partner={partnerDetails as HuwelijksplannerPartner} />
+
+                  {ingeschrevenPersoon ? (
+                    <AddressDataList ingeschrevenPersoon={ingeschrevenPersoon} />
+                  ) : (
+                    <Skeleton height="100px" />
+                  )}
+
                   <Heading2 id="contact">Contactgegevens</Heading2>
                   <dl>
                     <p>Deze gegevens kun je zelf invullen of wijzigen.</p>
@@ -232,11 +453,13 @@ export default function MultistepForm1() {
                         </FormLabel>
                       </p>
                       <Textbox
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
                         className="utrecht-form-field__input"
                         id="tel"
                         type="tel"
                         autoComplete="tel"
-                        defaultValue={partnerDetails?.tel}
+                        required
                       />
                     </FormField>
                     <FormField>
@@ -251,17 +474,18 @@ export default function MultistepForm1() {
                         De mail heeft een link om nog veranderingen door te geven.
                       </FormFieldDescription>
                       <Textbox
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="utrecht-form-field__input"
                         id="email"
                         type="email"
                         autoComplete="email"
-                        defaultValue={partnerDetails?.email}
                         aria-describedby="email-description"
+                        required
                       />
                     </FormField>
                   </dl>
                   <DeclarationCheckboxGroup
-                    name="checks"
                     onChange={onDeclarationCheckboxChange}
                     checkboxData={[
                       {
@@ -285,8 +509,13 @@ export default function MultistepForm1() {
                   {/*<Button type="submit" name="type" appearance="primary-action-button">
                     Deze gegevens kloppen
                   </Button>*/}
-                  <Button type="submit" name="type" appearance="primary-action-button">
-                    Contactgegevens opslaan
+                  <Button
+                    disabled={isLoading || !declarationCheckboxChecked}
+                    type="submit"
+                    name="type"
+                    appearance="primary-action-button"
+                  >
+                    {isLoading ? "Loading..." : "Contactgegevens opslaan"}
                   </Button>
                 </section>
                 <Aside>
@@ -338,7 +567,7 @@ export const DeclarationCheckboxGroup = ({ name, checkboxData, onChange }: Decla
         checkboxData.length > 0 &&
         checkboxData.map(({ id, label, value }, index) => (
           <FormField key={index} type="checkbox">
-            <Checkbox2 novalidate id={id} name={name || groupName} defaultValue={value} onChange={onChange} required />
+            <Checkbox2 novalidate id={id} name={value || groupName} defaultValue={value} onChange={onChange} required />
             <FormLabel htmlFor={id} type="checkbox">
               {label}
             </FormLabel>

@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useContext } from "react";
 import {
   ButtonGroup,
   ButtonLink,
@@ -27,7 +28,7 @@ import {
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
-import { exampleState } from "../../../src/data/huwelijksplanner-state";
+import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -37,9 +38,9 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen-success", "form"]);
-  const data = { ...exampleState };
   const locale = useRouter().locale || "en";
-  const partnerDetails = data.partners.find((p) => !p.partner);
+  const [marriageOptions] = useContext(MarriageOptionsContext);
+
   return (
     <Surface>
       <Document>
@@ -64,17 +65,18 @@ export default function MultistepForm1() {
                 </Paragraph>
               </HeadingGroup>
               {/*TODO: Banner / card */}
-              {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale} /> : ""}
+              <ReservationCard locale={locale} />
               <section>
                 <Heading2>Gelukt!</Heading2>
                 <Paragraph>
-                  <DataNoTranslate>{partnerDetails?.["given-name"]}</DataNoTranslate> heeft met DigID ingelogd. Nu
-                  kunnen jullie verder met het plannen van het huwelijk. Er volgen nog een paar stappen:
+                  <DataNoTranslate>{marriageOptions.huwelijk.firstPartnerName}</DataNoTranslate> heeft met DigID
+                  ingelogd. Nu kunnen jullie verder met het plannen van het huwelijk. Er volgen nog een paar stappen:
                 </Paragraph>
                 <OrderedList>
                   <OrderedListItem>
                     De gemeente Utrecht checkt een aantal dingen, bijvoorbeeld of{" "}
-                    <DataNoTranslate>{partnerDetails?.["given-name"]}</DataNoTranslate> geen broer of zus van je is
+                    <DataNoTranslate>{marriageOptions.huwelijk.firstPartnerName}</DataNoTranslate> geen broer of zus van
+                    je is
                   </OrderedListItem>
                   <OrderedListItem>Dan kun je betalen en is de reservering van je huwelijk klaar.</OrderedListItem>
                   <OrderedListItem>

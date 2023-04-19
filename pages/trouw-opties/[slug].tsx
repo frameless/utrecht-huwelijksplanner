@@ -1,9 +1,11 @@
+import { format } from "date-fns";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import {
   Aside,
   Button,
@@ -27,14 +29,13 @@ import {
   Paragraph,
   SkipLink,
   Surface,
-  TimeValue,
 } from "../../src/components";
 import { RadioButton2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
-import { Availability } from "../../src/generated/openapi/Agenda-Service";
-import { HuwelijksplannerAPI } from "../../src/openapi/index";
+import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import { AvailabilitycheckService, SdgproductService } from "../../src/generated";
+
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common", "huwelijksplanner-step-2"])),
@@ -42,48 +43,105 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 });
 
 const BlogPost: NextPage = () => {
-  const { locale = "nl", push } = useRouter();
+  const { replace } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
 
-  const getEvents = (type: CeremonyType, date: string) => {
-    return calendars[type as keyof typeof calendars].filter((event) => event.startDateTime.startsWith(date));
-  };
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().replace(/T.+/, ""));
+  const [selectedCeremony, setSelectedCeremony] = useState<string | undefined>();
+  const [selectedLocation, setSelectedLocation] = useState<string | undefined>();
+  const [selectedAmbtenaar, setSelectedAmbtenaar] = useState<string | undefined>();
+  const [selectedStartTime, setSelectedStartTime] = useState<string | undefined>();
+  const [selectedEndTime, setSelectedEndTime] = useState<string | undefined>();
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
-  const [, setResults] = useState<Availability[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [ceremonyTypes, setCeremonyTypes] = useState<
+    { name: string; id: string; locationId: string; ambtenaarId: string }[]
+  >([]);
 
-  const [selectedDate, setSelectedDate] = useState("2021-04-14");
-  const [selectedLocationAndDate, setSelectedLocationAndDate] = useState<string | undefined>();
-
-  const loadEvents = useCallback(() => {
-    const today = new Date().toISOString().replace(/T.+/, "");
-    HuwelijksplannerAPI.getAvailability({
-      interval: "PT1H",
-      start: today,
-    }).then((data) => {
-      setResults(data);
-    });
-  }, []);
+  const [availableSlots, setAvailableSlots] = useState<[]>([]);
 
   useEffect(() => {
-    loadEvents();
-  }, [selectedDate, loadEvents]);
+    if (!marriageOptions.type) return;
 
-  const onChangeDateHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedLocationAndDate(event.target.value);
+    setIsLoading(true);
+
+    SdgproductService.sdgproductGetItem(marriageOptions.type)
+      .then((res) => {
+        setCeremonyTypes(
+          // @ts-ignore
+          res.embedded.gerelateerdeProducten.map((ceremony: any) => ({
+            name: ceremony.upnLabel,
+            id: ceremony._self.id,
+            locationId: ceremony?.embedded?.gerelateerdeProducten[0]?.id,
+            ambtenaarId: ceremony?.embedded?.gerelateerdeProducten[0]?.embedded?.gerelateerdeProducten[0]?.id,
+          }))
+        );
+      })
+      .finally(() => setIsLoading(false));
+  }, [marriageOptions.type]);
+
+  useEffect(() => {
+    if (!ceremonyTypes.length) return;
+
+    const _endDate: Date = new Date(selectedDate);
+    const endDate = _endDate.setDate(_endDate.getDate() + 1);
+
+    AvailabilitycheckService.availabilitycheckGetCollection(
+      ceremonyTypes.map((ceremony) => ceremony.id),
+      "PT2H",
+      format(endDate, "yyyy-MM-dd"),
+      selectedDate
+    ).then((res) => {
+      // @ts-ignore
+      setAvailableSlots(JSON.parse(res)[selectedDate].filter((slot: any) => slot.resources.length > 0));
+    });
+  }, [ceremonyTypes, selectedDate]);
+
+  const formatDateToString = (date: any) => {
+    const newDate = date.split("T")[0];
+    setSelectedDate(newDate);
+  };
+
+  const onChangeDateHandler = (
+    ceremonyId: string,
+    location: string,
+    ambtenaar: string,
+    startTime: string,
+    endTime: string
+  ) => {
+    setSelectedCeremony(ceremonyId);
+    setSelectedAmbtenaar(ambtenaar);
+    setSelectedLocation(location);
+    setSelectedStartTime(startTime);
+    setSelectedEndTime(endTime);
   };
 
   const onSelectedDateAndLocationSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // const data = {
     //   trouw_optie: query.slug,
-    //   locatie_id: selectedLocationAndDate,
+    //   locatie_id: selectedLocation,
     // };
 
-    if (selectedLocationAndDate) {
-      push("/voorgenomen-huwelijk");
+    if (selectedLocation && selectedStartTime && selectedEndTime && selectedDate) {
+      setMarriageOptions({
+        ...marriageOptions,
+        location: selectedLocation,
+        startTime: selectedStartTime,
+        endTime: selectedEndTime,
+        date: selectedDate,
+        ambtenaar: selectedAmbtenaar,
+        ceremonyId: selectedCeremony,
+      });
+      replace(`/voorgenomen-huwelijk`);
     } else {
       throw new Error("please, select a date!");
     }
+  };
+
+  const back = () => {
+    replace("/trouw-opties/");
   };
 
   return (
@@ -101,89 +159,79 @@ const BlogPost: NextPage = () => {
           </PageHeader>
           <PageContent>
             <ButtonGroup>
-              <ButtonLink href="/trouw-opties/" appearance="subtle-button">
+              <ButtonLink onClick={back} appearance="subtle-button">
                 ← Terug
               </ButtonLink>
             </ButtonGroup>
             <PageContentMain>
-              <form onSubmit={onSelectedDateAndLocationSubmit}>
-                <HeadingGroup>
-                  <Heading1>{t("huwelijksplanner-step-2:heading-1")}</Heading1>
-                  {/*TODO: Step indicator component */}
-                  <Paragraph lead>
-                    {t("common:step-n-of-m", { n: 2, m: 5 })} — {t("huwelijksplanner-step-2:title")}
-                  </Paragraph>
-                </HeadingGroup>
-                <Paragraph lead>
-                  Kies hier de datum waarop jullie willen trouwen. Als je op de datum klikt zie je de beschikbare
-                  tijden, plaatsen en manieren waarop je kunt trouwen.
-                </Paragraph>
-                <section>
-                  <FormField>
-                    <Calendar onCalendarClick={(date: string) => setSelectedDate(date)} />
-                  </FormField>
-                  <Fieldset>
-                    <FieldsetLegend>Flits/balie-huwelijk — Stadskantoor</FieldsetLegend>
-                    {getEvents("flits-balie-huwelijk", selectedDate).map((event) => (
-                      <FormField key={event.id} type="radio">
-                        <RadioButton2
-                          novalidate={true}
-                          id={event.id}
-                          name="event"
-                          value={event.id}
-                          required
-                          onChange={onChangeDateHandler}
-                        />
-                        <FormLabel htmlFor={event.id} type="radio">
-                          <span aria-label="negen uur tot tien over negen">
-                            <TimeValue dateTime={event.startDateTime} locale={locale} />
-                            {" – "}
-                            <TimeValue dateTime={event.endDateTime} locale={locale} />
-                            {" uur"}
-                          </span>
-                        </FormLabel>
-                      </FormField>
-                    ))}
-                  </Fieldset>
-                  <Fieldset>
-                    <FieldsetLegend>Uitgebreid trouwen — Zelf de plaats bepalen</FieldsetLegend>
-                    {getEvents("uitgebreid-huwelijk", selectedDate).map((event) => (
-                      <FormField key={event.id}>
-                        <RadioButton2
-                          novalidate={true}
-                          id={event.id}
-                          name="event"
-                          value={event.id}
-                          required
-                          onChange={onChangeDateHandler}
-                        />
-                        <FormLabel htmlFor={event.id}>
-                          <span aria-label="negen uur tot tien over negen">
-                            <TimeValue dateTime={event.startDateTime} locale={locale} />
-                            {" – "}
-                            <TimeValue dateTime={event.endDateTime} locale={locale} />
-                            {" uur"}
-                          </span>
-                        </FormLabel>
-                      </FormField>
-                    ))}
-                  </Fieldset>
+              {isLoading && <Skeleton height="200px" />}
 
-                  <ButtonGroup>
-                    <Button type="submit" appearance="primary-action-button">
-                      Ja, dit wil ik!
-                    </Button>
-                  </ButtonGroup>
-                </section>
-                <Aside>
-                  <Heading2>Meer informatie</Heading2>
-                  <Paragraph>
-                    <Link href="/" external>
-                      Trouwen of partnerschap registreren in Utrecht
-                    </Link>
+              {!isLoading && (
+                <form onSubmit={onSelectedDateAndLocationSubmit}>
+                  <HeadingGroup>
+                    <Heading1>{t("huwelijksplanner-step-2:heading-1")}</Heading1>
+                    {/*TODO: Step indicator component */}
+                    <Paragraph lead>
+                      {t("common:step-n-of-m", { n: 2, m: 5 })} — {t("huwelijksplanner-step-2:title")}
+                    </Paragraph>
+                  </HeadingGroup>
+                  <Paragraph lead>
+                    Kies hier de datum waarop jullie willen trouwen. Als je op de datum klikt zie je de beschikbare
+                    tijden, plaatsen en manieren waarop je kunt trouwen.
                   </Paragraph>
-                </Aside>
-              </form>
+                  <section>
+                    <FormField>
+                      <Calendar onCalendarClick={(date: string) => formatDateToString(date)} />
+                    </FormField>
+
+                    {ceremonyTypes.map((ceremonyType, idx) => (
+                      <Fieldset key={idx}>
+                        <FieldsetLegend>{ceremonyType.name}</FieldsetLegend>
+
+                        {availableSlots
+                          .filter((slot: any) => slot.resources.includes(ceremonyType.id))
+                          .map((slot: any) => (
+                            <FormField key={slot.id} type="radio">
+                              <RadioButton2
+                                novalidate={true}
+                                id={slot.id}
+                                name="event"
+                                value={slot.id}
+                                required
+                                onChange={() =>
+                                  onChangeDateHandler(
+                                    ceremonyType.id,
+                                    ceremonyType.locationId,
+                                    ceremonyType.ambtenaarId,
+                                    slot.start,
+                                    slot.stop
+                                  )
+                                }
+                              />
+                              <FormLabel htmlFor={slot.id} type="radio">
+                                <span aria-label="negen uur tot tien over negen">{`${slot.start} - ${slot.stop}`}</span>
+                              </FormLabel>
+                            </FormField>
+                          ))}
+                      </Fieldset>
+                    ))}
+
+                    <ButtonGroup>
+                      <Button type="submit" appearance="primary-action-button">
+                        Ja, dit wil ik!
+                      </Button>
+                    </ButtonGroup>
+                  </section>
+                  <Aside>
+                    <Heading2>Meer informatie</Heading2>
+                    <Paragraph>
+                      <Link href="/" external>
+                        Trouwen of partnerschap registreren in Utrecht
+                      </Link>
+                    </Paragraph>
+                  </Aside>
+                </form>
+              )}
             </PageContentMain>
           </PageContent>
           <PageFooter>
