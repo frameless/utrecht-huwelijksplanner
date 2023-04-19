@@ -1,10 +1,10 @@
-/* eslint-disable no-console */
+import { format } from "date-fns";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import {
   Aside,
@@ -29,15 +29,12 @@ import {
   Paragraph,
   SkipLink,
   Surface,
-  TimeValue,
 } from "../../src/components";
 import { RadioButton2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
-import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
-import { Availability, SdgproductService } from "../../src/generated";
-import { HuwelijksplannerAPI } from "../../src/openapi/index";
+import { AvailabilitycheckService, SdgproductService } from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -46,23 +43,23 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 });
 
 const BlogPost: NextPage = () => {
-  const { locale = "nl", replace } = useRouter();
+  const { replace } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
 
-  const getEvents = (type: CeremonyType, date: string) => {
-    return calendars[type as keyof typeof calendars].filter((event) => event.startDateTime.startsWith(date));
-  };
-
-  const [, setResults] = useState<Availability[]>([]);
-
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().replace(/T.+/, ""));
+  const [selectedCeremony, setSelectedCeremony] = useState<string | undefined>();
   const [selectedLocation, setSelectedLocation] = useState<string | undefined>();
+  const [selectedAmbtenaar, setSelectedAmbtenaar] = useState<string | undefined>();
   const [selectedStartTime, setSelectedStartTime] = useState<string | undefined>();
   const [selectedEndTime, setSelectedEndTime] = useState<string | undefined>();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [ceremonyIds, setCeremonyIds] = useState<string[]>([]);
+  const [ceremonyTypes, setCeremonyTypes] = useState<
+    { name: string; id: string; locationId: string; ambtenaarId: string }[]
+  >([]);
+
+  const [availableSlots, setAvailableSlots] = useState<[]>([]);
 
   useEffect(() => {
     if (!marriageOptions.type) return;
@@ -71,36 +68,50 @@ const BlogPost: NextPage = () => {
 
     SdgproductService.sdgproductGetItem(marriageOptions.type)
       .then((res) => {
-        // @ts-ignore
-        setCeremonyIds(res.embedded.gerelateerdeProducten.map((ceremony: any) => ceremony._self.id));
+        setCeremonyTypes(
+          // @ts-ignore
+          res.embedded.gerelateerdeProducten.map((ceremony: any) => ({
+            name: ceremony.upnLabel,
+            id: ceremony._self.id,
+            locationId: ceremony?.embedded?.gerelateerdeProducten[0]?.id,
+            ambtenaarId: ceremony?.embedded?.gerelateerdeProducten[0]?.embedded?.gerelateerdeProducten[0]?.id,
+          }))
+        );
       })
       .finally(() => setIsLoading(false));
   }, [marriageOptions.type]);
 
   useEffect(() => {
-    console.log({ ceremonyIds });
-  }, [ceremonyIds]);
+    if (!ceremonyTypes.length) return;
+
+    const _endDate: Date = new Date(selectedDate);
+    const endDate = _endDate.setDate(_endDate.getDate() + 1);
+
+    AvailabilitycheckService.availabilitycheckGetCollection(
+      ceremonyTypes.map((ceremony) => ceremony.id),
+      "PT2H",
+      format(endDate, "yyyy-MM-dd"),
+      selectedDate
+    ).then((res) => {
+      // @ts-ignore
+      setAvailableSlots(JSON.parse(res)[selectedDate].filter((slot: any) => slot.resources.length > 0));
+    });
+  }, [ceremonyTypes, selectedDate]);
 
   const formatDateToString = (date: any) => {
     const newDate = date.split("T")[0];
     setSelectedDate(newDate);
   };
 
-  const loadEvents = useCallback(() => {
-    const today = new Date().toISOString().replace(/T.+/, "");
-    HuwelijksplannerAPI.getAvailability({
-      interval: "PT1H",
-      start: today,
-    }).then((data) => {
-      setResults(data);
-    });
-  }, []);
-
-  useEffect(() => {
-    loadEvents();
-  }, [selectedDate, loadEvents]);
-
-  const onChangeDateHandler = (location: string, startTime: string, endTime: string) => {
+  const onChangeDateHandler = (
+    ceremonyId: string,
+    location: string,
+    ambtenaar: string,
+    startTime: string,
+    endTime: string
+  ) => {
+    setSelectedCeremony(ceremonyId);
+    setSelectedAmbtenaar(ambtenaar);
     setSelectedLocation(location);
     setSelectedStartTime(startTime);
     setSelectedEndTime(endTime);
@@ -120,6 +131,8 @@ const BlogPost: NextPage = () => {
         startTime: selectedStartTime,
         endTime: selectedEndTime,
         date: selectedDate,
+        ambtenaar: selectedAmbtenaar,
+        ceremonyId: selectedCeremony,
       });
       replace(`/voorgenomen-huwelijk`);
     } else {
@@ -170,52 +183,38 @@ const BlogPost: NextPage = () => {
                     <FormField>
                       <Calendar onCalendarClick={(date: string) => formatDateToString(date)} />
                     </FormField>
-                    <Fieldset>
-                      <FieldsetLegend>Flits/balie-huwelijk — Stadskantoor</FieldsetLegend>
-                      {getEvents("flits-balie-huwelijk", selectedDate).map((event) => (
-                        <FormField key={event.id} type="radio">
-                          <RadioButton2
-                            novalidate={true}
-                            id={event.id}
-                            name="event"
-                            value={event.id}
-                            required
-                            onChange={() => onChangeDateHandler(event.id, event.startDateTime, event.endDateTime)}
-                          />
-                          <FormLabel htmlFor={event.id} type="radio">
-                            <span aria-label="negen uur tot tien over negen">
-                              <TimeValue dateTime={event.startDateTime} locale={locale} />
-                              {" – "}
-                              <TimeValue dateTime={event.endDateTime} locale={locale} />
-                              {" uur"}
-                            </span>
-                          </FormLabel>
-                        </FormField>
-                      ))}
-                    </Fieldset>
-                    <Fieldset>
-                      <FieldsetLegend>Uitgebreid trouwen — Zelf de plaats bepalen</FieldsetLegend>
-                      {getEvents("uitgebreid-huwelijk", selectedDate).map((event) => (
-                        <FormField key={event.id}>
-                          <RadioButton2
-                            novalidate={true}
-                            id={event.id}
-                            name="event"
-                            value={event.id}
-                            required
-                            onChange={() => onChangeDateHandler(event.id, event.startDateTime, event.endDateTime)}
-                          />
-                          <FormLabel htmlFor={event.id}>
-                            <span aria-label="negen uur tot tien over negen">
-                              <TimeValue dateTime={event.startDateTime} locale={locale} />
-                              {" – "}
-                              <TimeValue dateTime={event.endDateTime} locale={locale} />
-                              {" uur"}
-                            </span>
-                          </FormLabel>
-                        </FormField>
-                      ))}
-                    </Fieldset>
+
+                    {ceremonyTypes.map((ceremonyType, idx) => (
+                      <Fieldset key={idx}>
+                        <FieldsetLegend>{ceremonyType.name}</FieldsetLegend>
+
+                        {availableSlots
+                          .filter((slot: any) => slot.resources.includes(ceremonyType.id))
+                          .map((slot: any) => (
+                            <FormField key={slot.id} type="radio">
+                              <RadioButton2
+                                novalidate={true}
+                                id={slot.id}
+                                name="event"
+                                value={slot.id}
+                                required
+                                onChange={() =>
+                                  onChangeDateHandler(
+                                    ceremonyType.id,
+                                    ceremonyType.locationId,
+                                    ceremonyType.ambtenaarId,
+                                    slot.start,
+                                    slot.stop
+                                  )
+                                }
+                              />
+                              <FormLabel htmlFor={slot.id} type="radio">
+                                <span aria-label="negen uur tot tien over negen">{`${slot.start} - ${slot.stop}`}</span>
+                              </FormLabel>
+                            </FormField>
+                          ))}
+                      </Fieldset>
+                    ))}
 
                     <ButtonGroup>
                       <Button type="submit" appearance="primary-action-button">

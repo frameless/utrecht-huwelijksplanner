@@ -1,6 +1,5 @@
 /* eslint-disable no-alert */
 
-import { UtrechtBadgeStatus } from "@utrecht/web-component-library-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
@@ -29,7 +28,6 @@ import {
   PageHeader,
   Paragraph,
   PreHeading,
-  ProcessSteps,
   ReservationCard,
   Surface,
   Textbox,
@@ -39,12 +37,7 @@ import {
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
-import {
-  exampleState,
-  HuwelijksplannerPartner,
-  HuwelijksplannerState,
-  Invitee,
-} from "../../../src/data/huwelijksplanner-state";
+import { HuwelijksplannerPartner, Invitee } from "../../../src/data/huwelijksplanner-state";
 import { Assent, AssentService, Huwelijk, HuwelijkService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -55,11 +48,12 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function HuwelijksplannerStep0() {
   const { t } = useTranslation(["huwelijksplanner-step-0", "huwelijksplanner", "form", "common"]);
-  const [data] = useState({ ...exampleState });
   const locale = useRouter().locale || "en";
 
   const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [todos, setTodos] = useState<any[]>([]);
 
   const [marriageOptions] = useContext(MarriageOptionsContext);
 
@@ -76,10 +70,23 @@ export default function HuwelijksplannerStep0() {
       .finally(() => setIsLoading(false));
   }, [huwelijk, marriageOptions.huwelijk?.id]);
 
-  const isValidMinWitnesses = (data: HuwelijksplannerState) => {
-    // Return `true` for valid when every partner has reached the minimum amount of witnesses
-    return data.witnesses.length >= data.minWitnessPerPartner * 2;
-  };
+  useEffect(() => {
+    if (!huwelijk) return;
+
+    const {
+      // @ts-ignore
+      embedded: {
+        checklist: { embedded: items },
+      },
+    } = huwelijk;
+
+    setTodos(Object.values(items).filter((item: any) => !item.result));
+  }, [huwelijk]);
+
+  // const isValidMinWitnesses = (data: HuwelijksplannerState) => {
+  //   // Return `true` for valid when every partner has reached the minimum amount of witnesses
+  //   return data.witnesses.length >= data.minWitnessPerPartner * 2;
+  // };
 
   const handleHuwelijkAnnuleren = () => {
     const confirmHuwelijkAnnuleren = confirm("Are you sure you want to cancel the ceremony?");
@@ -93,64 +100,64 @@ export default function HuwelijksplannerStep0() {
     }
   };
 
-  const MarriageProcessSteps = ({ data }: { data: HuwelijksplannerState; locale: string }) => (
-    <ProcessSteps
-      steps={[
-        {
-          id: "cc18f54d-aadd-498f-b518-2fc74ce8e9b6",
-          marker: 1,
-          status: isValidMinWitnesses(data) ? "checked" : undefined,
-          title: "Getuigen wijzigen of meer getuigen uitnodigen",
-          meta: data.canInviteWitnesses ? (
-            <div>
-              <Paragraph>
-                tussen vandaag en{" "}
-                {data["inviteWitnessEndDate"] ? (
-                  <DateValue dateTime={marriageOptions.date ?? ""} locale={locale} />
-                ) : (
-                  ""
-                )}{" "}
-                <UtrechtBadgeStatus status="neutral">niet verplicht</UtrechtBadgeStatus>
-              </Paragraph>
-            </div>
-          ) : (
-            ""
-          ),
-          // steps: [
-          //   {
-          //     id: "dc18f54d-aadd-498f-b518-2fc74ce8e9b6",
-          //     status: undefined,
-          //     title: `tussen vandaag en ${data["inviteWitnessEndDate"]}`,
-          //   },
-          // ],
-        },
-        {
-          id: "12ca94b2-7179-4ae8-9032-dad49c294ff2",
-          marker: 2,
-          title: "Getuigen zijn definitief en bevestigingen van getuigen ontvangen",
-        },
-        {
-          id: "e51f2b4c-d62f-4347-8dc1-c83a9be0afc2",
-          marker: 3,
-          title: "Eventuele extra’s bestellen",
-        },
-        {
-          id: "1fc162c6-f1ab-4d1b-9007-d891cbd5614b",
-          title: "Trouwdag",
-          marker: 4,
-          date: data.reservation
-            ? ((<DateValue dateTime={marriageOptions.huwelijk["ceremony-start"]} locale={locale} />) as any)
-            : "",
-          meta:
-            data.reservation && data.reservation["ceremony-location"] === "Locatie Stadskantoor" ? (
-              <Paragraph>Jullie gaan trouwen op de vierde verdieping van het Stadskantoor Utrecht.</Paragraph>
-            ) : (
-              ""
-            ),
-        },
-      ]}
-    />
-  );
+  // const MarriageProcessSteps = ({ data }: { data: HuwelijksplannerState; locale: string }) => (
+  //   <ProcessSteps
+  //     steps={[
+  //       {
+  //         id: "cc18f54d-aadd-498f-b518-2fc74ce8e9b6",
+  //         marker: 1,
+  //         status: isValidMinWitnesses(data) ? "checked" : undefined,
+  //         title: "Getuigen wijzigen of meer getuigen uitnodigen",
+  //         meta: data.canInviteWitnesses ? (
+  //           <div>
+  //             <Paragraph>
+  //               tussen vandaag en{" "}
+  //               {data["inviteWitnessEndDate"] ? (
+  //                 <DateValue dateTime={marriageOptions.date ?? ""} locale={locale} />
+  //               ) : (
+  //                 ""
+  //               )}{" "}
+  //               <UtrechtBadgeStatus status="neutral">niet verplicht</UtrechtBadgeStatus>
+  //             </Paragraph>
+  //           </div>
+  //         ) : (
+  //           ""
+  //         ),
+  //         // steps: [
+  //         //   {
+  //         //     id: "dc18f54d-aadd-498f-b518-2fc74ce8e9b6",
+  //         //     status: undefined,
+  //         //     title: `tussen vandaag en ${data["inviteWitnessEndDate"]}`,
+  //         //   },
+  //         // ],
+  //       },
+  //       {
+  //         id: "12ca94b2-7179-4ae8-9032-dad49c294ff2",
+  //         marker: 2,
+  //         title: "Getuigen zijn definitief en bevestigingen van getuigen ontvangen",
+  //       },
+  //       {
+  //         id: "e51f2b4c-d62f-4347-8dc1-c83a9be0afc2",
+  //         marker: 3,
+  //         title: "Eventuele extra’s bestellen",
+  //       },
+  //       {
+  //         id: "1fc162c6-f1ab-4d1b-9007-d891cbd5614b",
+  //         title: "Trouwdag",
+  //         marker: 4,
+  //         date: data.reservation
+  //           ? ((<DateValue dateTime={marriageOptions.huwelijk["ceremony-start"]} locale={locale} />) as any)
+  //           : "",
+  //         meta:
+  //           data.reservation && data.reservation["ceremony-location"] === "Locatie Stadskantoor" ? (
+  //             <Paragraph>Jullie gaan trouwen op de vierde verdieping van het Stadskantoor Utrecht.</Paragraph>
+  //           ) : (
+  //             ""
+  //           ),
+  //       },
+  //     ]}
+  //   />
+  // );
 
   const PartnerDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -303,7 +310,12 @@ export default function HuwelijksplannerStep0() {
                   </Paragraph>
                   <section>
                     <Heading2>Nog te doen</Heading2>
-                    <MarriageProcessSteps data={data} locale={locale} />
+                    <ul>
+                      {todos.map((todo, idx) => (
+                        <li key={idx}>{todo.display}</li>
+                      ))}
+                    </ul>
+                    {/* <MarriageProcessSteps data={data} locale={locale} /> */}
                   </section>
 
                   <section>
@@ -348,8 +360,8 @@ export default function HuwelijksplannerStep0() {
                           partner={{
                             id: partner._self.id,
                             name: `${partner?.embedded?.contact?.voornaam} ${partner?.embedded?.contact?.achternaam}`,
-                            tel: partner?.embedded?.contact?.embedded?.telefoonnummers[0]?.telefoonnummer,
-                            email: partner?.embedded?.contact?.embedded?.emails[0]?.email,
+                            tel: partner?.embedded?.contact?.telefoonnummers[0]?.telefoonnummer,
+                            email: partner?.embedded?.contact?.emails[0]?.email,
                           }}
                         />
                       ))}
@@ -365,7 +377,7 @@ export default function HuwelijksplannerStep0() {
                           witness={{
                             // @ts-ignore
                             id: getuige?._self.id,
-                            name: getuige?.embedded?.contact?.embedded?.voornaam,
+                            name: getuige?.embedded?.contact?.voornaam,
                             email: getuige?.embedded?.contact?.embedded?.emails[0]?.email,
                           }}
                         />
