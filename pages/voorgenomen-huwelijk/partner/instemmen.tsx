@@ -23,6 +23,7 @@ import {
   SpotlightSection,
   Surface,
 } from "@utrecht/component-library-react";
+import moment from "moment";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
@@ -151,16 +152,30 @@ export default function MultistepForm1() {
     if (!assent) return;
     if (huwelijk) return;
 
-    const handleSecondPersonLogin = () => {
-      setIsLoading(true);
-      HuwelijkService.huwelijkGetItem(assent.property as string)
-        .then((res) => {
-          setHuwelijk(res);
-        })
-        .finally(() => setIsLoading(false));
-    };
+    setIsLoading(true);
+    HuwelijkService.huwelijkGetItem(assent.property as string)
+      .then((res) => {
+        setHuwelijk(res);
 
-    if (huwelijkId) handleSecondPersonLogin();
+        setMarriageOptions({
+          ...marriageOptions,
+          huwelijk: {
+            // @ts-ignore
+            id: res._self.id,
+            // @ts-ignore
+            firstPartnerName: `${res?.embedded.partners[0]?.embedded.contact?.voornaam} ${res?.embedded.partners[0]?.embedded.contact?.achternaam}`,
+            expiry: "FIXME: over 2 uur",
+            // @ts-ignore
+            "ceremony-type": res.embedded.ceremonie.upnLabel,
+            "ceremony-start": res.moment ?? "",
+            "ceremony-end": res.moment ? moment(res.moment).add(15, "m").toDate().toString() : "",
+            "ceremony-location": "Locatie Stadskantoor",
+            "ceremony-price-currency": "EUR",
+            "ceremony-price-amount": res.kosten ? res.kosten.replace("EUR ", "") : "-",
+          },
+        });
+      })
+      .finally(() => setIsLoading(false));
   }, [huwelijk, huwelijkId, assent, marriageOptions, setMarriageOptions]);
 
   if (!assentId) {

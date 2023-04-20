@@ -45,7 +45,7 @@ export default function ApplicantEmail() {
     if (!assentId) return; // all logic requires the assentId.
 
     if (!isAuthenticated()) {
-      push(`/gateway-login?redirectUrl=/voorgenomen-huwelijk/partner/login?assentId=${assentId}`);
+      push(`/gateway-login?redirectUrl=/voorgenomen-huwelijk/partner/instemmen?assentId=${assentId}`);
     }
 
     if (isAuthenticated()) {
