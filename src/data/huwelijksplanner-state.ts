@@ -174,9 +174,9 @@ export interface TODO {
   orderProductEndDate?: string;
 }
 
-export interface HuwelijksplannerState extends TODO {}
+export type HuwelijksplannerState = TODO;
 
-export interface HuwelijksplannerInput extends Partial<TODO> {}
+export type HuwelijksplannerInput = Partial<TODO>;
 
 export const initialState: HuwelijksplannerState = {
   partners: [],

@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, SVGAttributes } from "react";
 
-export interface UtrechtLogoProps extends SVGAttributes<SVGSVGElement> {}
+export type UtrechtLogoProps = SVGAttributes<SVGSVGElement>;
 
 export const UtrechtLogo = forwardRef(({ ...restProps }: UtrechtLogoProps, ref: ForwardedRef<SVGSVGElement>) => (
   <svg width="188" height="101" viewBox="0 0 188 101" fill="none" className="utrecht-logo" {...restProps} ref={ref}>

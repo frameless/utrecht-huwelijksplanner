@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   DataList,
   DataListItem,
   DataListKey,
@@ -7,7 +8,6 @@ import {
   Document,
   Fieldset,
   FormField,
-  FormFieldDescription,
   FormLabel,
   Heading1,
   Heading2,
@@ -22,29 +22,30 @@ import {
   SkipLink,
   SpotlightSection,
   Surface,
-  Textbox,
 } from "@utrecht/component-library-react";
-import moment from "moment";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEventHandler, FormEvent, useContext, useEffect, useRef, useState } from "react";
+import { ChangeEventHandler, useContext, useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
-import { Checkbox2 } from "../../src/components";
-import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
-import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
-import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import { Aside, PageContentMain } from "../../../src/components";
+import { Checkbox2 } from "../../../src/components";
+import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
+import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
+import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
+import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
 import {
+  Assent,
+  Assent as AssentNamespace,
   AssentService,
   Huwelijk,
   HuwelijkService,
   IngeschrevenPersoon,
   IngeschrevenpersoonService,
-} from "../../src/generated";
-import { getBsnFromJWT } from "../../src/services/getBsnFromJWT";
+} from "../../../src/generated";
+import { isAuthenticated, unauthenticate } from "../../../src/services/authentication";
+import { getBsnFromJWT } from "../../../src/services/getBsnFromJWT";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -61,57 +62,49 @@ export default function MultistepForm1() {
   const [declarationCheckboxChecked, setDeclarationCheckboxChecked] = useState<boolean>(false);
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
   const { query, locale = "nl", push } = useRouter();
-
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-
-  const hasCalledHuwelijkPost = useRef(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const [huwelijk, setHuwelijk] = useState<Huwelijk | null>(null);
   const [ingeschrevenPersoon, setIngeschrevenPersoon] = useState<IngeschrevenPersoon | null>(null);
-
-  const { huwelijkId } = query;
-
+  const [assent, setAssent] = useState<Assent | null>(null);
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+  const { huwelijkId, assentId } = query;
 
-  const getContactObject = () => {
-    const contactObject: any = {};
+  const handleResponseSubmit = (response: AssentNamespace.status) => {
+    setIsLoading(true);
 
-    if (email) {
-      contactObject.emails = [
-        {
-          naam: email,
-          email: email,
-        },
-      ];
-    }
-
-    if (phoneNumber) {
-      contactObject.telefoonnummers = [
-        {
-          naam: phoneNumber,
-          telefoonnummer: phoneNumber,
-        },
-      ];
-    }
-
-    return contactObject;
+    AssentService.assentPatchItem(
+      assentId as string,
+      {
+        status: response,
+      } as Assent
+    )
+      .then(() => {
+        unauthenticate();
+        setIsCompleted(true);
+      })
+      .finally(() => setIsLoading(false));
   };
 
-  const getResultsChecklist = () => {
-    return [
-      {
-        display: "Ik verklaar dat ik niet trouw met mijn neef, nicht, oom of tante.",
-        result: true,
-      },
-      {
-        display:
-          "Ik verklaar dat ik nu niet met iemand anders getrouwd ben (in Nederland of in een ander land). Ik heb nu ook geen geregistreerd partnerschap.",
-        result: true,
-      },
-    ];
-  };
+  useEffect(() => {
+    const handleGetAssent = () => {
+      setIsLoading(true);
+
+      AssentService.assentGetItem(assentId as string)
+        .then((res) => setAssent(res))
+        .finally(() => setIsLoading(false));
+    };
+
+    if (!assentId) return; // all logic requires the assentId.
+
+    if (!isAuthenticated()) {
+      push(`/gateway-login?redirectUrl=/voorgenomen-huwelijk/partner/instemmen?assentId=${assentId}`);
+    }
+
+    if (isAuthenticated()) {
+      handleGetAssent();
+    }
+  }, [assentId, push]);
 
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
@@ -137,7 +130,7 @@ export default function MultistepForm1() {
       undefined,
       undefined,
       getBsnFromJWT() // passing { burgerservicenummer: "bsn" } breaks the call
-    ).then((res: any) => {
+    ).then((res) => {
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
@@ -155,56 +148,24 @@ export default function MultistepForm1() {
   }, [declarationCheckboxData]);
 
   useEffect(() => {
+    if (!assent) return;
     if (huwelijk) return;
-
-    const handleNewPersonLogin = () => {
-      setIsLoading(true);
-
-      HuwelijkService.huwelijkPostItem({
-        type: marriageOptions.type,
-        ceremonie: marriageOptions.ceremonyId,
-        moment: marriageOptions?.startTime,
-        ambtenaar: marriageOptions.ambtenaar,
-        locatie: marriageOptions.location,
-      })
-        .then((res) => {
-          setMarriageOptions({
-            ...marriageOptions,
-            huwelijk: {
-              // @ts-ignore
-              id: res._self.id,
-              firstPartnerName: `${res?.partners[0]?.contact?.voornaam} ${res?.partners[0]?.contact?.achternaam}`,
-              expiry: "FIXME: over 2 uur",
-              "ceremony-type": res.ceremonie.upnLabel,
-              "ceremony-start": res.moment ?? "",
-              "ceremony-end": res.moment ? moment(res.moment).add(15, "m").toDate().toString() : "",
-              "ceremony-location": "Locatie Stadskantoor",
-              "ceremony-price-currency": "EUR",
-              "ceremony-price-amount": res.kosten ? res.kosten.replace("EUR ", "") : "-",
-            },
-          });
-
-          if (!huwelijk) setHuwelijk(res); // TODO: two are being created, this ensures its not overwritten
-        })
-        .finally(() => setIsLoading(false));
-    };
 
     const handleSecondPersonLogin = () => {
       setIsLoading(true);
-      HuwelijkService.huwelijkGetItem(huwelijkId as string)
+      HuwelijkService.huwelijkGetItem(assent.property as string)
         .then((res) => {
           setHuwelijk(res);
         })
         .finally(() => setIsLoading(false));
     };
 
-    if (!huwelijkId && hasCalledHuwelijkPost.current === false) {
-      handleNewPersonLogin();
-      hasCalledHuwelijkPost.current = true;
-    }
-
     if (huwelijkId) handleSecondPersonLogin();
-  }, [huwelijk, huwelijkId, marriageOptions, setMarriageOptions]);
+  }, [huwelijk, huwelijkId, assent, marriageOptions, setMarriageOptions]);
+
+  if (!assentId) {
+    return <>Did not receive a "assentId" param.</>;
+  }
 
   const onDeclarationCheckboxChange = (event: any) => {
     setDeclarationCheckboxData({ ...declarationCheckboxData, [event.target.name]: event.target.checked });
@@ -353,44 +314,6 @@ export default function MultistepForm1() {
     </DataList>
   );
 
-  const onContactDetailsSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    setIsLoading(true);
-
-    if (!huwelijkId) {
-      AssentService.assentPatchItem(huwelijk?.partners[0]._self.id, {
-        requester: getBsnFromJWT(),
-        contact: {
-          subjectIdentificatie: {
-            inpBsn: getBsnFromJWT(),
-          },
-          ...getContactObject(),
-        },
-        results: getResultsChecklist(),
-      } as any).then(() => {
-        push("/voorgenomen-huwelijk/partner");
-      });
-    } else {
-      HuwelijkService.huwelijkPatchItem(huwelijkId as string, {
-        partners: [
-          {
-            requester: getBsnFromJWT(),
-            contact: {
-              subjectIdentificatie: {
-                inpBsn: getBsnFromJWT(),
-              },
-              ...getContactObject(),
-            },
-            results: getResultsChecklist(),
-          },
-        ],
-      }).then(() => {
-        push(`/persoonsgegevens/succes?huwelijkId=${huwelijkId}`);
-      });
-    }
-  };
-
   return (
     <Surface>
       <Document>
@@ -406,7 +329,7 @@ export default function MultistepForm1() {
           </PageHeader>
           <PageContent>
             <PageContentMain>
-              <form onSubmit={onContactDetailsSubmit}>
+              <form>
                 <HeadingGroup>
                   <Heading1>{t("huwelijksplanner-step-4:heading-1")}</Heading1>
                   {/*TODO: Previous button */}
@@ -414,110 +337,86 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {marriageOptions.huwelijk ? <ReservationCard locale={locale} /> : <Skeleton height="200px" />}
-                <section>
-                  {/*TODO: Banner / card */}
-                  <SpotlightSection type="info">
-                    <Heading2>Gegevens uit Basisregistratie Personen</Heading2>
-                    <Paragraph>
-                      Hieronder zie je de gegevens die bij ons bekend zijn. Klopt er iets niet?{" "}
-                      <Link href="https://pki.utrecht.nl/Loket/product/499c98cd12284d9c6bfe658dd0ea95cb">
-                        Neem contact op met de gemeente
-                      </Link>
-                      .
-                    </Paragraph>
-                  </SpotlightSection>
-                  <Heading2 id="personal-details">Persoonsgegevens</Heading2>
+                {!isCompleted && (
+                  <>
+                    {marriageOptions.huwelijk ? <ReservationCard locale={locale} /> : <Skeleton height="200px" />}
+                    <section>
+                      {/*TODO: Banner / card */}
+                      <SpotlightSection type="info">
+                        <Heading2>Gegevens uit Basisregistratie Personen</Heading2>
+                        <Paragraph>
+                          Hieronder zie je de gegevens die bij ons bekend zijn. Klopt er iets niet?{" "}
+                          <Link href="https://pki.utrecht.nl/Loket/product/499c98cd12284d9c6bfe658dd0ea95cb">
+                            Neem contact op met de gemeente
+                          </Link>
+                          .
+                        </Paragraph>
+                      </SpotlightSection>
+                      <Heading2 id="personal-details">Persoonsgegevens</Heading2>
 
-                  {ingeschrevenPersoon ? (
-                    <PersonalDataList ingeschrevenPersoon={ingeschrevenPersoon} />
-                  ) : (
-                    <Skeleton height="100px" />
-                  )}
+                      {ingeschrevenPersoon ? (
+                        <PersonalDataList ingeschrevenPersoon={ingeschrevenPersoon} />
+                      ) : (
+                        <Skeleton height="100px" />
+                      )}
 
-                  <Heading2 id="address">Adresgegevens</Heading2>
+                      <Heading2 id="address">Adresgegevens</Heading2>
 
-                  {ingeschrevenPersoon ? (
-                    <AddressDataList ingeschrevenPersoon={ingeschrevenPersoon} />
-                  ) : (
-                    <Skeleton height="100px" />
-                  )}
+                      {ingeschrevenPersoon ? (
+                        <AddressDataList ingeschrevenPersoon={ingeschrevenPersoon} />
+                      ) : (
+                        <Skeleton height="100px" />
+                      )}
 
-                  <Heading2 id="contact">Contactgegevens</Heading2>
-                  <dl>
-                    <p>Deze gegevens kun je zelf invullen of wijzigen.</p>
-                    <FormField>
-                      <p className="utrecht-form-field__label">
-                        <FormLabel htmlFor="tel">
-                          {t("form:tel")} <OptionalIndicator title={t("form:optional")} />
-                        </FormLabel>
-                      </p>
-                      <Textbox
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        className="utrecht-form-field__input"
-                        id="tel"
-                        type="tel"
-                        autoComplete="tel"
-                        required
+                      <DeclarationCheckboxGroup
+                        onChange={onDeclarationCheckboxChange}
+                        checkboxData={[
+                          {
+                            id: "6e562ba6-0ed3-4f4d-95e2-7f35614771b2",
+                            label:
+                              "Ik verklaar dat ik nu niet met iemand anders getrouwd ben (in Nederland of in een ander land). Ik heb nu ook geen geregistreerd partnerschap.",
+                            value: "unmarried",
+                          },
+                          {
+                            id: "03aadd3e-49ad-43a6-89f9-de574d0b92df",
+                            label: "Ik verklaar dat ik niet trouw met mijn neef, nicht, oom of tante.",
+                            value: "not-marrying-relative",
+                          },
+                          {
+                            id: "f65c0e93-d550-4de2-a970-79df86269f5c",
+                            label: "De gegevens die hierboven staan kloppen en zijn compleet.",
+                            value: "correct-information-and-complete",
+                          },
+                        ]}
                       />
-                    </FormField>
-                    <FormField>
-                      <p className="utrecht-form-field__label">
-                        <FormLabel htmlFor="email">
-                          {t("form:email")} <OptionalIndicator title={t("form:optional")} />
-                        </FormLabel>
-                      </p>
-                      <FormFieldDescription id="email-description">
-                        We sturen je een bevestiging naar dit e-mailadres.
-                        <br />
-                        De mail heeft een link om nog veranderingen door te geven.
-                      </FormFieldDescription>
-                      <Textbox
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="utrecht-form-field__input"
-                        id="email"
-                        type="email"
-                        autoComplete="email"
-                        aria-describedby="email-description"
-                        required
-                      />
-                    </FormField>
-                  </dl>
-                  <DeclarationCheckboxGroup
-                    onChange={onDeclarationCheckboxChange}
-                    checkboxData={[
-                      {
-                        id: "6e562ba6-0ed3-4f4d-95e2-7f35614771b2",
-                        label:
-                          "Ik verklaar dat ik nu niet met iemand anders getrouwd ben (in Nederland of in een ander land). Ik heb nu ook geen geregistreerd partnerschap.",
-                        value: "unmarried",
-                      },
-                      {
-                        id: "03aadd3e-49ad-43a6-89f9-de574d0b92df",
-                        label: "Ik verklaar dat ik niet trouw met mijn neef, nicht, oom of tante.",
-                        value: "not-marrying-relative",
-                      },
-                      {
-                        id: "f65c0e93-d550-4de2-a970-79df86269f5c",
-                        label: "De gegevens die hierboven staan kloppen en zijn compleet.",
-                        value: "correct-information-and-complete",
-                      },
-                    ]}
-                  />
-                  {/*<Button type="submit" name="type" appearance="primary-action-button">
-                    Deze gegevens kloppen
-                  </Button>*/}
-                  <Button
-                    disabled={isLoading || !declarationCheckboxChecked}
-                    type="submit"
-                    name="type"
-                    appearance="primary-action-button"
-                  >
-                    {isLoading ? "Loading..." : "Contactgegevens opslaan"}
-                  </Button>
-                </section>
+
+                      {!isAuthenticated() && !isCompleted && (
+                        <>Een ogenblik geduld, u wordt doorverwezen naar de inlogpagina...</>
+                      )}
+                      <ButtonGroup>
+                        <Button
+                          disabled={isLoading || !assent || !declarationCheckboxChecked}
+                          appearance="primary-action-button"
+                          onClick={() => handleResponseSubmit(AssentNamespace.status.GRANTED)}
+                        >
+                          Accepteren
+                        </Button>
+
+                        <Button
+                          disabled={isLoading || !assent}
+                          onClick={() => handleResponseSubmit(AssentNamespace.status.DECLINED)}
+                        >
+                          Afwijzen
+                        </Button>
+                      </ButtonGroup>
+                    </section>
+                  </>
+                )}
+                {isCompleted && (
+                  <section>
+                    <>Bedankt voor uw reactie, uw sessie is afgesloten. U kunt deze pagina verlaten.</>
+                  </section>
+                )}
                 <Aside>
                   <Heading2>Meer informatie</Heading2>
                   <Paragraph>
