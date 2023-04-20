@@ -296,7 +296,9 @@ export default function MultistepForm1() {
           emptyDescription={t("form:data-item-unknown")}
           notranslate={true}
         >
-          {ingeschrevenPersoon.nationaliteiten ?? "-"}
+          {/* The code is an RvIG code. The list of countries with corresponding codes can be found at https://publicaties.rvig.nl/Landelijke_tabellen/Landelijke_tabellen_32_t_m_61_excl_tabel_35/Landelijke_Tabellen_32_t_m_61_in_csv_formaat */}
+          {ingeschrevenPersoon.embedded.nationaliteiten[0].embedded.nationaliteit.omschrijving ??
+            ingeschrevenPersoon.embedded.nationaliteiten[0].embedded.nationaliteit.code}
         </DataListValue>
       </DataListItem>
 
