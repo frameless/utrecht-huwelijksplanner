@@ -106,10 +106,6 @@ export default function MultistepForm1() {
     }
   }, [assentId, push]);
 
-  if (!assentId) {
-    return <>Did not receive a "assentId" param.</>;
-  }
-
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
 
@@ -166,6 +162,10 @@ export default function MultistepForm1() {
 
     if (huwelijkId) handleSecondPersonLogin();
   }, [huwelijk, huwelijkId, assent, marriageOptions, setMarriageOptions]);
+
+  if (!assentId) {
+    return <>Did not receive a "assentId" param.</>;
+  }
 
   const onDeclarationCheckboxChange = (event: any) => {
     setDeclarationCheckboxData({ ...declarationCheckboxData, [event.target.name]: event.target.checked });
