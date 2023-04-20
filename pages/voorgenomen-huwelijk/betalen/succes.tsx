@@ -360,8 +360,12 @@ export default function HuwelijksplannerStep0() {
                           partner={{
                             id: partner._self.id,
                             name: `${partner?.embedded?.contact?.voornaam} ${partner?.embedded?.contact?.achternaam}`,
-                            tel: partner?.embedded?.contact?.embedded?.telefoonnummers?.length ? partner?.embedded?.contact?.embedded?.telefoonnummers[0]?.telefoonnummer : "",
-                            email: partner?.embedded?.contact?.embedded?.emails?.length ? partner?.embedded?.contact?.embedded?.emails[0]?.email: "",
+                            tel: partner?.embedded?.contact?.embedded?.telefoonnummers?.length
+                              ? partner?.embedded?.contact?.embedded?.telefoonnummers[0]?.telefoonnummer
+                              : "",
+                            email: partner?.embedded?.contact?.embedded?.emails?.length
+                              ? partner?.embedded?.contact?.embedded?.emails[0]?.email
+                              : "",
                           }}
                         />
                       ))}
