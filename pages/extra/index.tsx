@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { FormField, FormLabel } from "@utrecht/component-library-react";
 import Head from "next/head";
 import Image from "next/image";
@@ -28,7 +27,7 @@ import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFo
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
-import { SdgproductService } from "../../src/generated";
+import { HuwelijkService, SdgproductService } from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -39,7 +38,9 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
   const { locale, push } = useRouter();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSavingProduct, setIsSavingProduct] = useState<boolean>(false);
 
   const [trouwboekje, setTrouwboekje] = useState<any>();
   const [selectedExtra, setSelectedExtra] = useState<any>();
@@ -49,9 +50,21 @@ export default function MultistepForm1() {
   const onMarriageCertificateKindSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setMarriageOptions({...marriageOptions, extras: [selectedExtra]});
+    setIsSavingProduct(true);
 
-    push("/voorgenomen-huwelijk/checken");
+    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { producten: [selectedExtra] })
+      .then((res) => {
+        setMarriageOptions({
+          ...marriageOptions,
+          huwelijk: {
+            ...marriageOptions.huwelijk,
+            "ceremony-price-amount": res.kosten ? res.kosten.replace("EUR ", "") : "-",
+          },
+        });
+
+        push("/voorgenomen-huwelijk/checken");
+      })
+      .finally(() => setIsSavingProduct(false));
   };
 
   useEffect(() => {
@@ -113,15 +126,19 @@ export default function MultistepForm1() {
 
                         {trouwboekje.embedded.vertalingen.map((vertaling: any) => (
                           <FormField key={vertaling.id} type="radio">
-                            <RadioButton2 onChange={() => setSelectedExtra(vertaling.id)} id={vertaling.id} name="marriage-certificate-kind" />
+                            <RadioButton2
+                              onChange={() => setSelectedExtra(vertaling.id)}
+                              id={vertaling.id}
+                              name="marriage-certificate-kind"
+                            />
                             <FormLabel htmlFor={vertaling.id} type="radio">
                               {vertaling.specifiekeTekst} ({vertaling.kosten})
                             </FormLabel>
                           </FormField>
                         ))}
                       </Fieldset>
-                      <Button type="submit" name="type" appearance="primary-action-button">
-                        Deze wil ik hebben
+                      <Button disabled={isSavingProduct} type="submit" name="type" appearance="primary-action-button">
+                        {isSavingProduct ? "Loading..." : "Deze wil ik hebben"}
                       </Button>
                     </>
                   )}

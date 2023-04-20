@@ -359,7 +359,8 @@ export default function MultistepForm1() {
     setIsLoading(true);
 
     if (!huwelijkId) {
-      AssentService.assentPatchItem(huwelijk?.partners[0]._self.id, {
+      // @ts-ignore
+      AssentService.assentPatchItem(huwelijk?.embedded?.partners[0]._self.id, {
         requester: getBsnFromJWT(),
         contact: {
           subjectIdentificatie: {
