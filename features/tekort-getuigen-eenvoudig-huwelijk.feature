@@ -10,7 +10,7 @@ Abstract Scenario: De datumgrens voor het toevoegen van getuigen nadert
     | 05    | Partner 2  | 
 
 
-@validate-flow
+
 Scenario: De datumgrens voor het toevoegen van getuigen is verlopen
 Gegeven dat het trouwdatum binnen de komende 3 werkdagen zal zijn
 Dan krijg Partner 1 een email bevestiging dat de bruiloft is geannuleerd omdat er niet op tijd genoeg getuigen waren aangegeven

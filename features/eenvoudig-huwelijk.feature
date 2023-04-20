@@ -112,6 +112,19 @@ Wanneer ik op een van de inloggen opties klik
 Dan word ik ingelogd door DigID
   En word ik naar de "persoonsgegevens" van mij pagina gestuurd
 
+# Scenario: Ik wil de DigID inloggen annuleren **Optioneel**
+# Gegeven dat ik op de "login" pagina ben 
+#     En dat ik de DigID Inloggen interface zie
+#     En dat ik zie een Annuleren button zie
+# Wanneer ik op de Annuleren button klik
+# Dan word ik teruggestuurd naar de "voorgenomen-huwelijk" pagina
+
+# Scenario: Ik wil een DigID hebben
+# Gegeven dat ik op de "login" pagina ben 
+#     En dat ik geen DigID heb
+#     En dat ik de "Nog geen DigID? Vraag uw DigiD aan" link op de pagina zie
+# Wanneer ik op de link klik
+# Dan word ik naar een pagina waarin ik een DigID kan krijgen gestuurd
 
 Scenario: Ik Partner 1 wil mijn basisgegevens bevestigen
 Gegeven dat ik op de "persoonsgegevens" pagina ben 
@@ -177,9 +190,9 @@ Dan zie ik een type text input field
 Dan zie ik een type email input field 
 Dan zie ik een "Verstuur uitnodiging" button 
 
-Scenario: Ik Partner 1 wil de gegevens van Partner 2 voor een DigID inloggen uitnodiging per e-mail invullen **Optioneel**
+Scenario: Ik Partner 1 wil de naam van Partner 2 voor een DigID inloggen uitnodiging per e-mail invullen **Optioneel**
 Gegeven dat ik op de "voorgenomen-huwelijk/partner/uitnodigen" pagina ben
-Wanneer ik de gegevens van Partner 2 invul
+Wanneer ik de email van Partner 2 invul
 Dan wordt het getypte e-mail gecontroleerd voor geldigheid 
 
 Scenario: Ik Partner 1 wil een DigID inloggen uitnodiging per e-mail naar Partner 2 stuuren **Optioneel**
@@ -312,17 +325,30 @@ Dan zie ik de heading  "Nodig alvast getuigen uit"
   En zie ik vier type email input fields
   En zie ik een "Verstuur uitnodiging" button
 
-Scenario: We willen de gegevens van Getuige 1 invullen
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
-  En dat ik in de eerste text input field de naam van Getuige 1 heb ingevuld 
-Wanneer ik in de eerste type email input field de email van Getuige 1 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
+# Scenario: We willen de gegevens van Getuige 1 invullen
+# Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
+#   En dat ik in de eerste text input field de naam van Getuige 1 heb ingevuld 
+# Wanneer ik in de eerste type email input field de email van Getuige 1 invul
+# Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
-Scenario: We willen de gegevens van Getuige 2 invullen
-Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
-  En dat ik in de tweede text input field de naam van Getuige 2 heb ingevuld 
-Wanneer ik in de tweede type email input field de email van Getuige 2 invul
-Dan wordt het ingevulde email gecontroleerd voor geldigheid
+# Scenario: We willen de gegevens van Getuige 2 invullen
+# Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
+#   En dat ik in de tweede text input field de naam van Getuige 2 heb ingevuld 
+# Wanneer ik in de tweede type email input field de email van Getuige 2 invul
+# Dan wordt het ingevulde email gecontroleerd voor geldigheid
+
+Abstract Scenario: We willen de email van "<getuige>" invullen
+  Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
+    En dat ik in de "<text>" input field de naam van "<getuige>"  heb ingevuld
+  Dan wordt het ingevulde "<email>" gecontroleerd voor geldigheid
+  Voorbeelden: 
+    | text    | getuige    | email             |
+    | eerste  | Getuige 1  | jip@gmail.com     |
+    | tweede  | Getuige 2  | janneke@gmail.com |
+    | eerste  | Getuige 1  | jip@gmail.com     |
+    | tweede  | Getuige 2  | janneke@gmail.com |
+    | eerste  | Getuige 1  | jip@gmail.com     |
+    | tweede  | Getuige 2  | janneke@gmail.com |
 
 Scenario: We willen de uitnodigingen naar de getuigen sturen
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
