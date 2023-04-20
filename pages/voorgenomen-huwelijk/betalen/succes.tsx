@@ -83,6 +83,12 @@ export default function HuwelijksplannerStep0() {
     setTodos(Object.values(items).filter((item: any) => !item.result));
   }, [huwelijk]);
 
+  const handleVoorgenomenHuwelijkMelden = () => {
+    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { melding: true }).then(() => {
+      // melding is nu true
+    });
+  };
+
   // const isValidMinWitnesses = (data: HuwelijksplannerState) => {
   //   // Return `true` for valid when every partner has reached the minimum amount of witnesses
   //   return data.witnesses.length >= data.minWitnessPerPartner * 2;
@@ -394,6 +400,8 @@ export default function HuwelijksplannerStep0() {
                   </Aside>
                 </>
               )}
+
+              <Button onClick={handleVoorgenomenHuwelijkMelden}>Voorgenomen huwelijk melden</Button>
 
               {!huwelijk && isLoading && <Skeleton height="300px" />}
             </PageContentMain>
