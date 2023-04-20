@@ -173,9 +173,11 @@ export default function MultistepForm1() {
             huwelijk: {
               // @ts-ignore
               id: res._self.id,
-              firstPartnerName: `${res?.partners[0]?.contact?.voornaam} ${res?.partners[0]?.contact?.achternaam}`,
+              // @ts-ignore
+              firstPartnerName: `${res?.embedded.partners[0]?.embedded.contact?.voornaam} ${res?.embedded.partners[0]?.embedded.contact?.achternaam}`,
               expiry: "FIXME: over 2 uur",
-              "ceremony-type": res.ceremonie.upnLabel,
+              // @ts-ignore
+              "ceremony-type": res.embedded.ceremonie.upnLabel,
               "ceremony-start": res.moment ?? "",
               "ceremony-end": res.moment ? moment(res.moment).add(15, "m").toDate().toString() : "",
               "ceremony-location": "Locatie Stadskantoor",
@@ -359,7 +361,8 @@ export default function MultistepForm1() {
     setIsLoading(true);
 
     if (!huwelijkId) {
-      AssentService.assentPatchItem(huwelijk?.partners[0]._self.id, {
+      //@ts-ignore
+      AssentService.assentPatchItem(huwelijk?.embedded.partners[0]._self.id, {
         requester: getBsnFromJWT(),
         contact: {
           subjectIdentificatie: {
