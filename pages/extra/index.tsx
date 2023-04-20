@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FormEvent } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import {
   Button,
   Document,
@@ -25,6 +26,8 @@ import { Checkbox2, RadioButton2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
+import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import { HuwelijkService, SdgproductService } from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -36,10 +39,45 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
   const { locale, push } = useRouter();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSavingProduct, setIsSavingProduct] = useState<boolean>(false);
+
+  const [trouwboekje, setTrouwboekje] = useState<any>();
+  const [selectedExtra, setSelectedExtra] = useState<any>();
+
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+
   const onMarriageCertificateKindSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    push("/voorgenomen-huwelijk/checken");
+
+    setIsSavingProduct(true);
+
+    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { producten: [selectedExtra] })
+      .then((res) => {
+        setMarriageOptions({
+          ...marriageOptions,
+          huwelijk: {
+            ...marriageOptions.huwelijk,
+            "ceremony-price-amount": res.kosten ? res.kosten.replace("EUR ", "") : "-",
+          },
+        });
+
+        push("/voorgenomen-huwelijk/checken");
+      })
+      .finally(() => setIsSavingProduct(false));
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    SdgproductService.sdgproductGetCollection(undefined, undefined, undefined, "trouwboekje")
+      .then((res) => {
+        setTrouwboekje(res.results[0]);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <Surface>
@@ -68,45 +106,42 @@ export default function MultistepForm1() {
                     Een trouwboekje hoort niet meer standaard bij een huwelijk. Je kunt het wel bestellen als extra -
                     dan is het een mooie aandenken aan jullie trouwdag.
                   </Paragraph>
-                  <Fieldset style={{ width: "fit-content" }}>
-                    <FieldsetLegend>Trouwboekje</FieldsetLegend>
-                    <Paragraph>
-                      <Image src="/img/voorbeeld-trouwboekjes.jpg" width={600} height={385} alt="trouwboekjes" />
-                    </Paragraph>
-                    <FormField type="checkbox">
-                      <Checkbox2 id="marriage-certificate-agreement" />
-                      <FormLabel htmlFor="marriage-certificate-agreement" type="checkbox">
-                        Ja, wij willen een trouwboekje
-                      </FormLabel>
-                    </FormField>
-                    <FormField type="radio">
-                      <RadioButton2 id="1" name="marriage-certificate-kind" />
-                      <FormLabel htmlFor="1" type="radio">
-                        Wit lederen omslag (€ 32,50)
-                      </FormLabel>
-                    </FormField>
-                    <FormField type="radio">
-                      <RadioButton2 id="2" name="marriage-certificate-kind" />
-                      <FormLabel htmlFor="2" type="radio">
-                        Wit lederen omslag (€ 32,50)
-                      </FormLabel>
-                    </FormField>
-                    <FormField type="radio">
-                      <RadioButton2 id="3" name="marriage-certificate-kind" />
-                      <FormLabel htmlFor="3" type="radio">
-                        Donkerblauw lederen omslag (€ 32,50)
-                      </FormLabel>
-                    </FormField>
-                    <FormField type="radio">
-                      <RadioButton2 id="4" name="marriage-certificate-kind" />
-                      <FormLabel htmlFor="4" type="radio">
-                        Rood kunstlederen omslag (€ 30,00)
-                      </FormLabel>
-                    </FormField>
-                  </Fieldset>
-                  <Button type="submit" name="type" appearance="primary-action-button">
-                    Deze wil ik hebben
-                  </Button>
+
+                  {isLoading && <Skeleton height="200px" />}
+
+                  {!isLoading && trouwboekje && (
+                    <>
+                      <Fieldset style={{ width: "fit-content" }}>
+                        <FieldsetLegend>{trouwboekje.upnLabel}</FieldsetLegend>
+                        <Paragraph>
+                          <Image src="/img/voorbeeld-trouwboekjes.jpg" width={600} height={385} alt="trouwboekjes" />
+                        </Paragraph>
+
+                        <FormField type="checkbox">
+                          <Checkbox2 id="marriage-certificate-agreement" />
+                          <FormLabel htmlFor="marriage-certificate-agreement" type="checkbox">
+                            Ja, wij willen een trouwboekje
+                          </FormLabel>
+                        </FormField>
+
+                        {trouwboekje.embedded.vertalingen.map((vertaling: any) => (
+                          <FormField key={vertaling.id} type="radio">
+                            <RadioButton2
+                              onChange={() => setSelectedExtra(vertaling.id)}
+                              id={vertaling.id}
+                              name="marriage-certificate-kind"
+                            />
+                            <FormLabel htmlFor={vertaling.id} type="radio">
+                              {vertaling.specifiekeTekst} ({vertaling.kosten})
+                            </FormLabel>
+                          </FormField>
+                        ))}
+                      </Fieldset>
+                      <Button disabled={isSavingProduct} type="submit" name="type" appearance="primary-action-button">
+                        {isSavingProduct ? "Loading..." : "Deze wil ik hebben"}
+                      </Button>
+                    </>
+                  )}
                 </section>
               </form>
             </PageContentMain>
