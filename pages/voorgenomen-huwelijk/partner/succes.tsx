@@ -90,13 +90,21 @@ export default function MultistepForm1() {
                 <PartnerInvitation
                   title="Verstuur uitnodiging opnieuw"
                   body="Komt de uitnodiging niet aan? Controleer of je een foutje hebt gemaakt in het e-mailadres en verstuur de uitnodiging opnieuw."
-                  partnerName={{
+                  partnerFirstName={{
                     value: (data.partnerInvitation && data.partnerInvitation["name"]) ?? "",
-                    label: t("form:name"),
+                    label: t("form:given-name"),
+                  }}
+                  partnerLastName={{
+                    value: "",
+                    label: t("form:family-name"),
                   }}
                   partnerEmail={{
                     value: (data.partnerInvitation && data.partnerInvitation["email"]) ?? "",
                     label: t("form:email"),
+                  }}
+                  partnerPhoneNumber={{
+                    value: "",
+                    label: t("form:tel"),
                   }}
                 />
               </form>
