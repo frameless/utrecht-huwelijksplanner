@@ -23,8 +23,10 @@ import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsCont
 import { HuwelijkService } from "../../../src/generated";
 
 type contactType = {
-  text?: string;
-  email?: string;
+  "section-partner given-name"?: string;
+  "section-partner family-name"?: string;
+  "section-partner email"?: string;
+  "section-partner tel"?: string;
 };
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -46,8 +48,12 @@ export default function MultistepForm1() {
       partners: [
         {
           contact: {
-            voornaam: contact?.text,
-            emails: [{ name: contact?.email, email: contact?.email }],
+            voornaam: contact?.["section-partner given-name"],
+            achternaam: contact?.["section-partner family-name"],
+            emails: [{ naam: contact?.["section-partner email"], email: contact?.["section-partner email"] }],
+            telefoonnummers: [
+              { naam: contact?.["section-partner tel"], telefoonnummer: contact?.["section-partner tel"] },
+            ],
           },
         },
       ],
@@ -88,14 +94,22 @@ export default function MultistepForm1() {
                 <PartnerInvitation
                   title="Nodig je partner uit"
                   body="Je kunt nu je partner uitnodigen om ook in te loggen met DigID. Zo bevestigt je partner dat jullie het huwelijk willen regelen."
-                  onChange={(e) => setContact({ ...contact, [e.target.type]: e.target.value })}
-                  partnerName={{
+                  onChange={(e) => setContact({ ...contact, [e.target.autocomplete]: e.target.value })}
+                  partnerFirstName={{
                     value: "",
-                    label: t("form:name"),
+                    label: t("form:given-name"),
+                  }}
+                  partnerLastName={{
+                    value: "",
+                    label: t("form:family-name"),
                   }}
                   partnerEmail={{
                     value: "",
                     label: t("form:email"),
+                  }}
+                  partnerPhoneNumber={{
+                    value: "",
+                    label: t("form:tel"),
                   }}
                 />
               </form>
