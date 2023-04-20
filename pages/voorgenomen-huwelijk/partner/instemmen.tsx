@@ -110,7 +110,6 @@ export default function MultistepForm1() {
     return <>Did not receive a "assentId" param.</>;
   }
 
-
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
 
