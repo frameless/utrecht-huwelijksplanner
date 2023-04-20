@@ -25,9 +25,9 @@ import {
   Surface,
   Textbox,
 } from "../../../src/components";
+import { ReservationCard } from "../../../src/components";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
 import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
 import { Huwelijk, HuwelijkService } from "../../../src/generated";
 
@@ -48,12 +48,15 @@ export default function MultistepForm1() {
   const onWitnessSubmit = (data: any) => {
     setIsLoading(true);
 
-    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { getuigen: mapGetuigen(data) } as Huwelijk).then(
-      () => {
-        push("/voorgenomen-huwelijk/getuigen/succes");
-        setIsLoading(false);
-      }
-    );
+    HuwelijkService.huwelijkPatchItem({
+      id: marriageOptions.huwelijk.id,
+      requestBody: {
+        getuigen: mapGetuigen(data),
+      } as Huwelijk,
+    }).then(() => {
+      push("/voorgenomen-huwelijk/getuigen/succes");
+      setIsLoading(false);
+    });
   };
 
   const WitnessFieldset = ({ index }: { index: number }) => {

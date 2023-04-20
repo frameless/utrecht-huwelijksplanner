@@ -43,12 +43,12 @@ export default function MultistepForm1() {
   const handleResponseSubmit = (response: AssentNamespace.status) => {
     setIsLoading(true);
 
-    AssentService.assentPatchItem(
-      assentId as string,
-      {
+    AssentService.assentPatchItem({
+      id: assentId as string,
+      requestBody: {
         status: response,
-      } as Assent
-    )
+      } as Assent,
+    })
       .then(() => {
         unauthenticate();
         setIsCompleted(true);
@@ -60,7 +60,7 @@ export default function MultistepForm1() {
     const handleGetAssent = () => {
       setIsLoading(true);
 
-      AssentService.assentGetItem(assentId as string)
+      AssentService.assentGetItem({ id: assentId as string })
         .then((res) => setAssent(res))
         .finally(() => setIsLoading(false));
     };

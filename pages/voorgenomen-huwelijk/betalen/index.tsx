@@ -15,23 +15,9 @@ const Betalen: NextPage = () => {
   const handleBetalenClick = () => {
     setIsLoading(true);
 
-    MollieService.mollieGetCollection(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      marriageOptions.huwelijk.id
-    ).then((res) => {
+    MollieService.mollieGetCollection({
+      id: marriageOptions.huwelijk.id,
+    }).then((res) => {
       // @ts-ignore
       const json = JSON.parse(res);
 

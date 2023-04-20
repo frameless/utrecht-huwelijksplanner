@@ -66,7 +66,7 @@ const BlogPost: NextPage = () => {
 
     setIsLoading(true);
 
-    SdgproductService.sdgproductGetItem(marriageOptions.type)
+    SdgproductService.sdgproductGetItem({ id: marriageOptions.type })
       .then((res) => {
         setCeremonyTypes(
           // @ts-ignore
@@ -87,12 +87,12 @@ const BlogPost: NextPage = () => {
     const _endDate: Date = new Date(selectedDate);
     const endDate = _endDate.setDate(_endDate.getDate() + 1);
 
-    AvailabilitycheckService.availabilitycheckGetCollection(
-      ceremonyTypes.map((ceremony) => ceremony.id),
-      "PT2H",
-      format(endDate, "yyyy-MM-dd"),
-      selectedDate
-    ).then((res) => {
+    AvailabilitycheckService.availabilitycheckGetCollection({
+      resourcesCould: ceremonyTypes.map((ceremony) => ceremony.id),
+      start: selectedDate,
+      stop: format(endDate, "yyyy-MM-dd"),
+      interval: "PT2H",
+    }).then((res) => {
       // @ts-ignore
       setAvailableSlots(JSON.parse(res)[selectedDate].filter((slot: any) => slot.resources.length > 0));
     });

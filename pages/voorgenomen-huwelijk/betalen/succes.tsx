@@ -62,7 +62,7 @@ export default function HuwelijksplannerStep0() {
 
     setIsLoading(true);
 
-    HuwelijkService.huwelijkGetItem(marriageOptions.huwelijk.id)
+    HuwelijkService.huwelijkGetItem({ id: marriageOptions.huwelijk.id })
       .then((res) => {
         setIsLoading(true);
         setHuwelijk(res);
@@ -94,7 +94,12 @@ export default function HuwelijksplannerStep0() {
     if (confirmHuwelijkAnnuleren) {
       setIsLoading(true);
 
-      HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { status: Huwelijk.status.CANCELLED })
+      HuwelijkService.huwelijkPatchItem({
+        id: marriageOptions.huwelijk.id,
+        requestBody: {
+          status: Huwelijk.status.CANCELLED,
+        },
+      })
         .then((res) => setHuwelijk(res))
         .finally(() => setIsLoading(false));
     }
@@ -167,18 +172,26 @@ export default function HuwelijksplannerStep0() {
 
     const handleUpdateEmail = () => {
       setIsLoading(true);
-      AssentService.assentPatchItem(
-        partner.id as string,
-        { contact: { emails: [{ naam: email, email: email }] } } as any
-      ).finally(() => setIsLoading(false));
+      AssentService.assentPatchItem({
+        id: partner.id as string,
+        requestBody: {
+          contact: {
+            emails: [{ naam: email, email: email }],
+          },
+        } as any,
+      }).finally(() => setIsLoading(false));
     };
 
     const handleUpdatePhoneNumber = () => {
       setIsLoading(true);
-      AssentService.assentPatchItem(
-        partner.id as string,
-        { contact: { telefoonnummers: [{ naam: phoneNumber, telefoonnummer: phoneNumber }] } } as any
-      ).finally(() => setIsLoading(false));
+      AssentService.assentPatchItem({
+        id: partner.id as string,
+        requestBody: {
+          contact: {
+            telefoonnummers: [{ naam: phoneNumber, telefoonnummer: phoneNumber }],
+          },
+        } as any,
+      }).finally(() => setIsLoading(false));
     };
 
     return (

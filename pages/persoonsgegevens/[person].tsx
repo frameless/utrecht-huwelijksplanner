@@ -38,6 +38,7 @@ import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHe
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import {
+  Assent,
   AssentService,
   Huwelijk,
   HuwelijkService,
@@ -116,28 +117,9 @@ export default function MultistepForm1() {
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
 
-    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      getBsnFromJWT() // passing { burgerservicenummer: "bsn" } breaks the call
-    ).then((res: any) => {
+    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection({
+      burgerservicenummer: getBsnFromJWT(),
+    }).then((res: any) => {
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
@@ -161,11 +143,13 @@ export default function MultistepForm1() {
       setIsLoading(true);
 
       HuwelijkService.huwelijkPostItem({
-        type: marriageOptions.type,
-        ceremonie: marriageOptions.ceremonyId,
-        moment: marriageOptions?.startTime,
-        ambtenaar: marriageOptions.ambtenaar,
-        locatie: marriageOptions.location,
+        requestBody: {
+          type: marriageOptions.type,
+          ceremonie: marriageOptions.ceremonyId,
+          moment: marriageOptions?.startTime,
+          ambtenaar: marriageOptions.ambtenaar,
+          locatie: marriageOptions.location,
+        },
       })
         .then((res) => {
           setMarriageOptions({
@@ -191,7 +175,7 @@ export default function MultistepForm1() {
 
     const handleSecondPersonLogin = () => {
       setIsLoading(true);
-      HuwelijkService.huwelijkGetItem(huwelijkId as string)
+      HuwelijkService.huwelijkGetItem({ id: huwelijkId as string })
         .then((res) => {
           setHuwelijk(res);
         })
@@ -359,33 +343,19 @@ export default function MultistepForm1() {
     setIsLoading(true);
 
     if (!huwelijkId) {
-      // @ts-ignore
-      AssentService.assentPatchItem(huwelijk?.embedded?.partners[0]._self.id, {
-        requester: getBsnFromJWT(),
-        contact: {
-          subjectIdentificatie: {
-            inpBsn: getBsnFromJWT(),
-          },
-          ...getContactObject(),
-        },
-        results: getResultsChecklist(),
-      } as any).then(() => {
-        push("/voorgenomen-huwelijk/partner");
-      });
-    } else {
-      HuwelijkService.huwelijkPatchItem(huwelijkId as string, {
-        partners: [
-          {
-            requester: getBsnFromJWT(),
-            contact: {
-              subjectIdentificatie: {
-                inpBsn: getBsnFromJWT(),
-              },
-              ...getContactObject(),
+      AssentService.assentPatchItem({
+        //@ts-ignore
+        id: huwelijk?.embedded?.partners[0]._self.id,
+        requestBody: {
+          requester: getBsnFromJWT(),
+          contact: {
+            subjectIdentificatie: {
+              inpBsn: getBsnFromJWT(),
             },
-            results: getResultsChecklist(),
+            ...getContactObject(),
           },
-        ],
+          results: getResultsChecklist(),
+        } as any,
       }).then(() => {
         push(`/persoonsgegevens/succes?huwelijkId=${huwelijkId}`);
       });

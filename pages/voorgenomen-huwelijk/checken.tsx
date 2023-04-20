@@ -47,7 +47,7 @@ export default function MultistepForm1() {
   useEffect(() => {
     setIsLoading(true);
 
-    HuwelijkService.huwelijkGetItem(marriageOptions.huwelijk.id)
+    HuwelijkService.huwelijkGetItem({ id: marriageOptions.huwelijk.id })
       .then((res) => {
         const {
           // @ts-ignore

@@ -73,12 +73,12 @@ export default function MultistepForm1() {
   const handleResponseSubmit = (response: AssentNamespace.status) => {
     setIsLoading(true);
 
-    AssentService.assentPatchItem(
-      assentId as string,
-      {
+    AssentService.assentPatchItem({
+      id: assentId as string,
+      requestBody: {
         status: response,
-      } as Assent
-    )
+      } as Assent,
+    })
       .then(() => {
         unauthenticate();
         setIsCompleted(true);
@@ -90,7 +90,7 @@ export default function MultistepForm1() {
     const handleGetAssent = () => {
       setIsLoading(true);
 
-      AssentService.assentGetItem(assentId as string)
+      AssentService.assentGetItem({ id: assentId as string })
         .then((res) => setAssent(res))
         .finally(() => setIsLoading(false));
     };
@@ -109,28 +109,9 @@ export default function MultistepForm1() {
   useEffect(() => {
     if (!getBsnFromJWT() || ingeschrevenPersoon) return;
 
-    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      getBsnFromJWT() // passing { burgerservicenummer: "bsn" } breaks the call
-    ).then((res) => {
+    IngeschrevenpersoonService.ingeschrevenpersoonGetCollection({
+      burgerservicenummer: getBsnFromJWT(), // passing { burgerservicenummer: "bsn" } breaks the call
+    }).then((res) => {
       setIngeschrevenPersoon(res.results[0]);
     });
   }, [huwelijk, ingeschrevenPersoon]);
@@ -153,7 +134,7 @@ export default function MultistepForm1() {
 
     const handleSecondPersonLogin = () => {
       setIsLoading(true);
-      HuwelijkService.huwelijkGetItem(assent.property as string)
+      HuwelijkService.huwelijkGetItem({ id: assent.property as string })
         .then((res) => {
           setHuwelijk(res);
         })

@@ -12,7 +12,7 @@ const Betalen = () => {
 
     setIsLoading(true);
 
-    MollieService.mollieGetItem(paymentId as string).then((res) => {
+    MollieService.mollieGetItem({ id: paymentId as string }).then((res) => {
       if (res.status === "paid") {
         setIsLoading(false);
         setTimeout(() => push("/voorgenomen-huwelijk/betalen/succes"), 2000);

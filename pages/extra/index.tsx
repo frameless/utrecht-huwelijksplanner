@@ -52,7 +52,12 @@ export default function MultistepForm1() {
 
     setIsSavingProduct(true);
 
-    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id, { producten: [selectedExtra] })
+    HuwelijkService.huwelijkPatchItem({
+      id: marriageOptions.huwelijk.id,
+      requestBody: {
+        producten: [selectedExtra],
+      },
+    })
       .then((res) => {
         setMarriageOptions({
           ...marriageOptions,
@@ -70,7 +75,9 @@ export default function MultistepForm1() {
   useEffect(() => {
     setIsLoading(true);
 
-    SdgproductService.sdgproductGetCollection(undefined, undefined, undefined, "trouwboekje")
+    SdgproductService.sdgproductGetCollection({
+      upnLabel: trouwboekje,
+    })
       .then((res) => {
         setTrouwboekje(res.results[0]);
       })

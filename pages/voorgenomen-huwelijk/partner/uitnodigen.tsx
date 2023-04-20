@@ -42,15 +42,18 @@ export default function MultistepForm1() {
   const onPartnerInvitationSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    HuwelijkService.huwelijkPatchItem(marriageOptions.huwelijk.id as string, {
-      partners: [
-        {
-          contact: {
-            voornaam: contact?.text,
-            emails: [{ name: contact?.email, email: contact?.email }],
+    HuwelijkService.huwelijkPatchItem({
+      id: marriageOptions.huwelijk.id as string,
+      requestBody: {
+        partners: [
+          {
+            contact: {
+              voornaam: contact?.text,
+              emails: [{ name: contact?.email, email: contact?.email }],
+            },
           },
-        },
-      ],
+        ],
+      },
     }).then(() => {
       push("/voorgenomen-huwelijk/getuigen");
     });

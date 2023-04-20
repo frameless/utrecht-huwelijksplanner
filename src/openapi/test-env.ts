@@ -23,7 +23,7 @@ const putAssent = (data: Assent) =>
 
 export const HuwelijksplannerAPI: HuwelijksplannerInterface = {
   getProducten: () =>
-    SdgproductService.sdgproductGetCollection().then((data): SDGProduct[] => resolveEmbedded(data.results || [])),
+    SdgproductService.sdgproductGetCollection({}).then((data): SDGProduct[] => resolveEmbedded(data.results || [])),
 
   getAccommodations: () =>
     // @ts-ignore
@@ -50,17 +50,17 @@ export const HuwelijksplannerAPI: HuwelijksplannerInterface = {
       status: AssentNamespace.status.GRANTED,
     }),
 
-  getHuwelijk: (id: string) => HuwelijkService.huwelijkGetItem(id).then((data): Huwelijk => resolveEmbedded(data)),
+  getHuwelijk: (id: string) => HuwelijkService.huwelijkGetItem({ id }).then((data): Huwelijk => resolveEmbedded(data)),
 
   getHuwelijken: () =>
-    HuwelijkService.huwelijkGetCollection().then((data): Huwelijk[] => resolveEmbedded(data.results || [])),
+    HuwelijkService.huwelijkGetCollection({}).then((data): Huwelijk[] => resolveEmbedded(data.results || [])),
 
   // @ts-ignore
   deleteHuwelijk: (huwelijk: Huwelijk) => HuwelijkService.huwelijkDeleteItem(huwelijk.id || ''),
 
-  getKlanten: () => KlantService.klantGetCollection().then((data) => resolveEmbedded(data.results)),
+  getKlanten: () => KlantService.klantGetCollection({}).then((data) => resolveEmbedded(data.results)),
 
-  getKlant: (uuid: string): Promise<Klant> => KlantService.klantGetItem(uuid),
+  getKlant: (uuid: string): Promise<Klant> => KlantService.klantGetItem({ id: uuid }),
 
-  getAvailability: () => AvailabilityService.availabilityGetCollection().then((data) => data.results || []),
+  getAvailability: () => AvailabilityService.availabilityGetCollection({}).then((data) => data.results || []),
 };

@@ -39,7 +39,7 @@ export default function ApplicantEmail() {
 
   useEffect(() => {
     const handleGetAssent = () => {
-      AssentService.assentGetItem(assentId as string).then((res) => setAssent(res));
+      AssentService.assentGetItem({ id: assentId as string }).then((res) => setAssent(res));
     };
 
     if (!assentId) return; // all logic requires the assentId.
