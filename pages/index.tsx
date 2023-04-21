@@ -76,6 +76,11 @@ export default function HuwelijksplannerStep0() {
                 <SpotlightSection aside type="info">
                   <Heading2>Meer informatie</Heading2>
                   <Paragraph>
+                    <UtrechtLink href="https://www.uabc.nl/?osc=uabc" external>
+                      Vindt u DigiD ingewikkeld? Bekijk dan deze uitleg over DigiD.
+                    </UtrechtLink>
+                  </Paragraph>
+                  <Paragraph>
                     <UtrechtLink
                       href="https://www.rijksoverheid.nl/onderwerpen/trouwen-samenlevingscontract-en-geregistreerd-partnerschap/vraag-en-antwoord/wat-is-het-verschil-tussen-een-huwelijk-geregistreerd-partnerschap-en-samenlevingscontract"
                       external
