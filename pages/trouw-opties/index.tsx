@@ -6,8 +6,6 @@ import { FormEvent, useState } from "react";
 import {
   Aside,
   Button,
-  ButtonGroup,
-  ButtonLink,
   Document,
   Heading1,
   Heading2,
@@ -23,6 +21,7 @@ import {
   UtrechtIconArrow,
   Link as UtrechtLink,
 } from "../../src/components";
+import { BackLink } from "../../src/components/BackLink";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 
@@ -61,11 +60,7 @@ export default function MultistepForm1() {
               <PageHeaderTemplate />
             </PageHeader>
             <PageContent>
-              <ButtonGroup>
-                <ButtonLink href="/" appearance="subtle-button">
-                  ← Terug
-                </ButtonLink>
-              </ButtonGroup>
+              <BackLink href="/">← Terug</BackLink>
               <PageContentMain>
                 <HeadingGroup>
                   <Heading1>{t("huwelijksplanner-step-1:heading-1")}</Heading1>

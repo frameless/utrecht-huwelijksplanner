@@ -1,6 +1,7 @@
 .utrecht-page-header {
   --utrecht-page-header-logo-max-inline-size: 192px;
   --utrecht-page-header-logo-max-block-size: 102px;
+  --utrecht-page-header-padding-block-end: 0px;
   --utrecht-logo-max-inline-size: var(--utrecht-page-header-logo-max-inline-size);
   --utrecht-logo-max-block-size: var(--utrecht-page-header-logo-max-block-size);
   background-color: var(--utrecht-page-background-color);

@@ -8,7 +8,6 @@ import {
   Aside,
   Button,
   ButtonGroup,
-  ButtonLink,
   Calendar,
   Document,
   Fieldset,
@@ -30,11 +29,13 @@ import {
   TimeValue,
 } from "../../src/components";
 import { RadioButton2 } from "../../src/components";
+import { BackLink } from "../../src/components/BackLink";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";
 import { Availability } from "../../src/generated";
 import { HuwelijksplannerAPI } from "../../src/openapi";
+
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common", "huwelijksplanner-step-2"])),
@@ -100,11 +101,7 @@ const BlogPost: NextPage = () => {
             <PageHeaderTemplate />
           </PageHeader>
           <PageContent>
-            <ButtonGroup>
-              <ButtonLink href="/trouw-opties/" appearance="subtle-button">
-                ← Terug
-              </ButtonLink>
-            </ButtonGroup>
+            <BackLink href="/trouw-opties/">← Terug</BackLink>
             <PageContentMain>
               <form onSubmit={onSelectedDateAndLocationSubmit}>
                 <HeadingGroup>

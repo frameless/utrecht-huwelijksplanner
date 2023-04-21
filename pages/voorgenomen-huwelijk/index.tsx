@@ -22,6 +22,7 @@ import {
   Surface,
   Link as UtrechtLink,
 } from "../../src/components";
+import { BackLink } from "../../src/components/BackLink";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
@@ -56,11 +57,7 @@ export default function MultistepForm1() {
             <PageHeaderTemplate />
           </PageHeader>
           <PageContent>
-            <ButtonGroup>
-              <ButtonLink href={`/trouw-opties/${slug}`} appearance="subtle-button">
-                ← Terug
-              </ButtonLink>
-            </ButtonGroup>
+            <BackLink href={`/trouw-opties/${slug}`}>← Terug</BackLink>
             <PageContentMain>
               <HeadingGroup>
                 <Heading1>{productName}</Heading1>
