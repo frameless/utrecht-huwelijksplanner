@@ -16,6 +16,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FormEvent } from "react";
 import { ButtonGroup, ButtonLink, PageContentMain, PartnerInvitation } from "../../../src/components";
+import { BackLink } from "../../../src/components/BackLink";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
@@ -51,11 +52,7 @@ export default function MultistepForm1() {
             <PageHeaderTemplate />
           </PageHeader>
           <PageContent>
-            <ButtonGroup>
-              <ButtonLink href="/voorgenomen-huwelijk/partner" appearance="subtle-button">
-                ← Terug
-              </ButtonLink>
-            </ButtonGroup>
+            <BackLink href="/voorgenomen-huwelijk/partner">← Terug</BackLink>
             <PageContentMain>
               <form onSubmit={onPartnerInvitationSubmit}>
                 <HeadingGroup>

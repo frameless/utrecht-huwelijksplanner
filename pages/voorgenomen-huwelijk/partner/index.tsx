@@ -20,6 +20,7 @@ import {
   Surface,
   Link as UtrechtLink,
 } from "../../../src/components";
+import { BackLink } from "../../../src/components/BackLink";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
@@ -53,11 +54,7 @@ export default function MultistepForm1() {
             <PageHeaderTemplate />
           </PageHeader>
           <PageContent>
-            <ButtonGroup>
-              <ButtonLink href={`/persoonsgegevens/${personId}`} appearance="subtle-button">
-                ← Terug
-              </ButtonLink>
-            </ButtonGroup>
+            <BackLink href={`/persoonsgegevens/${personId}`}>← Terug</BackLink>
             <PageContentMain>
               <HeadingGroup>
                 <Heading1>{t("huwelijksplanner-step-5:heading-1")}</Heading1>
