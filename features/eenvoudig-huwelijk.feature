@@ -1,3 +1,5 @@
+#na de getuigenunitnodigingen, kan man betalen of extras toevoegen, dan betalen, dan als geen extras waren toegevoegd, kan man ze nu toevoegen en dan voor ze betalen
+
 # language: nl
 
 Functionaliteit: Eenvoudig huwelijk
