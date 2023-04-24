@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent } from "react";
 import {
   Aside,
   BackLink,
@@ -12,10 +12,7 @@ import {
   ButtonGroup,
   Calendar,
   Document,
-  Fieldset,
-  FieldsetLegend,
   FormField,
-  FormLabel,
   Heading1,
   Heading2,
   HeadingGroup,
@@ -26,14 +23,11 @@ import {
   PageFooter,
   PageHeader,
   Paragraph,
-  RadioButton2,
   SkipLink,
   Surface,
-  TimeValue,
 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { CalendarEvent } from "../../src/data/huwelijksplanner-state";
 import { AvailabilitycheckService } from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -48,11 +42,17 @@ const PlanningFormPage: NextPage = () => {
 
   const onCalendarDateSelected = (date: Date) => {
     console.log(date);
+    console.log(date.getMonth());
 
     AvailabilitycheckService.availabilitycheckGetCollection({
+      resourcesCould: [
+        "0c0767af-e3d4-4ec0-ba9c-571b4c275b71",
+        "868da2b9-242d-4053-8e21-8a9ef66bd15c",
+        "31816698-10a0-41d6-8d0f-9108306491c0",
+      ],
       interval: "PT2H",
-      start: format(startOfMonth(date.getMonth()), "yyyy-MM-dd"),
-      stop: format(lastDayOfMonth(date.getMonth()), "yyyy-MM-dd"),
+      start: format(startOfMonth(date), "yyyy-MM-dd"),
+      stop: format(lastDayOfMonth(date), "yyyy-MM-dd"),
     }).then((result) => {
       console.log(result);
     });
