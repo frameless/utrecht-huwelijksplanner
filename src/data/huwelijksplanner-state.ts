@@ -151,7 +151,7 @@ export type CeremonyType =
   | 'geregistreerd-partnerschap'
   | 'uitgebreid-huwelijk';
 
-export interface TODO {
+export interface HuwelijksplannerState {
   partnerInvitation?: Invitee;
   partners: HuwelijksplannerPartner[];
   witnesses: Witness[];
@@ -174,9 +174,7 @@ export interface TODO {
   orderProductEndDate?: string;
 }
 
-export type HuwelijksplannerState = TODO;
-
-export type HuwelijksplannerInput = Partial<TODO>;
+export type HuwelijksplannerInput = Partial<HuwelijksplannerState>;
 
 export const initialState: HuwelijksplannerState = {
   partners: [],
