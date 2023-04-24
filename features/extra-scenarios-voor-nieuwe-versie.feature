@@ -34,7 +34,10 @@ Abstract Scenario: De datumgrens voor het toevoegen van getuigen nadert
 @validate-flow
 Scenario: De datumgrens voor het toevoegen van getuigen is verlopen
 Gegeven dat het trouwdatum binnen de komende 3 werkdagen zal zijn
-Dan wordt Partner 1 opgebeld door een medewerker 
+  En dat er nog niet genoeg getuigens zijn uitgenodigd
+Dan wordt een medeweker gewaarschuwd over de nog steeds onvoltooid getuigenuitnodigingsproces
+  En wordt Partner 1 opgebeld door een medewerker 
+
 
 
 
