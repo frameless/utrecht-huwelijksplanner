@@ -6,6 +6,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import {
   Aside,
+  BackLink,
   Button,
   ButtonGroup,
   Calendar,
@@ -24,12 +25,11 @@ import {
   PageFooter,
   PageHeader,
   Paragraph,
+  RadioButton2,
   SkipLink,
   Surface,
   TimeValue,
 } from "../../src/components";
-import { RadioButton2 } from "../../src/components";
-import { BackLink } from "../../src/components/BackLink";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { calendars, CeremonyType } from "../../src/data/huwelijksplanner-state";

@@ -5,6 +5,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FormEvent, useState } from "react";
 import {
   Aside,
+  BackLink,
   Button,
   Document,
   Heading1,
@@ -21,7 +22,6 @@ import {
   UtrechtIconArrow,
   Link as UtrechtLink,
 } from "../../src/components";
-import { BackLink } from "../../src/components/BackLink";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 

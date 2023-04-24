@@ -19,13 +19,13 @@ import {
   PageHeader,
   Paragraph,
   PartnerInvitation,
+  ReservationCard,
   SkipLink,
   SpotlightSection,
   Surface,
 } from "../../../src/components";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
 import { exampleState } from "../../../src/data/huwelijksplanner-state";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
