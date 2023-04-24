@@ -20,7 +20,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   return (
-    <div className={clsx("example-debugging-disabled", "utrecht-theme", "utrecht-theme--media-query-color-scheme")}>
+    <div className={clsx("example-debugging-disabled", "utrecht-theme")}>
       <Component {...pageProps} />
     </div>
   );
