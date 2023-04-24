@@ -30,10 +30,9 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ChangeEventHandler, FormEvent, useState } from "react";
 import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
-import { Checkbox2 } from "../../src/components";
+import { Checkbox2, ReservationCard } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { ReservationCard } from "../../src/components/huwelijksplanner/ReservationCard";
 import { exampleState, HuwelijksplannerPartner } from "../../src/data/huwelijksplanner-state";
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {

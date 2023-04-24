@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import {
+  BackLink,
   ButtonGroup,
   ButtonLink,
   Document,
@@ -16,14 +17,13 @@ import {
   PageFooter,
   PageHeader,
   Paragraph,
+  ReservationCard,
   SkipLink,
   Surface,
   Link as UtrechtLink,
 } from "../../../src/components";
-import { BackLink } from "../../../src/components/BackLink";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { ReservationCard } from "../../../src/components/huwelijksplanner/ReservationCard";
 import { exampleState } from "../../../src/data/huwelijksplanner-state";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
