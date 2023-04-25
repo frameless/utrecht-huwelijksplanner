@@ -29,9 +29,9 @@ import {
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
-import {AvailabilitycheckService, SDGProduct, SdgproductService} from "../../src/generated";
 import { CeremonyType } from "../../src/data/huwelijksplanner-state";
-import {resolveEmbedded} from "../../src/embedded";
+import { resolveEmbedded } from "../../src/embedded";
+import {Availability, AvailabilitycheckService, SDGProduct, SdgproductService} from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -51,11 +51,18 @@ interface CeremonyData {
   ambtenaarId: string;
 }
 
+interface AvailabilitySlot {
+  resources: string[],
+  start: string,
+  stop: string
+}
+
 const PlanningFormPage: NextPage = () => {
-  const { locale = "nl", replace } = useRouter();
+  const { replace } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
   const [ceremonies, setCeremonies] = useState<CeremonyData[]>([]);
+  const [availabilities, setAvailabilities] = useState([]);
 
   const [calendarRange, setCalendarRange] = useState<CalendarRange>({
     start: startOfMonth(Date.now()),
@@ -63,13 +70,16 @@ const PlanningFormPage: NextPage = () => {
   });
 
   const loadEvents = useCallback(() => {
-    if(ceremonies.length == 0) return;
+    if (ceremonies.length === 0) return;
     AvailabilitycheckService.availabilitycheckGetCollection({
-      resourcesCould: ceremonies.map(ceremony => ceremony.id),
+      resourcesCould: ceremonies.map((ceremony) => ceremony.id),
       interval: "PT2H",
       start: format(calendarRange.start, "yyyy-MM-dd"),
       stop: format(calendarRange.end, "yyyy-MM-dd"),
-    }).then((result) => {});
+    }).then((response) => {
+      const availabilityResults = JSON.parse(response as any);
+      console.log(availabilityResults[format(Date.now(), "yyyy-MM-dd")] as AvailabilitySlot[])
+    });
   }, [ceremonies, calendarRange]);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {};
@@ -81,17 +91,18 @@ const PlanningFormPage: NextPage = () => {
   useEffect(() => {
     if (!marriageOptions.productId) replace("/trouw-opties/");
 
-    SdgproductService.sdgproductGetItem({ id: marriageOptions.productId as string })
-      .then((result) => {
-        result = resolveEmbedded(result);
-        setCeremonies(result.gerelateerdeProducten.map((ceremony: SDGProduct) => ({
+    SdgproductService.sdgproductGetItem({ id: marriageOptions.productId as string }).then((response) => {
+      const result = resolveEmbedded(response);
+      setCeremonies(
+        result.gerelateerdeProducten.map((ceremony: SDGProduct) => ({
           id: ceremony.id,
           name: ceremony.upnLabel,
           locationId: ceremony.gerelateerdeProducten[0].id,
-          ambtenaarId: ceremony.gerelateerdeProducten[0].gerelateerdeProducten[0].id
-        })))
-      });
-  }, [marriageOptions.productId]);
+          ambtenaarId: ceremony.gerelateerdeProducten[0].gerelateerdeProducten[0].id,
+        }))
+      );
+    });
+  }, []);
 
   useEffect(() => {
     loadEvents();

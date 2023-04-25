@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useCallback, useContext, useState } from "react";
 import {
   Aside,
   BackLink,
@@ -26,7 +26,7 @@ import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFo
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { RegistrationType } from "../../src/data/huwelijksplanner-state";
-import {SdgproductService} from "../../src/generated";
+import { SdgproductService } from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -39,7 +39,7 @@ export default function MultistepForm1() {
   const { push } = useRouter();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
-  const onWeddingOptionsSubmit = (weddingType: RegistrationType) => {
+  const onMarriageOptionSubmit = (weddingType: RegistrationType) => {
     SdgproductService.sdgproductGetCollection({
       upnLabel: weddingType as string,
     }).then((result) => {
@@ -47,7 +47,8 @@ export default function MultistepForm1() {
       setMarriageOptions({
         ...marriageOptions,
         "registration-type": weddingType,
-        productId: productId });
+        productId: productId,
+      });
       push(`/trouw-opties/${weddingType}`);
     });
   };
@@ -79,7 +80,7 @@ export default function MultistepForm1() {
                   name="type"
                   value="huwelijk"
                   appearance="primary-action-button"
-                  onClick={() => onWeddingOptionsSubmit("huwelijk")}
+                  onClick={() => onMarriageOptionSubmit("huwelijk")}
                 >
                   Trouwen plannen <UtrechtIconArrow />
                 </Button>
@@ -88,7 +89,7 @@ export default function MultistepForm1() {
                   name="type"
                   value="geregistreerd-partnerschap"
                   appearance="primary-action-button"
-                  onClick={() => onWeddingOptionsSubmit("geregistreerd-partnerschap")}
+                  onClick={() => onMarriageOptionSubmit("geregistreerd-partnerschap")}
                 >
                   Geregistreerd partnerschap plannen
                   <UtrechtIconArrow />
