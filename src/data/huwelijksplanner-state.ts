@@ -161,6 +161,7 @@ export interface HuwelijksplannerState {
   'ceremony-end'?: string;
   'ceremony-price'?: string;
   'registration-type'?: RegistrationType;
+  productId?: string;
   reservation?: Reservation;
   cancelled?: boolean;
   cancelable?: boolean;
