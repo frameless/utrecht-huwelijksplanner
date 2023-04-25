@@ -26,6 +26,7 @@ import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFo
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { RegistrationType } from "../../src/data/huwelijksplanner-state";
+import {SdgproductService} from "../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -35,12 +36,20 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-1"]);
-  const { replace } = useRouter();
+  const { push } = useRouter();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
 
   const onWeddingOptionsSubmit = (weddingType: RegistrationType) => {
-    setMarriageOptions({ ...marriageOptions, "registration-type": weddingType });
-    replace(`/trouw-opties/${weddingType}`);
+    SdgproductService.sdgproductGetCollection({
+      upnLabel: weddingType as string,
+    }).then((result) => {
+      const productId = result.results[0].id as string;
+      setMarriageOptions({
+        ...marriageOptions,
+        "registration-type": weddingType,
+        productId: productId });
+      push(`/trouw-opties/${weddingType}`);
+    });
   };
 
   return (

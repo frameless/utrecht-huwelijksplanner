@@ -1,10 +1,10 @@
-import { format, lastDayOfMonth, startOfMonth } from "date-fns";
+import { endOfMonth, format, startOfMonth } from "date-fns";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FormEvent } from "react";
+import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
 import {
   Aside,
   BackLink,
@@ -28,7 +28,10 @@ import {
 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { AvailabilitycheckService } from "../../src/generated";
+import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import {AvailabilitycheckService, SDGProduct, SdgproductService} from "../../src/generated";
+import { CeremonyType } from "../../src/data/huwelijksplanner-state";
+import {resolveEmbedded} from "../../src/embedded";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -36,31 +39,63 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   },
 });
 
+interface CalendarRange {
+  start: Date;
+  end: Date;
+}
+
+interface CeremonyData {
+  type: CeremonyType;
+  id: string;
+  locationId: string;
+  ambtenaarId: string;
+}
+
 const PlanningFormPage: NextPage = () => {
   const { locale = "nl", replace } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+  const [ceremonies, setCeremonies] = useState<CeremonyData[]>([]);
+
+  const [calendarRange, setCalendarRange] = useState<CalendarRange>({
+    start: startOfMonth(Date.now()),
+    end: endOfMonth(Date.now()),
+  });
+
+  const loadEvents = useCallback(() => {
+    if(ceremonies.length == 0) return;
+    AvailabilitycheckService.availabilitycheckGetCollection({
+      resourcesCould: ceremonies.map(ceremony => ceremony.id),
+      interval: "PT2H",
+      start: format(calendarRange.start, "yyyy-MM-dd"),
+      stop: format(calendarRange.end, "yyyy-MM-dd"),
+    }).then((result) => {});
+  }, [ceremonies, calendarRange]);
+
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {};
 
   const onCalendarDateSelected = (date: Date) => {
-    console.log(date);
-    console.log(date.getMonth());
-
-    AvailabilitycheckService.availabilitycheckGetCollection({
-      resourcesCould: [
-        "0c0767af-e3d4-4ec0-ba9c-571b4c275b71",
-        "868da2b9-242d-4053-8e21-8a9ef66bd15c",
-        "31816698-10a0-41d6-8d0f-9108306491c0",
-      ],
-      interval: "PT2H",
-      start: format(startOfMonth(date), "yyyy-MM-dd"),
-      stop: format(lastDayOfMonth(date), "yyyy-MM-dd"),
-    }).then((result) => {
-      console.log(result);
-    });
+    setCalendarRange({ start: startOfMonth(date), end: endOfMonth(date) });
   };
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    console.log(event);
-  };
+  useEffect(() => {
+    if (!marriageOptions.productId) replace("/trouw-opties/");
+
+    SdgproductService.sdgproductGetItem({ id: marriageOptions.productId as string })
+      .then((result) => {
+        result = resolveEmbedded(result);
+        setCeremonies(result.gerelateerdeProducten.map((ceremony: SDGProduct) => ({
+          id: ceremony.id,
+          name: ceremony.upnLabel,
+          locationId: ceremony.gerelateerdeProducten[0].id,
+          ambtenaarId: ceremony.gerelateerdeProducten[0].gerelateerdeProducten[0].id
+        })))
+      });
+  }, [marriageOptions.productId]);
+
+  useEffect(() => {
+    loadEvents();
+  }, [calendarRange]);
 
   return (
     <Surface>
@@ -81,7 +116,6 @@ const PlanningFormPage: NextPage = () => {
               <form onSubmit={onSubmit}>
                 <HeadingGroup>
                   <Heading1>{t("huwelijksplanner-step-2:heading-1")}</Heading1>
-                  {/*TODO: Step indicator component */}
                   <Paragraph lead>
                     {t("common:step-n-of-m", { n: 2, m: 5 })} — {t("huwelijksplanner-step-2:title")}
                   </Paragraph>
