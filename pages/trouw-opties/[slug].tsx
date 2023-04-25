@@ -40,28 +40,35 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   },
 });
 
-interface CalendarData {
+type CalendarData = {
   start: Date;
   end: Date;
   selectedDate: Date;
 }
 
-interface CeremonyData {
+type CeremonyData = {
   type: CeremonyType;
   id: string;
   locationId: string;
   ambtenaarId: string;
 }
 
-interface AvailabilitySlot {
+type AvailabilitySlot = {
   resources: string[];
   start: string;
   stop: string;
 }
 
-interface Availabilities {
+type Availabilities = {
   [key: string]: Array<AvailabilitySlot>;
 }
+
+type Events = {
+  date: string;
+  emphasis?: boolean;
+  selected?: boolean;
+  disabled?: boolean;
+};
 
 const PlanningFormPage: NextPage = () => {
   const { replace } = useRouter();
@@ -86,6 +93,7 @@ const PlanningFormPage: NextPage = () => {
     }).then((response) => {
       const availabilityResults: Availabilities = response as any;
       setAvailabilities(availabilityResults);
+
     });
   }, [ceremonies, calendarData]);
 
