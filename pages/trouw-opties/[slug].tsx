@@ -1,10 +1,10 @@
-import { endOfMonth, format, startOfMonth } from "date-fns";
+import { addDays, addWeeks, endOfMonth, format, startOfMonth } from "date-fns";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FormEvent, useCallback, useContext, useEffect, useState } from "react";
+import { FormEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import {
   Aside,
   BackLink,
@@ -31,7 +31,8 @@ import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHe
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { CeremonyType } from "../../src/data/huwelijksplanner-state";
 import { resolveEmbedded } from "../../src/embedded";
-import {Availability, AvailabilitycheckService, SDGProduct, SdgproductService} from "../../src/generated";
+import { Availability, AvailabilitycheckService, SDGProduct, SdgproductService } from "../../src/generated";
+import { string } from "prop-types";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -39,34 +40,47 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   },
 });
 
-interface CalendarRange {
+type CalendarData = {
   start: Date;
   end: Date;
+  selectedDate: Date;
 }
 
-interface CeremonyData {
+type CeremonyData = {
   type: CeremonyType;
   id: string;
   locationId: string;
   ambtenaarId: string;
 }
 
-interface AvailabilitySlot {
-  resources: string[],
-  start: string,
-  stop: string
+type AvailabilitySlot = {
+  resources: string[];
+  start: string;
+  stop: string;
 }
+
+type Availabilities = {
+  [key: string]: Array<AvailabilitySlot>;
+}
+
+type Events = {
+  date: string;
+  emphasis?: boolean;
+  selected?: boolean;
+  disabled?: boolean;
+};
 
 const PlanningFormPage: NextPage = () => {
   const { replace } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
   const [ceremonies, setCeremonies] = useState<CeremonyData[]>([]);
-  const [availabilities, setAvailabilities] = useState([]);
+  const [availabilities, setAvailabilities] = useState<Availabilities>({});
 
-  const [calendarRange, setCalendarRange] = useState<CalendarRange>({
+  const [calendarData, setCalendarData] = useState<CalendarData>({
     start: startOfMonth(Date.now()),
     end: endOfMonth(Date.now()),
+    selectedDate: addWeeks(Date.now(), 3),
   });
 
   const loadEvents = useCallback(() => {
@@ -74,18 +88,19 @@ const PlanningFormPage: NextPage = () => {
     AvailabilitycheckService.availabilitycheckGetCollection({
       resourcesCould: ceremonies.map((ceremony) => ceremony.id),
       interval: "PT2H",
-      start: format(calendarRange.start, "yyyy-MM-dd"),
-      stop: format(calendarRange.end, "yyyy-MM-dd"),
+      start: format(calendarData.start, "yyyy-MM-dd"),
+      stop: format(calendarData.end, "yyyy-MM-dd"),
     }).then((response) => {
-      const availabilityResults = JSON.parse(response as any);
-      console.log(availabilityResults[format(Date.now(), "yyyy-MM-dd")] as AvailabilitySlot[])
+      const availabilityResults: Availabilities = response as any;
+      setAvailabilities(availabilityResults);
+
     });
-  }, [ceremonies, calendarRange]);
+  }, [ceremonies, calendarData]);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {};
 
   const onCalendarDateSelected = (date: Date) => {
-    setCalendarRange({ start: startOfMonth(date), end: endOfMonth(date) });
+    setCalendarData({ start: startOfMonth(date), end: endOfMonth(date), selectedDate: date });
   };
 
   useEffect(() => {
@@ -106,7 +121,7 @@ const PlanningFormPage: NextPage = () => {
 
   useEffect(() => {
     loadEvents();
-  }, [calendarRange]);
+  }, [calendarData]);
 
   return (
     <Surface>
@@ -137,7 +152,10 @@ const PlanningFormPage: NextPage = () => {
                 </Paragraph>
                 <section>
                   <FormField>
-                    <Calendar onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))} />
+                    <Calendar
+                      currentDate={calendarData.selectedDate}
+                      onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))}
+                    />
                   </FormField>
                   <ButtonGroup>
                     <Button type="submit" appearance="primary-action-button">
