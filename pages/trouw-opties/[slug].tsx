@@ -1,12 +1,11 @@
 import { FormLabel, RadioButton } from "@utrecht/component-library-react";
 import { endOfMonth, format, startOfMonth } from "date-fns";
-import _ from "lodash";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { FormEvent, useContext, useEffect, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import {
   Aside,
   BackLink,
@@ -35,9 +34,8 @@ import {
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
-import { CeremonyType } from "../../src/data/huwelijksplanner-state";
-import { resolveEmbedded } from "../../src/embedded";
-import { AvailabilitycheckService, SDGProduct, SdgproductService } from "../../src/generated";
+import { useAvailabilitycheckGetCollection } from "../../src/hooks/useAvailabilitycheckGetCollection";
+import { useSdgProductGetItem } from "../../src/hooks/useSdgProductGetItem";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -49,23 +47,6 @@ type CalendarData = {
   start: Date;
   end: Date;
   selectedDate?: Date;
-};
-
-type CeremonyData = {
-  type: CeremonyType;
-  id: string;
-  locationId: string;
-  ambtenaarId: string;
-};
-
-type AvailabilitySlot = {
-  resources: string[];
-  start: string;
-  stop: string;
-};
-
-type Availabilities = {
-  [key: string]: Array<AvailabilitySlot>;
 };
 
 type Event = {
@@ -81,38 +62,19 @@ const PlanningFormPage: NextPage = () => {
   const { locale = "nl", replace } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
-  const [ceremonies, setCeremonies] = useState<CeremonyData[]>([]);
-  const [availabilities, setAvailabilities] = useState<Availabilities>({});
   const [calendarData, setCalendarData] = useState<CalendarData>({
     start: startOfMonth(Date.now()),
     end: endOfMonth(Date.now()),
     selectedDate: undefined,
   });
-  const [unavailableData, setUnavailableData] = useState<Event[]>([]);
 
-  useEffect(() => {
-    if (ceremonies.length === 0) return;
-    AvailabilitycheckService.availabilitycheckGetCollection({
-      resourcesCould: ceremonies.map((ceremony) => ceremony.id),
-      interval: "PT2H",
-      start: format(calendarData.start, dateFormat),
-      stop: format(calendarData.end, dateFormat),
-    }).then((response) => {
-      const availabilityResults: Availabilities = response as any;
-      setAvailabilities(availabilityResults);
-
-      const unavailableEvents: Event[] = [];
-      _.forEach(availabilityResults, (result, date) => {
-        if (!_.some(result, (r) => r.resources.length > 0)) {
-          unavailableEvents.push({
-            date: date,
-            disabled: true,
-          });
-        }
-      });
-      setUnavailableData(unavailableEvents);
-    });
-  }, [ceremonies, calendarData.start.toISOString()]);
+  const [ceremonyData, ceremoniesLoading, ceremonyError] = useSdgProductGetItem(marriageOptions.productId);
+  const [availabilityData, availabilityLoading, availabilityError] = useAvailabilitycheckGetCollection({
+    ceremonyData: ceremonyData,
+    interval: "PT2H",
+    start: calendarData.start,
+    stop: calendarData.end,
+  });
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -121,22 +83,6 @@ const PlanningFormPage: NextPage = () => {
   const onCalendarDateSelected = (date: Date) => {
     setCalendarData({ start: startOfMonth(date), end: endOfMonth(date), selectedDate: date });
   };
-
-  useEffect(() => {
-    if (!marriageOptions.productId) replace("/trouw-opties/");
-
-    SdgproductService.sdgproductGetItem({ id: marriageOptions.productId as string }).then((response) => {
-      const result = resolveEmbedded(response);
-      setCeremonies(
-        result.gerelateerdeProducten.map((ceremony: SDGProduct) => ({
-          id: ceremony.id as string,
-          type: ceremony.upnLabel as CeremonyType,
-          locationId: ceremony.gerelateerdeProducten[0].id,
-          ambtenaarId: ceremony.gerelateerdeProducten[0].gerelateerdeProducten[0].id,
-        }))
-      );
-    });
-  }, []);
 
   return (
     <Surface>
@@ -168,7 +114,7 @@ const PlanningFormPage: NextPage = () => {
                 <section>
                   <FormField>
                     <Calendar
-                      events={unavailableData}
+                      //events={unavailableData}
                       onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))}
                     />
                   </FormField>
@@ -177,11 +123,11 @@ const PlanningFormPage: NextPage = () => {
                       <p>
                         <DateValue dateTime={calendarData.selectedDate.toISOString()} locale={locale} />
                       </p>
-                      {ceremonies.map((ceremony, idx) => (
+                      {ceremonyData.map((ceremony, idx) => (
                         <Fieldset key={idx}>
                           <FieldsetLegend>{ceremony.type}</FieldsetLegend>
                           {calendarData.selectedDate &&
-                            availabilities[format(calendarData.selectedDate, dateFormat)]
+                            availabilityData[format(calendarData.selectedDate, dateFormat)]
                               ?.filter((slot) => slot.resources.includes(ceremony.id))
                               .map((slot, idx) => (
                                 <FormField key={idx} type="radio">
