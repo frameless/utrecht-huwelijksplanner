@@ -1,12 +1,11 @@
 import { FormLabel, RadioButton } from "@utrecht/component-library-react";
 import { endOfMonth, format, startOfMonth } from "date-fns";
-import _ from "lodash";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { FormEvent, useContext, useEffect, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import {
   Aside,
   BackLink,
@@ -35,10 +34,8 @@ import {
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
-import { CeremonyType } from "../../src/data/huwelijksplanner-state";
-import { resolveEmbedded } from "../../src/embedded";
-import { AvailabilitycheckService, SDGProduct, SdgproductService } from "../../src/generated";
-import {CeremonyData, useSdgProductGetItem} from "../../src/hooks/useSdgProductGetItem";
+import { useSdgProductGetItem } from "../../src/hooks/useSdgProductGetItem";
+import { useAvailabilitycheckGetCollection } from "../../src/hooks/useAvailabilitycheckGetCollection";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -50,16 +47,6 @@ type CalendarData = {
   start: Date;
   end: Date;
   selectedDate?: Date;
-};
-
-type AvailabilitySlot = {
-  resources: string[];
-  start: string;
-  stop: string;
-};
-
-type Availabilities = {
-  [key: string]: Array<AvailabilitySlot>;
 };
 
 type Event = {
@@ -75,38 +62,19 @@ const PlanningFormPage: NextPage = () => {
   const { locale = "nl", replace } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
-  const [availabilities, setAvailabilities] = useState<Availabilities>({});
   const [calendarData, setCalendarData] = useState<CalendarData>({
     start: startOfMonth(Date.now()),
     end: endOfMonth(Date.now()),
     selectedDate: undefined,
   });
-  const [unavailableData, setUnavailableData] = useState<Event[]>([]);
+
   const [ceremonyData, ceremoniesLoading, ceremonyError] = useSdgProductGetItem(marriageOptions.productId);
-
-  useEffect(() => {
-    if (ceremonyData.length === 0) return;
-    AvailabilitycheckService.availabilitycheckGetCollection({
-      resourcesCould: ceremonyData.map((ceremony) => ceremony.id),
-      interval: "PT2H",
-      start: format(calendarData.start, dateFormat),
-      stop: format(calendarData.end, dateFormat),
-    }).then((response) => {
-      const availabilityResults: Availabilities = response as any;
-      setAvailabilities(availabilityResults);
-
-      const unavailableEvents: Event[] = [];
-      _.forEach(availabilityResults, (result, date) => {
-        if (!_.some(result, (r) => r.resources.length > 0)) {
-          unavailableEvents.push({
-            date: date,
-            disabled: true,
-          });
-        }
-      });
-      setUnavailableData(unavailableEvents);
-    });
-  }, [ceremonyData, calendarData.start.toISOString()]);
+  const [availabilityData, availabilityLoading, availabilityError] = useAvailabilitycheckGetCollection({
+    ceremonyData: ceremonyData,
+    interval: "PT2H",
+    start: calendarData.start,
+    stop: calendarData.end,
+  });
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -146,7 +114,7 @@ const PlanningFormPage: NextPage = () => {
                 <section>
                   <FormField>
                     <Calendar
-                      events={unavailableData}
+                      //events={unavailableData}
                       onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))}
                     />
                   </FormField>
@@ -159,7 +127,7 @@ const PlanningFormPage: NextPage = () => {
                         <Fieldset key={idx}>
                           <FieldsetLegend>{ceremony.type}</FieldsetLegend>
                           {calendarData.selectedDate &&
-                            availabilities[format(calendarData.selectedDate, dateFormat)]
+                            availabilityData[format(calendarData.selectedDate, dateFormat)]
                               ?.filter((slot) => slot.resources.includes(ceremony.id))
                               .map((slot, idx) => (
                                 <FormField key={idx} type="radio">
