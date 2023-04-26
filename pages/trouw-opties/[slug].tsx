@@ -38,6 +38,7 @@ import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext
 import { CeremonyType } from "../../src/data/huwelijksplanner-state";
 import { resolveEmbedded } from "../../src/embedded";
 import { AvailabilitycheckService, SDGProduct, SdgproductService } from "../../src/generated";
+import {CeremonyData, useSdgProductGetItem} from "../../src/hooks/useSdgProductGetItem";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -49,13 +50,6 @@ type CalendarData = {
   start: Date;
   end: Date;
   selectedDate?: Date;
-};
-
-type CeremonyData = {
-  type: CeremonyType;
-  id: string;
-  locationId: string;
-  ambtenaarId: string;
 };
 
 type AvailabilitySlot = {
@@ -81,7 +75,6 @@ const PlanningFormPage: NextPage = () => {
   const { locale = "nl", replace } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
-  const [ceremonies, setCeremonies] = useState<CeremonyData[]>([]);
   const [availabilities, setAvailabilities] = useState<Availabilities>({});
   const [calendarData, setCalendarData] = useState<CalendarData>({
     start: startOfMonth(Date.now()),
@@ -89,11 +82,12 @@ const PlanningFormPage: NextPage = () => {
     selectedDate: undefined,
   });
   const [unavailableData, setUnavailableData] = useState<Event[]>([]);
+  const [ceremonyData, ceremoniesLoading, ceremonyError] = useSdgProductGetItem(marriageOptions.productId);
 
   useEffect(() => {
-    if (ceremonies.length === 0) return;
+    if (ceremonyData.length === 0) return;
     AvailabilitycheckService.availabilitycheckGetCollection({
-      resourcesCould: ceremonies.map((ceremony) => ceremony.id),
+      resourcesCould: ceremonyData.map((ceremony) => ceremony.id),
       interval: "PT2H",
       start: format(calendarData.start, dateFormat),
       stop: format(calendarData.end, dateFormat),
@@ -112,7 +106,7 @@ const PlanningFormPage: NextPage = () => {
       });
       setUnavailableData(unavailableEvents);
     });
-  }, [ceremonies, calendarData.start.toISOString()]);
+  }, [ceremonyData, calendarData.start.toISOString()]);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -121,22 +115,6 @@ const PlanningFormPage: NextPage = () => {
   const onCalendarDateSelected = (date: Date) => {
     setCalendarData({ start: startOfMonth(date), end: endOfMonth(date), selectedDate: date });
   };
-
-  useEffect(() => {
-    if (!marriageOptions.productId) replace("/trouw-opties/");
-
-    SdgproductService.sdgproductGetItem({ id: marriageOptions.productId as string }).then((response) => {
-      const result = resolveEmbedded(response);
-      setCeremonies(
-        result.gerelateerdeProducten.map((ceremony: SDGProduct) => ({
-          id: ceremony.id as string,
-          type: ceremony.upnLabel as CeremonyType,
-          locationId: ceremony.gerelateerdeProducten[0].id,
-          ambtenaarId: ceremony.gerelateerdeProducten[0].gerelateerdeProducten[0].id,
-        }))
-      );
-    });
-  }, []);
 
   return (
     <Surface>
@@ -177,7 +155,7 @@ const PlanningFormPage: NextPage = () => {
                       <p>
                         <DateValue dateTime={calendarData.selectedDate.toISOString()} locale={locale} />
                       </p>
-                      {ceremonies.map((ceremony, idx) => (
+                      {ceremonyData.map((ceremony, idx) => (
                         <Fieldset key={idx}>
                           <FieldsetLegend>{ceremony.type}</FieldsetLegend>
                           {calendarData.selectedDate &&
