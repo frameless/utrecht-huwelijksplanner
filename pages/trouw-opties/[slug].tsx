@@ -1,4 +1,6 @@
+import { FormLabel, RadioButton } from "@utrecht/component-library-react";
 import { addWeeks, endOfMonth, format, startOfMonth } from "date-fns";
+import _ from "lodash";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -11,10 +13,11 @@ import {
   Button,
   ButtonGroup,
   Calendar,
+  DateValue,
   Document,
-  FormField,
   Fieldset,
   FieldsetLegend,
+  FormField,
   Heading1,
   Heading2,
   HeadingGroup,
@@ -28,7 +31,6 @@ import {
   SkipLink,
   Surface,
   TimeValue,
-  DateValue,
 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
@@ -36,8 +38,6 @@ import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext
 import { CeremonyType } from "../../src/data/huwelijksplanner-state";
 import { resolveEmbedded } from "../../src/embedded";
 import { AvailabilitycheckService, SDGProduct, SdgproductService } from "../../src/generated";
-import _ from "lodash";
-import { FormLabel, RadioButton } from "@utrecht/component-library-react";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -86,12 +86,11 @@ const PlanningFormPage: NextPage = () => {
   const [calendarData, setCalendarData] = useState<CalendarData>({
     start: startOfMonth(Date.now()),
     end: endOfMonth(Date.now()),
-    selectedDate: undefined
+    selectedDate: undefined,
   });
   const [unavailableData, setUnavailableData] = useState<Event[]>([]);
 
   useEffect(() => {
-    console.log(ceremonies.length)
     if (ceremonies.length === 0) return;
     AvailabilitycheckService.availabilitycheckGetCollection({
       resourcesCould: ceremonies.map((ceremony) => ceremony.id),
@@ -117,7 +116,6 @@ const PlanningFormPage: NextPage = () => {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(event.target);
   };
 
   const onCalendarDateSelected = (date: Date) => {
@@ -137,7 +135,6 @@ const PlanningFormPage: NextPage = () => {
           ambtenaarId: ceremony.gerelateerdeProducten[0].gerelateerdeProducten[0].id,
         }))
       );
-      console.log("ceremonies updated")
     });
   }, []);
 
@@ -180,14 +177,14 @@ const PlanningFormPage: NextPage = () => {
                       <p>
                         <DateValue dateTime={calendarData.selectedDate.toISOString()} locale={locale} />
                       </p>
-                      {ceremonies.map((ceremony) => (
-                        <Fieldset>
+                      {ceremonies.map((ceremony, idx) => (
+                        <Fieldset key={idx}>
                           <FieldsetLegend>{ceremony.type}</FieldsetLegend>
                           {calendarData.selectedDate &&
                             availabilities[format(calendarData.selectedDate, dateFormat)]
                               ?.filter((slot) => slot.resources.includes(ceremony.id))
                               .map((slot, idx) => (
-                                <FormField type="radio">
+                                <FormField key={idx} type="radio">
                                   <RadioButton id={`${idx}`} value={idx} name="event" />
                                   <FormLabel htmlFor={`${idx}`}>
                                     <TimeValue dateTime={slot.start} locale={locale} />
@@ -196,13 +193,13 @@ const PlanningFormPage: NextPage = () => {
                               ))}
                         </Fieldset>
                       ))}
+                      <ButtonGroup>
+                        <Button type="submit" appearance="primary-action-button">
+                          Ja, dit wil ik!
+                        </Button>
+                      </ButtonGroup>
                     </div>
                   )}
-                  <ButtonGroup>
-                    <Button type="submit" appearance="primary-action-button">
-                      Ja, dit wil ik!
-                    </Button>
-                  </ButtonGroup>
                 </section>
                 <Aside>
                   <Heading2>Meer informatie</Heading2>
