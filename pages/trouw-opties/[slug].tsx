@@ -26,7 +26,9 @@ import {
   PageHeader,
   Paragraph,
   SkipLink,
-  Surface, TimeValue, DateValue,
+  Surface,
+  TimeValue,
+  DateValue,
 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
@@ -46,7 +48,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 type CalendarData = {
   start: Date;
   end: Date;
-  selectedDate: Date;
+  selectedDate?: Date;
 };
 
 type CeremonyData = {
@@ -76,7 +78,7 @@ type Event = {
 const dateFormat = "yyyy-MM-dd";
 
 const PlanningFormPage: NextPage = () => {
-  const { locale= "nl", replace } = useRouter();
+  const { locale = "nl", replace } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
   const [ceremonies, setCeremonies] = useState<CeremonyData[]>([]);
@@ -84,11 +86,12 @@ const PlanningFormPage: NextPage = () => {
   const [calendarData, setCalendarData] = useState<CalendarData>({
     start: startOfMonth(Date.now()),
     end: endOfMonth(Date.now()),
-    selectedDate: addWeeks(Date.now(), 3),
+    selectedDate: undefined
   });
   const [unavailableData, setUnavailableData] = useState<Event[]>([]);
 
-  const loadEvents = useCallback(() => {
+  useEffect(() => {
+    console.log(ceremonies.length)
     if (ceremonies.length === 0) return;
     AvailabilitycheckService.availabilitycheckGetCollection({
       resourcesCould: ceremonies.map((ceremony) => ceremony.id),
@@ -110,7 +113,7 @@ const PlanningFormPage: NextPage = () => {
       });
       setUnavailableData(unavailableEvents);
     });
-  }, [ceremonies, calendarData]);
+  }, [ceremonies, calendarData.start.toISOString()]);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -134,12 +137,9 @@ const PlanningFormPage: NextPage = () => {
           ambtenaarId: ceremony.gerelateerdeProducten[0].gerelateerdeProducten[0].id,
         }))
       );
+      console.log("ceremonies updated")
     });
   }, []);
-
-  useEffect(() => {
-    loadEvents();
-  }, [calendarData.start.toISOString()]);
 
   return (
     <Surface>
@@ -172,28 +172,32 @@ const PlanningFormPage: NextPage = () => {
                   <FormField>
                     <Calendar
                       events={unavailableData}
-                      currentDate={calendarData.selectedDate}
                       onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))}
                     />
                   </FormField>
-                  <p>
-                    <DateValue dateTime={calendarData.selectedDate.toISOString()} locale={locale} />
-                  </p>
-                  {ceremonies.map((ceremony) => (
-                    <Fieldset>
-                      <FieldsetLegend>{ceremony.type}</FieldsetLegend>
-                      {availabilities[format(calendarData.selectedDate, dateFormat)]
-                        ?.filter((slot) => slot.resources.includes(ceremony.id))
-                        .map((slot, idx) => (
-                          <FormField type="radio">
-                            <RadioButton id={`${idx}`} value={idx} name="event" />
-                            <FormLabel htmlFor={`${idx}`}>
-                              <TimeValue dateTime={slot.start} locale={locale} />
-                            </FormLabel>
-                          </FormField>
-                        ))}
-                    </Fieldset>
-                  ))}
+                  {calendarData.selectedDate && (
+                    <div>
+                      <p>
+                        <DateValue dateTime={calendarData.selectedDate.toISOString()} locale={locale} />
+                      </p>
+                      {ceremonies.map((ceremony) => (
+                        <Fieldset>
+                          <FieldsetLegend>{ceremony.type}</FieldsetLegend>
+                          {calendarData.selectedDate &&
+                            availabilities[format(calendarData.selectedDate, dateFormat)]
+                              ?.filter((slot) => slot.resources.includes(ceremony.id))
+                              .map((slot, idx) => (
+                                <FormField type="radio">
+                                  <RadioButton id={`${idx}`} value={idx} name="event" />
+                                  <FormLabel htmlFor={`${idx}`}>
+                                    <TimeValue dateTime={slot.start} locale={locale} />
+                                  </FormLabel>
+                                </FormField>
+                              ))}
+                        </Fieldset>
+                      ))}
+                    </div>
+                  )}
                   <ButtonGroup>
                     <Button type="submit" appearance="primary-action-button">
                       Ja, dit wil ik!
