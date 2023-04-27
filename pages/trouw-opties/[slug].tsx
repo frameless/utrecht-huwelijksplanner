@@ -1,11 +1,11 @@
-import { FormLabel, RadioButton } from "@utrecht/component-library-react";
-import { endOfMonth, format, startOfMonth } from "date-fns";
+import { FormFieldDescription, FormLabel, RadioButton } from "@utrecht/component-library-react";
+import { endOfMonth, format, isToday, startOfMonth } from "date-fns";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { FormEvent, useContext, useState } from "react";
+import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
 import {
   Aside,
   BackLink,
@@ -36,6 +36,7 @@ import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHe
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { useAvailabilitycheckGetCollection } from "../../src/hooks/useAvailabilitycheckGetCollection";
 import { useSdgProductGetItem } from "../../src/hooks/useSdgProductGetItem";
+import _ from "lodash";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -67,6 +68,8 @@ const PlanningFormPage: NextPage = () => {
     end: endOfMonth(Date.now()),
     selectedDate: undefined,
   });
+  const [selectedSlot, setSelectedSlot] = useState<{ date?: Date; ceremonyId?: string; startTime?: string }>({});
+  const [selectedRadio, setSelectedRadio] = useState<string>("");
 
   const [ceremonyData, ceremoniesLoading, ceremonyError] = useSdgProductGetItem(marriageOptions.productId);
   const [availabilityData, availabilityLoading, availabilityError] = useAvailabilitycheckGetCollection({
@@ -80,8 +83,16 @@ const PlanningFormPage: NextPage = () => {
     event.preventDefault();
   };
 
+  const onCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) setSelectedRadio(event.target.id);
+  };
+
   const onCalendarDateSelected = (date: Date) => {
     setCalendarData({ start: startOfMonth(date), end: endOfMonth(date), selectedDate: date });
+    if (calendarData.selectedDate != date) {
+      setSelectedSlot({});
+      setSelectedRadio("");
+    }
   };
 
   return (
@@ -120,30 +131,46 @@ const PlanningFormPage: NextPage = () => {
                   </FormField>
                   {calendarData.selectedDate && (
                     <div>
-                      <p>
-                        <DateValue dateTime={calendarData.selectedDate.toISOString()} locale={locale} />
-                      </p>
-                      {ceremonyData.map((ceremony, idx) => (
-                        <Fieldset key={idx}>
-                          <FieldsetLegend>{ceremony.type}</FieldsetLegend>
-                          {calendarData.selectedDate &&
-                            availabilityData[format(calendarData.selectedDate, dateFormat)]
-                              ?.filter((slot) => slot.resources.includes(ceremony.id))
-                              .map((slot, idx) => (
-                                <FormField key={idx} type="radio">
-                                  <RadioButton id={`${idx}`} value={idx} name="event" />
-                                  <FormLabel htmlFor={`${idx}`}>
-                                    <TimeValue dateTime={slot.start} locale={locale} />
-                                  </FormLabel>
-                                </FormField>
-                              ))}
-                        </Fieldset>
-                      ))}
-                      <ButtonGroup>
-                        <Button type="submit" appearance="primary-action-button">
-                          Ja, dit wil ik!
-                        </Button>
-                      </ButtonGroup>
+                      {ceremonyData.map((ceremony, idx) => {
+                        const legendId = `${ceremony.type}-legend`;
+                        const ceremonyType = _.upperFirst(ceremony.type);
+                        const ceremonyUniqueDayId = `${ceremony.id}-${calendarData.selectedDate?.toISOString()}`;
+                        return (
+                          <Fieldset key={idx} role={"radiogroup"} aria-describedby={legendId}>
+                            <FieldsetLegend id={legendId}>{ceremonyType}</FieldsetLegend>
+                            {calendarData.selectedDate &&
+                              availabilityData[format(calendarData.selectedDate, dateFormat)]
+                                ?.filter((slot) => slot.resources.includes(ceremony.id))
+                                .map((slot, idx) => (
+                                  <FormField key={idx} type="radio">
+                                    <Paragraph className={"utrecht-form-field__label utrecht-form-field__label--radio"}>
+                                      <FormLabel htmlFor={`${ceremonyUniqueDayId}-${idx}`} type={"radio"}>
+                                        <RadioButton
+                                          className="utrecht-form-field__input"
+                                          id={`${ceremonyUniqueDayId}-${idx}`}
+                                          value={`${ceremonyUniqueDayId}-${idx}`}
+                                          name="event"
+                                          onChange={onCheckboxChange}
+                                          checked={`${ceremonyUniqueDayId}-${idx}` == selectedRadio}
+                                          required
+                                        />
+                                        <DateValue dateTime={slot.start} locale={locale} /> van{" "}
+                                        <TimeValue dateTime={slot.start} locale={locale} /> tot{" "}
+                                        <TimeValue dateTime={slot.stop} locale={locale} />
+                                      </FormLabel>
+                                    </Paragraph>
+                                  </FormField>
+                                ))}
+                          </Fieldset>
+                        );
+                      })}
+                      {selectedRadio && (
+                        <ButtonGroup>
+                          <Button type="submit" appearance="primary-action-button">
+                            Ja, dit wil ik!
+                          </Button>
+                        </ButtonGroup>
+                      )}
                     </div>
                   )}
                 </section>
