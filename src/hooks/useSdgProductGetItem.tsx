@@ -5,7 +5,7 @@ import { SDGProduct, SdgproductService } from "../generated";
 import { ApiError } from "../openapi/core/ApiError";
 
 export type CeremonyData = {
-  type: CeremonyType;
+  type: string;
   id: string;
   locationId: string;
   ambtenaarId: string;

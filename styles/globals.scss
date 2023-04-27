@@ -15,6 +15,14 @@
   --utrecht-form-fieldset-margin-block-end: var(--utrecht-space-block-sm) !important;
 }
 
+.utrecht-form-fieldset__legend {
+  --utrecht-form-fieldset-legend-text-transform: none;
+}
+
+.utrecht-form-field--radio .utrecht-paragraph {
+  --utrecht-space-around: 0;
+}
+
 .utrecht-button-group:not(.utrecht-button-group--vertical) .utrecht-button-link {
   --utrecht-button-padding-inline-end: 16px !important;
   --utrecht-button-padding-inline-start: 16px !important;
@@ -41,20 +49,6 @@ body {
   --utrecht-form-fieldset-legend-text-transform: var(--utrecht-form-label-text-transform);
   --utrecht-form-fieldset-legend-margin-block-end: var(--utrecht-form-label-margin-block-end);
   --utrecht-form-fieldset-legend-margin-block-start: var(--utrecht-form-label-margin-block-start);
-}
-
-.todo-radio-group--inline {
-  --utrecht-form-field-margin-block-end: 0;
-  --utrecht-form-field-margin-block-start: 0;
-  display: inline-flex;
-  gap: var(--todo-radio-group-gap);
-}
-
-.todo-form--distanced {
-  margin-block-end: var(--todo-form-margin-block-end, 0);
-  margin-block-start: var(--todo-form-margin-block-start, 0);
-  margin-inline-end: var(--todo-form-margin-inline-end, 0);
-  margin-inline-start: var(--todo-form-margin-inline-start, 0);
 }
 
 .utrecht-form-label--disabled {
