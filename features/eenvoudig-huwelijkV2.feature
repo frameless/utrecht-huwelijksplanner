@@ -24,21 +24,7 @@ Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
 Dan zie ik de heading "Wanneer en hoe"
   En ben ik op stap "2"
   En is er een "Trouwdatum" datum prikker op de pagina
-  En kan ik een "Ja, dit wil ik!" button zien
-
-
-# Scenario: Ik wil zien op welk datum ik kan trouwen door op de datum prikker te klikken
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-# Wanneer ik op de "Trouwdatum" datum prikker klik
-# Dan kan ik de beschikbare trouwdatums zien
-
-
-# Scenario: Ik wil zien op welk datum ik kan trouwen door een datum in te vullen
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-# Wanneer ik het "Trouwdatum" datum prikker gefocust heb
-# Dan kan ik de beschikbare trouwdatums zien
-#   En kan ik een datum handmatig in de "Trouwdatum" datum prikker invullen
-#   En kan ik de beschikbare tijdsloten radio button opties voor de ingevulde datum zien
+  En kan ik een inactief "Ja, dit wil ik!" button zien
 
 
 Scenario: Ik wil een trouwdatum selecteren door op de datum prikker te klikken
@@ -75,6 +61,7 @@ Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
   En dat ik heb een beschikbare datum geselecteerd
 Wanneer ik op de gewenste tijdslot radio button klik
 Dan zie ik dat de tijdslot radio button wordt geselecteerd
+  En zie ik dat de "Ja, dit wil ik!" button actief wordt 
 
 
 Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
@@ -114,19 +101,19 @@ Wanneer ik op een van de inloggen opties klik
 Dan word ik ingelogd door DigID
   En word ik naar de "persoonsgegevens" van mij pagina gestuurd
 
-# Scenario: Ik wil de DigID inloggen annuleren **Optioneel**
-# Gegeven dat ik op de "login" pagina ben 
-#     En dat ik de DigID Inloggen interface zie
-#     En dat ik zie een Annuleren button zie
-# Wanneer ik op de Annuleren button klik
-# Dan word ik teruggestuurd naar de "voorgenomen-huwelijk" pagina
+Scenario: Ik wil de DigID inloggen annuleren **Optioneel**
+Gegeven dat ik op de "login" pagina ben 
+    En dat ik de DigID Inloggen interface zie
+    En dat ik zie een Annuleren button zie
+Wanneer ik op de Annuleren button klik
+Dan word ik teruggestuurd naar de "voorgenomen-huwelijk" pagina
 
-# Scenario: Ik wil een DigID hebben
-# Gegeven dat ik op de "login" pagina ben 
-#     En dat ik geen DigID heb
-#     En dat ik de "Nog geen DigID? Vraag uw DigiD aan" link op de pagina zie
-# Wanneer ik op de link klik
-# Dan word ik naar een pagina waarin ik een DigID kan krijgen gestuurd
+Scenario: Ik wil een DigID hebben
+Gegeven dat ik op de "login" pagina ben 
+    En dat ik geen DigID heb
+    En dat ik de "Nog geen DigID? Vraag uw DigiD aan" link op de pagina zie
+Wanneer ik op de link klik
+Dan word ik naar een pagina waarin ik een DigID kan krijgen gestuurd
 
 Scenario: Ik Partner 1 wil mijn basisgegevens bevestigen
 Gegeven dat ik op de "persoonsgegevens" pagina ben 
@@ -134,12 +121,24 @@ Dan zie ik de heading "Melding Voorgenomen Huwelijk"
   En zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie 
   En zie ik dat mijn persoonsgegevens juist zijn
   En zie ik dat mijn adresgegevens juist zijn 
+  En zie ik een inactief "Contactgegevens opslaan" button
+  Voorbeelden: 
+    | datum         | tijd           | type          |
+    | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
+    | 2021-04-14    | 13:30 – 13:45  | Eenvoudig     | 
+    | 2021-04-14    | 12:00 – 12:15  | Uitgebreid    |  
 
 Scenario: Ik Partner 1 wil mijn telefoonnummer invullen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
   En dat ik een type tel input field zie
 Wanneer ik in de tel type input field mijn telefoonnummer invul
 Dan wordt het ingevulde nummer gecontroleerd voor geldigheid
+
+Scenario: Ik Partner 1 wil mijn telefoonnummer vals invullen
+Gegeven dat ik op de "persoonsgegevens" pagina ben
+  En dat ik een type tel input field zie
+Wanneer ik in de tel type input field andere karakteren dan nummers typ
+Dan zie ik dat de niet nummers niet de tel type input field invullen
 
 Scenario: Ik Partner 1 wil mijn email invullen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
@@ -149,13 +148,15 @@ Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 Scenario: Ik Partner 1 wil verklaren dat ik niet getrouwd ben
 Gegeven dat ik op de "persoonsgegevens" pagina ben
-  En dat ik een type checkbox input field voor de alleenstaand verklaring van mij zie
+  # En dat ik een type checkbox input field voor de alleenstaand verklaring van mij zie
+  En dat ik een type checkbox input field met label "burgerlijke-staat" zie
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
 Scenario: Ik Partner 1 wil verklaren dat ik niet binnen mijn familie ga trouwen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
-    En dat ik een checkbox voor de niet familie trouwen verklaring voor mij zie 
+  En dat ik een checkbox input field met label "incest-check"
+    # En dat ik een checkbox voor de niet familie trouwen verklaring voor mij zie 
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
@@ -163,14 +164,19 @@ Scenario: Ik Partner 1 wil al de gegevens in het formulier bevestigen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
     En dat ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie zie
     En dat al de ingevulde gegevens in het formulier kloppen
-Wanneer ik op de gegevensbevestiging checkbox klik
+Wanneer ik op de checkbox met label "gegevensbevestiging" klik
 Dan wordt het checkbox ingevuld
+  Voorbeelden: 
+    | datum         | tijd           | type          |
+    | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
+    | 2021-04-14    | 13:30 – 13:45  | Eenvoudig     | 
+    | 2021-04-14    | 12:00 – 12:15  | Uitgebreid    | 
 
 Scenario: Ik Partner 1 wil mijn contactgegevens opslaan
 Gegeven dat ik op de "persoonsgegevens" pagina ben
     En dat ik al de verklaring checkboxes ingevuld heb 
     En dat ik de gegevensbevestiging checkbox ingevuld heb 
-    En dat ik een "Contactgegevens opslaan" button zie 
+    En dat ik een actief "Contactgegevens opslaan" button zie 
 Wanneer ik op de "Contactgegevens opslaan" button klik
 Dan word ik naar de "voorgenomen-huwelijk/partner" pagina gestuurd
 
@@ -188,18 +194,20 @@ Dan word ik naar de "voorgenomen-huwelijk/partner/uitnodigen" pagina gestuurd
 
 Scenario: Ik Partner 1 wil zien dat ik op de "voorgenomen-huwelijk/partner/uitnodigen" pagina ben **Optioneel**
 Gegeven dat ik op de "voorgenomen-huwelijk/partner/uitnodigen" pagina ben
-Dan zie ik een type text input field 
-Dan zie ik een type email input field 
-Dan zie ik een "Verstuur uitnodiging" button 
+Dan zie ik een type text input field met label "partner2-naam"
+Dan zie ik een type email input field met label "partner2-email"
+Dan zie ik een inactief "Verstuur uitnodiging" button 
 
 Scenario: Ik Partner 1 wil de naam van Partner 2 voor een DigID inloggen uitnodiging per e-mail invullen **Optioneel**
 Gegeven dat ik op de "voorgenomen-huwelijk/partner/uitnodigen" pagina ben
-Wanneer ik de email van Partner 2 invul
+Wanneer ik de email van Partner 2 in de input field met label "partner2-email" invul
 Dan wordt het getypte e-mail gecontroleerd voor geldigheid 
+  En wordt de "Verstuur uitnodiging" button actief
 
 Scenario: Ik Partner 1 wil een DigID inloggen uitnodiging per e-mail naar Partner 2 stuuren **Optioneel**
 Gegeven dat ik op de "voorgenomen-huwelijk/partner/uitnodigen" pagina ben
-    En dat ik de gegevens van Partner 2 ingevult hebt
+    En dat ik de type text input field met label "partner2-naam" ingevult hebt
+    En dat ik de type email input field met label "partner2-email" ingevult hebt
 Wanneer ik op de "Verstuur uitnodiging" button klik
 Dan wordt ik naar de "voorgenomen-huwelijk/partner/succes" pagina gestuurd
   En krijg ik een bevestiging dat de e-mail verzonden is
@@ -267,12 +275,24 @@ Dan zie ik de heading "Melding Voorgenomen Huwelijk"
   En zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie 
   En zie ik dat mijn persoonsgegevens juist zijn
   En zie ik dat mijn adresgegevens juist zijn 
+  En zie ik een inactief "Contactgegevens opslaan" button
+  Voorbeelden: 
+    | datum         | tijd           | type          |
+    | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
+    | 2021-04-14    | 13:30 – 13:45  | Eenvoudig     | 
+    | 2021-04-14    | 12:00 – 12:15  | Uitgebreid    | 
 
 Scenario: Ik Partner 2 wil mijn telefoonnummer  invullen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
   En dat ik een type tel input field zie
 Wanneer ik in de tel type input field mijn telefoonnummer invul
 Dan wordt het ingevulde nummer gecontroleerd voor geldigheid
+
+Scenario: Ik Partner 2 wil mijn telefoonnummer vals invullen
+Gegeven dat ik op de "persoonsgegevens" pagina ben
+  En dat ik een type tel input field zie
+Wanneer ik in de tel type input field andere karakteren dan nummers typ
+Dan zie ik dat de niet nummers niet de tel type input field invullen
 
 Scenario: Ik Partner 2 wil mijn email invullen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
@@ -282,13 +302,15 @@ Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 Scenario: Ik Partner 2 wil verklaren dat ik niet getrouwd ben
 Gegeven dat ik op de "persoonsgegevens" pagina ben
-  En dat ik een type checkbox input field voor de alleenstaand verklaring van mij zie
+  # En dat ik een type checkbox input field voor de alleenstaand verklaring van mij zie
+  En dat ik een type checkbox input field met label "burgerlijke-staat" zie
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
-Scenario: Ik Partner 2 wil verklaren dat ik niet binnen zijn/haar familie ga trouwen
+Scenario: Ik Partner 2 wil verklaren dat ik niet binnen mijn familie ga trouwen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
-    En dat ik een checkbox voor de niet familie trouwen verklaring voor mij zie 
+  En dat ik een checkbox input field met label "incest-check"
+  # En dat ik een checkbox voor de niet familie trouwen verklaring voor mij zie 
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
@@ -296,14 +318,20 @@ Scenario: Ik Partner 2 wil al de gegevens in het formulier bevestigen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
     En dat ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie zie
     En dat al de ingevulde gegevens in het formulier kloppen
-Wanneer ik op de gegevensbevestiging checkbox klik
+Wanneer ik op de checkbox met label "gegevensbevestiging" klik
 Dan wordt het checkbox ingevuld
+  Voorbeelden: 
+    | datum         | tijd           | type          |
+    | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
+    | 2021-04-14    | 13:30 – 13:45  | Eenvoudig     | 
+    | 2021-04-14    | 12:00 – 12:15  | Uitgebreid    | 
 
 Scenario: Ik Partner 2 wil mijn contactgegevens opslaan
 Gegeven dat ik op de "persoonsgegevens" pagina ben
-    En dat ik al de verklaring checkboxes ingevuld heb 
-    En dat ik de gegevensbevestiging checkbox ingevuld heb 
-    En dat ik een "Contactgegevens opslaan" button zie 
+    En dat ik al de checkbox met label "persoonsgegevens" ingevuld heb 
+    En dat ik al de checkbox met label "incest-check" ingevuld heb 
+    En dat ik al de checkbox met label "gegevensbevestiging" ingevuld heb 
+    En dat ik een actief "Contactgegevens opslaan" button zie 
 Wanneer ik op de "Contactgegevens opslaan" button klik
 Dan word ik naar de "persoonsgegevens/succes" pagina gestuurd
 
@@ -313,6 +341,12 @@ Dan zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>"
     En zie ik de kosten voor het huwelijk 
     En zie ik de heading "Gelukt"
     En zie ik een "Nodig getuigen uit" button
+    Voorbeelden: 
+    | datum         | tijd           | type          |
+    | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
+    | 2021-04-14    | 13:30 – 13:45  | Eenvoudig     | 
+    | 2021-04-14    | 12:00 – 12:15  | Uitgebreid    | 
+
 
 Scenario: We willen getuigen uitnodigen
 Gegeven dat ik op de "persoonsgegevens/succes" pagina ben
@@ -327,17 +361,6 @@ Dan zie ik de heading  "Nodig alvast getuigen uit"
   En zie ik vier type email input fields
   En zie ik een "Verstuur uitnodiging" button
 
-# Scenario: We willen de gegevens van Getuige 1 invullen
-# Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
-#   En dat ik in de eerste text input field de naam van Getuige 1 heb ingevuld 
-# Wanneer ik in de eerste type email input field de email van Getuige 1 invul
-# Dan wordt het ingevulde email gecontroleerd voor geldigheid
-
-# Scenario: We willen de gegevens van Getuige 2 invullen
-# Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
-#   En dat ik in de tweede text input field de naam van Getuige 2 heb ingevuld 
-# Wanneer ik in de tweede type email input field de email van Getuige 2 invul
-# Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 Abstract Scenario: We willen de email van "<getuige>" invullen
   Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
@@ -347,10 +370,7 @@ Abstract Scenario: We willen de email van "<getuige>" invullen
     | text    | getuige    | email             |
     | eerste  | Getuige 1  | jip@gmail.com     |
     | tweede  | Getuige 2  | janneke@gmail.com |
-    | eerste  | Getuige 1  | jip@gmail.com     |
-    | tweede  | Getuige 2  | janneke@gmail.com |
-    | eerste  | Getuige 1  | jip@gmail.com     |
-    | tweede  | Getuige 2  | janneke@gmail.com |
+
 
 Scenario: We willen de uitnodigingen naar de getuigen sturen
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
@@ -361,7 +381,6 @@ Dan word ik naar de "voorgenomen-huwelijk/getuigen/succes" pagina gestuurd
 Scenario: We willen zien dat we op de "voorgenomen-huwelijk/getuigen/succes" pagina zijn 
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/succes" pagina ben
 Dan zie ik de heading  "Gelukt!"
-  En zie ik een "Laat de gemeente checken en ga betalen" link
   En zie ik een "Vul aan met extra's" link
 
 #extras
@@ -375,10 +394,11 @@ Gegeven dat ik op de "extra" pagina ben
 Dan zie ik de heading  "Kies je extra’s"
   En zie ik een "trouwboekjes" image
   En zie ik een type radio radio group met 5 items
+  En zie ik een inactief "Deze wil ik hebben" button
 
  Abstract Scenario: We willen verklaren dat wij "<trouwboekje>" willen
     Gegeven dat ik op de "extra" pagina ben
-    Wanneer ik op de radio button "<option>" klik  
+    Wanneer ik op de radio button "<trouwboekje>" klik  
     Dan wordt de radio button "<option>" ingevuld
     Voorbeelden: 
     | trouwboekje      | option    | 
@@ -387,11 +407,12 @@ Dan zie ik de heading  "Kies je extra’s"
     | Donkerblauw      | option 3  | 
     | Rood             | option 4  | 
     | Naturel          | option 5  | 
-        En zie ik een "Deze wil ik hebben" button
+    En word de button "Deze wil ik hebben" actief
 
 
 Scenario: We willen onze trouwboekje keuze hebben 
 Gegeven dat ik op de "extra" pagina ben
+  En dat de "Deze wil ik hebben" button actief is
 Wanneer ik op "Deze wil ik hebben" button klik
 Dan word ik naar de "voorgenomen-huwelijk/checken" pagina gestuurd
 

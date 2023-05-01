@@ -18,10 +18,6 @@ Gegeven dat het trouwdatum binnen de komende 3 werkdagen zal zijn
 Dan wordt een medeweker gewaarschuwd over de nog steeds onvoltooid getuigenuitnodigingsproces
   En wordt Partner 1 opgebeld door een medewerker 
 
-# Scenario: De datumgrens voor het toevoegen van getuigen is verlopen
-# Gegeven dat het trouwdatum binnen de komende 3 werkdagen zal zijn
-# Dan krijg Partner 1 een email bevestiging dat de bruiloft is geannuleerd omdat er niet op tijd genoeg getuigen waren aangegeven
-#     En krijg Partner 2 een email bevestiging dat de bruiloft is geannuleerd omdat er niet op tijd genoeg getuigen waren aangegeven
 
 
 

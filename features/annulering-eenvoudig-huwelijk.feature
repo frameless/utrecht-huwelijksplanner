@@ -35,7 +35,6 @@ Wanneer ik op de "Nee, ik wil terug naar het overzicht" link klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
 #extra
-@validate-flow
 Scenario: De huwelijk wordt automatisch gecancelled door de overlijden van een van de partners
 Gegeven dat een van de partner overleden is
 Wanneer de regering weet dat een van de partner overleden is

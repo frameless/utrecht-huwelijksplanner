@@ -15,7 +15,7 @@ Dan zie ik de heading  "Kies je extra’s"
   En zie ik een "trouwboekjes" image
   En zie ik een type checkbox input field voor de indicatie dat wij een trouwboekje willen
   En zie ik vier type radio button input fields 
-  En zie ik een "Deze wil ik hebben" button
+  En zie ik een inactief "Deze wil ik hebben" button
 
 
 @validate-flow
@@ -37,13 +37,16 @@ Dan wordt het checkbox ingevuld
 @validate-flow
 Scenario: We willen een van de trouwboekje opties als aanpassing kiezen 
 Gegeven dat ik op de "extra-laat" pagina ben
-Wanneer ik op één van de radio buttons klik
+Wanneer ik op één van de radio buttons voor trouwboekje opties klik
 Dan wordt alleen dat radio button ingevuld
+  En wordt de "Deze wil ik hebben" button actief
 
 
 @validate-flow
 Scenario: We willen onze trouwboekje keuze hebben 
 Gegeven dat ik op de "extra-laat" pagina ben
+  En dat de checkbox input field voor de bevestiging dat een trouwboekje is gewild is ingevuld 
+  En dat een van de radio buttons input fields is ingevuld
 Wanneer ik op "Deze wil ik hebben" button klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/extra" pagina gestuurd
 
@@ -51,7 +54,8 @@ Dan word ik naar de "voorgenomen-huwelijk/betalen/extra" pagina gestuurd
 @validate-flow
 Scenario: We willen voor de extras betalen 
 Gegeven dat ik op de "voorgenomen-huwelijk/betalen/extra" pagina ben
-Wanneer ik op betaal
+  En dat ik een "Betaal met iDeal" button zie 
+Wanneer ik op de "Betaal met iDeal" button klik 
 Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
 

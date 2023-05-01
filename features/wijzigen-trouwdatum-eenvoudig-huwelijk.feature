@@ -25,6 +25,7 @@ Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 Scenario: We willen de trouwdatum aanpassen door op de datum prikker te klikken
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
   En dat er is een "Trouwdatum" datum prikker op de pagina
+  En dat er beschikbare dagen zijn
 Wanneer ik een beschikbare dag selecteer
 Dan wordt de datum op de datum prikker gezet
   En kan ik de beschikbare tijdsloten radio button opties voor de geselecteerde datum zien
