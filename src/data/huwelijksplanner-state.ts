@@ -145,17 +145,12 @@ interface Witness extends Invitee {
 
 export type RegistrationType = 'huwelijk' | 'geregistreerd-partnerschap';
 
-export type CeremonyType =
-  | 'eenvoudig-huwelijk'
-  | 'flits-balie-huwelijk'
-  | 'geregistreerd-partnerschap'
-  | 'uitgebreid-huwelijk';
-
 export interface HuwelijksplannerState {
+  ambtenaar?: string;
   partnerInvitation?: Invitee;
   partners: HuwelijksplannerPartner[];
   witnesses: Witness[];
-  'ceremony-type'?: CeremonyType;
+  'ceremony-type'?: string;
   'ceremony-location'?: string;
   'ceremony-start'?: string;
   'ceremony-end'?: string;

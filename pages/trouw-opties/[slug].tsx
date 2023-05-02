@@ -36,7 +36,7 @@ import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFo
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { useAvailabilitycheckGetCollection } from "../../src/hooks/useAvailabilitycheckGetCollection";
-import { useSdgProductGetItem } from "../../src/hooks/useSdgProductGetItem";
+import { CeremonyData, useSdgProductGetItem } from "../../src/hooks/useSdgProductGetItem";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -50,17 +50,10 @@ type CalendarData = {
   selectedDate?: Date;
 };
 
-type Event = {
-  date: string;
-  emphasis?: boolean;
-  selected?: boolean;
-  disabled?: boolean;
-};
-
 const dateFormat = "yyyy-MM-dd";
 
 const PlanningFormPage: NextPage = () => {
-  const { locale = "nl", replace } = useRouter();
+  const { locale = "nl", push } = useRouter();
   const { t } = useTranslation(["common", "huwelijksplanner-step-2"]);
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
   const [calendarData, setCalendarData] = useState<CalendarData>({
@@ -68,7 +61,9 @@ const PlanningFormPage: NextPage = () => {
     end: endOfMonth(Date.now()),
     selectedDate: undefined,
   });
-  const [selectedSlot, setSelectedSlot] = useState<{ ceremonyId?: string; startTime?: Date }>({});
+  const [selectedSlot, setSelectedSlot] = useState<{ ceremony?: CeremonyData; startTime?: string; endTime?: string }>(
+    {}
+  );
   const [selectedRadio, setSelectedRadio] = useState<string>("");
 
   const [ceremonyData, ceremoniesLoading, ceremonyError] = useSdgProductGetItem(marriageOptions.productId);
@@ -79,11 +74,14 @@ const PlanningFormPage: NextPage = () => {
     stop: calendarData.end,
   });
 
-  const onRadioChange = (event: ChangeEvent<HTMLInputElement>, slotData: { ceremonyId: string; start: Date }) => {
+  const onRadioChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    slotData: { ceremony: CeremonyData; start: string; end: string }
+  ) => {
     if (!event.target.checked) return;
 
     setSelectedRadio(event.target.id);
-    setSelectedSlot({ ceremonyId: slotData.ceremonyId, startTime: slotData.start });
+    setSelectedSlot({ ceremony: slotData.ceremony, startTime: slotData.start, endTime: slotData.end });
   };
 
   const onCalendarDateSelected = (date: Date) => {
@@ -92,6 +90,19 @@ const PlanningFormPage: NextPage = () => {
       setSelectedSlot({});
       setSelectedRadio("");
     }
+  };
+
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    setMarriageOptions({
+      ...marriageOptions,
+      ambtenaar: selectedSlot.ceremony?.ambtenaarId,
+      "ceremony-type": selectedSlot.ceremony?.type,
+      "ceremony-location": selectedSlot.ceremony?.locationId,
+      "ceremony-start": selectedSlot.startTime,
+      "ceremony-end": selectedSlot.endTime,
+    });
+    push("/voorgenomen-huwelijk");
   };
 
   return (
@@ -110,7 +121,7 @@ const PlanningFormPage: NextPage = () => {
           <PageContent>
             <BackLink href="/trouw-opties/">← Terug</BackLink>
             <PageContentMain>
-              <form>
+              <form onSubmit={onSubmit}>
                 <HeadingGroup>
                   <Heading1>{t("huwelijksplanner-step-2:heading-1")}</Heading1>
                   <Paragraph lead>
@@ -123,10 +134,7 @@ const PlanningFormPage: NextPage = () => {
                 </Paragraph>
                 <section>
                   <FormField>
-                    <Calendar
-                      //events={unavailableData}
-                      onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))}
-                    />
+                    <Calendar onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))} />
                   </FormField>
                   {calendarData.selectedDate && (
                     <div>
@@ -151,8 +159,9 @@ const PlanningFormPage: NextPage = () => {
                                           name="event"
                                           onChange={(e) =>
                                             onRadioChange(e, {
-                                              ceremonyId: ceremony.id,
-                                              start: new Date(slot.start),
+                                              ceremony: ceremony,
+                                              start: slot.start,
+                                              end: slot.stop,
                                             })
                                           }
                                           checked={`${ceremonyUniqueDayId}-${idx}` === selectedRadio}
