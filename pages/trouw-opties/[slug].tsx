@@ -165,7 +165,7 @@ const PlanningFormPage: NextPage = () => {
                                             })
                                           }
                                           checked={`${ceremonyUniqueDayId}-${idx}` === selectedRadio}
-                                          required
+                                          aria-required={true}
                                         />
                                         <DateValue dateTime={slot.start} locale={locale} /> van{" "}
                                         <TimeValue dateTime={slot.start} locale={locale} /> tot{" "}
