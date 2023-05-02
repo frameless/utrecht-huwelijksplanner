@@ -31,13 +31,10 @@ const Betalen: NextPage = () => {
       undefined,
       undefined,
       marriageOptions.huwelijk.id
-    ).then((res) => {
-      // @ts-ignore
-      const json = JSON.parse(res);
+    ).then((res: any) => {
+      const path = new URL(res.redirectUrl).pathname;
 
-      const path = new URL(json.redirectUrl).pathname;
-
-      push(`${path}?paymentId=${json.paymentId}`);
+      push(`${path}?paymentId=${res.paymentId}`);
     });
   };
 
