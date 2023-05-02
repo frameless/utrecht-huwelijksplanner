@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CeremonyType } from "../data/huwelijksplanner-state";
 import { resolveEmbedded } from "../embedded";
 import { SDGProduct, SdgproductService } from "../generated";
 import { ApiError } from "../openapi/core/ApiError";
@@ -14,7 +13,7 @@ export type CeremonyData = {
 const mapToCeremonyData = (products: SDGProduct): CeremonyData[] => {
   return products.gerelateerdeProducten.map((ceremony: SDGProduct) => ({
     id: ceremony.id as string,
-    type: ceremony.upnLabel as CeremonyType,
+    type: ceremony.upnLabel as string,
     locationId: ceremony.gerelateerdeProducten[0].id,
     ambtenaarId: ceremony.gerelateerdeProducten[0].gerelateerdeProducten[0].id,
   }));
