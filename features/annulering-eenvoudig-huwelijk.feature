@@ -34,13 +34,13 @@ Gegeven dat ik op de "huwelijksplanner-cancel" pagina ben
 Wanneer ik op de "Nee, ik wil terug naar het overzicht" link klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
-#extra
-Scenario: De huwelijk wordt automatisch gecancelled door de overlijden van een van de partners
-Gegeven dat een van de partner overleden is
-Wanneer de regering weet dat een van de partner overleden is
-Dan krijg ik een bevestiging dat de reservering voor het huwelijk geannuleerd is
-    En krijg ik een bevestiging dat de betaling wordt teruggestort op de rekening
-    En krijg ik een bevestiging dat een email wordt gestuurd naar elk getuigen
+#extra voor een toekomstige versie
+# Scenario: De huwelijk wordt automatisch gecancelled door de overlijden van een van de partners
+# Gegeven dat een van de partner overleden is
+# Wanneer de regering weet dat een van de partner overleden is
+# Dan krijg ik een bevestiging dat de reservering voor het huwelijk geannuleerd is
+#     En krijg ik een bevestiging dat de betaling wordt teruggestort op de rekening
+#     En krijg ik een bevestiging dat een email wordt gestuurd naar elk getuigen
     
 
 

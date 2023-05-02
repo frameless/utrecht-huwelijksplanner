@@ -8,14 +8,16 @@ Wanneer ik op de "Extras aanpassen" link klik
 Dan word ik naar de "extra-laat" pagina gestuurd
 
 
+
+
 @validate-flow
 Scenario: We willen zien dat we op de "extra-laat" pagina zijn 
 Gegeven dat ik op de "extra-laat" pagina ben
 Dan zie ik de heading  "Kies je extra’s"
   En zie ik een "trouwboekjes" image
-  En zie ik een type checkbox input field voor de indicatie dat wij een trouwboekje willen
-  En zie ik vier type radio button input fields 
-  En zie ik een inactief "Deze wil ik hebben" button
+  En zie ik een type radio radio group met 5 items
+
+
 
 
 @validate-flow
@@ -27,25 +29,31 @@ Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
 
 @validate-flow
-Scenario: We willen verklaren dat wij een trouwboekje aanpassen willen
-Gegeven dat ik op de "extra-laat" pagina ben
-  En dat ik een type checkbox input field voor de bevestiging dat een trouwboekje is gewild zie
-Wanneer ik op de checkbox klik
-Dan wordt het checkbox ingevuld
+Abstract Scenario: We willen verklaren dat wij "<trouwboekje>" aanpassen willen
+   Gegeven dat ik op de "extra-laat" pagina ben
+  Wanneer ik op de radio button "<trouwboekje>" klik  
+   Dan wordt de radio button "<option>" ingevuld
+  Voorbeelden: 
+   | trouwboekje      | option    | 
+   | geen trouwboekje | option 1  | 
+   | Wit              | option 2  | 
+   | Donkerblauw      | option 3  | 
+   | Rood             | option 4  | 
+   | Naturel          | option 5  | 
+   En zie ik een "Deze wil ik hebben" button
 
 
 @validate-flow
 Scenario: We willen een van de trouwboekje opties als aanpassing kiezen 
 Gegeven dat ik op de "extra-laat" pagina ben
-Wanneer ik op één van de radio buttons voor trouwboekje opties klik
+Wanneer ik op één van de radio buttons klik
 Dan wordt alleen dat radio button ingevuld
-  En wordt de "Deze wil ik hebben" button actief
+  En zie ik een "Deze wil ik hebben" button
 
 
 @validate-flow
 Scenario: We willen onze trouwboekje keuze hebben 
 Gegeven dat ik op de "extra-laat" pagina ben
-  En dat de checkbox input field voor de bevestiging dat een trouwboekje is gewild is ingevuld 
   En dat een van de radio buttons input fields is ingevuld
 Wanneer ik op "Deze wil ik hebben" button klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/extra" pagina gestuurd

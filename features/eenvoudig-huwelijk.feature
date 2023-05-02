@@ -24,7 +24,7 @@ Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
 Dan zie ik de heading "Wanneer en hoe"
   En ben ik op stap "2"
   En is er een "Trouwdatum" datum prikker op de pagina
-  En kan ik een inactief "Ja, dit wil ik!" button zien
+
 
 
 Scenario: Ik wil een trouwdatum selecteren door op de datum prikker te klikken
@@ -43,17 +43,17 @@ Wanneer ik probeer een niet beschikbare dag te selecteren
 Dan zie ik dat ik dat dag niet selecteren kan
 
 
-Scenario: Ik wil in over een jaar trouwen
-Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
-  En dat er is een "Trouwdatum" datum prikker op de pagina
-Wanneer ik probeer een datum over een jaar te selecteren
-Dan krijg ik een melding om een datum maximaal tussen een jaar te selecteren
+# Scenario: Ik wil in over een jaar trouwen
+# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
+#   En dat er is een "Trouwdatum" datum prikker op de pagina
+# Wanneer ik probeer een datum over een jaar te selecteren
+# Dan krijg ik een melding om een datum maximaal tussen een jaar te selecteren
 
-Scenario: Ik wil in binnen 3 weken trouwen
-Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
-  En dat er is een "Trouwdatum" datum prikker op de pagina
-Wanneer ik probeer een datum binnen 3 weken van te voren te selecteren
-Dan krijg ik een melding om een datum minimaal 3 weken van te voren te selecteren
+# Scenario: Ik wil in binnen 3 weken trouwen
+# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
+#   En dat er is een "Trouwdatum" datum prikker op de pagina
+# Wanneer ik probeer een datum binnen 3 weken van te voren te selecteren
+# Dan krijg ik een melding om een datum minimaal 3 weken van te voren te selecteren
 
 
 Scenario: Ik wil een tijdslot selecteren
@@ -61,7 +61,7 @@ Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
   En dat ik heb een beschikbare datum geselecteerd
 Wanneer ik op de gewenste tijdslot radio button klik
 Dan zie ik dat de tijdslot radio button wordt geselecteerd
-  En zie ik dat de "Ja, dit wil ik!" button actief wordt 
+  En kan ik een "Ja, dit wil ik!" button zien
 
 
 Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
@@ -121,7 +121,6 @@ Dan zie ik de heading "Melding Voorgenomen Huwelijk"
   En zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie 
   En zie ik dat mijn persoonsgegevens juist zijn
   En zie ik dat mijn adresgegevens juist zijn
-  En zie ik een inactief "Contactgegevens opslaan" button
   Voorbeelden: 
     | datum         | tijd           | type          |
     | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
@@ -149,7 +148,6 @@ Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 Scenario: Ik Partner 1 wil verklaren dat ik niet getrouwd ben
 Gegeven dat ik op de "persoonsgegevens" pagina ben
-  # En dat ik een type checkbox input field voor de alleenstaand verklaring van mij zie
   En dat ik een type checkbox input field met label "burgerlijke-staat" zie
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
@@ -157,7 +155,6 @@ Dan wordt het checkbox ingevuld
 Scenario: Ik Partner 1 wil verklaren dat ik niet binnen mijn familie ga trouwen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
   En dat ik een checkbox input field met label "incest-check"
-    # En dat ik een checkbox voor de niet familie trouwen verklaring voor mij zie 
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
@@ -173,12 +170,20 @@ Dan wordt het checkbox ingevuld
     | 2021-04-14    | 13:30 – 13:45  | Eenvoudig     | 
     | 2021-04-14    | 12:00 – 12:15  | Uitgebreid    | 
 
+Scenario: Ik Partner 1 heb al de gegevens checkboxes ingevuld
+Gegeven dat ik op de "persoonsgegevens" pagina ben
+    En dat ik al de checkbox met label "persoonsgegevens" ingevuld heb 
+    En dat ik al de checkbox met label "incest-check" ingevuld heb 
+    En dat ik al de checkbox met label "gegevensbevestiging" ingevuld heb
+Dan zie ik een "Contactgegevens opslaan" button
+    
+
 Scenario: Ik Partner 1 wil mijn contactgegevens opslaan
 Gegeven dat ik op de "persoonsgegevens" pagina ben
     En dat ik al de checkbox met label "persoonsgegevens" ingevuld heb 
     En dat ik al de checkbox met label "incest-check" ingevuld heb 
     En dat ik al de checkbox met label "gegevensbevestiging" ingevuld heb 
-    En dat ik een actief "Contactgegevens opslaan" button zie 
+    En dat ik een "Contactgegevens opslaan" button zie 
 Wanneer ik op de "Contactgegevens opslaan" button klik
 Dan word ik naar de "voorgenomen-huwelijk/partner" pagina gestuurd
 
@@ -198,13 +203,15 @@ Scenario: Ik Partner 1 wil zien dat ik op de "voorgenomen-huwelijk/partner/uitno
 Gegeven dat ik op de "voorgenomen-huwelijk/partner/uitnodigen" pagina ben
 Dan zie ik een type text input field met label "partner2-naam"
 Dan zie ik een type email input field met label "partner2-email"
-Dan zie ik een inactief "Verstuur uitnodiging" button 
+
 
 Scenario: Ik Partner 1 wil de naam van Partner 2 voor een DigID inloggen uitnodiging per e-mail invullen **Optioneel**
 Gegeven dat ik op de "voorgenomen-huwelijk/partner/uitnodigen" pagina ben
+  En dat ik de naam van Partner 2 in de type text input field met label "partner2-naam" heb ingevuld
 Wanneer ik de email van Partner 2 in de input field met label "partner2-email" invul
 Dan wordt het getypte e-mail gecontroleerd voor geldigheid 
-  En wordt de "Verstuur uitnodiging" button actief
+  En zie ik een  "Verstuur uitnodiging" button 
+
 
 Scenario: Ik Partner 1 wil een DigID inloggen uitnodiging per e-mail naar Partner 2 stuuren **Optioneel**
 Gegeven dat ik op de "voorgenomen-huwelijk/partner/uitnodigen" pagina ben
@@ -277,7 +284,6 @@ Dan zie ik de heading "Melding Voorgenomen Huwelijk"
   En zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie 
   En zie ik dat mijn persoonsgegevens juist zijn
   En zie ik dat mijn adresgegevens juist zijn 
-  En zie ik een inactief "Contactgegevens opslaan" button
   Voorbeelden: 
     | datum         | tijd           | type          |
     | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
@@ -304,7 +310,6 @@ Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
 Scenario: Ik Partner 2 wil verklaren dat ik niet getrouwd ben
 Gegeven dat ik op de "persoonsgegevens" pagina ben
-  # En dat ik een type checkbox input field voor de alleenstaand verklaring van mij zie
   En dat ik een type checkbox input field met label "burgerlijke-staat" zie
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
@@ -312,7 +317,6 @@ Dan wordt het checkbox ingevuld
 Scenario: Ik Partner 2 wil verklaren dat ik niet binnen mijn familie ga trouwen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
   En dat ik een checkbox input field met label "incest-check"
-  # En dat ik een checkbox voor de niet familie trouwen verklaring voor mij zie 
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
@@ -327,6 +331,13 @@ Dan wordt het checkbox ingevuld
     | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
     | 2021-04-14    | 13:30 – 13:45  | Eenvoudig     | 
     | 2021-04-14    | 12:00 – 12:15  | Uitgebreid    | 
+
+Scenario: Ik Partner 2 heb al de gegevens checkboxes ingevuld
+Gegeven dat ik op de "persoonsgegevens" pagina ben
+    En dat ik al de checkbox met label "persoonsgegevens" ingevuld heb 
+    En dat ik al de checkbox met label "incest-check" ingevuld heb 
+    En dat ik al de checkbox met label "gegevensbevestiging" ingevuld heb
+Dan zie ik een "Contactgegevens opslaan" button
 
 Scenario: Ik Partner 2 wil mijn contactgegevens opslaan
 Gegeven dat ik op de "persoonsgegevens" pagina ben
@@ -412,11 +423,11 @@ Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/succes" pagina ben
 Wanneer ik op de "Vul aan met extra's" link klik
 Dan word ik naar de "extra" pagina gestuurd
 
+# oude versie van de extras met een checkbox een radio buttons 
 Scenario: We willen zien dat we op de "extra" pagina zijn 
 Gegeven dat ik op de "extra" pagina ben
 Dan zie ik de heading  "Kies je extra’s"
   En zie ik een "trouwboekjes" image
-  # En zie ik een type checkbox input field voor de indicatie dat wij een trouwboekje willen
   En zie ik een type checkbox input field met label "trouwboek"
   En zie ik een vier type radio button input fields 
   En zie ik een inactief "Deze wil ik hebben" button

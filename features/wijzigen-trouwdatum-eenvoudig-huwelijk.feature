@@ -8,11 +8,10 @@ Dan word ik naar de "trouw-opties/huwelijk" pagina gestuurd
 
 Scenario: We willen de trouwdatum voor het huwelijk aanpassen
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-    En dat ik de heading "Wanneer en hoe" zie
-    En dat ik de datum prikker "Trouwdatum" op de pagina zie
-    En dat ik de disabled button "Ja, dit wil ik!" zie
-    En dat ik de link "Terug naar het huwelijksoverzicht" zie
-Dan kan ik de beschikbare trouwdatums zien
+Dan kan ik de heading "Wanneer en hoe" zien
+    En kan ik de datum prikker "Trouwdatum" op de pagina zien
+    En kan ik de link "Terug naar het huwelijksoverzicht" zien
+    En kan ik de beschikbare trouwdatums zien
 
 
 Scenario: We willen naar het overzicht zonder de trouwdatum voor het huwelijk aan te passen
