@@ -1,4 +1,4 @@
-import { FormLabel, RadioButton } from "@utrecht/component-library-react";
+import { FormLabel } from "@utrecht/component-library-react";
 import { endOfMonth, format, startOfMonth } from "date-fns";
 import _ from "lodash";
 import { NextPage } from "next";
@@ -28,6 +28,7 @@ import {
   PageFooter,
   PageHeader,
   Paragraph,
+  RadioButton2,
   SkipLink,
   Surface,
   TimeValue,
@@ -152,7 +153,7 @@ const PlanningFormPage: NextPage = () => {
                                   <FormField key={idx} type="radio">
                                     <Paragraph className={"utrecht-form-field__label utrecht-form-field__label--radio"}>
                                       <FormLabel htmlFor={`${ceremonyUniqueDayId}-${idx}`} type={"radio"}>
-                                        <RadioButton
+                                        <RadioButton2
                                           className="utrecht-form-field__input"
                                           id={`${ceremonyUniqueDayId}-${idx}`}
                                           value={`${ceremonyUniqueDayId}-${idx}`}
@@ -165,7 +166,8 @@ const PlanningFormPage: NextPage = () => {
                                             })
                                           }
                                           checked={`${ceremonyUniqueDayId}-${idx}` === selectedRadio}
-                                          aria-required={true}
+                                          required
+                                          novalidate
                                         />
                                         <DateValue dateTime={slot.start} locale={locale} /> van{" "}
                                         <TimeValue dateTime={slot.start} locale={locale} /> tot{" "}
