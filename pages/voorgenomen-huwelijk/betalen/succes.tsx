@@ -250,10 +250,13 @@ export default function HuwelijksplannerStep0() {
       // @ts-ignore
       AssentService.assentPatchItem(witness.id, {
         huwelijk: null,
-      } as Assent).then(() =>  HuwelijkService.huwelijkGetItem(marriageOptions.huwelijk.id)
-      .then((res) => {
-        setHuwelijk(res);
-      })) .finally(() => setIsLoading(false));
+      } as Assent)
+        .then(() =>
+          HuwelijkService.huwelijkGetItem(marriageOptions.huwelijk.id).then((res) => {
+            setHuwelijk(res);
+          })
+        )
+        .finally(() => setIsLoading(false));
     };
 
     return (
