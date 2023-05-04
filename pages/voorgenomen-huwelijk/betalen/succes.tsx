@@ -244,6 +244,18 @@ export default function HuwelijksplannerStep0() {
       } as Assent).finally(() => setIsLoading(false));
     };
 
+    const removeWitness = () => {
+      setIsLoading(true);
+
+      // @ts-ignore
+      AssentService.assentPatchItem(witness.id, {
+        huwelijk: null,
+      } as Assent).then(() =>  HuwelijkService.huwelijkGetItem(marriageOptions.huwelijk.id)
+      .then((res) => {
+        setHuwelijk(res);
+      })) .finally(() => setIsLoading(false));
+    };
+
     return (
       <DataList className="utrecht-data-list--grid">
         <DataListItem>
@@ -254,6 +266,9 @@ export default function HuwelijksplannerStep0() {
           <DataListActions>
             <Button disabled={isLoading || !name} onClick={handleNameChange}>
               Update name
+            </Button>
+            <Button disabled={isLoading} onClick={removeWitness}>
+              Remove
             </Button>
           </DataListActions>
         </DataListItem>
