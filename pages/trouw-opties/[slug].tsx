@@ -67,9 +67,8 @@ const BlogPost: NextPage = () => {
     setIsLoading(true);
 
     SdgproductService.sdgproductGetItem(marriageOptions.type)
-      .then((res) => {
+      .then((res: any) => {
         setCeremonyTypes(
-          // @ts-ignore
           res.embedded.gerelateerdeProducten.map((ceremony: any) => ({
             name: ceremony.upnLabel,
             id: ceremony._self.id,
@@ -92,9 +91,8 @@ const BlogPost: NextPage = () => {
       "PT2H",
       format(endDate, "yyyy-MM-dd"),
       selectedDate
-    ).then((res) => {
-      // @ts-ignore
-      setAvailableSlots(JSON.parse(res)[selectedDate].filter((slot: any) => slot.resources.length > 0));
+    ).then((res: any) => {
+      setAvailableSlots(res[selectedDate].filter((slot: any) => slot.resources.length > 0));
     });
   }, [ceremonyTypes, selectedDate]);
 

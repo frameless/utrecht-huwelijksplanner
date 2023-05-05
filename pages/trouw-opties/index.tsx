@@ -48,8 +48,7 @@ export default function MultistepForm1() {
     setIsLoading(true);
 
     SdgproductService.sdgproductGetCollection(undefined, undefined, undefined, weddingOptions)
-      .then((res) => {
-        // @ts-ignore
+      .then((res: any) => {
         setMarriageOptions({ ...marriageOptions, type: res.results[0].id });
         replace(`/trouw-opties/${weddingOptions}`);
       })
@@ -107,7 +106,7 @@ export default function MultistepForm1() {
                   <Button
                     type="submit"
                     name="type"
-                    value="geregistreerd-partnerschap"
+                    value="partnerschap"
                     appearance="primary-action-button"
                     onClick={onWeddingOptionsClick}
                     disabled={isLoading}
