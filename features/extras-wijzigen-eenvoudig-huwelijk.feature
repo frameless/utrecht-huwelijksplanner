@@ -29,7 +29,7 @@ Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
 
 @validate-flow
-Abstract Scenario: We willen verklaren dat wij "<trouwboekje>" aanpassen willen
+Scenario Outline: We willen verklaren dat wij "<trouwboekje>" aanpassen willen
    Gegeven dat ik op de "extra-laat" pagina ben
   Wanneer ik op de radio button "<trouwboekje>" klik  
    Dan wordt de radio button "<option>" ingevuld

@@ -1,5 +1,5 @@
 @validate-flow 
-Abstract Scenario: We willen het "<veld>" van elke partner aanpassen
+Scenario Outline: We willen het "<veld>" van elke partner aanpassen
 Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
     En dat ik de heading "Betaling ontvangen" zie
     En dat ik een link "Aanpassen" zie om het "<veld>" van partner "<partner>" aan te passen
@@ -15,7 +15,7 @@ Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
 
 
 @validate-flow 
-Abstract Scenario: We willen het "<veld>" van elke partner controleren
+Scenario Outline: We willen het "<veld>" van elke partner controleren
 Gegeven dat ik op de "<pagina>" ben
     En dat ik op het "<veld>" input field met "<label>" ben gefocust
   Wanneer ik het "<veld>" met "<content>" invul 
@@ -28,7 +28,7 @@ Gegeven dat ik op de "<pagina>" ben
     | email          | 2       | persoonsgegevens/partner2 | Telefoonnummer aanpassen Partner 2 | jane@gmail.com |
 
 @validate-flow 
-Abstract Scenario: We willen terug naar het overzicht als we klaar met de aanpassing van de gegevens van "<partner>" zijn
+Scenario Outline: We willen terug naar het overzicht als we klaar met de aanpassing van de gegevens van "<partner>" zijn
 Gegeven dat ik op de "<pagina>" ben
     En dat het "<veld>" veld met label "<label>" de waarde "<content>" heeft
     En dat ik de link "Terug naar het huwelijksoverzicht" zie
@@ -44,7 +44,7 @@ Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
 
 # --
-Abstract Scenario: We willen de naam van Getuige 1 aanpassen
+Scenario Outline: We willen de naam van Getuige 1 aanpassen
 Gegeven dat ik op de "voorgenomen-huwelijk/betalen/succes" pagina ben
     En dat ik de heading "Betaling ontvangen" zie
     En dat ik een link "Aanpassen" zie om het "<veld>" van getuige "<getuige>" aan te passen
@@ -69,7 +69,7 @@ Wanneer ik op de "Terug naar het huwelijksoverzicht" link klik
 Dan word ik naar de "voorgenomen-huwelijk/betalen/succes" pagina gestuurd
 
 @validate-flow 
-Abstract Scenario: We willen het "<veld>" van elke getuige controleren
+Scenario Outline: We willen het "<veld>" van elke getuige controleren
 Gegeven dat ik op de "voorgenomen-huwelijk/getuigen/aanpassen" ben
     En dat ik het "<veld>" input field met label "<label>" heb ingevuld
 Wanneer ik het "<veld>" met "<content>" invul 

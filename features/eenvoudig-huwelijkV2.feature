@@ -65,7 +65,7 @@ Dan zie ik dat de tijdslot radio button wordt geselecteerd
 
 
 
-Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
+Scenario Outline: Ik wil mijn gewenste tijd en datum bevestigen
   Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
     En dat ik heb de "<datum>" geselecteerd
     En dat ik heb een beschikbare "<tijd>" geselecteerd voor een "<type>" huwelijk
@@ -116,7 +116,7 @@ Gegeven dat ik op de "login" pagina ben
 Wanneer ik op de link klik
 Dan word ik naar een pagina waarin ik een DigID kan krijgen gestuurd
 
-Scenario: Ik Partner 1 wil mijn basisgegevens bevestigen
+Scenario Outline: Ik Partner 1 wil mijn basisgegevens bevestigen
 Gegeven dat ik op de "persoonsgegevens" pagina ben 
 Dan zie ik de heading "Melding Voorgenomen Huwelijk"
   En zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie 
@@ -158,7 +158,7 @@ Gegeven dat ik op de "persoonsgegevens" pagina ben
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
-Scenario: Ik Partner 1 wil al de gegevens in het formulier bevestigen
+Scenario Outline: Ik Partner 1 wil al de gegevens in het formulier bevestigen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
     En dat ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie zie
     En dat al de ingevulde gegevens in het formulier kloppen
@@ -275,7 +275,7 @@ Dan word ik ingelogd door DigID
   En word ik naar de "persoonsgegevens" van mij pagina gestuurd
 
 
-Scenario: Ik Partner 2 wil mijn basisgegevens bevestigen
+Scenario Outline: Ik Partner 2 wil mijn basisgegevens bevestigen
 Gegeven dat ik op de "persoonsgegevens" pagina ben 
 Dan zie ik de heading "Melding Voorgenomen Huwelijk"
   En zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie 
@@ -317,7 +317,7 @@ Gegeven dat ik op de "persoonsgegevens" pagina ben
 Wanneer ik op de checkbox klik
 Dan wordt het checkbox ingevuld
 
-Scenario: Ik Partner 2 wil al de gegevens in het formulier bevestigen
+Scenario Outline: Ik Partner 2 wil al de gegevens in het formulier bevestigen
 Gegeven dat ik op de "persoonsgegevens" pagina ben
     En dat ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie zie
     En dat al de ingevulde gegevens in het formulier kloppen
@@ -345,7 +345,7 @@ Gegeven dat ik op de "persoonsgegevens" pagina ben
 Wanneer ik op de "Contactgegevens opslaan" button klik
 Dan word ik naar de "persoonsgegevens/succes" pagina gestuurd
 
-Scenario: Gekoppeling van gegevens bevestigen
+Scenario Outline: Gekoppeling van gegevens bevestigen
 Gegeven dat ik op de "persoonsgegevens/succes" pagina ben
 Dan zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie
     En zie ik de kosten voor het huwelijk 
@@ -372,7 +372,7 @@ Dan zie ik de heading  "Nodig alvast getuigen uit"
   En zie ik een "Verstuur uitnodiging" button
 
 
-Abstract Scenario: We willen de email van "<getuige>" invullen
+Scenario Outline: We willen de email van "<getuige>" invullen
   Gegeven dat ik op de "voorgenomen-huwelijk/getuigen" pagina ben
     En dat ik in de "<text>" input field de naam van "<getuige>"  heb ingevuld
   Dan wordt het ingevulde "<email>" gecontroleerd voor geldigheid
@@ -407,18 +407,19 @@ Dan zie ik de heading  "Kies je extra’s"
   En zie ik een type radio radio group met 5 items
 
 
- Abstract Scenario: We willen verklaren dat wij "<trouwboekje>" willen
-    Gegeven dat ik op de "extra" pagina ben
-    Wanneer ik op de radio button "<trouwboekje>" klik  
-    Dan wordt de radio button "<option>" ingevuld
-    Voorbeelden: 
-    | trouwboekje      | option    | 
-    | geen trouwboekje | option 1  | 
-    | Wit              | option 2  | 
-    | Donkerblauw      | option 3  | 
-    | Rood             | option 4  | 
-    | Naturel          | option 5  | 
-    En zie ik een "Deze wil ik hebben" button
+Scenario Outline: We willen verklaren dat wij "<trouwboekje>" willen
+  Gegeven dat ik op de "extra" pagina ben
+  Wanneer ik op de radio button "<trouwboekje>" klik  
+  Dan wordt de radio button "<option>" ingevuld
+  En zie ik een "Deze wil ik hebben" button
+  Voorbeelden: 
+  | trouwboekje      | option    | 
+  | geen trouwboekje | option 1  | 
+  | Wit              | option 2  | 
+  | Donkerblauw      | option 3  | 
+  | Rood             | option 4  | 
+  | Naturel          | option 5  | 
+
 
 
 Scenario: We willen onze trouwboekje keuze hebben 

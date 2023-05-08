@@ -1,5 +1,5 @@
 @validate-flow
-Abstract Scenario: De datumgrens voor het toevoegen van getuigen nadert
+Scenario Outline: De datumgrens voor het toevoegen van getuigen nadert
   Gegeven dat het trouwdatum binnen de komende "<weken>" zal zijn
   Dan krijg "<partner>" een herinnering email waarin staat dat het minimum aantal getuigen is nog niet bereikt
   Voorbeelden: 
