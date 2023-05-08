@@ -2,14 +2,10 @@
 
 # Functionaliteit: Datum Prikker 
 
-Scenario: Ik wil een "Site is down" bericht zien als de JavaScript van de datum prikker niet worden geladen kan
-Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-    En dat de JavaScript van de datum prikker niet worden geladen kan
-Dan zie ik de "Site is down" bericht
 
 Scenario: De datum prikker toont actieve en inactieve datums
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-    En dat ik een datumprikker zie
+    En dat ik een "Trouwdatum" datumprikker zie
 Dan zie ik datums dat niet beschikbare zijn als inactief
     En zie ik datums dat beschikbaar zijn als actief
 
@@ -34,8 +30,7 @@ Dan zie ik dat de datum prikker highlighted wordt
 
 
 
-
-Scenario: Ik wil zien dat de datumprikker zichtbaar is als ik op een datum klikt
+Scenario: Ik wil zien dat de datumprikker zichtbaar is als ik op een trouwdatum selecteer
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
     En dat ik een datumprikker zie
 Wanneer ik op een actief trouwdatum button klik 
@@ -59,6 +54,11 @@ Wanneer ik buiten de datum prikker klikt
 Dan zie ik dat de geselecteerde trouwdatum niet verandert heeft
     En zie ik dat de tijdsloten voor de geselecteerde trouwdatum niet verandert hebben
 
+Scenario: Ik kan een niet beschikbare dag niet selecteren
+Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
+  En dat er is een "Trouwdatum" datum prikker op de pagina
+Wanneer ik probeer een inactief trouwdatum te selecteren
+Dan zie ik dat ik dat dag niet selecteren kan
 
 Scenario: Ik kan beschikbare tijdsloten voor de geselecteerde trouwdatum kiezen
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
@@ -93,6 +93,17 @@ Wanneer ik de "Volgend Jaar" button klikt
 Dan zie ik dat de datum prikker de huidige maand toont
     En zie ik het bericht "Kan datums meer dan een jaar vanaf vandaag niet weergeven"
 
+Scenario: Ik wil in over een jaar trouwdatum selecteren
+Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
+  En dat er is een "Trouwdatum" datum prikker op de pagina
+Wanneer ik probeer een datum over een jaar te selecteren
+Dan krijg ik een melding om een datum maximaal tussen een jaar te selecteren
+
+Scenario: Ik wil in binnen 3 weken trouwen
+Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
+  En dat er is een "Trouwdatum" datum prikker op de pagina
+Wanneer ik probeer een datum binnen 3 weken van te voren te selecteren
+Dan krijg ik een melding om een datum minimaal 3 weken van te voren te selecteren
 
 Scenario: Ik kan door de datum prikker naar vorige maanden bladeren door de "Vorige Maand" button te gebruiken
 Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
@@ -109,83 +120,4 @@ Wanneer ik de "Vorige Maand" button klikt
 Dan zie ik dat de datum prikker de huidige maand toont
     En zie ik het bericht "Kan geen datums eerder dan vandaag selecteren"
 
-
-
-
-##Current date picker scenarios from the eenvoudig-huwelijk.feature file
-
-# Scenario: Ik wil zien dat ik op de trouw-opties/huwelijk pagina ben
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-# Dan zie ik de heading "Wanneer en hoe"
-#   En ben ik op stap "2"
-#   En is er een "Trouwdatum" datum prikker op de pagina
-#   En kan ik een "Ja, dit wil ik!" button zien
-
-
-# Scenario: Ik wil zien op welk datum ik kan trouwen door op de datum prikker te klikken
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-# Wanneer ik op de "Trouwdatum" datum prikker klik
-# Dan kan ik de beschikbare trouwdatums zien
-
-
-# # Scenario: Ik wil zien op welk datum ik kan trouwen door een datum in te vullen
-# # Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-# # Wanneer ik het "Trouwdatum" datum prikker gefocust heb
-# # Dan kan ik de beschikbare trouwdatums zien
-# #   En kan ik een datum handmatig in de "Trouwdatum" datum prikker invullen
-# #   En kan ik de beschikbare tijdsloten radio button opties voor de ingevulde datum zien
-
-
-# Scenario: Ik wil een trouwdatum selecteren door op de datum prikker te klikken
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-#   En dat er is een "Trouwdatum" datum prikker op de pagina
-#   En dat ik heb de datum prikker geopend
-# Wanneer ik een beschikbare dag selecteer
-# Dan wordt de datum op de datum prikker gezet
-#   En kan ik de beschikbare tijdsloten radio button opties voor de geselecteerde datum zien
-
-
-# Scenario: Ik kan een niet beschikbare dag niet selecteren
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
-#   En dat er is een "Trouwdatum" datum prikker op de pagina
-#   En dat ik heb de datum prikker geopend
-# Wanneer ik probeer een niet beschikbare dag te selecteren
-# Dan zie ik dat ik dat dag niet selecteren kan
-
-
-# Scenario: Ik wil in over een jaar trouwen
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
-#   En dat er is een "Trouwdatum" datum prikker op de pagina
-#   En dat ik heb de datum prikker geopend
-# Wanneer ik probeer een datum over een jaar te selecteren
-# Dan krijg ik een melding om een datum maximaal tussen een jaar te selecteren
-
-# Scenario: Ik wil in binnen 3 weken trouwen
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben 
-#   En dat er is een "Trouwdatum" datum prikker op de pagina
-#   En dat ik heb de datum prikker geopend
-# Wanneer ik probeer een datum binnen 3 weken van te voren te selecteren
-# Dan krijg ik een melding om een datum minimaal 3 weken van te voren te selecteren
-
-
-# Scenario: Ik wil een tijdslot selecteren
-# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-#   En dat ik heb een beschikbare datum geselecteerd
-# Wanneer ik op de gewenste tijdslot radio button klik
-# Dan zie ik dat de tijdslot radio button wordt geselecteerd
-
-
-# Abstract Scenario: Ik wil mijn gewenste tijd en datum bevestigen
-#   Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
-#     En dat ik heb de "<datum>" geselecteerd
-#     En dat ik heb een beschikbare "<tijd>" geselecteerd voor een "<type>" huwelijk
-#   Wanneer ik op de "Ja, dit wil ik!" button klik
-#   Dan word ik naar de "voorgenomen-huwelijk" pagina gestuurd 
-#     En ben ik op stap "3"
-#     En zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie
-#   Voorbeelden: 
-#     | datum         | tijd           | type          |
-#     | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
-#     | 2021-04-14    | 13:30 – 13:45  | Eenvoudig     | 
-#     | 2021-04-14    | 12:00 – 12:15  | Uitgebreid    |  
 
