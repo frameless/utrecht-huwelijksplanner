@@ -121,3 +121,27 @@ Dan zie ik dat de datum prikker de huidige maand toont
     En zie ik het bericht "Kan geen datums eerder dan vandaag selecteren"
 
 
+# Gerelateerde Scenarios uit de eevoudig-huwelijk.feature file
+
+# Scenario: Ik wil zien dat ik op de trouw-opties/huwelijk pagina ben
+# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
+# Dan zie ik de heading "Wanneer en hoe"
+#   En ben ik op stap "2"
+#   En zie ik een "Trouwdatum" datum prikker op de pagina
+
+
+# Scenario Outline: Ik wil mijn gewenste tijd en datum bevestigen
+# Gegeven dat ik op de "trouw-opties/huwelijk" pagina ben
+#   En dat ik een "Trouwdatum" datumprikker zie
+#   En dat ik heb de "<datum>" geselecteerd
+#   En dat ik heb een beschikbare "<tijd>" geselecteerd voor een "<type>" huwelijk
+#   En dat ik een "Ja, dit wil ik!" button zie
+# Wanneer ik op de "Ja, dit wil ik!" button klik
+# Dan word ik naar de "voorgenomen-huwelijk" pagina gestuurd 
+#   En ben ik op stap "3"
+#   En zie ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie
+# Voorbeelden: 
+#   | datum         | tijd           | type          |
+#   | 2021-04-14    | 12:00 – 12:15  | Eenvoudig     |
+#   | 2021-04-14    | 13:30 – 13:45  | Eenvoudig     | 
+#   | 2021-04-14    | 12:00 – 12:15  | Uitgebreid    |  

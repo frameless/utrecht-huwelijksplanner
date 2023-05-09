@@ -9,7 +9,7 @@ Dan zie ik de heading "Regel je huwelijk of geregistreerd partnerschap"
     En zie ik de heading "Welke stappen kun je verwachten?"
     En zie ik een lijst "Welke stappen kun je verwachten?" met verwachte stappen voor al de trouwopties
     En zie ik een aside "Meer informatie" 
-    En zie ik een link "uitleg over DigiD" 
+    En zie ik een link "Vindt u DigiD ingewikkeld? Bekijk dan deze uitleg over DigiD." 
     En zie ik een "Start" button die zich gedraagd als link
 
 Scenario: Ik wil de huwelijksplanner kunnen starten
