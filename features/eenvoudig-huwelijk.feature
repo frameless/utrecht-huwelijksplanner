@@ -60,6 +60,22 @@ Functionaliteit: Eenvoudig huwelijk
         Dan word ik ingelogd door DigID
         En word ik naar de "persoonsgegevens" van mij pagina gestuurd
 
+    Scenario: Ik wil de DigID inloggen annuleren **Optioneel**
+        Gegeven dat ik op de "login" pagina ben
+        En dat ik de DigID Inloggen interface zie
+        En dat ik zie een Annuleren button zie
+
+        Wanneer ik op de Annuleren button klik
+        Dan word ik teruggestuurd naar de "voorgenomen-huwelijk" pagina
+
+    Scenario: Ik wil een DigID hebben
+        Gegeven dat ik op de "login" pagina ben
+        En dat ik geen DigID heb
+        En dat ik de "Nog geen DigID? Vraag uw DigiD aan" link op de pagina zie
+
+        Wanneer ik op de link klik
+        Dan word ik naar een pagina waarin ik een DigID kan krijgen gestuurd
+
     Abstract Scenario: Ik Partner 1 wil mijn basisgegevens bevestigen
         Gegeven dat ik op de "persoonsgegevens" pagina ben
         Dan zie ik de heading "Melding Voorgenomen Huwelijk"
@@ -80,6 +96,13 @@ Functionaliteit: Eenvoudig huwelijk
         Wanneer ik in de tel type input field mijn telefoonnummer invul
         Dan wordt het ingevulde nummer gecontroleerd voor geldigheid
 
+    Scenario: Ik Partner 1 wil mijn telefoonnummer vals invullen
+        Gegeven dat ik op de "persoonsgegevens" pagina ben
+        En dat ik een type tel input field zie
+
+        Wanneer ik in de tel type input field ongeldige karakteren typ
+        Dan zie ik dat de ongeldige karateren de tel type input field niet invullen
+
     Scenario: Ik Partner 1 wil mijn email invullen
         Gegeven dat ik op de "persoonsgegevens" pagina ben
         En dat ik een type email input field zie
@@ -87,22 +110,29 @@ Functionaliteit: Eenvoudig huwelijk
         Wanneer ik in de type email input field mijn email invul
         Dan wordt het ingevulde email gecontroleerd voor geldigheid
 
+    Scenario: Ik Partner 1 wil mijn email vals invullen
+        Gegeven dat ik op de "persoonsgegevens" pagina ben
+        En dat ik een type email input field zie
+
+        Wanneer ik in de email type input field ongeldige karakteren typ
+        Dan zie ik dat de ongeldige karateren de email type input field niet invullen
+
     Scenario: Ik Partner 1 wil verklaren dat ik niet getrouwd ben
-        Gegeven dat ik op de Persoonsgegevens pagina ben
+        Gegeven dat ik op de "persoonsgegevens" pagina ben
         En dat ik een type checkbox input field met label "burgerlijke-staat" zie
 
         Wanneer ik op de checkbox klik
         Dan wordt het checkbox ingevuld
 
     Scenario: Ik Partner 1 wil verklaren dat ik niet binnen mijn familie ga trouwen
-        Gegeven dat ik op de Persoonsgegevens pagina ben
-        En dat ik een checkbox input field met label "incest-check"
+        Gegeven dat ik op de "persoonsgegevens" pagina ben
+        En dat ik een checkbox input field met label "incest-check" zie
 
         Wanneer ik op de checkbox klik
         Dan wordt het checkbox ingevuld
 
     Abstract Scenario: Ik Partner 1 wil al de gegevens in het formulier bevestigen
-        Gegeven dat ik op de Persoonsgegevens pagina ben
+        Gegeven dat ik op de "persoonsgegevens" pagina ben
         En dat ik het correcte "<type>" huwelijk met de vroeger geselecteerde "<datum>" en "<tijd>" combinatie zie
         En dat al de ingevulde gegevens in het formulier kloppen
 
@@ -123,7 +153,7 @@ Functionaliteit: Eenvoudig huwelijk
         Dan zie ik een "Contactgegevens opslaan" button
 
     Scenario: Ik Partner 1 wil mijn contactgegevens opslaan
-        Gegeven ik ben op de Persoonsgegevens pagina
+        Gegeven dat ik op de "persoonsgegevens" pagina ben
         En dat ik al de verklaring checkboxes ingevuld heb
         En dat ik de gegevensbevestiging checkbox ingevuld heb
         En dat ik een "Contactgegevens opslaan" button zie
@@ -137,7 +167,7 @@ Functionaliteit: Eenvoudig huwelijk
         En is er een "Partner inloggen met DigiD" button op de pagina
         En is er een "mail een uitnodiging aan je partner" link
 
-    Scenario: Ik Partner 1 wil een DigID inloggen uitnodiging naar Partner 2 sturen **Optioneel**
+    Scenario: Ik Partner 1 wil een DigID inloggen uitnodiging naar partner 2 stuuren **Optioneel**
         Gegeven dat ik op de "voorgenomen-huwelijk/partner" pagina ben
         En dat ik een "mail een uitnodiging aan je partner" link zie
 
@@ -165,7 +195,8 @@ Functionaliteit: Eenvoudig huwelijk
 
     Scenario: Ik Partner 1 wil een DigID inloggen uitnodiging per e-mail naar Partner 2 stuuren **Optioneel**
         Gegeven dat ik op de "voorgenomen-huwelijk/partner/uitnodigen" pagina ben
-        En dat ik de gegevens van Partner 2 ingevult hebt
+        En dat ik de type text input field met label "partner2-naam" ingevult hebt
+        En dat ik de type email input field met label "partner2-email" ingevult hebt
 
         Wanneer ik op de "Verstuur uitnodiging" button klik
         Dan wordt ik naar de "voorgenomen-huwelijk/partner/succes" pagina gestuurd
@@ -175,7 +206,7 @@ Functionaliteit: Eenvoudig huwelijk
         Gegeven dat ik op de "voorgenomen-huwelijk/partner/succes" pagina ben
         Dan zie ik een "Bekijk e-mail voor aanvrager" link
         En zie ik een "Bekijk e-mail voor partner" link
-        En zie ik een type text input field met label "partner2-naam"
+        En zie ik een type text input field "partner2-naam"
         En zie ik een type email input field met label "partner2-email"
         En zie ik een "Verstuur uitnodiging" button
 
@@ -249,12 +280,26 @@ Functionaliteit: Eenvoudig huwelijk
         Wanneer ik in de tel type input field mijn telefoonnummer invul
         Dan wordt het ingevulde nummer gecontroleerd voor geldigheid
 
+    Scenario: Ik Partner 2 wil mijn telefoonnummer vals invullen
+        Gegeven dat ik op de "persoonsgegevens" pagina ben
+        En dat ik een type tel input field zie
+
+        Wanneer ik in de tel type input field andere karakteren dan nummers typ
+        Dan zie ik dat de niet nummers niet de tel type input field invullen
+
     Scenario: Ik Partner 2 wil mijn email invullen
         Gegeven dat ik op de "persoonsgegevens" pagina ben
         En dat ik een type email input field zie
 
         Wanneer ik in de type email input field mijn email invul
         Dan wordt het ingevulde email gecontroleerd voor geldigheid
+
+    Scenario: Ik Partner 2 wil mijn email vals invullen
+        Gegeven dat ik op de "persoonsgegevens" pagina ben
+        En dat ik een type email input field zie
+
+        Wanneer ik in de email type input field ongeldige karakteren typ
+        Dan zie ik dat de ongeldige karateren de email type input field niet invullen
 
     Scenario: Ik Partner 2 wil verklaren dat ik niet getrouwd ben
         Gegeven dat ik op de "persoonsgegevens" pagina ben
@@ -263,7 +308,7 @@ Functionaliteit: Eenvoudig huwelijk
         Wanneer ik op de checkbox klik
         Dan wordt het checkbox ingevuld
 
-    Scenario: Ik Partner 2 wil verklaren dat ik niet binnen zijn/haar familie ga trouwen
+    Scenario: Ik Partner 2 wil verklaren dat ik niet binnen mijn familie ga trouwen
         Gegeven dat ik op de "persoonsgegevens" pagina ben
         En dat ik een checkbox input field met label "incest-check" zie
 
@@ -365,6 +410,7 @@ Functionaliteit: Eenvoudig huwelijk
         Wanneer ik op de "Vul aan met extra's" link klik
         Dan word ik naar de "extra" pagina gestuurd
 
+    #nieuwe versie van de extras met vijf radio buttons
     Scenario: We willen zien dat we op de "extra" pagina zijn
         Gegeven dat ik op de "extra" pagina ben
         Dan zie ik de heading  "Kies je extra’s"
@@ -379,12 +425,12 @@ Functionaliteit: Eenvoudig huwelijk
         En zie ik een "Deze wil ik hebben" button
 
         Voorbeelden:
-            | trouwboekje | option   |
-            | geen        | option 1 |
-            | Wit         | option 2 |
-            | Donkerblauw | option 3 |
-            | Rood        | option 4 |
-            | Naturel     | option 5 |
+            | trouwboekje      | option   |
+            | geen trouwboekje | option 1 |
+            | Wit              | option 2 |
+            | Donkerblauw      | option 3 |
+            | Rood             | option 4 |
+            | Naturel          | option 5 |
 
     Scenario: We willen een van de trouwboekje opties kiezen
         Gegeven dat ik op de "extra" pagina ben
