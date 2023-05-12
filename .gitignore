@@ -39,6 +39,8 @@ yarn-error.log*
 src/generated/
 /public/favicon.ico
 .cache/
+cucumber-messages.ndjson
+cucumber-report.json
 
 # ide files
 .idea/
