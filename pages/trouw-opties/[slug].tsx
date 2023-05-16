@@ -1,5 +1,5 @@
 import { FormLabel } from "@utrecht/component-library-react";
-import { endOfMonth, format, startOfMonth } from "date-fns";
+import { addWeeks, addYears, endOfMonth, format, startOfMonth } from "date-fns";
 import _ from "lodash";
 import { NextPage } from "next";
 import Head from "next/head";
@@ -139,7 +139,7 @@ const PlanningFormPage: NextPage = () => {
                 </Paragraph>
                 <section>
                   <FormField>
-                    <Calendar onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))} />
+                    <Calendar onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))} minDate={addWeeks(new Date(), 3)} maxDate={addYears(new Date(), 1)} />
                   </FormField>
                   {calendarData.selectedDate && (
                     <div>
