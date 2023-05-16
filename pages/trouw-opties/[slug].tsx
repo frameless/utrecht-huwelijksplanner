@@ -62,9 +62,7 @@ const PlanningFormPage: NextPage = () => {
     end: endOfMonth(Date.now()),
     selectedDate: undefined,
   });
-  const [selectedSlot, setSelectedSlot] = useState<{ ceremony?: CeremonyData; startTime?: string; endTime?: string }>(
-    {}
-  );
+  const [selectedSlot, setSelectedSlot] = useState<{ ceremony: CeremonyData; startTime: string; endTime: string }>();
   const [selectedRadio, setSelectedRadio] = useState<string>("");
 
   const [ceremonyData, ceremoniesLoading, ceremonyError] = useSdgProductGetItem(marriageOptions.productId);
@@ -88,20 +86,26 @@ const PlanningFormPage: NextPage = () => {
   const onCalendarDateSelected = (date: Date) => {
     setCalendarData({ start: startOfMonth(date), end: endOfMonth(date), selectedDate: date });
     if (calendarData.selectedDate !== date) {
-      setSelectedSlot({});
+      setSelectedSlot(undefined);
       setSelectedRadio("");
     }
   };
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
+
+    if(!selectedSlot)
+      return;
+
     setMarriageOptions({
       ...marriageOptions,
       ambtenaar: selectedSlot.ceremony?.ambtenaarId,
-      "ceremony-type": selectedSlot.ceremony?.type,
-      "ceremony-location": selectedSlot.ceremony?.locationId,
-      "ceremony-start": selectedSlot.startTime,
-      "ceremony-end": selectedSlot.endTime,
+      reservation: {
+        "ceremony-type": selectedSlot.ceremony.type,
+        "ceremony-location": selectedSlot.ceremony.locationId,
+        "ceremony-start": selectedSlot.startTime,
+        "ceremony-end": selectedSlot.endTime,
+      },
     });
     push("/voorgenomen-huwelijk");
   };

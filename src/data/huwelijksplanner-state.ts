@@ -130,31 +130,26 @@ export interface HuwelijksplannerPartner
 }
 
 export interface Reservation {
-  expiry: string;
+  expiry?: string;
   'ceremony-type': string;
   'ceremony-start': string;
   'ceremony-end': string;
   'ceremony-location': string;
-  'ceremony-price-currency': string;
-  'ceremony-price-amount': string;
+  'ceremony-price-currency'?: string;
+  'ceremony-price-amount'?: string;
 }
 
 interface Witness extends Invitee {
   id: string;
 }
 
-export type RegistrationType = 'huwelijk' | 'geregistreerd-partnerschap';
+export type RegistrationType = 'huwelijk' | 'partnerschap';
 
 export interface HuwelijksplannerState {
   ambtenaar?: string;
   partnerInvitation?: Invitee;
   partners: HuwelijksplannerPartner[];
   witnesses: Witness[];
-  'ceremony-type'?: string;
-  'ceremony-location'?: string;
-  'ceremony-start'?: string;
-  'ceremony-end'?: string;
-  'ceremony-price'?: string;
   'registration-type'?: RegistrationType;
   productId?: string;
   reservation?: Reservation;
@@ -244,11 +239,6 @@ export const exampleState: HuwelijksplannerState = {
     'ceremony-price-amount': '168',
   },
   'registration-type': 'huwelijk',
-  'ceremony-type': 'eenvoudig-huwelijk',
-  'ceremony-start': '2021-04-14T09:00+01:00',
-  'ceremony-end': '2021-04-14T09:10+01:00',
-  'ceremony-location': 'Locatie Stadskantoor',
-  'ceremony-price': 'EUR 168',
   witnesses: [
     {
       id: 'd79c67b8-fa97-49e8-b177-679594cb95c4',
