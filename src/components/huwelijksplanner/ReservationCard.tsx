@@ -15,9 +15,7 @@ interface ReservationCardProps extends HTMLAttributes<HTMLElement> {
 
 export const ReservationCard = ({ reservation, locale }: ReservationCardProps) => (
   <SpotlightSection type="info">
-    <div>
-      {reservation["ceremony-location"]} - {reservation["ceremony-type"]}
-    </div>
+    <div>Locatie Stadskantoor - {reservation["ceremony-type"]}</div>
     <div>
       <time dateTime={reservation["ceremony-start"]}>
         {new Intl.DateTimeFormat(locale, {
@@ -42,13 +40,15 @@ export const ReservationCard = ({ reservation, locale }: ReservationCardProps) =
       </time>
     </div>
     {/*TODO:Intl currency format */}
-    <div>
-      Kosten:{" "}
-      <ValueCurrency
-        currency={reservation["ceremony-price-currency"]}
-        amount={reservation["ceremony-price-amount"]}
-        locale={locale}
-      />
-    </div>
+    {reservation["ceremony-price-amount"] && (
+      <div>
+        Kosten:{" "}
+        <ValueCurrency
+          currency={reservation["ceremony-price-currency"]}
+          amount={reservation["ceremony-price-amount"]}
+          locale={locale}
+        />
+      </div>
+    )}
   </SpotlightSection>
 );

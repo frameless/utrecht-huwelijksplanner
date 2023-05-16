@@ -87,9 +87,9 @@ export default function MultistepForm1() {
                 <Heading2>Wij willen een geregistreerd partnerschap</Heading2>
                 <Button
                   name="type"
-                  value="geregistreerd-partnerschap"
+                  value="partnerschap"
                   appearance="primary-action-button"
-                  onClick={() => onMarriageOptionSubmit("geregistreerd-partnerschap")}
+                  onClick={() => onMarriageOptionSubmit("partnerschap")}
                 >
                   Geregistreerd partnerschap plannen
                   <UtrechtIconArrow />
