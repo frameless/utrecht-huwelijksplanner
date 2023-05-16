@@ -94,8 +94,7 @@ const PlanningFormPage: NextPage = () => {
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    if(!selectedSlot)
-      return;
+    if (!selectedSlot) return;
 
     setMarriageOptions({
       ...marriageOptions,
@@ -139,7 +138,11 @@ const PlanningFormPage: NextPage = () => {
                 </Paragraph>
                 <section>
                   <FormField>
-                    <Calendar onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))} minDate={addWeeks(new Date(), 3)} maxDate={addYears(new Date(), 1)} />
+                    <Calendar
+                      onCalendarClick={(date: string) => onCalendarDateSelected(new Date(date))}
+                      minDate={addWeeks(new Date(), 3)}
+                      maxDate={addYears(new Date(), 1)}
+                    />
                   </FormField>
                   {calendarData.selectedDate && (
                     <div>
