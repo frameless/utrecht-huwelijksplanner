@@ -1,9 +1,5 @@
 import {
   Button,
-  DataList,
-  DataListItem,
-  DataListKey,
-  DataListValue,
   Document,
   Fieldset,
   FormField,
@@ -13,7 +9,6 @@ import {
   Heading2,
   HeadingGroup,
   Link,
-  NumberValue,
   Page,
   PageContent,
   PageFooter,
@@ -28,12 +23,16 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEventHandler, FormEvent, useState } from "react";
-import { Aside, OptionalIndicator, PageContentMain } from "../../src/components";
-import { Checkbox2, ReservationCard } from "../../src/components";
+import { ChangeEventHandler, FormEvent, useContext, useState } from "react";
+import { AddressDataList } from "./sections/AddressDataList";
+import { PersonalDataList } from "./sections/PersonalDataList";
+import { Aside, Checkbox2, OptionalIndicator, PageContentMain, ReservationCard } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { exampleState, HuwelijksplannerPartner } from "../../src/data/huwelijksplanner-state";
+import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import { useIngeschrevenpersoonGetByBsn } from "../../src/hooks/useIngeschrevenpersoonGetByBsn";
+import { getBsnFromJWT } from "../../src/openapi/authentication";
+
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common", "huwelijksplanner-step-4", "form"])),
@@ -43,142 +42,18 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function MultistepForm1() {
   const [declarationCheckboxData, setDeclarationCheckboxData] = useState<any>();
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
-  const data = { ...exampleState };
   const { query, locale = "nl", push } = useRouter();
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+  const [persoonData] = useIngeschrevenpersoonGetByBsn(getBsnFromJWT());
 
   const onDeclarationCheckboxChange = (event: any) => {
     setDeclarationCheckboxData({ ...declarationCheckboxData, [event.target.name]: event.target.checked });
   };
 
-  const PersonalDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => (
-    <DataList aria-describedby="personal-details" className="utrecht-data-list--rows">
-      <DataListItem>
-        <DataListKey>{t("form:bsn")}</DataListKey>
-        <DataListValue value={partner.bsn} emptyDescription={t("form:data-item-unknown")}>
-          <NumberValue>{partner.bsn}</NumberValue>
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:salutation")}</DataListKey>
-        <DataListValue value={partner.salutation} emptyDescription={t("form:data-item-unknown")}>
-          {partner.salutation}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:given-name")}</DataListKey>
-        <DataListValue value={partner["given-name"]} emptyDescription={t("form:data-item-unknown")} notranslate={true}>
-          {partner["given-name"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:family-name-prefix")}</DataListKey>
-        <DataListValue
-          value={partner["family-name-prefix"]}
-          emptyDescription={t("form:data-item-empty")}
-          notranslate={true}
-        >
-          {partner["family-name-prefix"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:family-name")}</DataListKey>
-        <DataListValue value={partner["family-name"]} emptyDescription={t("form:data-item-unknown")} notranslate={true}>
-          {partner["family-name"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:marital-status")}</DataListKey>
-        <DataListValue value={partner["marital-status"]} emptyDescription={t("form:data-item-unknown")}>
-          {partner["marital-status"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:bday")}</DataListKey>
-        <DataListValue value={partner["bday"]} emptyDescription={t("form:data-item-unknown")}>
-          {partner["bday"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:place-of-birth")}</DataListKey>
-        <DataListValue
-          value={partner["place-of-birth"]}
-          emptyDescription={t("form:data-item-unknown")}
-          notranslate={true}
-        >
-          {partner["place-of-birth"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:nationality")}</DataListKey>
-        <DataListValue value={partner["nationality"]} emptyDescription={t("form:data-item-unknown")} notranslate={true}>
-          {partner["nationality"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:registered-guardianship")}</DataListKey>
-        <DataListValue
-          value={partner["indicatie-curateleregister"] === 1 ? "Ja" : undefined}
-          emptyDescription={t("form:data-item-unknown")}
-        >
-          {/*TODO:What are the values and labels here?*/}
-          {partner["indicatie-curateleregister"] === 1 ? "Ja" : "Nee"}
-        </DataListValue>
-      </DataListItem>
-    </DataList>
-  );
-
-  const AddressDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => (
-    <DataList aria-describedby="address" className="utrecht-data-list--rows">
-      <DataListItem>
-        <DataListKey>{t("form:street")}</DataListKey>
-        <DataListValue value={partner.street} emptyDescription={t("form:data-item-unknown")}>
-          {partner.street}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:house-number")}</DataListKey>
-        <DataListValue value={partner["house-number"]} emptyDescription={t("form:data-item-unknown")}>
-          <NumberValue>{partner["house-number"]}</NumberValue>
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:house-number-suffix")}</DataListKey>
-        <DataListValue
-          value={partner["house-number-suffix"]}
-          emptyDescription={t("form:data-item-empty")}
-          notranslate={true}
-        >
-          {partner["house-number-suffix"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:postal-code")}</DataListKey>
-        <DataListValue value={partner["postal-code"]} emptyDescription={t("form:data-item-unknown")}>
-          {partner["postal-code"]}
-        </DataListValue>
-      </DataListItem>
-      <DataListItem>
-        <DataListKey>{t("form:place-of-residence")}</DataListKey>
-        <DataListValue
-          value={partner["place-of-residence"]}
-          emptyDescription={t("form:data-item-unknown")}
-          notranslate={true}
-        >
-          {partner["place-of-residence"]}
-        </DataListValue>
-      </DataListItem>
-    </DataList>
-  );
-  const partnerDetails = data.partners.find((p) => p.id === query.person);
-
   const onContactDetailsSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!partnerDetails?.partner) {
-      push("/voorgenomen-huwelijk/partner");
-    } else {
-      push(`/persoonsgegevens/succes`);
-    }
+    //TODO
   };
 
   return (
@@ -204,7 +79,9 @@ export default function MultistepForm1() {
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale} /> : ""}
+                {marriageOptions.reservation && (
+                  <ReservationCard reservation={marriageOptions.reservation} locale={locale} />
+                )}
                 <section>
                   {/*TODO: Banner / card */}
                   <SpotlightSection type="info">
@@ -218,9 +95,9 @@ export default function MultistepForm1() {
                     </Paragraph>
                   </SpotlightSection>
                   <Heading2 id="personal-details">Persoonsgegevens</Heading2>
-                  <PersonalDataList partner={partnerDetails as HuwelijksplannerPartner} />
+                  {persoonData && <PersonalDataList partner={persoonData} />}
                   <Heading2 id="address">Adresgegevens</Heading2>
-                  <AddressDataList partner={partnerDetails as HuwelijksplannerPartner} />
+                  {persoonData && <AddressDataList partner={persoonData} />}
                   <Heading2 id="contact">Contactgegevens</Heading2>
                   <dl>
                     <p>Deze gegevens kun je zelf invullen of wijzigen.</p>
@@ -230,13 +107,7 @@ export default function MultistepForm1() {
                           {t("form:tel")} <OptionalIndicator title={t("form:optional")} />
                         </FormLabel>
                       </p>
-                      <Textbox
-                        className="utrecht-form-field__input"
-                        id="tel"
-                        type="tel"
-                        autoComplete="tel"
-                        defaultValue={partnerDetails?.tel}
-                      />
+                      <Textbox className="utrecht-form-field__input" id="tel" type="tel" autoComplete="tel" />
                     </FormField>
                     <FormField>
                       <p className="utrecht-form-field__label">
@@ -254,7 +125,6 @@ export default function MultistepForm1() {
                         id="email"
                         type="email"
                         autoComplete="email"
-                        defaultValue={partnerDetails?.email}
                         aria-describedby="email-description"
                       />
                     </FormField>
