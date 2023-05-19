@@ -8,12 +8,10 @@ Functionaliteit: Eenvoudig huwelijk
         En ben ik op stap "1"
         En zie ik een "Trouwen plannen" button
 
-    Abstract Scenario: Ik wil relevante extra informatie op de trouw-opties pagina
+    Scenario: Ik wil relevante extra informatie op de trouw-opties pagina
         Gegeven dat ik op de "/trouw-opties" pagina ben
         Dan zie ik een aside "Meer informatie"
-        En zie ik een link "<link>" die gaat naar "<href>"
-
-        Voorbeelden:
+        En zie ik een link die gaat naar de juiste pagina
             | link                                                                                                 | href                                                                                                                                                                                                             |
             | Wat zijn de verschillen tussen een huwelijk, geregistreerd partnerschap en een samenlevingscontract? | https://www.rijksoverheid.nl/onderwerpen/trouwen-samenlevingscontract-en-geregistreerd-partnerschap/vraag-en-antwoord/wat-is-het-verschil-tussen-een-huwelijk-geregistreerd-partnerschap-en-samenlevingscontract |
             | Waar moet ik aan denken als ik wil trouwen of een geregistreerd partnerschap wil sluiten?            | https://www.rijksoverheid.nl/onderwerpen/trouwen-samenlevingscontract-en-geregistreerd-partnerschap/vraag-en-antwoord/trouwen-of-geregistreerd-partnerschap-sluiten                                              |
@@ -32,12 +30,10 @@ Functionaliteit: Eenvoudig huwelijk
         En ben ik op stap "2"
         En zie ik een "Trouwdatum" datum prikker op de pagina
 
-    Abstract Scenario: Ik wil relevante extra informatie op de trouw-opties/huwelijk pagina
+    Scenario: Ik wil relevante extra informatie op de trouw-opties/huwelijk pagina
         Gegeven dat ik op de "/trouw-opties/huwelijk" pagina ben
         Dan zie ik een aside "Meer informatie"
-        En zie ik een link "<link>" die gaat naar "<href>"
-
-        Voorbeelden:
+        En zie ik een link die gaat naar de juiste pagina
             | link                                           | href                                                                  |
             | Trouwen of partnerschap registreren in Utrecht | https://pki.utrecht.nl/Loket/product/298304036ec988f0633d839dde5b588f |
 
