@@ -31,7 +31,7 @@ Functionaliteit: Datum Prikker
         Wanneer ik over een actieve trouwdatum button met de muisaanwijzer heen beweeg
         Dan zie ik dat de datum waarover ik heen beweeg er anders uit ziet
 
-    Scenario: De actieve datumwordt die met het toetsenbord wordt gefocussed ziet er anders uit
+    Scenario: De actieve datum die met het toetsenbord wordt gefocussed ziet er anders uit
         Gegeven dat ik een trouwdatum heb geselecteerd
 
         Wanneer ik met mijn toetsenbord een actieve trouwdatum button focus
