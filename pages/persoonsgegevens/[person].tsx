@@ -23,7 +23,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEventHandler, FormEvent, useContext, useState } from "react";
+import React, { ChangeEventHandler, FormEvent, useContext, useEffect, useState } from "react";
 import { AddressDataList } from "./sections/AddressDataList";
 import { PersonalDataList } from "./sections/PersonalDataList";
 import { Aside, Checkbox2, OptionalIndicator, PageContentMain, ReservationCard } from "../../src/components";
@@ -43,7 +43,7 @@ export default function MultistepForm1() {
   const [declarationCheckboxData, setDeclarationCheckboxData] = useState<any>();
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
   const { query, locale = "nl", push } = useRouter();
-  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
+  const [marriageOptions] = useContext(MarriageOptionsContext);
   const [persoonData] = useIngeschrevenpersoonGetByBsn(getBsnFromJWT());
 
   const onDeclarationCheckboxChange = (event: any) => {
@@ -78,9 +78,8 @@ export default function MultistepForm1() {
                   {/*TODO: Step indicator component */}
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
-                {/*TODO: Banner / card */}
-                {marriageOptions.reservation && (
-                  <ReservationCard reservation={marriageOptions.reservation} locale={locale} />
+                {marriageOptions["reservation"] && (
+                  <ReservationCard reservation={marriageOptions["reservation"]} locale={locale} />
                 )}
                 <section>
                   {/*TODO: Banner / card */}
