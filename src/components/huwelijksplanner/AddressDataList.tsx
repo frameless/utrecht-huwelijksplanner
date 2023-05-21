@@ -1,6 +1,6 @@
 import { DataList, DataListItem, DataListKey, DataListValue, NumberValue } from "@utrecht/component-library-react";
 import { useTranslation } from "next-i18next";
-import { IngeschrevenPersoon } from "../../../src/generated";
+import { IngeschrevenPersoon } from "../../generated";
 
 export const AddressDataList = ({ partner }: { partner: IngeschrevenPersoon }) => {
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
