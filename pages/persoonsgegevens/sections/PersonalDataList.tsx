@@ -27,18 +27,18 @@ export const PersonalDataList = ({ partner }: { partner: IngeschrevenPersoon }) 
       </DataListItem>
       <DataListItem>
         <DataListKey>{t("form:family-name-prefix")}</DataListKey>
-        <DataListValue
-          value={partner.naam.voorvoegsel}
-          emptyDescription={t("form:data-item-empty")}
-          notranslate={true}
-        >
+        <DataListValue value={partner.naam.voorvoegsel} emptyDescription={t("form:data-item-empty")} notranslate={true}>
           {partner.naam.voorvoegsel ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
         <DataListKey>{t("form:family-name")}</DataListKey>
-        <DataListValue value={partner.naam.geslachtsnaam} emptyDescription={t("form:data-item-unknown")} notranslate={true}>
-          {partner.naam.geslachtsnaam  ?? "-"}
+        <DataListValue
+          value={partner.naam.geslachtsnaam}
+          emptyDescription={t("form:data-item-unknown")}
+          notranslate={true}
+        >
+          {partner.naam.geslachtsnaam ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
@@ -59,7 +59,11 @@ export const PersonalDataList = ({ partner }: { partner: IngeschrevenPersoon }) 
       </DataListItem>
       <DataListItem>
         <DataListKey>{t("form:nationality")}</DataListKey>
-        <DataListValue value={partner.nationaliteiten[0].nationaliteit.code} emptyDescription={t("form:data-item-unknown")} notranslate={true}>
+        <DataListValue
+          value={partner.nationaliteiten[0].nationaliteit.code}
+          emptyDescription={t("form:data-item-unknown")}
+          notranslate={true}
+        >
           {partner.nationaliteiten[0].nationaliteit.omschrijving || partner.nationaliteiten[0].nationaliteit.code}
         </DataListValue>
       </DataListItem>
