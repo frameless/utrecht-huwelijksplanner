@@ -23,13 +23,15 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { ChangeEventHandler, FormEvent, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
+import { useForm, UseFormRegister } from "react-hook-form";
 import { Aside, Checkbox2, OptionalIndicator, PageContentMain, ReservationCard } from "../../src/components";
 import { AddressDataList } from "../../src/components/huwelijksplanner/AddressDataList";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { PersonalDataList } from "../../src/components/huwelijksplanner/PersonalDataList";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import { AssentService, Huwelijk, HuwelijkService } from "../../src/generated";
 import { useIngeschrevenpersoonGetByBsn } from "../../src/hooks/useIngeschrevenpersoonGetByBsn";
 import { getBsnFromJWT } from "../../src/openapi/authentication";
 
@@ -39,21 +41,65 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   },
 });
 
+type FormData = {
+  "correct-information-and-complete": boolean;
+  "not-marrying-relative": boolean;
+  unmarried: boolean;
+  email?: string;
+  phoneNumber?: string;
+};
+
 export default function MultistepForm1() {
-  const [declarationCheckboxData, setDeclarationCheckboxData] = useState<any>();
   const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
-  const { query, locale = "nl", push } = useRouter();
+  const {
+    query: { huwelijkId },
+    locale = "nl",
+    push,
+  } = useRouter();
+  const { register, handleSubmit, formState } = useForm<FormData>();
   const [marriageOptions] = useContext(MarriageOptionsContext);
   const [persoonData] = useIngeschrevenpersoonGetByBsn(getBsnFromJWT());
+  const [huwelijk, setHuwelijk] = useState<Huwelijk>();
 
-  const onDeclarationCheckboxChange = (event: any) => {
-    setDeclarationCheckboxData({ ...declarationCheckboxData, [event.target.name]: event.target.checked });
-  };
-
-  const onContactDetailsSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    //TODO
+  const onContactDetailsSubmit = (data: FormData) => {
+    if (huwelijkId) {
+      HuwelijkService.huwelijkPatchItem({
+        id: huwelijkId as string,
+        requestBody: {
+          partners: [
+            {
+              requester: getBsnFromJWT(),
+              contact: {
+                subjectIdentificatie: {
+                  inpBsn: getBsnFromJWT(),
+                },
+                ...mapToContactObject(data.email, data.phoneNumber),
+              },
+              results: getResultsChecklist(),
+            },
+          ],
+        },
+      }).then(() => {
+        push(`/persoonsgegevens/succes?huwelijkId=${huwelijkId}`);
+      });
+    } else {
+      AssentService.assentPatchItem({
+        id: huwelijk?.partners[0]._self.id,
+        requestBody: {
+          requester: getBsnFromJWT(),
+          contact: {
+            subjectIdentificatie: {
+              inpBsn: getBsnFromJWT(),
+            },
+            ...mapToContactObject(data.email, data.phoneNumber),
+          },
+          results: getResultsChecklist(),
+          name: null,
+        },
+      }).then(() => {
+        push("/voorgenomen-huwelijk/partner");
+      });
+    }
   };
 
   return (
@@ -71,15 +117,15 @@ export default function MultistepForm1() {
           </PageHeader>
           <PageContent>
             <PageContentMain>
-              <form onSubmit={onContactDetailsSubmit}>
+              <form onSubmit={handleSubmit(onContactDetailsSubmit)}>
                 <HeadingGroup>
                   <Heading1>{t("huwelijksplanner-step-4:heading-1")}</Heading1>
                   {/*TODO: Previous button */}
                   {/*TODO: Step indicator component */}
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
-                {marriageOptions["reservation"] && (
-                  <ReservationCard reservation={marriageOptions["reservation"]} locale={locale} />
+                {marriageOptions.reservation && (
+                  <ReservationCard reservation={marriageOptions.reservation} locale={locale} />
                 )}
                 <section>
                   {/*TODO: Banner / card */}
@@ -106,7 +152,13 @@ export default function MultistepForm1() {
                           {t("form:tel")} <OptionalIndicator title={t("form:optional")} />
                         </FormLabel>
                       </p>
-                      <Textbox className="utrecht-form-field__input" id="tel" type="tel" autoComplete="tel" />
+                      <Textbox
+                        className="utrecht-form-field__input"
+                        id="tel"
+                        type="tel"
+                        autoComplete="tel"
+                        {...register("phoneNumber")}
+                      />
                     </FormField>
                     <FormField>
                       <p className="utrecht-form-field__label">
@@ -125,35 +177,12 @@ export default function MultistepForm1() {
                         type="email"
                         autoComplete="email"
                         aria-describedby="email-description"
+                        {...register("email")}
                       />
                     </FormField>
                   </dl>
-                  <DeclarationCheckboxGroup
-                    name="checks"
-                    onChange={onDeclarationCheckboxChange}
-                    checkboxData={[
-                      {
-                        id: "6e562ba6-0ed3-4f4d-95e2-7f35614771b2",
-                        label:
-                          "Ik verklaar dat ik nu niet met iemand anders getrouwd ben (in Nederland of in een ander land). Ik heb nu ook geen geregistreerd partnerschap.",
-                        value: "unmarried",
-                      },
-                      {
-                        id: "03aadd3e-49ad-43a6-89f9-de574d0b92df",
-                        label: "Ik verklaar dat ik niet trouw met mijn neef, nicht, oom of tante.",
-                        value: "not-marrying-relative",
-                      },
-                      {
-                        id: "f65c0e93-d550-4de2-a970-79df86269f5c",
-                        label: "De gegevens die hierboven staan kloppen en zijn compleet.",
-                        value: "correct-information-and-complete",
-                      },
-                    ]}
-                  />
-                  {/*<Button type="submit" name="type" appearance="primary-action-button">
-                    Deze gegevens kloppen
-                  </Button>*/}
-                  <Button type="submit" name="type" appearance="primary-action-button">
+                  <DeclarationCheckboxGroup register={register} checkboxData={checkboxData} />
+                  <Button disabled={!formState.isValid} type="submit" name="type" appearance="primary-action-button">
                     Contactgegevens opslaan
                   </Button>
                 </section>
@@ -187,26 +216,46 @@ export default function MultistepForm1() {
   );
 }
 
+const checkboxData: CheckboxData[] = [
+  {
+    id: "6e562ba6-0ed3-4f4d-95e2-7f35614771b2",
+    label:
+      "Ik verklaar dat ik nu niet met iemand anders getrouwd ben (in Nederland of in een ander land). Ik heb nu ook geen geregistreerd partnerschap.",
+    value: "unmarried",
+  },
+  {
+    id: "03aadd3e-49ad-43a6-89f9-de574d0b92df",
+    label: "Ik verklaar dat ik niet trouw met mijn neef, nicht, oom of tante.",
+    value: "not-marrying-relative",
+  },
+  {
+    id: "f65c0e93-d550-4de2-a970-79df86269f5c",
+    label: "De gegevens die hierboven staan kloppen en zijn compleet.",
+    value: "correct-information-and-complete",
+  },
+];
+
+type CheckboxData = {
+  id: string;
+  label: string;
+  value: CheckType;
+};
+
+type CheckType = "correct-information-and-complete" | "not-marrying-relative" | "unmarried";
+
 interface DeclarationCheckboxGroupProps {
-  name?: string;
-  checkboxData: {
-    id: string;
-    label: string;
-    name?: string;
-    value?: string;
-  }[];
-  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+  checkboxData: CheckboxData[];
+  register: UseFormRegister<FormData>;
 }
 
-export const DeclarationCheckboxGroup = ({ name, checkboxData, onChange }: DeclarationCheckboxGroupProps) => {
-  const groupName = name;
+export const DeclarationCheckboxGroup = ({ checkboxData, register }: DeclarationCheckboxGroupProps) => {
   return (
     <Fieldset>
       {checkboxData &&
         checkboxData.length > 0 &&
         checkboxData.map(({ id, label, value }, index) => (
           <FormField key={index} type="checkbox">
-            <Checkbox2 novalidate id={id} name={name || groupName} defaultValue={value} onChange={onChange} required />
+            <Checkbox2 novalidate id={id} {...register(value, { required: true })} />
             <FormLabel htmlFor={id} type="checkbox">
               {label}
             </FormLabel>
@@ -214,4 +263,42 @@ export const DeclarationCheckboxGroup = ({ name, checkboxData, onChange }: Decla
         ))}
     </Fieldset>
   );
+};
+
+const getResultsChecklist = () => {
+  return [
+    {
+      display: "Ik verklaar dat ik niet trouw met mijn neef, nicht, oom of tante.",
+      result: true,
+    },
+    {
+      display:
+        "Ik verklaar dat ik nu niet met iemand anders getrouwd ben (in Nederland of in een ander land). Ik heb nu ook geen geregistreerd partnerschap.",
+      result: true,
+    },
+  ];
+};
+
+const mapToContactObject = (email?: string, phoneNumber?: string) => {
+  const contactObject: any = {};
+
+  if (email) {
+    contactObject.emails = [
+      {
+        naam: email,
+        email: email,
+      },
+    ];
+  }
+
+  if (phoneNumber) {
+    contactObject.telefoonnummers = [
+      {
+        naam: phoneNumber,
+        telefoonnummer: phoneNumber,
+      },
+    ];
+  }
+
+  return contactObject;
 };
