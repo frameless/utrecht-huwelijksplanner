@@ -14,9 +14,15 @@ export const MarriageOptionsContext = createContext<[HuwelijksplannerState, (_: 
 ]);
 
 export const MarriageOptionsProvider = ({ children }: { children: ReactNode }) => {
-  const [marriageOptions, setMarriageOptions] = useState(getSavedMarriageOptions());
+  const [marriageOptions, setMarriageOptions] = useState<HuwelijksplannerState>(initialState);
 
   useEffect(() => {
+    setMarriageOptions(getSavedMarriageOptions);
+  }, []);
+
+  useEffect(() => {
+    if (!marriageOptions?.productId) return;
+
     myWindow?.sessionStorage.setItem("marriageOptions", JSON.stringify(marriageOptions));
   }, [marriageOptions]);
 
