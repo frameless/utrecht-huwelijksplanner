@@ -25,6 +25,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React, { useContext, useState } from "react";
 import { useForm, UseFormRegister } from "react-hook-form";
+import Skeleton from "react-loading-skeleton";
 import { Aside, Checkbox2, OptionalIndicator, PageContentMain, ReservationCard } from "../../src/components";
 import { AddressDataList } from "../../src/components/huwelijksplanner/AddressDataList";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
@@ -58,7 +59,7 @@ export default function MultistepForm1() {
   } = useRouter();
   const { register, handleSubmit, formState } = useForm<FormData>();
   const [marriageOptions] = useContext(MarriageOptionsContext);
-  const [persoonData] = useIngeschrevenpersoonGetByBsn(getBsnFromJWT());
+  const [persoonData = null] = useIngeschrevenpersoonGetByBsn(getBsnFromJWT());
   const [huwelijk, setHuwelijk] = useState<Huwelijk>();
 
   const onContactDetailsSubmit = (data: FormData) => {
@@ -124,7 +125,7 @@ export default function MultistepForm1() {
                   {/*TODO: Step indicator component */}
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
-                {marriageOptions.reservation && (
+                {marriageOptions?.reservation && (
                   <ReservationCard reservation={marriageOptions.reservation} locale={locale} />
                 )}
                 <section>
@@ -140,47 +141,45 @@ export default function MultistepForm1() {
                     </Paragraph>
                   </SpotlightSection>
                   <Heading2 id="personal-details">Persoonsgegevens</Heading2>
-                  {persoonData && <PersonalDataList partner={persoonData} />}
+                  {persoonData ? <PersonalDataList partner={persoonData} /> : <Skeleton height="100px" />}
                   <Heading2 id="address">Adresgegevens</Heading2>
-                  {persoonData && <AddressDataList partner={persoonData} />}
+                  {persoonData ? <AddressDataList partner={persoonData} /> : <Skeleton height="100px" />}
                   <Heading2 id="contact">Contactgegevens</Heading2>
-                  <dl>
-                    <p>Deze gegevens kun je zelf invullen of wijzigen.</p>
-                    <FormField>
-                      <p className="utrecht-form-field__label">
-                        <FormLabel htmlFor="tel">
-                          {t("form:tel")} <OptionalIndicator title={t("form:optional")} />
-                        </FormLabel>
-                      </p>
-                      <Textbox
-                        className="utrecht-form-field__input"
-                        id="tel"
-                        type="tel"
-                        autoComplete="tel"
-                        {...register("phoneNumber")}
-                      />
-                    </FormField>
-                    <FormField>
-                      <p className="utrecht-form-field__label">
-                        <FormLabel htmlFor="email">
-                          {t("form:email")} <OptionalIndicator title={t("form:optional")} />
-                        </FormLabel>
-                      </p>
-                      <FormFieldDescription id="email-description">
-                        We sturen je een bevestiging naar dit e-mailadres.
-                        <br />
-                        De mail heeft een link om nog veranderingen door te geven.
-                      </FormFieldDescription>
-                      <Textbox
-                        className="utrecht-form-field__input"
-                        id="email"
-                        type="email"
-                        autoComplete="email"
-                        aria-describedby="email-description"
-                        {...register("email")}
-                      />
-                    </FormField>
-                  </dl>
+                  <p>Deze gegevens kun je zelf invullen of wijzigen.</p>
+                  <FormField>
+                    <p className="utrecht-form-field__label">
+                      <FormLabel htmlFor="tel">
+                        {t("form:tel")} <OptionalIndicator title={t("form:optional")} />
+                      </FormLabel>
+                    </p>
+                    <Textbox
+                      className="utrecht-form-field__input"
+                      id="tel"
+                      type="tel"
+                      autoComplete="tel"
+                      {...register("phoneNumber")}
+                    />
+                  </FormField>
+                  <FormField>
+                    <p className="utrecht-form-field__label">
+                      <FormLabel htmlFor="email">
+                        {t("form:email")} <OptionalIndicator title={t("form:optional")} />
+                      </FormLabel>
+                    </p>
+                    <FormFieldDescription id="email-description">
+                      We sturen je een bevestiging naar dit e-mailadres.
+                      <br />
+                      De mail heeft een link om nog veranderingen door te geven.
+                    </FormFieldDescription>
+                    <Textbox
+                      className="utrecht-form-field__input"
+                      id="email"
+                      type="email"
+                      autoComplete="email"
+                      aria-describedby="email-description"
+                      {...register("email")}
+                    />
+                  </FormField>
                   <DeclarationCheckboxGroup register={register} checkboxData={checkboxData} />
                   <Button disabled={!formState.isValid} type="submit" name="type" appearance="primary-action-button">
                     Contactgegevens opslaan

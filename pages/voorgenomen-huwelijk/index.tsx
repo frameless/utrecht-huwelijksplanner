@@ -67,8 +67,8 @@ export default function MultistepForm1() {
                   {t("common:step-n-of-m", { n: 3, m: 5 })} — {t("huwelijksplanner-step-3:title")}
                 </Paragraph>
               </HeadingGroup>
-              {marriageOptions["reservation"] && (
-                <ReservationCard reservation={marriageOptions["reservation"]} locale={locale} />
+              {marriageOptions?.reservation && (
+                <ReservationCard reservation={marriageOptions.reservation} locale={locale} />
               )}
               <section>
                 <Heading2>Meld je voorgenomen huwelijk</Heading2>
