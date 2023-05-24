@@ -19,11 +19,12 @@ import {
   Surface,
   Textbox,
 } from "@utrecht/component-library-react";
+import { addMinutes } from "date-fns";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm, UseFormRegister } from "react-hook-form";
 import Skeleton from "react-loading-skeleton";
 import { Aside, Checkbox2, OptionalIndicator, PageContentMain, ReservationCard } from "../../src/components";
@@ -32,6 +33,8 @@ import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFo
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { PersonalDataList } from "../../src/components/huwelijksplanner/PersonalDataList";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import { HuwelijkWithId } from "../../src/data/huwelijksplanner-state";
+import { resolveEmbedded } from "../../src/embedded";
 import { AssentService, Huwelijk, HuwelijkService } from "../../src/generated";
 import { useIngeschrevenpersoonGetByBsn } from "../../src/hooks/useIngeschrevenpersoonGetByBsn";
 import { getBsnFromJWT } from "../../src/openapi/authentication";
@@ -56,11 +59,51 @@ export default function MultistepForm1() {
     query: { huwelijkId },
     locale = "nl",
     push,
+    replace,
   } = useRouter();
   const { register, handleSubmit, formState } = useForm<FormData>();
-  const [marriageOptions] = useContext(MarriageOptionsContext);
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
   const [persoonData = null] = useIngeschrevenpersoonGetByBsn(getBsnFromJWT());
   const [huwelijk, setHuwelijk] = useState<Huwelijk>();
+
+  useEffect(() => {
+    if (huwelijk || !marriageOptions.reservation) return;
+
+    const reservation = marriageOptions.reservation;
+
+    const handleNewPersonLogin = () => {
+      const body = {
+        requestBody: {
+          type: marriageOptions.productId,
+          ceremonie: reservation?.["ceremony-id"],
+          moment: reservation?.["ceremony-start"],
+          ambtenaar: marriageOptions.ambtenaar,
+          locatie: reservation?.["ceremony-location"],
+        },
+      };
+
+      HuwelijkService.huwelijkPostItem(body).then((response) => {
+        const result = resolveEmbedded(response) as HuwelijkWithId;
+        setMarriageOptions({
+          ...marriageOptions,
+          id: result._id || "",
+          partners: [...result.partners],
+          reservation: {
+            ...reservation,
+            "ceremony-end": addMinutes(new Date(result.moment || ""), 15).toString(),
+            "ceremony-price-currency": result.kosten?.split(' ')[0] || "EUR",
+            "ceremony-price-amount": result.kosten?.split(' ')[1] || "-",
+          },
+        });
+
+        setHuwelijk(huwelijk);
+      });
+    };
+
+    if (!huwelijkId) {
+      handleNewPersonLogin();
+    }
+  }, [huwelijk, huwelijkId, marriageOptions, setMarriageOptions]);
 
   const onContactDetailsSubmit = (data: FormData) => {
     if (huwelijkId) {
@@ -215,6 +258,14 @@ export default function MultistepForm1() {
   );
 }
 
+type CheckType = "correct-information-and-complete" | "not-marrying-relative" | "unmarried";
+
+type CheckboxData = {
+  id: string;
+  label: string;
+  value: CheckType;
+};
+
 const checkboxData: CheckboxData[] = [
   {
     id: "6e562ba6-0ed3-4f4d-95e2-7f35614771b2",
@@ -233,14 +284,6 @@ const checkboxData: CheckboxData[] = [
     value: "correct-information-and-complete",
   },
 ];
-
-type CheckboxData = {
-  id: string;
-  label: string;
-  value: CheckType;
-};
-
-type CheckType = "correct-information-and-complete" | "not-marrying-relative" | "unmarried";
 
 interface DeclarationCheckboxGroupProps {
   checkboxData: CheckboxData[];
