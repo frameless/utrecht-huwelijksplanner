@@ -100,6 +100,7 @@ const PlanningFormPage: NextPage = () => {
       ...marriageOptions,
       ambtenaar: selectedSlot.ceremony?.ambtenaarId,
       reservation: {
+        "ceremony-id": selectedSlot.ceremony.id,
         "ceremony-type": selectedSlot.ceremony.type,
         "ceremony-location": selectedSlot.ceremony.locationId,
         "ceremony-start": selectedSlot.startTime,
