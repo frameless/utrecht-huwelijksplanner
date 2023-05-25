@@ -1,4 +1,4 @@
-import { Huwelijk } from "../generated";
+import { Huwelijk } from '../generated';
 
 export interface BSN {
   bsn: string;
@@ -126,6 +126,7 @@ export interface HuwelijksplannerPartner
     Partial<Email>,
     Partial<Salutation>,
     Partial<IndicatieCurateleRegister> {
+  _self: { id: string };
   'marital-status'?: string;
   'declaration-checkbox-list'?: DeclarationCheckboxList;
   'verified-invitation-email'?: boolean;
@@ -168,7 +169,7 @@ export interface HuwelijksplannerState {
   partnerInvitation?: Invitee;
   partners: HuwelijksplannerPartner[];
   productId?: string;
-  "registration-type"?: RegistrationType;
+  'registration-type'?: RegistrationType;
   reservation?: Reservation;
   witnesses: Witness[];
 }
