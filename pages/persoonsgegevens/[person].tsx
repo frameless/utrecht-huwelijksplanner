@@ -24,7 +24,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useForm, UseFormRegister } from "react-hook-form";
 import Skeleton from "react-loading-skeleton";
 import { Aside, Checkbox2, OptionalIndicator, PageContentMain, ReservationCard } from "../../src/components";
@@ -35,7 +35,7 @@ import { PersonalDataList } from "../../src/components/huwelijksplanner/Personal
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
 import { HuwelijkWithId } from "../../src/data/huwelijksplanner-state";
 import { resolveEmbedded } from "../../src/embedded";
-import { AssentService, Huwelijk, HuwelijkService } from "../../src/generated";
+import { AssentService, HuwelijkService } from "../../src/generated";
 import { useIngeschrevenpersoonGetByBsn } from "../../src/hooks/useIngeschrevenpersoonGetByBsn";
 import { getBsnFromJWT } from "../../src/openapi/authentication";
 
@@ -59,30 +59,31 @@ export default function MultistepForm1() {
     query: { huwelijkId },
     locale = "nl",
     push,
-    replace,
   } = useRouter();
   const { register, handleSubmit, formState } = useForm<FormData>();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
-  const [persoonData = null] = useIngeschrevenpersoonGetByBsn(getBsnFromJWT());
-  const [huwelijk, setHuwelijk] = useState<Huwelijk>();
+  const [persoonData] = useIngeschrevenpersoonGetByBsn(getBsnFromJWT());
+  const { reservation, ambtenaar, productId } = marriageOptions;
+  const [loading, setLoading] = useState(false);
+  const pageInitialized = useRef(false);
 
-  useEffect(() => {
-    if (huwelijk || !marriageOptions.reservation) return;
+  const initializeMarriage = useCallback(() => {
+    if (!reservation) return;
 
-    const reservation = marriageOptions.reservation;
+    setLoading(true);
 
-    const handleNewPersonLogin = () => {
-      const body = {
-        requestBody: {
-          type: marriageOptions.productId,
-          ceremonie: reservation?.["ceremony-id"],
-          moment: reservation?.["ceremony-start"],
-          ambtenaar: marriageOptions.ambtenaar,
-          locatie: reservation?.["ceremony-location"],
-        },
-      };
+    const postBody = {
+      requestBody: {
+        type: productId,
+        ceremonie: reservation["ceremony-id"],
+        moment: reservation["ceremony-start"],
+        ambtenaar: ambtenaar,
+        locatie: reservation["ceremony-location"],
+      },
+    };
 
-      HuwelijkService.huwelijkPostItem(body).then((response) => {
+    HuwelijkService.huwelijkPostItem(postBody)
+      .then((response) => {
         const result = resolveEmbedded(response) as HuwelijkWithId;
         setMarriageOptions({
           ...marriageOptions,
@@ -91,19 +92,24 @@ export default function MultistepForm1() {
           reservation: {
             ...reservation,
             "ceremony-end": addMinutes(new Date(result.moment || ""), 15).toString(),
-            "ceremony-price-currency": result.kosten?.split(' ')[0] || "EUR",
-            "ceremony-price-amount": result.kosten?.split(' ')[1] || "-",
+            "ceremony-price-currency": result.kosten?.split(" ")[0] || "EUR",
+            "ceremony-price-amount": result.kosten?.split(" ")[1] || "-",
           },
         });
-
-        setHuwelijk(huwelijk);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    };
+  }, [ambtenaar, marriageOptions, productId, reservation, setMarriageOptions]);
 
-    if (!huwelijkId) {
-      handleNewPersonLogin();
+  useEffect(() => {
+    if (pageInitialized.current || !reservation) return;
+
+    if (!marriageOptions.id) {
+      initializeMarriage();
+      pageInitialized.current = true;
     }
-  }, [huwelijk, huwelijkId, marriageOptions, setMarriageOptions]);
+  }, [huwelijkId, initializeMarriage, marriageOptions, reservation, setMarriageOptions]);
 
   const onContactDetailsSubmit = (data: FormData) => {
     if (huwelijkId) {
@@ -128,7 +134,7 @@ export default function MultistepForm1() {
       });
     } else {
       AssentService.assentPatchItem({
-        id: huwelijk?.partners[0]._self.id,
+        id: marriageOptions.partners[0]._self.id as string,
         requestBody: {
           requester: getBsnFromJWT(),
           contact: {
@@ -138,7 +144,7 @@ export default function MultistepForm1() {
             ...mapToContactObject(data.email, data.phoneNumber),
           },
           results: getResultsChecklist(),
-          name: null,
+          name: "",
         },
       }).then(() => {
         push("/voorgenomen-huwelijk/partner");
@@ -168,8 +174,10 @@ export default function MultistepForm1() {
                   {/*TODO: Step indicator component */}
                   <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
-                {marriageOptions?.reservation && (
-                  <ReservationCard reservation={marriageOptions.reservation} locale={locale} />
+                {loading ? (
+                  <Skeleton height={"50px"} />
+                ) : (
+                  reservation && <ReservationCard reservation={reservation} locale={locale} />
                 )}
                 <section>
                   {/*TODO: Banner / card */}
