@@ -126,6 +126,7 @@ export interface HuwelijksplannerPartner
     Partial<Email>,
     Partial<Salutation>,
     Partial<IndicatieCurateleRegister> {
+  contact: { voornaam: string; achternaam: string };
   _self: { id: string };
   'marital-status'?: string;
   'declaration-checkbox-list'?: DeclarationCheckboxList;
