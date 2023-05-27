@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useContext } from "react";
 import {
   ButtonGroup,
   ButtonLink,
@@ -27,7 +28,7 @@ import {
 } from "../../../src/components";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { exampleState } from "../../../src/data/huwelijksplanner-state";
+import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -37,9 +38,10 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen-success", "form"]);
-  const data = { ...exampleState };
+  const [marriageOptions] = useContext(MarriageOptionsContext);
   const { locale = "nl" } = useRouter();
-  const partnerDetails = data.partners.find((p) => !p.partner);
+  const partnerContact = marriageOptions.partners[0]?.contact;
+
   return (
     <Surface>
       <Document>
@@ -57,24 +59,23 @@ export default function MultistepForm1() {
             <PageContentMain>
               <HeadingGroup>
                 <Heading1>{t("huwelijksplanner-step-getuigen-success:heading-1")}</Heading1>
-                {/*TODO: Previous button */}
-                {/*TODO: Step indicator component */}
                 <Paragraph lead>
                   {t("common:step-n-of-m", { n: 3, m: 5 })} — {t("huwelijksplanner-step-getuigen-success:title")}
                 </Paragraph>
               </HeadingGroup>
-              {/*TODO: Banner / card */}
-              {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale} /> : ""}
+              {marriageOptions.reservation && (
+                <ReservationCard reservation={marriageOptions.reservation} locale={locale} />
+              )}
               <section>
                 <Heading2>Gelukt!</Heading2>
                 <Paragraph>
-                  <DataNoTranslate>{partnerDetails?.["given-name"]}</DataNoTranslate> heeft met DigID ingelogd. Nu
-                  kunnen jullie verder met het plannen van het huwelijk. Er volgen nog een paar stappen:
+                  <DataNoTranslate>{partnerContact?.voornaam}</DataNoTranslate> heeft met DigID ingelogd. Nu kunnen
+                  jullie verder met het plannen van het huwelijk. Er volgen nog een paar stappen:
                 </Paragraph>
                 <OrderedList>
                   <OrderedListItem>
                     De gemeente Utrecht checkt een aantal dingen, bijvoorbeeld of{" "}
-                    <DataNoTranslate>{partnerDetails?.["given-name"]}</DataNoTranslate> geen broer of zus van je is
+                    <DataNoTranslate>{partnerContact?.voornaam}</DataNoTranslate> geen broer of zus van je is
                   </OrderedListItem>
                   <OrderedListItem>Dan kun je betalen en is de reservering van je huwelijk klaar.</OrderedListItem>
                   <OrderedListItem>
