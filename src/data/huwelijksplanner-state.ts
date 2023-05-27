@@ -126,6 +126,7 @@ export interface HuwelijksplannerPartner
     Partial<Email>,
     Partial<Salutation>,
     Partial<IndicatieCurateleRegister> {
+  contact: { voornaam: string; achternaam: string };
   _self: { id: string };
   'marital-status'?: string;
   'declaration-checkbox-list'?: DeclarationCheckboxList;
@@ -191,6 +192,10 @@ export const exampleState: HuwelijksplannerState = {
   },
   partners: [
     {
+      contact: {
+        voornaam: 'Anne Nico Johannes',
+        achternaam: 'Deursen',
+      },
       _self: {
         id: '567EE1FC1C-A28A-43E7-8950-769E9',
       },
@@ -219,6 +224,10 @@ export const exampleState: HuwelijksplannerState = {
     {
       _self: {
         id: '567EE1FC1C-A28A-43E7-8950-769E9',
+      },
+      contact: {
+        voornaam: 'Sanne',
+        achternaam: 'Broecke',
       },
       id: '67EEFC1C-A28A-43E7-8950-76C289E905C7',
       name: 'Sanne van den Broecke',
