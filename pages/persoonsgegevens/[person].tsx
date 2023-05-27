@@ -232,7 +232,12 @@ export default function MultistepForm1() {
                     />
                   </FormField>
                   <DeclarationCheckboxGroup register={register} checkboxData={checkboxData} />
-                  <Button disabled={!formState.isValid} type="submit" name="type" appearance="primary-action-button">
+                  <Button
+                    disabled={!formState.isValid || loading}
+                    type="submit"
+                    name="type"
+                    appearance="primary-action-button"
+                  >
                     Contactgegevens opslaan
                   </Button>
                 </section>
