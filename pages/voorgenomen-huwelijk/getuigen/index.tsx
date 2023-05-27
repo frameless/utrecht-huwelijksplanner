@@ -1,3 +1,4 @@
+import { FormFieldDescription } from "@utrecht/component-library-react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
@@ -29,7 +30,6 @@ import {
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
-import { Huwelijk, HuwelijkService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -38,32 +38,30 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 });
 
 type WitnessType = {
-  name?: string;
-  email?: string;
+  name: string;
+  email: string;
 };
 
 type WitnessFormData = {
-  witnesses?: WitnessType[];
+  witnesses: WitnessType[];
 };
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen", "form"]);
   const [marriageOptions] = useContext(MarriageOptionsContext);
   const { locale = "nl", push } = useRouter();
-  const { register, handleSubmit } = useForm<WitnessFormData>();
+  const { register, setError, setFocus, formState, handleSubmit } = useForm<WitnessFormData>();
   const [loading, setLoading] = useState(false);
 
   const onWitnessSubmit = (formData: WitnessFormData) => {
-    HuwelijkService.huwelijkPatchItem({
-      id: marriageOptions.id as string,
-      requestBody: {
-        getuigen: mapGetuigen(formData),
-      } as Huwelijk,
-    }).then(() => {
-      push("/voorgenomen-huwelijk/getuigen/succes");
-      setLoading(false);
+    formData.witnesses.forEach((witness, index) => {
+      if (witness.name && !witness.email) {
+        setError(`witnesses.${index}.email`, { type: "required" });
+      }
+      if (!witness.name && witness.email) {
+        setError(`witnesses.${index}.name`, { type: "required" });
+      }
     });
-    setLoading(true);
   };
 
   const WitnessFieldset = ({ index }: { index: number }) => {
@@ -71,22 +69,43 @@ export default function MultistepForm1() {
     const nameId = useId();
     const emailId = useId();
 
+    const nameInvalid = !!formState.errors.witnesses?.[index]?.name;
+    const emailInvalid = !!formState.errors.witnesses?.[index]?.email;
+
     return (
       <Fieldset>
         <FieldsetLegend>
           {t("form:legal-witness")} {index}
         </FieldsetLegend>
-        <FormField>
+        <FormField invalid={nameInvalid}>
           <p className="utrecht-form-field__label">
             <FormLabel htmlFor={nameId}>{t("form:name")}</FormLabel>
           </p>
-          <Textbox id={nameId} type="text" autoComplete={`name ${witnessId}`} {...register(`witnesses.${index}.name`)} />
+          {formState.errors.witnesses?.[index]?.name?.type === "required" && (
+            <FormFieldDescription invalid>{t("form:name-required")}</FormFieldDescription>
+          )}
+          <Textbox
+            id={nameId}
+            type="text"
+            autoComplete={`name ${witnessId}`}
+            {...register(`witnesses.${index}.name`)}
+            invalid={nameInvalid}
+          />
         </FormField>
-        <FormField>
+        <FormField invalid={emailInvalid}>
           <p className="utrecht-form-field__label">
             <FormLabel htmlFor={emailId}>{t("form:email")}</FormLabel>
           </p>
-          <Textbox id={emailId} type="email" autoComplete={`email ${witnessId}`} {...register(`witnesses.${index}.email`)} />
+          {formState.errors.witnesses?.[index]?.email?.type === "required" && (
+            <FormFieldDescription invalid>{t("form:email-required")}</FormFieldDescription>
+          )}
+          <Textbox
+            id={emailId}
+            type="email"
+            autoComplete={`email ${witnessId}`}
+            {...register(`witnesses.${index}.email`)}
+            invalid={emailInvalid}
+          />
         </FormField>
       </Fieldset>
     );
