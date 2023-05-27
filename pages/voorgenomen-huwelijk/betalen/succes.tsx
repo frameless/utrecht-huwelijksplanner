@@ -54,7 +54,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function HuwelijksplannerStep0() {
   const { t } = useTranslation(["huwelijksplanner-step-0", "huwelijksplanner", "form", "common"]);
   const [data, setData] = useState({ ...exampleState });
-  const locale = useRouter().locale || "en";
+  const { locale = "nl" } = useRouter();
 
   useEffect(() => {
     const huwelijkId = "6e69d32c-afdb-4aef-85cc-fd5ff743a84b";
@@ -180,12 +180,12 @@ export default function HuwelijksplannerStep0() {
               <div>1</div>
             </ProcessSteps.StepMarker>
             <ProcessSteps.StepHeading>
-              
-              
+
+
             </ProcessSteps.StepHeading>
             <ProcessSteps.StepExpandedIcon />
           </ProcessSteps.StepHeader>
-          
+
         </ProcessSteps.StepSection>
       </ProcessSteps.Step>
       <ProcessSteps.Step>

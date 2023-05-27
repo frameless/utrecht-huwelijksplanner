@@ -37,7 +37,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
   const [marriageOptions] = useContext(MarriageOptionsContext);
-  const { push, locale } = useRouter();
+  const { push, locale = "nl" } = useRouter();
 
   // FIXME: personId from state
   const personId = "xxxx";
