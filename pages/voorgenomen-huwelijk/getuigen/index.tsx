@@ -38,14 +38,14 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   },
 });
 
-type WitnessType = {
-  name?: string;
-  email?: string;
+type Witness = {
+  name: string;
+  email: string;
 };
 
 type WitnessFormData = {
   submit: "invite" | "continue";
-  witnesses?: WitnessType[];
+  witnesses?: Witness[];
 };
 
 export default function MultistepForm1() {
@@ -54,35 +54,45 @@ export default function MultistepForm1() {
   const { locale = "nl", push } = useRouter();
   const formMethods = useForm<WitnessFormData>();
   const [loading, setLoading] = useState(false);
+  const watch = formMethods.watch();
+
+  const hasWitnesses =
+    (watch.witnesses &&
+      watch.witnesses.some((witness) => {
+        return witness.name.length > 0 || witness.email?.length > 0;
+      })) ??
+    false;
+
+  const onContinueWithoutInvite = () => {
+    push("/voorgenomen-huwelijk/getuigen/succes");
+  };
 
   const onWitnessSubmit = (formData: WitnessFormData) => {
-    console.log(formData);
-    if (formData.submit === "continue") {
-      push("/voorgenomen-huwelijk/getuigen/success");
+    if (!formData.witnesses) {
+      onContinueWithoutInvite();
       return;
     }
 
-    if (formData.witnesses) {
-      let hasError = false;
+    let hasError = false;
 
-      formData.witnesses.forEach((witness, index) => {
-        if (witness.name && !witness.email) {
-          formMethods.setError(`witnesses.${index}.email`, { type: "required" });
-          hasError = true;
-        }
-        if (!witness.name && witness.email) {
-          formMethods.setError(`witnesses.${index}.name`, { type: "required" });
-          hasError = true;
-        }
-      });
+    formData.witnesses.forEach((witness, index) => {
+      if (witness.name && !witness.email) {
+        formMethods.setError(`witnesses.${index}.email`, { type: "required" });
+        hasError = true;
+      }
+      if (!witness.name && witness.email) {
+        formMethods.setError(`witnesses.${index}.name`, { type: "required" });
+        hasError = true;
+      }
+    });
 
-      if (hasError) return;
-    }
+    if (hasError) return;
 
+    setLoading(true);
     HuwelijkService.huwelijkPatchItem({
       id: marriageOptions.id as string,
       requestBody: {
-        getuigen: mapGetuigen(formData),
+        getuigen: mapWitnesses(formData.witnesses),
       },
     }).then(() => {
       push("/voorgenomen-huwelijk/getuigen/succes");
@@ -127,13 +137,13 @@ export default function MultistepForm1() {
                       moet je de getuigen aanmelden.
                     </Paragraph>
                     {/*TODO: Dynamisch tonen hoe lang er nog is om getuigen aan te melden*/}
-                    <WitnessFieldset index={0} />
                     <WitnessFieldset index={1} />
                     <WitnessFieldset index={2} />
                     <WitnessFieldset index={3} />
+                    <WitnessFieldset index={4} />
                     <ButtonGroup>
                       <Button
-                        disabled={loading}
+                        disabled={loading || !hasWitnesses}
                         appearance="primary-action-button"
                         type="submit"
                         value={"invite"}
@@ -145,7 +155,7 @@ export default function MultistepForm1() {
                         type="submit"
                         appearance="secondary-action-button"
                         value={"continue"}
-                        {...formMethods.register("submit")}
+                        onClick={onContinueWithoutInvite}
                       >
                         Later uitnodigen
                       </Button>
@@ -164,26 +174,20 @@ export default function MultistepForm1() {
   );
 }
 
-const mapGetuigen = (data: any) => {
-  const getuigen = Array.from({ length: 4 }, (_, i) => {
-    const naam = data[`getuige-${i + 1}-naam}`];
-    const email = data[`getuige-${i + 1}-email}`];
-
-    if (naam && email) {
+const mapWitnesses = (witnesses: Witness[]) => {
+  return witnesses
+    .filter((witness) => witness.name.length > 0 || witness.email.length > 0)
+    .map((witness) => {
+      const { name, email } = witness;
       return {
-        name: naam,
+        name: name,
         requester: null,
         contact: {
-          voornaam: naam,
-          emails: [{ naam, email }],
+          voornaam: name,
+          emails: [{ naam: name, email: email }],
         },
       };
-    }
-
-    return undefined;
-  }).filter(Boolean);
-
-  return getuigen.filter((g) => g);
+    });
 };
 
 const WitnessFieldset = ({ index }: { index: number }) => {
@@ -197,11 +201,11 @@ const WitnessFieldset = ({ index }: { index: number }) => {
   const emailInvalid = !!formState.errors.witnesses?.[index]?.email;
 
   return (
-    <Fieldset>
+    <Fieldset invalid={nameInvalid || emailInvalid}>
       <FieldsetLegend>
         {t("form:legal-witness")} {index}
       </FieldsetLegend>
-      <FormField invalid={nameInvalid}>
+      <FormField>
         <p className="utrecht-form-field__label">
           <FormLabel htmlFor={nameId}>{t("form:name")}</FormLabel>
         </p>
@@ -216,7 +220,7 @@ const WitnessFieldset = ({ index }: { index: number }) => {
           {...register(`witnesses.${index}.name`)}
         />
       </FormField>
-      <FormField invalid={emailInvalid}>
+      <FormField>
         <p className="utrecht-form-field__label">
           <FormLabel htmlFor={emailId}>{t("form:email")}</FormLabel>
         </p>
