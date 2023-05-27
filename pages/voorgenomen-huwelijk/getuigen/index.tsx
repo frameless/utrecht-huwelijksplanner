@@ -2,7 +2,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { ChangeEvent, FormEvent, useId, useState } from "react";
+import { useContext, useId, useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   Button,
   ButtonGroup,
@@ -27,7 +28,8 @@ import {
 } from "../../../src/components";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { exampleState } from "../../../src/data/huwelijksplanner-state";
+import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
+import { Huwelijk, HuwelijkService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -40,32 +42,37 @@ type WitnessType = {
   email?: string;
 };
 
+type WitnessFormData = {
+  witnesses?: WitnessType[];
+};
+
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen", "form"]);
-  const data = { ...exampleState };
+  const [marriageOptions] = useContext(MarriageOptionsContext);
   const { locale = "nl", push } = useRouter();
+  const { register, handleSubmit } = useForm<WitnessFormData>();
+  const [loading, setLoading] = useState(false);
 
-  const [witness, setWitness] = useState<WitnessType>();
-
-  const onWitnessSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (witness) {
+  const onWitnessSubmit = (formData: WitnessFormData) => {
+    HuwelijkService.huwelijkPatchItem({
+      id: marriageOptions.id as string,
+      requestBody: {
+        getuigen: mapGetuigen(formData),
+      } as Huwelijk,
+    }).then(() => {
       push("/voorgenomen-huwelijk/getuigen/succes");
-    }
+      setLoading(false);
+    });
+    setLoading(true);
   };
 
-  const onWitnessChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setWitness({ ...witness, [event.target.name]: event.target.value });
-  };
-
-  const WitnessFieldset = ({ index, onChange }: { index: number; onChange: any }) => {
+  const WitnessFieldset = ({ index }: { index: number }) => {
     const witnessId = useId();
     const nameId = useId();
     const emailId = useId();
 
     return (
       <Fieldset>
-        {/* TODO: Allow submitting only the first witness, there is time left to think of the second person */}
         <FieldsetLegend>
           {t("form:legal-witness")} {index}
         </FieldsetLegend>
@@ -73,25 +80,13 @@ export default function MultistepForm1() {
           <p className="utrecht-form-field__label">
             <FormLabel htmlFor={nameId}>{t("form:name")}</FormLabel>
           </p>
-          <Textbox
-            id={nameId}
-            type="text"
-            autoComplete={`name ${witnessId}`}
-            name={`getuige-${index}-naam}`}
-            onChange={onChange}
-          />
+          <Textbox id={nameId} type="text" autoComplete={`name ${witnessId}`} {...register(`witnesses.${index}.name`)} />
         </FormField>
         <FormField>
           <p className="utrecht-form-field__label">
             <FormLabel htmlFor={emailId}>{t("form:email")}</FormLabel>
           </p>
-          <Textbox
-            id={emailId}
-            type="email"
-            name={`getuige-${index}-email}`}
-            autoComplete={`email ${witnessId}`}
-            onChange={onChange}
-          />
+          <Textbox id={emailId} type="email" autoComplete={`email ${witnessId}`} {...register(`witnesses.${index}.email`)} />
         </FormField>
       </Fieldset>
     );
@@ -121,9 +116,11 @@ export default function MultistepForm1() {
                 <Paragraph lead>{t("common:step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
               </HeadingGroup>
               {/*TODO: Banner / card */}
-              {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale || "en"} /> : ""}
+              {marriageOptions.reservation && (
+                <ReservationCard reservation={marriageOptions.reservation} locale={locale} />
+              )}
               <section>
-                <form onSubmit={onWitnessSubmit} aria-labelledby={formHeaderId}>
+                <form onSubmit={handleSubmit(onWitnessSubmit)} aria-labelledby={formHeaderId}>
                   <Heading2 id={formHeaderId}>Nodig alvast getuigen uit</Heading2>
                   <Paragraph>Bij je huwelijk zijn minimaal twee en maximaal vier getuigen nodig.</Paragraph>
                   <Paragraph>
@@ -131,17 +128,15 @@ export default function MultistepForm1() {
                     moet je de getuigen aanmelden.
                   </Paragraph>
                   {/*TODO: Dynamisch tonen hoe lang er nog is om getuigen aan te melden*/}
-                  <WitnessFieldset index={1} onChange={onWitnessChange} />
-                  <WitnessFieldset index={2} onChange={onWitnessChange} />
-                  <WitnessFieldset index={3} onChange={onWitnessChange} />
-                  <WitnessFieldset index={4} onChange={onWitnessChange} />
-                  {/* <div>
-                    <Button type="submit">Later uitnodigen</Button>
-                  </div> */}
+                  <WitnessFieldset index={1} />
+                  <WitnessFieldset index={2} />
+                  <WitnessFieldset index={3} />
+                  <WitnessFieldset index={4} />
                   <ButtonGroup>
                     <Button appearance="primary-action-button" type="submit">
                       Verstuur uitnodiging
                     </Button>
+                    <Button type="submit">Later uitnodigen</Button>
                   </ButtonGroup>
                 </form>
               </section>
@@ -155,3 +150,25 @@ export default function MultistepForm1() {
     </Surface>
   );
 }
+
+const mapGetuigen = (data: any) => {
+  const getuigen = Array.from({ length: 4 }, (_, i) => {
+    const naam = data[`getuige-${i + 1}-naam}`];
+    const email = data[`getuige-${i + 1}-email}`];
+
+    if (naam && email) {
+      return {
+        name: naam,
+        requester: null,
+        contact: {
+          voornaam: naam,
+          emails: [{ naam, email }],
+        },
+      };
+    }
+
+    return undefined;
+  }).filter(Boolean);
+
+  return getuigen.filter((g) => g);
+};
