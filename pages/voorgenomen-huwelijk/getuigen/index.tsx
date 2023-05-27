@@ -43,7 +43,7 @@ type WitnessType = {
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen", "form"]);
   const data = { ...exampleState };
-  const { locale, push } = useRouter();
+  const { locale = "nl", push } = useRouter();
 
   const [witness, setWitness] = useState<WitnessType>();
 

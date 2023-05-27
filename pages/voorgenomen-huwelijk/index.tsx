@@ -38,7 +38,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-3"]);
-  const { push, locale = "en" } = useRouter();
+  const { push, locale = "nl" } = useRouter();
   const [marriageOptions] = useContext(MarriageOptionsContext);
 
   // FIXME: get slug from state

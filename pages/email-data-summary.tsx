@@ -44,7 +44,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function HuwelijksplannerStep0() {
   const { t } = useTranslation(["huwelijksplanner-step-4", "huwelijksplanner", "form", "common"]);
   const data = { ...exampleState };
-  const locale = useRouter().locale || "en";
+  const { locale = "nl" } = useRouter();
 
   const PartnerDataList = ({ partner }: { partner: HuwelijksplannerPartner }) => (
     <DataList className="utrecht-data-list--rows">

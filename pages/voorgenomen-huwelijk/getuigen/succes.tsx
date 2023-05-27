@@ -38,7 +38,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen-success", "form"]);
   const data = { ...exampleState };
-  const locale = useRouter().locale || "en";
+  const { locale = "nl" } = useRouter();
   const partnerDetails = data.partners.find((p) => !p.partner);
   return (
     <Surface>

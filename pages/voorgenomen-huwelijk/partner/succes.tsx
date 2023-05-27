@@ -37,7 +37,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
   const data = { ...exampleState };
-  const { locale } = useRouter();
+  const { locale = "nl" } = useRouter();
 
   const onPartnerInvitationSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -35,7 +35,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
   const [marriageOptions] = useContext(MarriageOptionsContext);
-  const { locale } = useRouter();
+  const { locale = "nl" } = useRouter();
   const contact = marriageOptions.partners[0]?.contact;
 
   return (
@@ -62,7 +62,7 @@ export default function MultistepForm1() {
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
                 {marriageOptions.reservation ? (
-                  <ReservationCard reservation={marriageOptions.reservation} locale={locale || "en"} />
+                  <ReservationCard reservation={marriageOptions.reservation} locale={locale} />
                 ) : (
                   ""
                 )}

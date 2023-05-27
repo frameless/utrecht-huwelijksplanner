@@ -36,7 +36,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
   const data = { ...exampleState };
-  const { locale, push } = useRouter();
+  const { locale = "nl", push } = useRouter();
 
   const onMarriageCertificateKindSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -63,11 +63,7 @@ export default function MultistepForm1() {
                   <Paragraph lead>Stap 3 — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
                 {/*TODO: Banner / card */}
-                {data["reservation"] ? (
-                  <ReservationCard reservation={data["reservation"]} locale={locale || "en"} />
-                ) : (
-                  ""
-                )}
+                {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale} /> : ""}
                 <section>
                   <Heading2>Kies je extra’s</Heading2>
                   <Paragraph>
