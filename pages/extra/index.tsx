@@ -90,12 +90,6 @@ export default function MultistepForm1() {
                       </FormLabel>
                     </FormField>
                     <FormField type="radio">
-                      <RadioButton2 id="1" {...register(certificateRadioName)} />
-                      <FormLabel htmlFor="1" type="radio">
-                        Wit lederen omslag (€ 32,50)
-                      </FormLabel>
-                    </FormField>
-                    <FormField type="radio">
                       <RadioButton2 id="2" {...register(certificateRadioName)} />
                       <FormLabel htmlFor="2" type="radio">
                         Wit lederen omslag (€ 32,50)
