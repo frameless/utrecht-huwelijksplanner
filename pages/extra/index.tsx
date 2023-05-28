@@ -115,7 +115,7 @@ export default function MultistepForm1() {
                     </FormField>
                   </Fieldset>
                   <Button type="submit" name="type" appearance="primary-action-button">
-                    Deze wil ik hebben
+                    Bevestigen
                   </Button>
                 </section>
               </form>
