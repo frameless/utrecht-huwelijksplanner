@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useContext } from "react";
+import { useContext, useId } from "react";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -43,13 +43,13 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
   const [marriageOptions] = useContext(MarriageOptionsContext);
   const { locale = "nl", push } = useRouter();
-  const [data, isLoading] = useSdgProductGetCollection("trouwboekje");
+  const [certificate, isLoading] = useSdgProductGetCollection("trouwboekje");
   const { register, handleSubmit } = useForm<FormData>();
 
   const certificateRadioName = "marriage-certificate-kind";
+  const noCertificateId = useId();
 
   const onMarriageCertificateKindSubmit = (formData: FormData) => {
-    push("/voorgenomen-huwelijk/checken");
   };
 
   return (
@@ -84,29 +84,37 @@ export default function MultistepForm1() {
                       <Image src="/img/voorbeeld-trouwboekjes.jpg" width={600} height={385} alt="trouwboekjes" />
                     </Paragraph>
                     <FormField type="radio">
-                      <RadioButton2 id="1" defaultChecked={true} {...register(certificateRadioName)} />
-                      <FormLabel htmlFor="1" type="radio">
-                        Nee, wij willen geen trouwboekje
-                      </FormLabel>
+                      <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
+                        <FormLabel htmlFor={noCertificateId} type="radio">
+                          <RadioButton2
+                            className="utrecht-form-field__input"
+                            id={noCertificateId}
+                            defaultChecked={true}
+                            value={"none"}
+                            {...register(certificateRadioName)}
+                          />
+                          Nee, wij willen geen trouwboekje
+                        </FormLabel>
+                      </Paragraph>
                     </FormField>
-                    <FormField type="radio">
-                      <RadioButton2 id="2" {...register(certificateRadioName)} />
-                      <FormLabel htmlFor="2" type="radio">
-                        Wit lederen omslag (€ 32,50)
-                      </FormLabel>
-                    </FormField>
-                    <FormField type="radio">
-                      <RadioButton2 id="3" {...register(certificateRadioName)} />
-                      <FormLabel htmlFor="3" type="radio">
-                        Donkerblauw lederen omslag (€ 32,50)
-                      </FormLabel>
-                    </FormField>
-                    <FormField type="radio">
-                      <RadioButton2 id="4" {...register(certificateRadioName)} />
-                      <FormLabel htmlFor="4" type="radio">
-                        Rood kunstlederen omslag (€ 30,00)
-                      </FormLabel>
-                    </FormField>
+                    {certificate &&
+                      certificate.vertalingen.map(
+                        (vertaling: { id: string; specifiekeTekst: string; kosten: string }) => (
+                          <FormField key={vertaling.id} type="radio">
+                            <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
+                              <FormLabel htmlFor={vertaling.id} type="radio">
+                                <RadioButton2
+                                  className="utrecht-form-field__input"
+                                  id={vertaling.id}
+                                  value={vertaling.id}
+                                  {...register(certificateRadioName)}
+                                />
+                                {vertaling.specifiekeTekst} ({vertaling.kosten})
+                              </FormLabel>
+                            </Paragraph>
+                          </FormField>
+                        )
+                      )}
                   </Fieldset>
                   <Button type="submit" name="type" appearance="primary-action-button">
                     Bevestigen
