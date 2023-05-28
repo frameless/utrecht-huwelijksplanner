@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FormEvent } from "react";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
 import {
   Button,
   Document,
@@ -19,13 +20,14 @@ import {
   PageFooter,
   PageHeader,
   Paragraph,
+  RadioButton2,
   ReservationCard,
   Surface,
 } from "../../src/components";
-import { Checkbox2, RadioButton2 } from "../../src/components";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { exampleState } from "../../src/data/huwelijksplanner-state";
+import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import { useSdgProductGetCollection } from "../../src/hooks/useSdgProductGetCollection";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -33,13 +35,20 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   },
 });
 
+type FormData = {
+  "marriage-certificate-kind": string;
+};
+
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
-  const data = { ...exampleState };
+  const [marriageOptions] = useContext(MarriageOptionsContext);
   const { locale = "nl", push } = useRouter();
+  const [data, isLoading] = useSdgProductGetCollection("trouwboekje");
+  const { register, handleSubmit } = useForm<FormData>();
 
-  const onMarriageCertificateKindSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const certificateRadioName = "marriage-certificate-kind";
+
+  const onMarriageCertificateKindSubmit = (formData: FormData) => {
     push("/voorgenomen-huwelijk/checken");
   };
 
@@ -55,15 +64,14 @@ export default function MultistepForm1() {
           </PageHeader>
           <PageContent>
             <PageContentMain>
-              <form onSubmit={onMarriageCertificateKindSubmit}>
+              <form onSubmit={handleSubmit(onMarriageCertificateKindSubmit)}>
                 <HeadingGroup>
                   <Heading1>{t("huwelijksplanner-step-5:heading-1")}</Heading1>
-                  {/*TODO: Previous button */}
-                  {/*TODO: Step indicator component */}
                   <Paragraph lead>Stap 3 — Meld je voorgenomen huwelijk</Paragraph>
                 </HeadingGroup>
-                {/*TODO: Banner / card */}
-                {data["reservation"] ? <ReservationCard reservation={data["reservation"]} locale={locale} /> : ""}
+                {marriageOptions.reservation && (
+                  <ReservationCard reservation={marriageOptions.reservation} locale={locale} />
+                )}
                 <section>
                   <Heading2>Kies je extra’s</Heading2>
                   <Paragraph>
@@ -75,32 +83,32 @@ export default function MultistepForm1() {
                     <Paragraph>
                       <Image src="/img/voorbeeld-trouwboekjes.jpg" width={600} height={385} alt="trouwboekjes" />
                     </Paragraph>
-                    <FormField type="checkbox">
-                      <Checkbox2 id="marriage-certificate-agreement" />
-                      <FormLabel htmlFor="marriage-certificate-agreement" type="checkbox">
-                        Ja, wij willen een trouwboekje
+                    <FormField type="radio">
+                      <RadioButton2 id="1" defaultChecked={true} {...register(certificateRadioName)} />
+                      <FormLabel htmlFor="1" type="radio">
+                        Nee, wij willen geen trouwboekje
                       </FormLabel>
                     </FormField>
                     <FormField type="radio">
-                      <RadioButton2 id="1" name="marriage-certificate-kind" />
+                      <RadioButton2 id="1" {...register(certificateRadioName)} />
                       <FormLabel htmlFor="1" type="radio">
                         Wit lederen omslag (€ 32,50)
                       </FormLabel>
                     </FormField>
                     <FormField type="radio">
-                      <RadioButton2 id="2" name="marriage-certificate-kind" />
+                      <RadioButton2 id="2" {...register(certificateRadioName)} />
                       <FormLabel htmlFor="2" type="radio">
                         Wit lederen omslag (€ 32,50)
                       </FormLabel>
                     </FormField>
                     <FormField type="radio">
-                      <RadioButton2 id="3" name="marriage-certificate-kind" />
+                      <RadioButton2 id="3" {...register(certificateRadioName)} />
                       <FormLabel htmlFor="3" type="radio">
                         Donkerblauw lederen omslag (€ 32,50)
                       </FormLabel>
                     </FormField>
                     <FormField type="radio">
-                      <RadioButton2 id="4" name="marriage-certificate-kind" />
+                      <RadioButton2 id="4" {...register(certificateRadioName)} />
                       <FormLabel htmlFor="4" type="radio">
                         Rood kunstlederen omslag (€ 30,00)
                       </FormLabel>
