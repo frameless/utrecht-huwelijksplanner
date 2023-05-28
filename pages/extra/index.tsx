@@ -1,11 +1,12 @@
-import { FormField, FormLabel } from "@utrecht/component-library-react";
+import { ButtonGroup, FormField, FormLabel } from "@utrecht/component-library-react";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useContext, useId, useState } from "react";
+import React, { useContext, useId, useState } from "react";
 import { useForm } from "react-hook-form";
+import Skeleton from "react-loading-skeleton";
 import {
   Button,
   Document,
@@ -44,7 +45,7 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
   const { locale = "nl", push } = useRouter();
-  const [certificate, isLoading] = useSdgProductGetCollection("trouwboekje");
+  const [certificate, productLoading] = useSdgProductGetCollection("trouwboekje");
   const { register, handleSubmit } = useForm<FormData>();
   const reservation = marriageOptions.reservation;
   const [saving, setSaving] = useState(false);
@@ -107,48 +108,59 @@ export default function MultistepForm1() {
                     Een trouwboekje hoort niet meer standaard bij een huwelijk. Je kunt het wel bestellen als extra -
                     dan is het een mooie aandenken aan jullie trouwdag.
                   </Paragraph>
-                  <Fieldset style={{ width: "fit-content" }}>
-                    <FieldsetLegend>Trouwboekje</FieldsetLegend>
-                    <Paragraph>
-                      <Image src="/img/voorbeeld-trouwboekjes.jpg" width={600} height={385} alt="trouwboekjes" />
-                    </Paragraph>
-                    <FormField type="radio">
-                      <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
-                        <FormLabel htmlFor={noCertificateId} type="radio">
-                          <RadioButton2
-                            className="utrecht-form-field__input"
-                            id={noCertificateId}
-                            defaultChecked={true}
-                            value={"none"}
-                            {...register(certificateRadioName)}
-                          />
-                          Nee, wij willen geen trouwboekje
-                        </FormLabel>
+                  {productLoading ? (
+                    <Skeleton height={"250px"} />
+                  ) : (
+                    <Fieldset style={{ width: "fit-content" }}>
+                      <FieldsetLegend>Trouwboekje</FieldsetLegend>
+                      <Paragraph>
+                        <Image src="/img/voorbeeld-trouwboekjes.jpg" width={600} height={385} alt="trouwboekjes" />
                       </Paragraph>
-                    </FormField>
-                    {certificate &&
-                      certificate.vertalingen.map(
-                        (vertaling: { id: string; specifiekeTekst: string; kosten: string }) => (
-                          <FormField key={vertaling.id} type="radio">
-                            <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
-                              <FormLabel htmlFor={vertaling.id} type="radio">
-                                <RadioButton2
-                                  className="utrecht-form-field__input"
-                                  id={vertaling.id}
-                                  value={vertaling.id}
-                                  {...register(certificateRadioName)}
-                                />
-                                {vertaling.specifiekeTekst} ({vertaling.kosten})
-                              </FormLabel>
-                            </Paragraph>
-                          </FormField>
-                        )
-                      )}
-                  </Fieldset>
-                  <Button disabled={saving} type="submit" name="type" appearance="primary-action-button">
+                      <FormField type="radio">
+                        <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
+                          <FormLabel htmlFor={noCertificateId} type="radio">
+                            <RadioButton2
+                              className="utrecht-form-field__input"
+                              id={noCertificateId}
+                              defaultChecked={true}
+                              value={"none"}
+                              {...register(certificateRadioName)}
+                            />
+                            Nee, wij willen geen trouwboekje
+                          </FormLabel>
+                        </Paragraph>
+                      </FormField>
+                      {certificate &&
+                        certificate.vertalingen.map(
+                          (vertaling: { id: string; specifiekeTekst: string; kosten: string }) => (
+                            <FormField key={vertaling.id} type="radio">
+                              <Paragraph className="utrecht-form-field__label utrecht-form-field__label--radio">
+                                <FormLabel htmlFor={vertaling.id} type="radio">
+                                  <RadioButton2
+                                    className="utrecht-form-field__input"
+                                    id={vertaling.id}
+                                    value={vertaling.id}
+                                    {...register(certificateRadioName)}
+                                  />
+                                  {vertaling.specifiekeTekst} ({vertaling.kosten})
+                                </FormLabel>
+                              </Paragraph>
+                            </FormField>
+                          )
+                        )}
+                    </Fieldset>
+                  )}
+                </section>
+                <ButtonGroup>
+                  <Button
+                    disabled={saving || productLoading}
+                    type="submit"
+                    name="type"
+                    appearance="primary-action-button"
+                  >
                     Bevestigen
                   </Button>
-                </section>
+                </ButtonGroup>
               </form>
             </PageContentMain>
           </PageContent>
