@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useContext, useId } from "react";
+import { useContext, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -27,6 +27,7 @@ import {
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
 import { MarriageOptionsContext } from "../../src/context/MarriageOptionsContext";
+import { HuwelijkService } from "../../src/generated";
 import { useSdgProductGetCollection } from "../../src/hooks/useSdgProductGetCollection";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -41,15 +42,43 @@ type FormData = {
 
 export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5", "form"]);
-  const [marriageOptions] = useContext(MarriageOptionsContext);
+  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
   const { locale = "nl", push } = useRouter();
   const [certificate, isLoading] = useSdgProductGetCollection("trouwboekje");
   const { register, handleSubmit } = useForm<FormData>();
+  const reservation = marriageOptions.reservation;
+  const [saving, setSaving] = useState(false);
 
   const certificateRadioName = "marriage-certificate-kind";
   const noCertificateId = useId();
 
   const onMarriageCertificateKindSubmit = (formData: FormData) => {
+    if (formData["marriage-certificate-kind"] === "none") {
+      push("/voorgenomen-huwelijk/checken");
+      return;
+    }
+
+    if (!reservation) return;
+
+    setSaving(true);
+
+    HuwelijkService.huwelijkPatchItem({
+      id: marriageOptions.id as string,
+      requestBody: {
+        producten: [formData["marriage-certificate-kind"]],
+      },
+    })
+      .then(({ kosten }) => {
+        setMarriageOptions({
+          ...marriageOptions,
+          reservation: {
+            ...reservation,
+            "ceremony-price-amount": kosten ? kosten.replace("EUR ", "") : "-",
+          },
+        });
+        push("/voorgenomen-huwelijk/checken");
+      })
+      .finally(() => setSaving(false));
   };
 
   return (
@@ -116,7 +145,7 @@ export default function MultistepForm1() {
                         )
                       )}
                   </Fieldset>
-                  <Button type="submit" name="type" appearance="primary-action-button">
+                  <Button disabled={saving} type="submit" name="type" appearance="primary-action-button">
                     Bevestigen
                   </Button>
                 </section>
