@@ -3,6 +3,8 @@
  * Copyright (c) 2021 Robbert Broersma
  */
 
+/* this component will be replaced by the Utrecht component soon anyway */
+/* stylelint-disable scss/at-extend-no-missing-placeholder */
 .utrecht-skip-link {
   background-color: var(--utrecht-skip-link-background-color, var(--utrecht-document-background-color));
   color: var(--utrecht-skip-link-color, var(--utrecht-link-color));
@@ -35,9 +37,9 @@
    * To go the extra mile, ensure the focus indicator is inside the viewport.
    * */
   --_utrecht-skip-link-inset: calc(var(--utrecht-focus-outline-width, 0px) + var(--utrecht-focus-outline-offset, 0px));
+
   inset-block-start: var(--_utrecht-skip-link-inset);
   inset-inline-start: var(--_utrecht-skip-link-inset);
-
   position: fixed;
   z-index: var(--utrecht-layer-focus-z-index);
 }

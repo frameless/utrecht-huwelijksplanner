@@ -4,12 +4,12 @@
 @import "./page-footer";
 @import "./page";
 @import "./skip-link";
-@import "./src/components/Email.scss";
-@import "./src/components/FeedbackSection.scss";
-@import "./src/components/FormContent.scss";
-@import "./src/components/HeadingGroup.scss";
-@import "./src/components/PageContentMain.scss";
-@import "./pages/gateway-login/index.scss";
+@import "./src/components/Email";
+@import "./src/components/FeedbackSection";
+@import "./src/components/FormContent";
+@import "./src/components/HeadingGroup";
+@import "./src/components/PageContentMain";
+@import "./pages/gateway-login/index";
 @import "react-loading-skeleton/dist/skeleton.css";
 
 .utrecht-form-fieldset {
@@ -39,7 +39,8 @@ body {
   margin-block-start: 0;
   margin-inline-end: 0;
   margin-inline-start: 0;
-  /*--utrecht-page-content-max-inline-size: 700px;*/
+
+  /* --utrecht-page-content-max-inline-size: 700px; */
 }
 
 .todo-radio-group {
@@ -109,6 +110,7 @@ body {
 
 .todo-form-field--max-length .utrecht-textbox {
   --todo-char-width: var(--todo-char-width-custom, calc((1 / 3 * 1ch + 2 / 3 * 1em)));
+
   box-sizing: content-box;
   inline-size: calc(var(--todo-char-width) * var(--todo-max-length));
 }
