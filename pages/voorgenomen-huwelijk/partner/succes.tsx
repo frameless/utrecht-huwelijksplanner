@@ -84,12 +84,15 @@ export default function MultistepForm1() {
                   </Paragraph>
                 </SpotlightSection>
                 <ButtonGroup>
-                  <Link passHref href="/voorgenomen-huwelijk/partner/aanvrager-email">
-                    <ButtonLink appearance="primary-action-button">Bekijk e-mail voor aanvrager</ButtonLink>
-                  </Link>
-                  <Link passHref href="/voorgenomen-huwelijk/partner/invitation-email-partner">
-                    <ButtonLink appearance="primary-action-button">Bekijk e-mail voor partner</ButtonLink>
-                  </Link>
+                  <ButtonLink appearance="primary-action-button" href="/voorgenomen-huwelijk/partner/aanvrager-email">
+                    Bekijk e-mail voor aanvrager
+                  </ButtonLink>
+                  <ButtonLink
+                    appearance="primary-action-button"
+                    href="/voorgenomen-huwelijk/partner/invitation-email-partner"
+                  >
+                    Bekijk e-mail voor partner
+                  </ButtonLink>
                 </ButtonGroup>
                 <PartnerInvitation
                   title="Verstuur uitnodiging opnieuw"
