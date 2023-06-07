@@ -53,6 +53,7 @@ const GatewayLogin: NextPage = () => {
             className="utrecht-form-field__input"
             id="username"
             type="email"
+            autoComplete="email"
             {...register("username", { required: true })}
           />
         </FormField>
@@ -66,6 +67,7 @@ const GatewayLogin: NextPage = () => {
             className="utrecht-form-field__input"
             id="password"
             type="password"
+            autoComplete="password"
             {...register("password", { required: true })}
           />
         </FormField>
