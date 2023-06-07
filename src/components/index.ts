@@ -13,6 +13,7 @@ export { Address } from './Address';
 export { Aside } from './Aside';
 export { BackLink } from './BackLink';
 export { ButtonGroup } from './ButtonGroup';
+export { ButtonLink } from './ButtonLink';
 export { Checkbox2 } from './Checkbox2';
 export { DataNoTranslate } from './DataNoTranslate';
 export { DateInput } from './DateInput';

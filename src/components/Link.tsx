@@ -1,5 +1,6 @@
 import { Link as DesignSystemLink } from "@utrecht/component-library-react";
 import type { LinkProps as DesignSystemLinkProps } from "@utrecht/component-library-react/dist/Link";
+import clsx from "clsx";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { ForwardedRef, forwardRef } from "react";
@@ -17,7 +18,10 @@ export interface LinkProps extends DesignSystemLinkProps {
 }
 
 export const Link = forwardRef(
-  ({ children, href, sameURL, ...restProps }: LinkProps, ref: ForwardedRef<HTMLAnchorElement>) => {
+  (
+    { boxContent, children, external, href, className, sameURL, placeholder, role, ...restProps }: LinkProps,
+    ref: ForwardedRef<HTMLAnchorElement>
+  ) => {
     const router = useRouter();
     const isSameURL = router.pathname === href;
 
@@ -25,23 +29,45 @@ export const Link = forwardRef(
       return <>{children}</>;
     }
 
-    const link = (
-      <DesignSystemLink ref={ref} aria-current={isSameURL ? "page" : undefined} {...restProps}>
-        {children}
-      </DesignSystemLink>
-    );
-
-    if (isSameURL && sameURL === "reload") {
+    if ((isSameURL && sameURL === "reload") || placeholder) {
       /* Avoid client-side routing with `NextLink` for reload behavior */
-      return link;
-    } else if (typeof href === "string") {
+      /* Avoid `NextLink` for placeholder links that render no `href` */
       return (
-        <NextLink href={href} passHref>
-          {link}
-        </NextLink>
+        <DesignSystemLink
+          href={href}
+          external={external}
+          boxContent={boxContent}
+          placeholder={placeholder}
+          ref={ref}
+          aria-current={isSameURL ? "page" : undefined}
+          {...restProps}
+        >
+          {children}
+        </DesignSystemLink>
       );
     } else {
-      return link;
+      return (
+        <NextLink
+          href={href || ""}
+          ref={ref}
+          role={role || (placeholder ? "link" : undefined)}
+          className={clsx(
+            "utrecht-link",
+            {
+              "utrecht-link--box-content": boxContent,
+              "utrecht-link--external": external,
+              "utrecht-link--placeholder": placeholder,
+            },
+            className
+          )}
+          aria-disabled={placeholder ? "true" : undefined}
+          rel={external ? "external noopener noreferrer" : undefined}
+          aria-current={isSameURL ? "page" : undefined}
+          {...restProps}
+        >
+          {children}
+        </NextLink>
+      );
     }
   }
 );
