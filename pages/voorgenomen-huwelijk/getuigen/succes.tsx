@@ -40,7 +40,7 @@ export default function MultistepForm1() {
   const { t } = useTranslation(["common", "huwelijksplanner-step-getuigen-success", "form"]);
   const [marriageOptions] = useContext(MarriageOptionsContext);
   const { locale = "nl" } = useRouter();
-  const partnerContact = marriageOptions.partners[0]?.contact;
+  const { voornaam } = marriageOptions.partners[0]?.contact;
 
   return (
     <Surface>
@@ -69,7 +69,7 @@ export default function MultistepForm1() {
               <section>
                 <Heading2>Gelukt!</Heading2>
                 <Paragraph>
-                  <DataNoTranslate>{partnerContact?.voornaam}</DataNoTranslate> heeft met DigID ingelogd. Nu kunnen
+                  { voornaam && <DataNoTranslate>{voornaam}</DataNoTranslate> heeft met DigID ingelogd. } Nu kunnen
                   jullie verder met het plannen van het huwelijk. Er volgen nog een paar stappen:
                 </Paragraph>
                 <OrderedList>
