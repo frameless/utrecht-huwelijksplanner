@@ -91,7 +91,7 @@
     "sass": "1.62.1",
     "sharp": "0.32.1",
     "stylelint": "15.7.0",
-    "stylelint-config-prettier": "9.0.5",
+    "stylelint-config-standard-scss": "9.0.0",
     "stylelint-order": "6.0.3",
     "typescript": "5.1.3"
   },
