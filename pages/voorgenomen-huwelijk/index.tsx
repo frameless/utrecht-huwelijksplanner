@@ -77,13 +77,11 @@ export default function MultistepForm1() {
                 </Paragraph>
                 <Paragraph>Na deze stap vragen we ook aan je partner om in te loggen met DigiD.</Paragraph>
                 <ButtonGroup>
-                  <Link passHref href="/login">
-                    <UtrechtDigidButton>
-                      <ButtonLink appearance="primary-action-button">
-                        Inloggen met DigiD <UtrechtIconArrow />
-                      </ButtonLink>
-                    </UtrechtDigidButton>
-                  </Link>
+                  <UtrechtDigidButton>
+                    <ButtonLink appearance="primary-action-button" href="/login">
+                      Inloggen met DigiD <UtrechtIconArrow />
+                    </ButtonLink>
+                  </UtrechtDigidButton>
                   <Button onClick={() => push("/gateway-login?redirectUrl=/persoonsgegevens/persoon")}>
                     Testomgeving login
                   </Button>

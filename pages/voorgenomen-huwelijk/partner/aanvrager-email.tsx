@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import {
@@ -49,9 +48,9 @@ export default function ApplicantEmail() {
               </Paragraph>
 
               <ButtonGroup>
-                <Link passHref href="/voorgenomen-huwelijk/getuigen">
-                  <ButtonLink appearance="primary-action-button">Doorgaan huwelijksaanvraag</ButtonLink>
-                </Link>
+                <ButtonLink appearance="primary-action-button" href="/voorgenomen-huwelijk/getuigen">
+                  Doorgaan huwelijksaanvraag
+                </ButtonLink>
               </ButtonGroup>
               <Paragraph>Of kopieer het adres hieronder en open het in je browser:</Paragraph>
               <Paragraph>

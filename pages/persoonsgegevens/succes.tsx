@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -74,9 +73,9 @@ export default function MultistepForm1() {
                     verder gaan met het plannen van jullie huwelijk.
                   </Paragraph>
                   <ButtonGroup>
-                    <Link passHref href="/voorgenomen-huwelijk/getuigen">
-                      <ButtonLink appearance="primary-action-button">Nodig getuigen uit</ButtonLink>
-                    </Link>
+                    <ButtonLink appearance="primary-action-button" href="/voorgenomen-huwelijk/getuigen">
+                      Nodig getuigen uit
+                    </ButtonLink>
                   </ButtonGroup>
                 </section>
               </form>

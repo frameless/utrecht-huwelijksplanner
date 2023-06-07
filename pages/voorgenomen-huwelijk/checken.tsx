@@ -1,6 +1,5 @@
 import { UnorderedList, UnorderedListItem } from "@utrecht/component-library-react";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -80,9 +79,9 @@ export default function MultistepForm1() {
                   </UnorderedList>
                   <Paragraph>Je kunt nu je reservering voor datum en tijd vastleggen door te betalen.</Paragraph>
                   <ButtonGroup>
-                    <Link passHref href="/voorgenomen-huwelijk/betalen">
-                      <ButtonLink appearance="primary-action-button">Ga betalen</ButtonLink>
-                    </Link>
+                    <ButtonLink appearance="primary-action-button" href="/voorgenomen-huwelijk/betalen">
+                      Ga betalen
+                    </ButtonLink>
                   </ButtonGroup>
                 </section>
               </form>

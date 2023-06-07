@@ -70,13 +70,11 @@ export default function ApplicantEmail() {
                 Uw partner heeft u uitgenodigd om te loggen met DigiD. Zo bevestigt u met uw partner dat jullie het
                 huwelijk willen regelen.
               </Paragraph>
-              <Link passHref href="/login">
-                <UtrechtDigidButton>
-                  <ButtonLink appearance="primary-action-button">
-                    Inloggen met DigiD <UtrechtIconArrow />
-                  </ButtonLink>
-                </UtrechtDigidButton>
-              </Link>
+              <UtrechtDigidButton>
+                <ButtonLink appearance="primary-action-button" href="/login">
+                  Inloggen met DigiD <UtrechtIconArrow />
+                </ButtonLink>
+              </UtrechtDigidButton>
               <Paragraph>Of kopieer het adres hieronder en open het in je browser:</Paragraph>
               <Paragraph>
                 <URLValue>https://utrecht.nl/reservering</URLValue>

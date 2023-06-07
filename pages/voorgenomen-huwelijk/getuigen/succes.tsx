@@ -1,5 +1,4 @@
 import Head from "next/head";
-import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -85,15 +84,15 @@ export default function MultistepForm1() {
                   </OrderedListItem>
                 </OrderedList>
                 <ButtonGroup>
-                  <NextLink passHref href="/voorgenomen-huwelijk/checken">
-                    <ButtonLink appearance="primary-action-button">Laat de gemeente checken en ga betalen</ButtonLink>
-                  </NextLink>
+                  <ButtonLink appearance="primary-action-button" href="/voorgenomen-huwelijk/checken">
+                    Laat de gemeente checken en ga betalen
+                  </ButtonLink>
                 </ButtonGroup>
                 <Paragraph>of:</Paragraph>
                 <ButtonGroup>
-                  <NextLink passHref href="/extra">
-                    <ButtonLink appearance="secondary-action-button">Vul aan met extra's</ButtonLink>
-                  </NextLink>
+                  <ButtonLink appearance="secondary-action-button" href="/extra">
+                    Vul aan met extra's
+                  </ButtonLink>
                 </ButtonGroup>
               </section>
               <SpotlightSection aside type="info">

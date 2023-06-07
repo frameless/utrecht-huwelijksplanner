@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import {
@@ -65,12 +64,10 @@ export default function HuwelijksplannerStep0() {
                     <UnorderedListItem>Je datum is geregeld!</UnorderedListItem>
                   </UnorderedList>
                   <Paragraph>
-                    <Link passHref href="/trouw-opties">
-                      <ButtonLink appearance="primary-action-button">
-                        Start
-                        <UtrechtIconArrow />
-                      </ButtonLink>
-                    </Link>
+                    <ButtonLink appearance="primary-action-button" href="/trouw-opties">
+                      Start
+                      <UtrechtIconArrow />
+                    </ButtonLink>
                   </Paragraph>
                 </section>
                 <SpotlightSection aside type="info">
