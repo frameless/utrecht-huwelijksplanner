@@ -77,21 +77,14 @@ export default function MultistepForm1() {
                     {voornaam ? <DataNoTranslate>{voornaam}</DataNoTranslate> : <>je partner</>} geen broer of zus van
                     je is
                   </OrderedListItem>
-                  <OrderedListItem>Dan kun je betalen en is de reservering van je huwelijk klaar.</OrderedListItem>
                   <OrderedListItem>
-                    Je kunt alvast de getuigen uitnodigen en/of extra’s aanschaffen om je huwelijk nog leuker te maken.
-                    Dat kan natuurlijk ook later.
+                    Je kunt alvast extra’s aanschaffen om je huwelijk nog leuker te maken. Dat kan natuurlijk ook later.
                   </OrderedListItem>
+                  <OrderedListItem>Dan kun je betalen en is de reservering van je huwelijk klaar.</OrderedListItem>
                 </OrderedList>
                 <ButtonGroup>
-                  <ButtonLink appearance="primary-action-button" href="/voorgenomen-huwelijk/checken">
-                    Laat de gemeente checken en ga betalen
-                  </ButtonLink>
-                </ButtonGroup>
-                <Paragraph>of:</Paragraph>
-                <ButtonGroup>
                   <ButtonLink appearance="secondary-action-button" href="/extra">
-                    Vul aan met extra's
+                    Verder
                   </ButtonLink>
                 </ButtonGroup>
               </section>
