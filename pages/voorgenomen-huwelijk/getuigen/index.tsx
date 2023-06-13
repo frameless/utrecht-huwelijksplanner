@@ -192,8 +192,7 @@ const mapWitnesses = (witnesses: Witness[]) => {
 
 const WitnessFieldset = ({ index }: { index: number }) => {
   const { t } = useTranslation(["form"]);
-  const { register, formState, watch } = useFormContext<WitnessFormData>();
-  const witnessId = useId();
+  const { register, formState } = useFormContext<WitnessFormData>();
   const nameId = useId();
   const emailId = useId();
 
@@ -215,8 +214,8 @@ const WitnessFieldset = ({ index }: { index: number }) => {
         <Textbox
           id={nameId}
           type="text"
-          autoComplete={`name ${witnessId}`}
           invalid={nameInvalid}
+          autoComplete={`section-witness-${index} name`}
           {...register(`witnesses.${index}.name`)}
         />
       </FormField>
@@ -230,8 +229,8 @@ const WitnessFieldset = ({ index }: { index: number }) => {
         <Textbox
           id={emailId}
           type="email"
-          autoComplete={`email ${witnessId}`}
           invalid={emailInvalid}
+          autoComplete={`section-witness-${index} email`}
           {...register(`witnesses.${index}.email`)}
         />
       </FormField>
