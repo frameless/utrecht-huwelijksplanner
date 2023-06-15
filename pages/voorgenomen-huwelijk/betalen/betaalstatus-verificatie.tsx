@@ -1,10 +1,8 @@
-import { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Document,
   Heading1,
@@ -20,7 +18,6 @@ import {
 } from "../../../src/components";
 import { PageFooterTemplate } from "../../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../../src/components/huwelijksplanner/PageHeaderTemplate";
-import { MarriageOptionsContext } from "../../../src/context/MarriageOptionsContext";
 import { MollieService } from "../../../src/generated";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -29,32 +26,30 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   },
 });
 
-const Betalen: NextPage = () => {
+const Betalen = () => {
   const { t } = useTranslation(["common", "huwelijksplanner-step-5"]);
-  const [error, setError] = useState<boolean>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const { push } = useRouter();
-  const [marriageOptions] = useContext(MarriageOptionsContext);
-  const { id } = marriageOptions;
+  const { push, query } = useRouter();
+  const { paymentId } = query;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!id || loading) return;
+    if (!paymentId) return;
 
-    setLoading(true);
-    MollieService.mollieGetCollection({
-      resource: id,
-    })
-      .then((res: any) => {
-        const path = new URL(res.redirectUrl).pathname;
-        push(`${path}?paymentId=${res.paymentId}`);
-      })
-      .catch(() => {
-        setError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [id, loading, push]);
+    setIsLoading(true);
+
+    MollieService.mollieGetItem({ id: paymentId as string }).then((res) => {
+      if (res.status === "paid") {
+        setIsLoading(false);
+        setTimeout(() => push("/voorgenomen-huwelijk/betalen/succes"), 2000);
+      }
+    });
+  }, [paymentId, push]);
+
+  const content = isLoading ? (
+    <Paragraph>Betaling verifiëren, even geduld...</Paragraph>
+  ) : (
+    <Paragraph>Betaling voltooid, je wordt doorgestuurd...</Paragraph>
+  );
 
   return (
     <Surface>
@@ -75,9 +70,7 @@ const Betalen: NextPage = () => {
                 <Heading1>{t("huwelijksplanner-step-5:heading-1")}</Heading1>
                 <Paragraph lead>{t("common:step-n-of-m", { n: 5, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
               </HeadingGroup>
-              <section>
-                {error ? <PaymentError /> : <Paragraph>Je wordt doorgestuurd naar de betaling</Paragraph>}
-              </section>
+              <section>{content}</section>
             </PageContentMain>
           </PageContent>
           <PageFooter>
@@ -86,14 +79,6 @@ const Betalen: NextPage = () => {
         </Page>
       </Document>
     </Surface>
-  );
-};
-
-const PaymentError = () => {
-  return (
-    <Paragraph>
-      Er is iets misgegaan. Klik <Link href={"/"}>hier</Link> om terug te gaan naar de startpagina
-    </Paragraph>
   );
 };
 
