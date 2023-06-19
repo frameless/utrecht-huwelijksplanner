@@ -39,7 +39,7 @@
     "@gemeente-denhaag/process-steps": "0.1.0-alpha.145",
     "@utrecht/assets": "1.0.0-alpha.147",
     "@utrecht/component-library-css": "1.0.0-alpha.526",
-    "@utrecht/component-library-react": "1.0.0-alpha.335",
+    "@utrecht/component-library-react": "1.0.0-alpha.337",
     "@utrecht/design-tokens": "1.0.0-alpha.519",
     "@utrecht/web-component-library-react": "1.0.0-alpha.525",
     "clsx": "1.2.1",
