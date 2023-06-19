@@ -24,7 +24,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useId, useRef, useState } from "react";
 import { useForm, UseFormRegister } from "react-hook-form";
 import Skeleton from "react-loading-skeleton";
 import { Aside, Checkbox2, OptionalIndicator, PageContentMain, ReservationCard } from "../../src/components";
@@ -60,12 +60,13 @@ export default function MultistepForm1() {
     locale = "nl",
     push,
   } = useRouter();
-  const { register, handleSubmit, formState } = useForm<FormData>();
+  const { formState, handleSubmit, register, reset } = useForm<FormData>();
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
   const [persoonData] = useIngeschrevenpersoonGetByBsn(getBsnFromJWT());
   const { reservation, ambtenaar, productId } = marriageOptions;
   const [loading, setLoading] = useState(false);
   const pageInitialized = useRef(false);
+  const invalidStateDescriptionId = useId();
 
   const initializeMarriage = useCallback(() => {
     if (!reservation) return;
@@ -110,6 +111,12 @@ export default function MultistepForm1() {
       pageInitialized.current = true;
     }
   }, [huwelijkId, initializeMarriage, marriageOptions, reservation, setMarriageOptions]);
+
+  // Reset the `formState.isSubmitted` when the form is dirtied by calling `reset` (useForm hook)
+  useEffect(() => {
+    if (!formState.isSubmitted) return;
+    reset(undefined, { keepValues: true, keepErrors: true, keepIsValid: true, keepIsSubmitted: !formState.isDirty });
+  }, [formState.isSubmitted, formState.isDirty, reset]);
 
   const onContactDetailsSubmit = (data: FormData) => {
     if (huwelijkId) {
@@ -233,13 +240,27 @@ export default function MultistepForm1() {
                   </FormField>
                   <DeclarationCheckboxGroup register={register} checkboxData={checkboxData} />
                   <Button
-                    disabled={!formState.isValid || loading}
                     type="submit"
                     name="type"
                     appearance="primary-action-button"
+                    aria-describedby={invalidStateDescriptionId}
+                    busy={loading}
                   >
                     Contactgegevens opslaan
                   </Button>
+                  {!formState.isValid && (
+                    <>
+                      {!formState.isSubmitted ? (
+                        <FormFieldDescription id={invalidStateDescriptionId} hidden>
+                          <Paragraph>Vul eerst alle gegevens in.</Paragraph>
+                        </FormFieldDescription>
+                      ) : (
+                        <FormFieldDescription id={invalidStateDescriptionId} invalid aria-live={"assertive"}>
+                          <Paragraph>Nog niet alle gegevens zijn ingevuld.</Paragraph>
+                        </FormFieldDescription>
+                      )}
+                    </>
+                  )}
                 </section>
                 <Aside>
                   <Heading2>Meer informatie</Heading2>
