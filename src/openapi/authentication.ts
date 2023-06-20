@@ -1,3 +1,7 @@
+'use server';
+
+import jwt from 'jsonwebtoken';
+import { cookies } from 'next/headers';
 import { OpenAPI } from '../generated';
 
 const myWindow = typeof window !== 'undefined' ? window : undefined;
@@ -13,10 +17,10 @@ export const authenticate = (JWT: string): void => {
     Authorization: `Bearer ${JWT}`,
   };
 
-  myWindow?.sessionStorage.setItem('JWT', JWT);
+  cookies().set('JWT', JWT);
 };
 
-export const isAuthenticated = (): boolean => !!myWindow?.sessionStorage.getItem('JWT');
+export const isAuthenticated = (): boolean => cookies().has('JWT');
 
 export const getBsnFromJWT = (): string => {
   const JWT = myWindow?.sessionStorage.getItem('JWT');

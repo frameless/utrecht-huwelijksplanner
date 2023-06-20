@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { HuwelijksplannerState, initialState } from "../data/huwelijksplanner-state";
 
