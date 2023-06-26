@@ -86,7 +86,7 @@
     "openapi-typescript-codegen": "0.23.0",
     "prettier": "2.8.8",
     "prettier-plugin-gherkin": "1.1.1",
-    "react-i18next": "11.18.6",
+    "react-i18next": "13.0.1",
     "rimraf": "5.0.1",
     "sass": "1.62.1",
     "sharp": "0.32.1",
