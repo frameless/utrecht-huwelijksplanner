@@ -1,11 +1,10 @@
 import { Button, FormField, FormLabel, Textbox } from "@utrecht/component-library-react";
-import { RedirectType } from "next/dist/client/components/redirect";
 import { redirect } from "next/navigation";
-import { OpenAPI } from "../../../../generated";
-import { request as __request } from "../../../../generated/core/request";
-import { authenticate, unauthenticate } from "../../../../openapi/authentication";
+import { IngeschrevenpersoonService, OpenAPI } from "../../../generated";
+import { request as __request } from "../../../generated/core/request";
+import { authenticate, getBsnFromJWT, unauthenticate } from "../../../openapi/authentication";
 
-const GatewayLogin = async ({ params: { locale, assentId } }: any) => {
+const GatewayLogin = async ({ params: { locale }, searchParams }: any) => {
   const onLoginSubmit = async (formData: FormData) => {
     "use server";
     unauthenticate();
@@ -19,24 +18,19 @@ const GatewayLogin = async ({ params: { locale, assentId } }: any) => {
     };
 
     if (email && email !== null && password && password !== null) {
-      __request(OpenAPI, {
+      const res: any = await __request(OpenAPI, {
         method: "POST",
         url: "/users/login",
         body,
         mediaType: "application/json",
-      })
-        .then((res: any) => {
-          authenticate(res.jwtToken);
-        })
-        .catch((error) => {
-          throw new Error(error.message);
-        });
+      });
+      authenticate(res?.jwtToken);
+      const JWT = getBsnFromJWT();
+      const response = await IngeschrevenpersoonService.ingeschrevenpersoonGetCollection({
+        burgerservicenummer: JWT as string,
+      });
 
-      if (assentId !== "person") {
-        redirect(`${locale}/persoonsgegevens/persoon`, RedirectType.replace);
-      }
-
-      redirect(`/persoonsgegevens/${assentId}`);
+      redirect(`/persoonsgegevens/${(response.results[0] as any)._id}`);
     }
   };
 

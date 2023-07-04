@@ -42,7 +42,7 @@ export default async function IntendedMarriage({ params: { locale } }: Params) {
 
   return (
     <>
-      <BackLink href={`${locale}/trouw-opties/${slug}`}>← Terug</BackLink>
+      <BackLink href={`/trouw-opties/${slug}`}>← Terug</BackLink>
       <>
         <HeadingGroup>
           <Heading1>{productName}</Heading1>
@@ -61,7 +61,7 @@ export default async function IntendedMarriage({ params: { locale } }: Params) {
                 Inloggen met DigiD <UtrechtIconArrow />
               </ButtonLink>
             </UtrechtDigidButton>
-            <ButtonLink href="/gateway-login/person">Testomgeving login</ButtonLink>
+            <ButtonLink href="/gateway-login">Testomgeving login</ButtonLink>
           </ButtonGroup>
         </section>
         <Aside>

@@ -24,8 +24,6 @@ import {
   UtrechtIconArrow,
 } from "../../../../components";
 import { MarriageOptionsContext } from "../../../../context/MarriageOptionsContext";
-import { RegistrationType } from "../../../../data/huwelijksplanner-state";
-import { SdgproductService } from "../../../../generated";
 import { useAvailabilitycheckGetCollection } from "../../../../hooks/useAvailabilitycheckGetCollection";
 import { CeremonyData, useSdgProductGetItem } from "../../../../hooks/useSdgProductGetItem";
 import { useTranslation } from "../../../i18n/client";
@@ -37,48 +35,7 @@ type CalendarData = {
 };
 const dateFormat = "yyyy-MM-dd";
 
-export const ButtWeddingOptionsContext = ({ locale }: { locale: string }) => {
-  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
-  const { push } = useRouter();
-  const onMarriageOptionSubmit = (weddingType: RegistrationType) => {
-    SdgproductService.sdgproductGetCollection({
-      upnLabel: weddingType as string,
-    }).then((result) => {
-      const productId = result.results[0].id as string;
-      setMarriageOptions({
-        ...marriageOptions,
-        "registration-type": weddingType,
-        productId: productId,
-      });
-      push(`/trouw-opties/${weddingType}`);
-    });
-  };
-
-  return (
-    <>
-      <Heading2>Wij willen trouwen</Heading2>
-      <Button
-        name="type"
-        value="huwelijk"
-        appearance="primary-action-button"
-        onClick={() => onMarriageOptionSubmit("huwelijk")}
-      >
-        Trouwen plannen <UtrechtIconArrow />
-      </Button>
-      <Heading2>Wij willen een geregistreerd partnerschap</Heading2>
-      <Button
-        name="type"
-        value="partnerschap"
-        appearance="primary-action-button"
-        onClick={() => onMarriageOptionSubmit("partnerschap")}
-      >
-        Geregistreerd partnerschap plannen
-        <UtrechtIconArrow />
-      </Button>
-    </>
-  );
-};
-
+//
 export const PlanningFormPageContext = ({ locale }: { locale: string }) => {
   const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
   const { t } = useTranslation(locale, "huwelijksplanner-step-2");
@@ -162,6 +119,7 @@ export const PlanningFormPageContext = ({ locale }: { locale: string }) => {
                 const legendId = `${ceremony.type}-legend`;
                 const ceremonyType = _.upperFirst(ceremony.type);
                 const ceremonyUniqueDayId = `${ceremony.id}-${calendarData.selectedDate?.toISOString()}`;
+
                 return (
                   <Fieldset key={idx} role={"radiogroup"} aria-describedby={legendId}>
                     <FieldsetLegend id={legendId}>{ceremonyType}</FieldsetLegend>

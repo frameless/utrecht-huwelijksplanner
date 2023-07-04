@@ -1,6 +1,7 @@
-import { DataList, DataListItem, DataListKey, DataListValue, NumberValue } from "@utrecht/component-library-react";
+"use client";
 import { useTranslation } from "../../app/i18n/client";
 import { IngeschrevenPersoon } from "../../generated";
+import { DataList, DataListItem, DataListKey, DataListValue, NumberValue } from "../index";
 
 export const PersonalDataList = ({ partner, locale }: { partner: IngeschrevenPersoon; locale: string }) => {
   const { t } = useTranslation(locale, ["form"]);

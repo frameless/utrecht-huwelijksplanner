@@ -15,6 +15,7 @@ import {
   Textbox,
 } from "@utrecht/component-library-react";
 import { addMinutes } from "date-fns";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useForm, UseFormRegister } from "react-hook-form";
@@ -70,6 +71,102 @@ type FormData = {
   phoneNumber?: string;
 };
 
+interface DeclarationCheckboxGroupProps {
+  checkboxData: CheckboxData[];
+  register: UseFormRegister<FormData>;
+}
+
+export const DeclarationCheckboxGroup = ({ checkboxData, register }: DeclarationCheckboxGroupProps) => {
+  return (
+    <Fieldset>
+      {checkboxData &&
+        checkboxData.length > 0 &&
+        checkboxData.map(({ id, label, value }, index) => (
+          <FormField key={index} type="checkbox">
+            <Checkbox2 novalidate id={id} {...register(value, { required: true })} />
+            <FormLabel htmlFor={id} type="checkbox">
+              {label}
+            </FormLabel>
+          </FormField>
+        ))}
+    </Fieldset>
+  );
+};
+
+interface FormProps {
+  onActionHandler?: ((formData: globalThis.FormData) => void) | undefined;
+  locale: string;
+}
+
+export const Form = ({ onActionHandler, locale }: FormProps) => {
+  const { t } = useTranslation(locale, ["huwelijksplanner-step-4", "form", "common"]);
+  const {
+    register,
+    trigger,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+  });
+
+  const handleButtonClick = async () => {
+    try {
+      await trigger();
+
+      if (Object.keys(errors).length > 0) {
+        // setOptimisticValidation(false);
+      } else {
+        // setOptimisticValidation(true);
+      }
+    } catch (error) {
+      // Handle error
+    }
+  };
+
+  return (
+    <form action={onActionHandler}>
+      <p>Deze gegevens kun je zelf invullen of wijzigen.</p>
+      <FormField>
+        <p className="utrecht-form-field__label">
+          <FormLabel htmlFor="tel">
+            {t("tel")} <OptionalIndicator title={t("optional")} />
+          </FormLabel>
+        </p>
+        <Textbox
+          className="utrecht-form-field__input"
+          id="tel"
+          type="tel"
+          autoComplete="tel"
+          {...register("phoneNumber")}
+        />
+      </FormField>
+      <FormField>
+        <p className="utrecht-form-field__label">
+          <FormLabel htmlFor="email">
+            {t("email")} <OptionalIndicator title={t("optional")} />
+          </FormLabel>
+        </p>
+        <FormFieldDescription id="email-description">
+          We sturen je een bevestiging naar dit e-mailadres.
+          <br />
+          De mail heeft een link om nog veranderingen door te geven.
+        </FormFieldDescription>
+        <Textbox
+          className="utrecht-form-field__input"
+          id="email"
+          type="email"
+          autoComplete="email"
+          aria-describedby="email-description"
+          {...register("email")}
+        />
+      </FormField>
+      <DeclarationCheckboxGroup register={register} checkboxData={checkboxData} />
+      <Button type="submit" name="type" appearance="primary-action-button" onClick={handleButtonClick}>
+        Contactgegevens opslaan
+      </Button>
+    </form>
+  );
+};
+
 const mapToContactObject = (email?: string, phoneNumber?: string) => {
   const contactObject: any = {};
 
@@ -110,56 +207,6 @@ const getResultsChecklist = () => {
 
 export const PersonContext = ({ person, locale }: { person: string; locale: string }) => {
   const { t } = useTranslation(locale, ["huwelijksplanner-step-4", "form", "common"]);
-  const { register, handleSubmit, formState } = useForm<FormData>();
-  const [marriageOptions, setMarriageOptions] = useContext(MarriageOptionsContext);
-  const [persoonData] = useIngeschrevenpersoonGetByBsn(getBsnFromJWT());
-
-  const { reservation, ambtenaar, productId } = marriageOptions;
-  const [loading, setLoading] = useState(false);
-  const pageInitialized = useRef(false);
-  const initializeMarriage = useCallback(() => {
-    if (!reservation) return;
-
-    setLoading(true);
-
-    const postBody = {
-      requestBody: {
-        type: productId,
-        ceremonie: reservation["ceremony-id"],
-        moment: reservation["ceremony-start"],
-        ambtenaar: ambtenaar,
-        locatie: reservation["ceremony-location"],
-      },
-    };
-
-    HuwelijkService.huwelijkPostItem(postBody)
-      .then((response) => {
-        const result = resolveEmbedded(response) as HuwelijkWithId;
-        setMarriageOptions({
-          ...marriageOptions,
-          id: result._id || "",
-          partners: [...result.partners],
-          reservation: {
-            ...reservation,
-            "ceremony-end": addMinutes(new Date(result.moment || ""), 15).toString(),
-            "ceremony-price-currency": result.kosten?.split(" ")[0] || "EUR",
-            "ceremony-price-amount": result.kosten?.split(" ")[1] || "-",
-          },
-        });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [ambtenaar, marriageOptions, productId, reservation, setMarriageOptions]);
-
-  useEffect(() => {
-    if (pageInitialized.current || !reservation) return;
-
-    if (!marriageOptions.id) {
-      initializeMarriage();
-      pageInitialized.current = true;
-    }
-  }, [person, initializeMarriage, marriageOptions, reservation, setMarriageOptions]);
 
   const onContactDetailsSubmit = (data: FormData) => {
     if (person) {
@@ -201,116 +248,5 @@ export const PersonContext = ({ person, locale }: { person: string; locale: stri
       });
     }
   };
-  return (
-    <form onSubmit={handleSubmit(onContactDetailsSubmit)}>
-      <HeadingGroup>
-        <Heading1>{t("heading-1")}</Heading1>
-        {/*TODO: Previous button */}
-        {/*TODO: Step indicator component */}
-        <Paragraph lead>{t("step-n-of-m", { n: 3, m: 5 })} — Meld je voorgenomen huwelijk</Paragraph>
-      </HeadingGroup>
-      {loading ? (
-        <Skeleton height={"50px"} />
-      ) : (
-        reservation && <ReservationCard reservation={reservation} locale={locale} />
-      )}
-      <section>
-        {/*TODO: Banner / card */}
-        <SpotlightSection type="info">
-          <Heading2>Gegevens uit Basisregistratie Personen</Heading2>
-          <Paragraph>
-            Hieronder zie je de gegevens die bij ons bekend zijn. Klopt er iets niet?{" "}
-            <Link href="https://pki.utrecht.nl/Loket/product/499c98cd12284d9c6bfe658dd0ea95cb">
-              Neem contact op met de gemeente
-            </Link>
-            .
-          </Paragraph>
-        </SpotlightSection>
-        <Heading2 id="personal-details">Persoonsgegevens</Heading2>
-        {persoonData ? <PersonalDataList partner={persoonData} locale={locale} /> : <Skeleton height="100px" />}
-        <Heading2 id="address">Adresgegevens</Heading2>
-        {persoonData ? <AddressDataList partner={persoonData} /> : <Skeleton height="100px" />}
-        <Heading2 id="contact">Contactgegevens</Heading2>
-        <p>Deze gegevens kun je zelf invullen of wijzigen.</p>
-        <FormField>
-          <p className="utrecht-form-field__label">
-            <FormLabel htmlFor="tel">
-              {t("tel")} <OptionalIndicator title={t("optional")} />
-            </FormLabel>
-          </p>
-          <Textbox
-            className="utrecht-form-field__input"
-            id="tel"
-            type="tel"
-            autoComplete="tel"
-            {...register("phoneNumber")}
-          />
-        </FormField>
-        <FormField>
-          <p className="utrecht-form-field__label">
-            <FormLabel htmlFor="email">
-              {t("email")} <OptionalIndicator title={t("optional")} />
-            </FormLabel>
-          </p>
-          <FormFieldDescription id="email-description">
-            We sturen je een bevestiging naar dit e-mailadres.
-            <br />
-            De mail heeft een link om nog veranderingen door te geven.
-          </FormFieldDescription>
-          <Textbox
-            className="utrecht-form-field__input"
-            id="email"
-            type="email"
-            autoComplete="email"
-            aria-describedby="email-description"
-            {...register("email")}
-          />
-        </FormField>
-        <DeclarationCheckboxGroup register={register} checkboxData={checkboxData} />
-        <Button disabled={!formState.isValid || loading} type="submit" name="type" appearance="primary-action-button">
-          Contactgegevens opslaan
-        </Button>
-      </section>
-      <Aside>
-        <Heading2>Meer informatie</Heading2>
-        <Paragraph>
-          Je mag in Nederland trouwen met je neef, nicht, oom of tante. Je moet dan wel komen verklaren dat je niet
-          gedwongen wordt. Neem contact op met de gemeente: <Link href="tel:14030">bel 14 030</Link> of{" "}
-          <Link href="https://www.utrecht.nl/contact/">chat met ons</Link>.
-        </Paragraph>
-        <Paragraph>
-          <Link href="https://www.rijksoverheid.nl/onderwerpen/huwelijksdwang/huwelijksdwang-voorkomen">
-            Aanpak huwelijksdwang
-          </Link>
-        </Paragraph>
-        <Paragraph>
-          <Link href="https://pki.utrecht.nl/Loket/product/499c98cd12284d9c6bfe658dd0ea95cb">
-            Wat kan ik doen als mijn gegevens niet kloppen?
-          </Link>
-        </Paragraph>
-      </Aside>
-    </form>
-  );
-};
-
-interface DeclarationCheckboxGroupProps {
-  checkboxData: CheckboxData[];
-  register: UseFormRegister<FormData>;
-}
-
-export const DeclarationCheckboxGroup = ({ checkboxData, register }: DeclarationCheckboxGroupProps) => {
-  return (
-    <Fieldset>
-      {checkboxData &&
-        checkboxData.length > 0 &&
-        checkboxData.map(({ id, label, value }, index) => (
-          <FormField key={index} type="checkbox">
-            <Checkbox2 novalidate id={id} {...register(value, { required: true })} />
-            <FormLabel htmlFor={id} type="checkbox">
-              {label}
-            </FormLabel>
-          </FormField>
-        ))}
-    </Fieldset>
-  );
+  return <div>dsds</div>;
 };
