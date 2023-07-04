@@ -1,44 +1,45 @@
-import { DataList, DataListItem, DataListKey, DataListValue, NumberValue } from "@utrecht/component-library-react";
-import { useTranslation } from "next-i18next";
+"use client";
+import { useTranslation } from "../../app/i18n/client";
 import { IngeschrevenPersoon } from "../../generated";
+import { DataList, DataListItem, DataListKey, DataListValue, NumberValue } from "../index";
 
-export const AddressDataList = ({ partner }: { partner: IngeschrevenPersoon }) => {
-  const { t } = useTranslation(["common", "huwelijksplanner-step-4", "form"]);
+export const AddressDataList = ({ partner, locale }: { partner: IngeschrevenPersoon; locale: string }) => {
+  const { t } = useTranslation(locale, ["form"]);
   return (
     <DataList aria-describedby="address" className="utrecht-data-list--rows">
       <DataListItem>
-        <DataListKey>{t("form:street")}</DataListKey>
-        <DataListValue value={partner.verblijfplaats.straat} emptyDescription={t("form:data-item-unknown")}>
+        <DataListKey>{t("street")}</DataListKey>
+        <DataListValue value={partner.verblijfplaats.straat} emptyDescription={t("data-item-unknown")}>
           {partner.verblijfplaats.straat ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
-        <DataListKey>{t("form:house-number")}</DataListKey>
-        <DataListValue value={partner.verblijfplaats.huisnummer} emptyDescription={t("form:data-item-unknown")}>
+        <DataListKey>{t("house-number")}</DataListKey>
+        <DataListValue value={partner.verblijfplaats.huisnummer} emptyDescription={t("data-item-unknown")}>
           <NumberValue>{partner.verblijfplaats.huisnummer ?? "-"}</NumberValue>
         </DataListValue>
       </DataListItem>
       <DataListItem>
-        <DataListKey>{t("form:house-number-suffix")}</DataListKey>
+        <DataListKey>{t("house-number-suffix")}</DataListKey>
         <DataListValue
           value={partner.verblijfplaats.huisnummerToevoeging}
-          emptyDescription={t("form:data-item-empty")}
+          emptyDescription={t("data-item-empty")}
           notranslate={true}
         >
           {partner.verblijfplaats.huisnummerToevoeging ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
-        <DataListKey>{t("form:postal-code")}</DataListKey>
-        <DataListValue value={partner.verblijfplaats.postcode} emptyDescription={t("form:data-item-unknown")}>
+        <DataListKey>{t("postal-code")}</DataListKey>
+        <DataListValue value={partner.verblijfplaats.postcode} emptyDescription={t("data-item-unknown")}>
           {partner.verblijfplaats.postcode ?? "-"}
         </DataListValue>
       </DataListItem>
       <DataListItem>
-        <DataListKey>{t("form:place-of-residence")}</DataListKey>
+        <DataListKey>{t("place-of-residence")}</DataListKey>
         <DataListValue
           value={partner.verblijfplaats.woonplaats}
-          emptyDescription={t("form:data-item-unknown")}
+          emptyDescription={t("data-item-unknown")}
           notranslate={true}
         >
           {partner.verblijfplaats.woonplaats ?? "-"}

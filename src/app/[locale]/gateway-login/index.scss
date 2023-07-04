@@ -1,0 +1,17 @@
+.example-login {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding-block: 5rem;
+  width: 100%;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 300px;
+  }
+
+  .example-error {
+    color: red;
+  }
+}

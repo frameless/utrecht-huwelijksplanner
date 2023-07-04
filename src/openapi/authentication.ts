@@ -1,11 +1,26 @@
+'use server';
+
+import jwt from 'jsonwebtoken';
+import jwt_decode from "jwt-decode";
+import { cookies } from 'next/headers';
 import { OpenAPI } from '../generated';
 
-const myWindow = typeof window !== 'undefined' ? window : undefined;
+interface User {
+  userId: string;
+  username: string;
+  organization: string;
+  locale: string;
+  roles: string[];
+  session: string;
+  iss: string;
+  ias: number;
+  exp: number;
+  person: string;
+}
 
 export const unauthenticate = (): void => {
   OpenAPI.HEADERS = {};
-
-  myWindow?.sessionStorage.removeItem('JWT');
+  cookies().delete('JWT')
 };
 
 export const authenticate = (JWT: string): void => {
@@ -13,17 +28,16 @@ export const authenticate = (JWT: string): void => {
     Authorization: `Bearer ${JWT}`,
   };
 
-  myWindow?.sessionStorage.setItem('JWT', JWT);
+  cookies().set('JWT', JWT);
 };
 
-export const isAuthenticated = (): boolean => !!myWindow?.sessionStorage.getItem('JWT');
+export const isAuthenticated = (): boolean => cookies().has('JWT');
 
-export const getBsnFromJWT = (): string => {
-  const JWT = myWindow?.sessionStorage.getItem('JWT');
+export const getBsnFromJWT = (): string | null => {
+  const JWT = cookies().get('JWT')?.value;
   const jwtArray = JWT?.split('.');
-  if (jwtArray && jwtArray.length >= 2) {
-    const jwtJSON = JSON.parse(decodeURIComponent(escape(window.atob(jwtArray[1]))));
-    return jwtJSON.person; // BSN
-  }
-  return '';
+  if (!jwtArray) return null
+
+  const decoded = jwt_decode<User>(JWT as string);
+  return decoded.person; // BSN
 };

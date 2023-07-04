@@ -1,8 +1,5 @@
-const { i18n } = require('./next-i18next.config');
-
 module.exports = {
   reactStrictMode: true,
-  i18n,
   transpilePackages: ['@utrecht/web-component-library-react'],
   async headers() {
     return [
@@ -10,10 +7,6 @@ module.exports = {
         // Apply these security headers to all routes
         source: '/(.*)',
         headers: [
-          // {
-          //   key: 'Content-Security-Policy',
-          //   value: "default-src 'self'; style-src data: 'self' 'unsafe-inline'; script-src data: 'self' 'unsafe-eval'",
-          // },
           {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin',
@@ -33,5 +26,8 @@ module.exports = {
         ],
       },
     ];
+  },
+  experimental: {
+    serverActions: true,
   },
 };

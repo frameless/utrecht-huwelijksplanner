@@ -3,7 +3,7 @@
  * Copyright (c) 2021 Robbert Broersma
  */
 
-import { HeaderNav, HeaderNavLink, LanguageToggleButtons, Link, Paragraph, UtrechtLogo } from "../index";
+import { HeaderNav, HeaderNavLink, LanguageToggle, Link, Paragraph, UtrechtLogo } from "../index";
 
 export const PageHeaderTemplate = () => (
   <>
@@ -12,7 +12,7 @@ export const PageHeaderTemplate = () => (
         <UtrechtLogo />
       </Link>
     </Paragraph>
-    <LanguageToggleButtons headingLevel={2} className="utrecht-page-header__alternate-lang-nav" />
+    <LanguageToggle />
     <HeaderNav className="utrecht-page-header__nav">
       <HeaderNavLink href="https://www.utrecht.nl/wonen-en-leven">Wonen en Leven</HeaderNavLink>
       <HeaderNavLink href="https://www.utrecht.nl/zorg-en-onderwijs/">Zorg en Onderwijs</HeaderNavLink>

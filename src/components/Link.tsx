@@ -1,10 +1,10 @@
+"use client";
 import { Link as DesignSystemLink } from "@utrecht/component-library-react";
 import type { LinkProps as DesignSystemLinkProps } from "@utrecht/component-library-react/dist/Link";
 import clsx from "clsx";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import React, { ForwardedRef, forwardRef } from "react";
-
 export interface LinkProps extends DesignSystemLinkProps {
   /**
    * Background to the naming of this API:
@@ -22,8 +22,8 @@ export const Link = forwardRef(
     { boxContent, children, external, href, className, sameURL, placeholder, role, ...restProps }: LinkProps,
     ref: ForwardedRef<HTMLAnchorElement>
   ) => {
-    const router = useRouter();
-    const isSameURL = router.pathname === href;
+    const pathname = usePathname();
+    const isSameURL = pathname === href;
 
     if (isSameURL && sameURL === "no-link") {
       return <>{children}</>;

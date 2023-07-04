@@ -2,7 +2,7 @@ import { ButtonLink as DesignSystemButtonLink } from "@utrecht/component-library
 import type { ButtonLinkProps as DesignSystemButtonLinkProps } from "@utrecht/component-library-react/dist/ButtonLink";
 import clsx from "clsx";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import React, { ForwardedRef, forwardRef, KeyboardEvent } from "react";
 
 export interface ButtonLinkProps extends DesignSystemButtonLinkProps {
@@ -32,8 +32,8 @@ export const ButtonLink = forwardRef(
     { appearance, children, external, href, className, sameURL, placeholder, role, ...restProps }: ButtonLinkProps,
     ref: ForwardedRef<HTMLAnchorElement>
   ) => {
-    const router = useRouter();
-    const isSameURL = router.pathname === href;
+    const pathname = usePathname();
+    const isSameURL = pathname === href;
 
     let props = restProps;
 
