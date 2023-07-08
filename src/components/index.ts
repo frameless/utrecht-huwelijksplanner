@@ -29,6 +29,7 @@ export { ReservationCard } from './huwelijksplanner/ReservationCard';
 export { SkipLink } from './SkipLink';
 export { UtrechtLogo } from './UtrechtLogo';
 export { ValueCurrency } from './ValueCurrency';
+export { HeaderDivider } from './HeaderDivider';
 export { PreHeading } from './PreHeading';
 export { HeadingGroup } from './HeadingGroup';
 export { FeedbackSection } from './FeedbackSection';
