@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { FC, ForwardedRef, forwardRef, HTMLAttributes } from "react";
+import { FC, ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { Link, LinkProps } from "./Link";
 
 export const HeaderNavLink: FC<LinkProps> = forwardRef(
