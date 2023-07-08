@@ -112,11 +112,10 @@ export default function MultistepForm1() {
     }
   }, [huwelijkId, initializeMarriage, marriageOptions, reservation, setMarriageOptions]);
 
-  // Reset the `formState.isSubmitted` when the form is dirtied by calling `reset` (useForm hook)
   useEffect(() => {
-    if (!formState.isSubmitted) return;
-    reset(undefined, { keepValues: true, keepErrors: true, keepIsValid: true, keepIsSubmitted: !formState.isDirty });
-  }, [formState.isSubmitted, formState.isDirty, reset]);
+    if (formState.isDirty)
+      reset(undefined, { keepValues: true, keepErrors: true, keepIsValid: true, keepIsSubmitted: false });
+  });
 
   const onContactDetailsSubmit = (data: FormData) => {
     if (huwelijkId) {
@@ -241,6 +240,7 @@ export default function MultistepForm1() {
                   <DeclarationCheckboxGroup register={register} checkboxData={checkboxData} />
                   <Button
                     type="submit"
+                    disabled={loading}
                     name="type"
                     appearance="primary-action-button"
                     aria-describedby={invalidStateDescriptionId}
