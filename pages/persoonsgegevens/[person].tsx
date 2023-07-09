@@ -118,6 +118,7 @@ export default function MultistepForm1() {
   });
 
   const onContactDetailsSubmit = (data: FormData) => {
+    setLoading(true);
     if (huwelijkId) {
       HuwelijkService.huwelijkPatchItem({
         id: huwelijkId as string,
@@ -137,6 +138,7 @@ export default function MultistepForm1() {
         },
       }).then(() => {
         push(`/persoonsgegevens/succes?huwelijkId=${huwelijkId}`);
+        setLoading(false);
       });
     } else {
       AssentService.assentPatchItem({
@@ -154,6 +156,7 @@ export default function MultistepForm1() {
         },
       }).then(() => {
         push("/voorgenomen-huwelijk/partner");
+        setLoading(false);
       });
     }
   };
