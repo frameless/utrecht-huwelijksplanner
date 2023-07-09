@@ -205,23 +205,19 @@ export default function MultistepForm1() {
                   <p>Deze gegevens kun je zelf invullen of wijzigen.</p>
                   <FormField>
                     <p className="utrecht-form-field__label">
-                      <FormLabel htmlFor="tel">
-                        {t("form:tel")} <OptionalIndicator title={t("form:optional")} />
-                      </FormLabel>
+                      <FormLabel htmlFor="tel">{t("form:tel")}</FormLabel>
                     </p>
                     <Textbox
                       className="utrecht-form-field__input"
                       id="tel"
                       type="tel"
                       autoComplete="tel"
-                      {...register("phoneNumber")}
+                      {...register("phoneNumber", { required: true })}
                     />
                   </FormField>
                   <FormField>
                     <p className="utrecht-form-field__label">
-                      <FormLabel htmlFor="email">
-                        {t("form:email")} <OptionalIndicator title={t("form:optional")} />
-                      </FormLabel>
+                      <FormLabel htmlFor="email">{t("form:email")}</FormLabel>
                     </p>
                     <FormFieldDescription id="email-description">
                       We sturen je een bevestiging naar dit e-mailadres.
@@ -234,7 +230,7 @@ export default function MultistepForm1() {
                       type="email"
                       autoComplete="email"
                       aria-describedby="email-description"
-                      {...register("email")}
+                      {...register("email", { required: true })}
                     />
                   </FormField>
                   <DeclarationCheckboxGroup register={register} checkboxData={checkboxData} />
