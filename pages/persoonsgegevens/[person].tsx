@@ -27,7 +27,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React, { useCallback, useContext, useEffect, useId, useRef, useState } from "react";
 import { useForm, UseFormRegister } from "react-hook-form";
 import Skeleton from "react-loading-skeleton";
-import { Aside, Checkbox2, OptionalIndicator, PageContentMain, ReservationCard } from "../../src/components";
+import { Aside, Checkbox2, PageContentMain, ReservationCard } from "../../src/components";
 import { AddressDataList } from "../../src/components/huwelijksplanner/AddressDataList";
 import { PageFooterTemplate } from "../../src/components/huwelijksplanner/PageFooterTemplate";
 import { PageHeaderTemplate } from "../../src/components/huwelijksplanner/PageHeaderTemplate";
@@ -212,6 +212,7 @@ export default function MultistepForm1() {
                       id="tel"
                       type="tel"
                       autoComplete="tel"
+                      invalid={formState.errors.phoneNumber && formState.isSubmitted}
                       {...register("phoneNumber", { required: true })}
                     />
                   </FormField>
@@ -230,6 +231,7 @@ export default function MultistepForm1() {
                       type="email"
                       autoComplete="email"
                       aria-describedby="email-description"
+                      invalid={formState.errors.email && formState.isSubmitted}
                       {...register("email", { required: true })}
                     />
                   </FormField>
