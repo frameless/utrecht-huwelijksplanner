@@ -83,7 +83,7 @@
     "npm-check-updates": "16.10.12",
     "npm-package-json-lint": "6.4.0",
     "npm-run-all": "4.1.5",
-    "openapi-typescript-codegen": "0.23.0",
+    "openapi-typescript-codegen": "0.25.0",
     "prettier": "2.8.8",
     "prettier-plugin-gherkin": "1.1.1",
     "react-i18next": "11.18.6",
