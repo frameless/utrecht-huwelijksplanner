@@ -13,8 +13,10 @@ services:
         - "NPM_TOKEN=${NPM_TOKEN}"
         - "VCS_REF=${VCS_REF}"
         - "VERSION=${VERSION}"
+        - "NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}"
       context: .
       dockerfile: ./Dockerfile
     ports:
       - "3000:3000"
     command: "start"
+    image: ghcr.io/conductionnl/huwelijksplanner-utrecht:leiden
