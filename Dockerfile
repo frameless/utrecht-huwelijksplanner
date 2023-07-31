@@ -36,7 +36,7 @@ ADD ./ /var/www/
 RUN if test "$NODE_ENV" != 'development'; \
 then \
     npm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}" \
-    && NODE_ENV=development npm ci --no-update-notifier \
+    && NODE_ENV=development && npm ci --no-update-notifier \
     && npm run build \
     && npm prune \
     && npm config set "//registry.npmjs.org/:_authToken" "" \
